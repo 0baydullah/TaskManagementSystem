@@ -12,3 +12,17 @@ D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLa
 D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
 D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
 D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.runtimeconfig.json
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.pdb
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.AssemblyReference.cache
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfoInputs.cache
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfo.cs
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.dll
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\refint\DataAccessLayer.dll
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
+D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
