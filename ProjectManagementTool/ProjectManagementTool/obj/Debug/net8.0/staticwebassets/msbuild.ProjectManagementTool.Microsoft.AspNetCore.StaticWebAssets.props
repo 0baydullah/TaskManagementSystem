@@ -36,6 +36,96 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ProjectManagementTool</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ProjectManagementTool</BasePath>
+      <RelativePath>files/10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>dyftb4nreq</Fingerprint>
+      <Integrity>BaEacV2Kr985OS8uwicJoi/nokcvGOvPZ6RXt2uRgI0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ProjectManagementTool</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ProjectManagementTool</BasePath>
+      <RelativePath>files/258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>4d7eu51mzh</Fingerprint>
+      <Integrity>OEEAPeLc8RLNu4fLEzVm/9KI1Oz5tVlipkVpVNytedA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ProjectManagementTool</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ProjectManagementTool</BasePath>
+      <RelativePath>files/737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>9vsaa54q5f</Fingerprint>
+      <Integrity>pe7M2YxSz8NYBrgUr4D8m+9OZKYd18zRodKvDLauE/w=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ProjectManagementTool</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ProjectManagementTool</BasePath>
+      <RelativePath>files/954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>4d7eu51mzh</Fingerprint>
+      <Integrity>OEEAPeLc8RLNu4fLEzVm/9KI1Oz5tVlipkVpVNytedA=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ProjectManagementTool</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ProjectManagementTool</BasePath>
+      <RelativePath>files/d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>9vsaa54q5f</Fingerprint>
+      <Integrity>pe7M2YxSz8NYBrgUr4D8m+9OZKYd18zRodKvDLauE/w=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\files\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))">
       <SourceType>Package</SourceType>
       <SourceId>ProjectManagementTool</SourceId>

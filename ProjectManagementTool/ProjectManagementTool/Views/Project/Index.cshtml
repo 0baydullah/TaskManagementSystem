@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DataAccessLayer.Models.Entity.ProjectInfo>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-success fw-bold" asp-action="Create">Create</a>
+</p>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Key
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Company Name 
+            </th>
+            <th>
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Key)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProjectId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

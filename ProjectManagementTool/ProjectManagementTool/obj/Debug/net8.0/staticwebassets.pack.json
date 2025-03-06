@@ -13,6 +13,26 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png",
+      "PackagePath": "staticwebassets\\files\\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin",
+      "PackagePath": "staticwebassets\\files\\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg",
+      "PackagePath": "staticwebassets\\files\\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg",
+      "PackagePath": "staticwebassets\\files\\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg",
+      "PackagePath": "staticwebassets\\files\\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg"
+    },
+    {
       "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

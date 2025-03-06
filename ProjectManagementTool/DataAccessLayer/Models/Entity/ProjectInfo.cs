@@ -17,7 +17,7 @@ namespace DataAccessLayer.Models.Entity
         public string Key { get; set; }
         public string Description { get; set; }
 
-        public string Files { get; set; }
+        public List<string>? Files { get; set; }
 
         public DateTime StartDate { get; set; }
 
