@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj": {}
+    "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj": {}
   },
   "projects": {
-    "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj": {
+    "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectUniqueName": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj",
         "projectName": "DataAccessLayer",
-        "projectPath": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectPath": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\OPL\\.nuget\\packages\\",
-        "outputPath": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\obj\\",
+        "outputPath": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -83,7 +83,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
