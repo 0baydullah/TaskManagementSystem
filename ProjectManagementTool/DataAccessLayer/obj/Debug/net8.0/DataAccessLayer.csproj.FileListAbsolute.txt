@@ -26,3 +26,17 @@ D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.runtimeconfig.json
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.pdb
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.AssemblyReference.cache
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfoInputs.cache
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfo.cs
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.dll
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\refint\DataAccessLayer.dll
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
+D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll

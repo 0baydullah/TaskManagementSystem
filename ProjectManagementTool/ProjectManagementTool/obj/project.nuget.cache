@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D1u66mHi7RA=",
+  "dgSpecHash": "ZEiLIlWOzKI=",
   "success": true,
-  "projectFilePath": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj",
+  "projectFilePath": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\OPL\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\OPL\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
