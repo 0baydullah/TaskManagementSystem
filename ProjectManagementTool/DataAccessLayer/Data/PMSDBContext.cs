@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Models.Entity;
+﻿using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,8 @@ namespace DataAccessLayer.Data
 
         }
 
-        public DbSet<Role> Role { get; set; }
+        public DbSet<UserStory> UserStories { get; set; }
+
+
     }
 }
