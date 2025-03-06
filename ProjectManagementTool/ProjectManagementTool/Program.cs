@@ -2,6 +2,8 @@ using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
 using BusinessLogicLayer;
+using Microsoft.AspNetCore.Identity;
+using DataAccessLayer.Models.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("PMSDB") ?? throw new InvalidOperationException("Connection string 'PMSDbContext' not found.");
-builder.Services.AddDbContext<PMSDBContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<PMSDBContext>(options => options.UseSqlServer(connectionString));
+
+// Configuration Identity Services * IdentityUser,IdentityRole is the class name of user registration. It is customizable
+builder.Services.AddIdentity<UserInfo, IdentityRole<int>>(
+        options =>
+        {
+            // Password settings
+            options.Password.RequireDigit = true;
+            options.Password.RequiredLength = 6;
+            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequireUppercase = true;
+            options.Password.RequireLowercase = true;
+            options.Password.RequiredUniqueChars = 4;
+        })
+        .AddEntityFrameworkStores<PMSDBContext>().AddDefaultTokenProviders();
+
 
 // Register Dependency injection of iservice and irepository layer
 builder.Services.AddServiceLayer();
