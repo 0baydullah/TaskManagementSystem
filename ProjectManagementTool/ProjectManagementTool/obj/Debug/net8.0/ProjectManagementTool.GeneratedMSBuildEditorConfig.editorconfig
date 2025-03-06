@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\ProjectManagementTool
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Project Manament System/PMS-Authentication/project-management/ProjectManagementTool/ProjectManagementTool/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Project Manament System/PMS-Authentication/project-management/ProjectManagementTool/ProjectManagementTool/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

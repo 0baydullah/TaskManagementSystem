@@ -51,6 +51,7 @@
         }
         h2{
             text-align: center;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -80,7 +81,7 @@
             <button type="submit">Sing up</button>
         </form>
 
-        <p class="login-text">Already have an account? <a href="login.html">Log in</a></p>
+        <p class="login-text">Already have an account? <a href="/Account/Login">Log in</a></p>
 
         <div id="responseMessage"></div>
     </div>
@@ -118,7 +119,7 @@
                      contentType: 'application/json',
                      data: JSON.stringify(userInfo), 
                      success: function (response) {  
-                        $("#responseMessage").html("<p style='color:green;'>Registered successfully!</p>");
+                        $("#responseMessage").html("<p style='color:green;'>Registered successful!</p>");
                         $("#registerForm")[0].reset();
                      },
                     error: function (xhr) {
