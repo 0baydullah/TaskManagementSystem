@@ -118,8 +118,11 @@
                      type: 'POST',
                      contentType: 'application/json',
                      data: JSON.stringify(userInfo), 
-                     success: function (response) {  
+                     success: function (response) {
                         $("#responseMessage").html("<p style='color:green;'>Registered successful!</p>");
+                        setTimeout(() => {
+                            $("#responseMessage").html("");
+                        }, 2000);
                         $("#registerForm")[0].reset();
                      },
                     error: function (xhr) {
