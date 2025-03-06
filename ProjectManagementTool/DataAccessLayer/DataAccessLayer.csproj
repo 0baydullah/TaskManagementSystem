@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Entity\" />
     <Folder Include="Models\ViewModel\" />
     <Folder Include="IRepository\" />
     <Folder Include="Repository\" />
