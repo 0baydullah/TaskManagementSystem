@@ -150,7 +150,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public ActionResult ForgotPasswordConfirmation()
+        public IActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
@@ -242,12 +242,56 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public ActionResult ResetPasswordConfirmation()
+        public IActionResult ResetPasswordConfirmation()
         {
             return View();
         }
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+
+                var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.RefreshSignInAsync(user);
+
+                    return RedirectToAction("ChangePasswordConfirmation", "Account");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ChangePasswordConfirmation()
+        {
+            return View();
+        }
 
     }
 }

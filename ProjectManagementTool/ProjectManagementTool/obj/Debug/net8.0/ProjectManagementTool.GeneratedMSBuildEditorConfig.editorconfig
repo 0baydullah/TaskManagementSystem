@@ -26,6 +26,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\ProjectManagementTool
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/Project Manament System/PMS-Authentication/project-management/ProjectManagementTool/ProjectManagementTool/Views/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project Manament System/PMS-Authentication/project-management/ProjectManagementTool/ProjectManagementTool/Views/Account/ChangePasswordConfirmation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDaGFuZ2VQYXNzd29yZENvbmZpcm1hdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Project Manament System/PMS-Authentication/project-management/ProjectManagementTool/ProjectManagementTool/Views/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

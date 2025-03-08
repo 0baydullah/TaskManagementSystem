@@ -5,14 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\project manament system\\pms-authentication\\project-management\\projectmanagementtool\\projectmanagementtool\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\project manament system\\pms-authentication\\project-management\\projectmanagementtool\\projectmanagementtool\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\project manament system\\pms-authentication\\project-management\\projectmanagementtool\\projectmanagementtool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,34 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "ProjectManagementTool\\Controllers\\HomeController.cs",
-              "ToolTip": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "ProjectManagementTool\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwBAAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T06:17:48.736Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Program.cs",
-              "RelativeDocumentMoniker": "ProjectManagementTool\\Program.cs",
-              "ToolTip": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Program.cs",
-              "RelativeToolTip": "ProjectManagementTool\\Program.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAAACUAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T06:16:08.933Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -58,7 +24,7 @@
               "RelativeDocumentMoniker": "ProjectManagementTool\\Controllers\\AccountController.cs",
               "ToolTip": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\AccountController.cs",
               "RelativeToolTip": "ProjectManagementTool\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAAMEAAAAAAAAAAAAYwJ8AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAP0AAAAAAAAAAAAUwAwBAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-08T05:31:10.956Z",
               "EditorCaption": ""
