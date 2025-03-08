@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.ViewModel.UserStoryVM
+﻿@model DataAccessLayer.Models.UserStory
 @using static DataAccessLayer.Enums.Category
 @using static DataAccessLayer.Enums.Priority
 @using static DataAccessLayer.Enums.Status
@@ -7,30 +7,31 @@
     ViewData["Title"] = "Add UserStory";
 }
 
-<h1 class="text-center">Add User Story</h1>
+<h1 class="text-center">Edit User Story</h1>
 
 <hr />
 <div class="d-flex justify-content-center">
     <div class="col-md-4">
         <form id="createForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input asp-for="@Model.StoryId" hidden />
             <div class="form-group mt-2">
                 <label asp-for="StoryName" class="control-label">Story Name</label>
-                <input asp-for="StoryName" class="form-control" />
+                <input asp-for="StoryName" class="form-control" value="@Model.StoryName"/>
                 <span asp-validation-for="StoryName" class="text-danger"></span>
             </div>
             <div class="form-group mt-2">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" style="height: 100px;" rows="" ></textarea>
+                <textarea asp-for="Description" class="form-control"  style="height: 100px;" rows="3" >@Model.Description</textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group d-flex justify-content-evenly mt-2">
-                <label asp-for="Category" class="control-label"></label>  
+                <label asp-for="Category" class="control-label"></label>
                 <select asp-for="Category" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Category>()"></select>
-                <span asp-validation-for="Category" class="text-danger"></span>  
+                <span asp-validation-for="Category" class="text-danger"></span>
 
                 <label asp-for="Points" class="control-label"></label>
-                <input asp-for="Points" class="form-control " style="width: 60px;"/> 
+                <input asp-for="Points" class="form-control " style="width: 60px;" />
                 <span asp-validation-for="Points" class="text-danger"></span>
             </div>
             <div class="form-group mt-2">
@@ -40,10 +41,12 @@
             </div>
             <div class="form-group d-flex justify-content-evenly mt-2">
                 <label asp-for="Status" class="control-label"></label>
-                
-                <select asp-for="Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Status>()"></select>
+
+                <select asp-for="Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Status>()">
+					<option value="@Model.Status">@Model.Status</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
-            
+
                 <label asp-for="Priority" class="control-label"></label>
                 <select asp-for="Priority" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Priority>()"></select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
@@ -54,7 +57,7 @@
                 <span asp-validation-for="SprintId" class="text-danger"></span>
             </div>
             <div class="form-group mt-2 d-flex justify-content-center ">
-                <button type="button" class="btn btn-success w-50 " onclick="submitForm()">Create</button>
+                <button type="button" class="btn btn-success w-50 " onclick="submitForm()">Update</button>
             </div>
         </form>
     </div>
@@ -65,18 +68,18 @@
 </div>
 
 @section Scripts {
-    
+
     <script>
         function submitForm() {
             var form = $('#createForm');
             var formData = new FormData(form[0]);
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Create", "UserStory")',
+                url: '@Url.Action("Edit", "UserStory")',
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function () {
+                success: function() {
                     window.location.href = '@Url.Action("Index", "UserStory")';
                 },
                 error: function (error) {
@@ -85,5 +88,7 @@
             });
         }
     </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -21,9 +21,42 @@ namespace BusinessLogicLayer.Service
             _userStoryRepo.AddUserStory(userStory);
         }
 
+        public void DeleteUserStory(UserStory userStory)
+        {
+            _userStoryRepo.DeleteUserStory(userStory);
+        }
+
         public List<UserStory> GetAllUserStory()
         {
             return _userStoryRepo.GetAllUserStory();
+        }
+
+        public UserStory GetUserStory(int id)
+        {
+            var userStory = _userStoryRepo.GetUserStory(id);
+            return userStory;
+        }
+
+        public void UpdateUserStory(UserStory userStory)
+        {
+            var existingUserStory = _userStoryRepo.GetUserStory(userStory.StoryId);
+            if (existingUserStory != null)
+            {
+                existingUserStory.StoryName = userStory.StoryName;
+                existingUserStory.Description = userStory.Description;
+                existingUserStory.Category = userStory.Category;
+                existingUserStory.Points = userStory.Points;
+                existingUserStory.EstimateTime = userStory.EstimateTime;
+                existingUserStory.Status = userStory.Status;
+                existingUserStory.Priority = userStory.Priority;
+                existingUserStory.SprintId = userStory.SprintId;
+
+                _userStoryRepo.UpdateUserStory(existingUserStory);
+            }
+            else
+            {
+                throw new ArgumentException("User story not found");
+            }
         }
     }
 }
