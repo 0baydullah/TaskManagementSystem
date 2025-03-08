@@ -1,8 +1,12 @@
-﻿using DataAccessLayer.Models.Entity;
-using DataAccessLayer.Models.ViewModel;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Encodings.Web;
+using BusinessLogicLayer.IService;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -10,22 +14,26 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly UserManager<UserInfo> _userManager;
         private readonly SignInManager<UserInfo> _signInManager;
+        private readonly IEmailSenderService _emailSenderService;
 
 
-        public AccountController(UserManager<UserInfo> userManager, SignInManager<UserInfo> signInManager)
+        public AccountController(UserManager<UserInfo> userManager, SignInManager<UserInfo> signInManager,
+            IEmailSenderService emailSenderService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSenderService = emailSenderService;
 
         }
 
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] UserInfoVM model)
         {
             if (ModelState.IsValid == false)
@@ -76,6 +84,7 @@ namespace ProjectManagementTool.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             // after implementing role here check to user previously signed in or not and do not sign in from other browser
@@ -94,7 +103,6 @@ namespace ProjectManagementTool.Controllers
 
             try
             {
-
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, lockoutOnFailure: false);
 
                 if (result.Succeeded == false)
@@ -102,14 +110,144 @@ namespace ProjectManagementTool.Controllers
                     return BadRequest(new { success = false, errors = new List<string> { "Invalid Email or Password" } });
                 }
 
-                TempData["welcomeMessage"] = "wow you are logged in the system";
-                return Ok(new { success = true, redirectUrl = Url.Action("Index", "Home") });
+                return Ok(new { success = true, redirectUrl = Url.Action("index", "Home") });
             }
             catch (Exception)
             {
                 return View();
             }
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Welcome","Home");
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user != null)
+                {
+                    await SendForgotPasswordEmail(user.Email, user);
+                    return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                }
+
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        private async Task SendForgotPasswordEmail(string? email, UserInfo? user)
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var passwordResetLink = Url.Action("ResetPassword", "Account",
+                new { Email = email, Token = token }, protocol: HttpContext.Request.Scheme);
+            var safeLink = HtmlEncoder.Default.Encode(passwordResetLink);
+            var subject = "Reset Your Password";
+
+            var messageBody = $@"
+            <div style=""font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #333; line-height: 1.5; padding: 20px;"">
+                <h2 style=""color: #007bff; text-align: center;"">Password Reset Request</h2>
+        
+        
+                <p>You received a request to reset your password for your <strong>Project Management Tool</strong> account. If you made this request, please click the button below to reset your password:</p>
+        
+                <div style=""text-align: center; margin: 20px 0;"">
+                    <a href=""{safeLink}"" 
+                       style=""background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block;"">
+                        Reset Password
+                    </a>
+                </div>
+        
+                <p>If the button above doesn’t work, copy and paste the following URL into your browser:</p>
+                <p style=""background-color: #f8f9fa; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"">
+                    <a href=""{safeLink}"" style=""color: #007bff; text-decoration: none;"">{safeLink}</a>
+                </p>
+        
+                <p>If you did not request to reset your password, please ignore this email or contact support if you have concerns.</p>
+        
+                <p style=""margin-top: 30px;"">Thank you,<br />Project Management Tool</p>
+            </div>";
+
+            await _emailSenderService.SendEmailAsync(email, subject, messageBody, IsBodyHtml: true);
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string Token, string Email)
+        {
+            if (Token == null || Email == null)
+            {
+                ViewBag.ErrorTitle = "Invalid Password Reset Token";
+                ViewBag.ErrorMessage = "The Link is Expired or Invalid";
+                return View("Error");
+            }
+            else
+            {
+                ResetPasswordVM model = new ResetPasswordVM()
+                {
+                    Token = Token,
+                    Email = Email
+                };
+
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user != null)
+                {
+                    var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ResetPasswordConfirmation", "Account");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+
+                    return View(model);
+                }
+
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+
 
     }
 }

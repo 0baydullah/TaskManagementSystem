@@ -32,6 +32,12 @@ builder.Services.AddIdentity<UserInfo, IdentityRole<int>>(
 builder.Services.AddServiceLayer();
 builder.Services.AddRepositoryLayer();
 
+// Configure the Application Cookie settings
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+});
+
 
 var app = builder.Build();
 
