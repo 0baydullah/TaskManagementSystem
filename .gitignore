@@ -1,0 +1,52 @@
+# Visual Studio specific files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+out/
+
+# User-specific files
+*.rsuser
+*.ide
+
+# ASP.NET Core environment and dependency files
+appsettings.*.json
+secrets.json
+.env
+
+# Package dependencies
+node_modules/
+wwwroot/lib/
+dist/
+bower_components/
+
+# Logs, lock files, and backup files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+!**/wwwroot/**/*.log
+.DS_Store
+Thumbs.db
+
+# Entity Framework migrations and generated models
+Migrations/
+
+# Publish output
+publish/
+*.Publish.xml
+
+# Rider & Resharper
+.idea/
+*.DotSettings.user
+.ReSharper/
+
+# MacOS & Linux system files
+*.swp
+*.swo
