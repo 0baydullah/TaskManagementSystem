@@ -1,0 +1,89 @@
+﻿@model DataAccessLayer.Models.ViewModel.ProjectInfoVM
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<div id="response-message">
+
+</div>
+
+<h1 class="fw-bold text-center">Welcome to Create Page </h1>
+
+<form id="form" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Name"> </label>
+        <input asp-for="@Model.Name" class="form-control" id="name" placeholder="Enter Project Name">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Key"> </label>
+        <input asp-for="@Model.Key" class="form-control" id="key" placeholder="Enter Project Key">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Description"> </label>
+        <input asp-for="@Model.Description" class="form-control" id="description" placeholder="Write Short Description">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Files"> </label>
+        <input asp-for="@Model.Files" class="form-control" id="files" placeholder="Upload Necessary Files">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.StartDate"> </label>
+        <input asp-for="@Model.StartDate" class="form-control" id="startDate" placeholder="Select Start Date">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.EndDate"> </label>
+        <input asp-for="@Model.EndDate" class="form-control" id="endDate" placeholder="Select End Date">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.CompanyName"> </label>
+        <input asp-for="@Model.CompanyName" class="form-control" id="companyName" placeholder="Enter Company Name">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.ProjectOwnerId"> </label>
+        <input asp-for="@Model.ProjectOwnerId" class="form-control" id="projectOwnerId" placeholder="Select Project Onwer">
+    </div>
+    <br /> <br />
+
+    <button type="button" class="btn btn-success" id="submitForm">Create Project</button>
+    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+     
+        $('#submitForm').click( function (e) {
+            e.preventDefault();
+
+            var formData = new FormData($('#form')[0]);
+
+            for( var pair of formData.entries()) {
+                console.log(pair[0]+ ', '+ pair[1]);
+            }
+            //debugger;
+
+            $.ajax({
+                url:'@Url.Action("Create", "Project")',
+                method:'POST',
+                data:formData,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    $('#response-message').html(response);
+                    setTimeout(function(){
+                        window.location.href = '@Url.Action("Index", "Project")';
+                    }, 2000);
+                },
+                error: function(response){
+                    $('#response-message').html(response);
+                }
+
+
+            });
+        });
+
+    });
+</script>

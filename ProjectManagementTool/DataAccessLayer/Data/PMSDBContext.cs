@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-﻿using DataAccessLayer.Models.Entity;
-<<<<<<< HEAD
-=======
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
->>>>>>> PMS-Authentication
-=======
-﻿using DataAccessLayer.Models;
->>>>>>> origin/UserStory
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,8 +14,6 @@ namespace DataAccessLayer.Data
 
         }
 
-        public DbSet<UserStory> UserStories { get; set; }
-
-
+        
     }
 }

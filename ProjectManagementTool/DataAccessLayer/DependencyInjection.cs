@@ -14,7 +14,12 @@ namespace DataAccessLayer
         public static IServiceCollection AddRepositoryLayer(this IServiceCollection services)
         {
             //services.AddScoped<IxxxxRepository, xxxxRepository>();
+<<<<<<< HEAD
             services.AddScoped<IUserStoryRepo, UserStoryRepo>();
+=======
+
+            services.AddScoped<IProjectInfoRepo, ProjectInfoRepo>();
+>>>>>>> origin/Project-CRUD
             return services;
         }
     }
