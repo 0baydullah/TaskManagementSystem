@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DataAccessLayer.IRepository;
+using DataAccessLayer.Repository;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ namespace DataAccessLayer
         {
             //services.AddScoped<IxxxxRepository, xxxxRepository>();
 
+            services.AddScoped<IProjectInfoRepo, ProjectInfoRepo>();
             return services;
         }
     }

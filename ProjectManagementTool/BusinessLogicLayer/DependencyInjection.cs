@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BusinessLogicLayer.IService;
+using BusinessLogicLayer.Service;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace BusinessLogicLayer
         {
             //services.AddScoped<IxxxxxService, xxxxxService>();
             //services.AddScoped<IxxxxxService, xxxxxService>();
-           
+            services.AddScoped<IProjectInfoService, ProjectInfoService>();
 
             return services;
         }

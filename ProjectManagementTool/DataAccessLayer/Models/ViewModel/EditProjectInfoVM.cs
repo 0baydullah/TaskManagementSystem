@@ -9,6 +9,7 @@ namespace DataAccessLayer.Models.ViewModel
 {
     public class EditProjectInfoVM
     {
+        public int ProjectId { get; set; }
         public string Name { get; set; }
 
         public string Key { get; set; }

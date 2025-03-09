@@ -13,6 +13,11 @@
 
 <form id="editForm" enctype="multipart/form-data" method="post">
     <div class="form-group">
+        <label for="ProjectId">ProjectId</label>
+        <input id="ProjectId" name="ProjectId" type="text" value="@Model.ProjectId" readonly />
+    </div>
+
+    <div class="form-group">
         <label asp-for="@Model.Name"> </label>
         <input asp-for="@Model.Name" class="form-control" id="name">
     </div>
@@ -33,6 +38,7 @@
             foreach (var item in Model.ExistingFiles)
             {
                 <img src="/files/@item"  style="width:50px; height:50px; margin-right: 5px"/>
+                <button type="button" class="btn btn-danger" onclick="deletePhoto('@item');">Delete</button>
                 <br />
             }
         }
@@ -59,7 +65,105 @@
         <input asp-for="@Model.ProjectOwnerId" class="form-control" id="projectOwnerId">
     </div>
     <br /> <br />
-
-    <button type="button" class="btn btn-success" id="submitForm">Create Project</button>
+    <input type="button" onclick="editProject();" value="Save Changes" class="btn btn-primary"/>
     <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
 </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+    function editProject() {
+
+        var formData = new FormData(document.getElementById("editForm"));
+        var id = $('input[name="ProjectId"]').val();
+
+        $.ajax({
+            url: `/Project/Edit/${id}`,
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+
+                    $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                    setTimeout(() => {
+                        window.location.href = '/Project/Index';
+                    }, 2000);
+                }
+
+                else {
+                    $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function (xhr, status, error) {
+
+                $('#response-message').removeClass('alert-success').addClass('alert-danger')
+                    .html('An error occurred: ' + xhr.responseText);
+            }
+        });
+    }
+
+    function deletePhoto(file) {
+
+            //var id = $('input[name="ProjectId"]').val();
+            var id = $('#ProjectId').val();
+            //debugger;
+
+            $.ajax({
+                url: '/Project/DeletePhoto',
+                method: 'POST',
+                data: { file: file, id:id },
+                success: function (response) {
+                    if (response.success) {
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    }
+
+                    else {
+                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $('#response-message').removeClass('alert-success').addClass('alert-danger')
+                        .html('An error occurred: ' + xhr.responseText);
+                }
+            });
+
+
+    }
+
+    // function validateSize() {
+    //     const maxSize = 100;
+    //     let isValid = true;
+    //     let messages = [];
+
+    //     const files = $("#files")[0].files;
+
+    //     $.each(files, function (index, file) {
+    //         const fileSize = file.size / 1024;
+
+
+    //         if (fileSize > maxSize) {
+    //             messages.push(`image "${file.name}" is too big`);
+    //             isValid = false;
+    //         }
+    //     });
+
+
+    //     if (!isValid) {
+    //         $("#response-message").html(messages.join("<br>"));
+    //         $("#files").val("");
+    //     }
+
+    //     else {
+    //         $("#response-message").html('<span class="alert alert-success">All Files are valid. </span>');
+    //     }
+    // }
+
+</script>

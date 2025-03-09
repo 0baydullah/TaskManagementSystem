@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "bbghl5FRG7dmGkvCNDY/cVZ5zltEGyRWTMbnZwniYOQ=",
+  "Hash": "dgiK/WD7M9VHOcu2LJy4V2K5Xi0/+3SlJAnKUv2v8ds=",
   "Source": "ProjectManagementTool",
   "BasePath": "_content/ProjectManagementTool",
   "Mode": "Default",
@@ -101,6 +101,27 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "j1de4adiio",
+      "Integrity": "h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg"
+    },
+    {
       "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png",
       "SourceId": "ProjectManagementTool",
       "SourceType": "Discovered",
@@ -120,6 +141,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\files\\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "y6ir7yul7x",
+      "Integrity": "2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg"
     },
     {
       "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin",
@@ -143,6 +185,90 @@
       "OriginalItemSpec": "wwwroot\\files\\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin"
     },
     {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "w8w5k591as",
+      "Integrity": "gDUG9/4FDpD2nPkDx+lAqywqE4FkPQqu6+PsUhVTEKU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "c7mqkecu3u",
+      "Integrity": "GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/611321b2-3882-4284-8c49-cacf62ae69d7_bank3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "fqdmcims4q",
+      "Integrity": "+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/70275a32-8e39-41b4-a898-5480c002fec3_images (1)#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "d0l1t8jmlc",
+      "Integrity": "Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg"
+    },
+    {
       "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg",
       "SourceId": "ProjectManagementTool",
       "SourceType": "Discovered",
@@ -162,6 +288,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\files\\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/7e04363a-d692-49f6-a1cb-a99b3111092a_images#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "y6ir7yul7x",
+      "Integrity": "2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg"
     },
     {
       "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg",
@@ -185,6 +332,111 @@
       "OriginalItemSpec": "wwwroot\\files\\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg"
     },
     {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "db6rbpiu7r",
+      "Integrity": "ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "c7mqkecu3u",
+      "Integrity": "GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "j1de4adiio",
+      "Integrity": "h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "db6rbpiu7r",
+      "Integrity": "ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/bedbf629-9711-4bed-90c7-6541ca4a9891_bank3#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "fqdmcims4q",
+      "Integrity": "+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg"
+    },
+    {
       "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg",
       "SourceId": "ProjectManagementTool",
       "SourceType": "Discovered",
@@ -204,6 +456,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\files\\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg"
+    },
+    {
+      "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg",
+      "SourceId": "ProjectManagementTool",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\",
+      "BasePath": "_content/ProjectManagementTool",
+      "RelativePath": "files/e5ec2432-b2a9-4aed-894f-957626eae989_images (1)#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "d0l1t8jmlc",
+      "Integrity": "Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\files\\e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg"
     },
     {
       "Identity": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\js\\site.js",
@@ -1590,6 +1863,88 @@
       ]
     },
     {
+      "Route": "files/06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.j1de4adiio.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "63329"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "j1de4adiio"
+        },
+        {
+          "Name": "label",
+          "Value": "files/06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ="
+        }
+      ]
+    },
+    {
+      "Route": "files/06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "63329"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ="
+        }
+      ]
+    },
+    {
       "Route": "files/10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.dyftb4nreq.png",
       "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png",
       "Selectors": [],
@@ -1668,6 +2023,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-BaEacV2Kr985OS8uwicJoi/nokcvGOvPZ6RXt2uRgI0="
+        }
+      ]
+    },
+    {
+      "Route": "files/13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5852"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI="
+        }
+      ]
+    },
+    {
+      "Route": "files/13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.y6ir7yul7x.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5852"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y6ir7yul7x"
+        },
+        {
+          "Name": "label",
+          "Value": "files/13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI="
         }
       ]
     },
@@ -1754,6 +2191,334 @@
       ]
     },
     {
+      "Route": "files/33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "29420"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gDUG9/4FDpD2nPkDx+lAqywqE4FkPQqu6+PsUhVTEKU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gDUG9/4FDpD2nPkDx+lAqywqE4FkPQqu6+PsUhVTEKU="
+        }
+      ]
+    },
+    {
+      "Route": "files/33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.w8w5k591as.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "29420"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gDUG9/4FDpD2nPkDx+lAqywqE4FkPQqu6+PsUhVTEKU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w8w5k591as"
+        },
+        {
+          "Name": "label",
+          "Value": "files/33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gDUG9/4FDpD2nPkDx+lAqywqE4FkPQqu6+PsUhVTEKU="
+        }
+      ]
+    },
+    {
+      "Route": "files/4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.c7mqkecu3u.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57306"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c7mqkecu3u"
+        },
+        {
+          "Name": "label",
+          "Value": "files/4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4="
+        }
+      ]
+    },
+    {
+      "Route": "files/4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57306"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4="
+        }
+      ]
+    },
+    {
+      "Route": "files/611321b2-3882-4284-8c49-cacf62ae69d7_bank3.fqdmcims4q.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16166"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fqdmcims4q"
+        },
+        {
+          "Name": "label",
+          "Value": "files/611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY="
+        }
+      ]
+    },
+    {
+      "Route": "files/611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16166"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY="
+        }
+      ]
+    },
+    {
+      "Route": "files/70275a32-8e39-41b4-a898-5480c002fec3_images (1).d0l1t8jmlc.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11562"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "d0l1t8jmlc"
+        },
+        {
+          "Name": "label",
+          "Value": "files/70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg="
+        }
+      ]
+    },
+    {
+      "Route": "files/70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11562"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg="
+        }
+      ]
+    },
+    {
       "Route": "files/737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.9vsaa54q5f.jpg",
       "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg",
       "Selectors": [],
@@ -1832,6 +2597,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-pe7M2YxSz8NYBrgUr4D8m+9OZKYd18zRodKvDLauE/w="
+        }
+      ]
+    },
+    {
+      "Route": "files/7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5852"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI="
+        }
+      ]
+    },
+    {
+      "Route": "files/7e04363a-d692-49f6-a1cb-a99b3111092a_images.y6ir7yul7x.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5852"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "y6ir7yul7x"
+        },
+        {
+          "Name": "label",
+          "Value": "files/7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-2uPqf3IOTYRbMuKvfPD2sW38IQjgIz+uAXef2eXFWDI="
         }
       ]
     },
@@ -1918,6 +2765,416 @@
       ]
     },
     {
+      "Route": "files/956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.db6rbpiu7r.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9109"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "db6rbpiu7r"
+        },
+        {
+          "Name": "label",
+          "Value": "files/956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA="
+        }
+      ]
+    },
+    {
+      "Route": "files/956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9109"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA="
+        }
+      ]
+    },
+    {
+      "Route": "files/96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.c7mqkecu3u.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57306"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "c7mqkecu3u"
+        },
+        {
+          "Name": "label",
+          "Value": "files/96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4="
+        }
+      ]
+    },
+    {
+      "Route": "files/96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "57306"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-GEHcwKe3TQf+SJbZrjzC6pr0+wvAY/zrg00uTKA/oT4="
+        }
+      ]
+    },
+    {
+      "Route": "files/9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.j1de4adiio.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "63329"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "j1de4adiio"
+        },
+        {
+          "Name": "label",
+          "Value": "files/9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ="
+        }
+      ]
+    },
+    {
+      "Route": "files/9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "63329"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:37:39 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-h3XRZsWgG3U1QsSeZAtryi6l8U06uFU+2AbwCNfzrQQ="
+        }
+      ]
+    },
+    {
+      "Route": "files/9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.db6rbpiu7r.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9109"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "db6rbpiu7r"
+        },
+        {
+          "Name": "label",
+          "Value": "files/9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA="
+        }
+      ]
+    },
+    {
+      "Route": "files/9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9109"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ueeEe4m/4h422OozC6M77kO1myBPGUGMOwDiyxc4zAA="
+        }
+      ]
+    },
+    {
+      "Route": "files/bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.fqdmcims4q.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16166"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fqdmcims4q"
+        },
+        {
+          "Name": "label",
+          "Value": "files/bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY="
+        }
+      ]
+    },
+    {
+      "Route": "files/bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "16166"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+Zx2EAC0XzLlPNHyYaQjs3VM8VyxW5dReHAskJHSWCY="
+        }
+      ]
+    },
+    {
       "Route": "files/d83002e8-a3cb-46c4-834a-416de229e2d9_exim.9vsaa54q5f.jpg",
       "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg",
       "Selectors": [],
@@ -1996,6 +3253,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-pe7M2YxSz8NYBrgUr4D8m+9OZKYd18zRodKvDLauE/w="
+        }
+      ]
+    },
+    {
+      "Route": "files/e5ec2432-b2a9-4aed-894f-957626eae989_images (1).d0l1t8jmlc.jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11562"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "d0l1t8jmlc"
+        },
+        {
+          "Name": "label",
+          "Value": "files/e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg="
+        }
+      ]
+    },
+    {
+      "Route": "files/e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg",
+      "AssetFile": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "11562"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Mar 2025 09:47:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y9K1VdCuWIneZbSileNOioSlxVP0xaEGaD6iks+jhSg="
         }
       ]
     },

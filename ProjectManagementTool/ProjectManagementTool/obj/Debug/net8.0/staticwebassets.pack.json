@@ -13,24 +13,76 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "PackagePath": "staticwebassets\\files\\06a66e10-7bad-415d-9eac-03cf52f3a229_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg"
+    },
+    {
       "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png",
       "PackagePath": "staticwebassets\\files\\10d1c1ad-de5d-40ed-b90e-e71fb046fe68_bb.png"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg",
+      "PackagePath": "staticwebassets\\files\\13a2d810-0c51-4a4a-a1a4-a8fe3001d669_images.jpg"
     },
     {
       "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin",
       "PackagePath": "staticwebassets\\files\\258a8408-3bf2-49bf-a73b-6d6fce8de422_application.bin"
     },
     {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg",
+      "PackagePath": "staticwebassets\\files\\33c24297-8a95-4f38-87ab-3d2f79e7959b_istockphoto-1270779408-612x612.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg",
+      "PackagePath": "staticwebassets\\files\\4b69db1b-1b7a-4276-93f7-08aff2d5e408_bank4.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg",
+      "PackagePath": "staticwebassets\\files\\611321b2-3882-4284-8c49-cacf62ae69d7_bank3.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg",
+      "PackagePath": "staticwebassets\\files\\70275a32-8e39-41b4-a898-5480c002fec3_images (1).jpg"
+    },
+    {
       "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg",
       "PackagePath": "staticwebassets\\files\\737a0b20-f4f5-466a-b5af-d2a96224f9ed_exim.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg",
+      "PackagePath": "staticwebassets\\files\\7e04363a-d692-49f6-a1cb-a99b3111092a_images.jpg"
     },
     {
       "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg",
       "PackagePath": "staticwebassets\\files\\954d7871-5501-43df-a91b-535817d96f5e_imageasas.jpg"
     },
     {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg",
+      "PackagePath": "staticwebassets\\files\\956271af-0412-4bc9-bd7e-3a2f61c134f3_bank2.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg",
+      "PackagePath": "staticwebassets\\files\\96c57085-6c32-4ceb-8acc-d75d0e799fab_bank4.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg",
+      "PackagePath": "staticwebassets\\files\\9af59742-01cc-432d-98bc-097dc23445b9_amp-coin-crypto-currency-logo-with-golden-colour-free-vector.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg",
+      "PackagePath": "staticwebassets\\files\\9dc7a626-73d9-4a23-8a76-0b7c5de92ae9_bank2.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg",
+      "PackagePath": "staticwebassets\\files\\bedbf629-9711-4bed-90c7-6541ca4a9891_bank3.jpg"
+    },
+    {
       "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg",
       "PackagePath": "staticwebassets\\files\\d83002e8-a3cb-46c4-834a-416de229e2d9_exim.jpg"
+    },
+    {
+      "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\files\\e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg",
+      "PackagePath": "staticwebassets\\files\\e5ec2432-b2a9-4aed-894f-957626eae989_images (1).jpg"
     },
     {
       "Id": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\wwwroot\\js\\site.js",
