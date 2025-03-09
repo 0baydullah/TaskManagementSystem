@@ -217,12 +217,60 @@
             {
               "$type": "Document",
               "DocumentIndex": 7,
+<<<<<<< Updated upstream
               "Title": "PMSDBContext.cs",
               "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\Data\\PMSDBContext.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\Data\\PMSDBContext.cs",
               "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\Data\\PMSDBContext.cs",
               "RelativeToolTip": "DataAccessLayer\\Data\\PMSDBContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAA==",
+=======
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Views\\Project\\Index.cshtml",
+              "RelativeDocumentMoniker": "ProjectManagementTool\\Views\\Project\\Index.cshtml",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Views\\Project\\Index.cshtml",
+              "RelativeToolTip": "ProjectManagementTool\\Views\\Project\\Index.cshtml",
+              "ViewState": "AgIAACcAAAAAAAAAAAAYwGYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-06T05:52:33.655Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Views\\Project\\Create.cshtml",
+              "RelativeDocumentMoniker": "ProjectManagementTool\\Views\\Project\\Create.cshtml",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Views\\Project\\Create.cshtml",
+              "RelativeToolTip": "ProjectManagementTool\\Views\\Project\\Create.cshtml",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwDUAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-06T05:51:24.638Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Views\\Project\\Edit.cshtml",
+              "RelativeDocumentMoniker": "ProjectManagementTool\\Views\\Project\\Edit.cshtml",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Views\\Project\\Edit.cshtml",
+              "RelativeToolTip": "ProjectManagementTool\\Views\\Project\\Edit.cshtml",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAiwFcAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-06T09:08:40.151Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProjectController.cs",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "RelativeDocumentMoniker": "ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "RelativeToolTip": "ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAowDQAAAANAAAAAAAAAA==",
+>>>>>>> Stashed changes
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T08:31:48.858Z"
             },

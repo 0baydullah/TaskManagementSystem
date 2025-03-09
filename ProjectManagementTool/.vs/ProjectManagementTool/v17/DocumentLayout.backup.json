@@ -81,6 +81,74 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
+<<<<<<< Updated upstream
+=======
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\DependencyInjection.cs",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\DependencyInjection.cs",
+              "RelativeToolTip": "DataAccessLayer\\DependencyInjection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T05:01:12.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProjectInfoRepo.cs",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\Repository\\ProjectInfoRepo.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\Repository\\ProjectInfoRepo.cs",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\Repository\\ProjectInfoRepo.cs",
+              "RelativeToolTip": "DataAccessLayer\\Repository\\ProjectInfoRepo.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAA9wFUAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:59:54.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IProjectInfoRepo.cs",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\IRepository\\IProjectInfoRepo.cs",
+              "RelativeDocumentMoniker": "DataAccessLayer\\IRepository\\IProjectInfoRepo.cs",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\DataAccessLayer\\IRepository\\IProjectInfoRepo.cs",
+              "RelativeToolTip": "DataAccessLayer\\IRepository\\IProjectInfoRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:57:45.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProjectInfoService.cs",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\BusinessLogicLayer\\Service\\ProjectInfoService.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\Service\\ProjectInfoService.cs",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\BusinessLogicLayer\\Service\\ProjectInfoService.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\Service\\ProjectInfoService.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAA2wDQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:55:04.33Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\BusinessLogicLayer\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "BusinessLogicLayer\\DependencyInjection.cs",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\BusinessLogicLayer\\DependencyInjection.cs",
+              "RelativeToolTip": "BusinessLogicLayer\\DependencyInjection.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T04:50:32.08Z",
+              "EditorCaption": ""
+            },
+            {
+>>>>>>> Stashed changes
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Index.cshtml",
@@ -193,6 +261,7 @@
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 3,
               "Title": "DependencyInjection.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DependencyInjection.cs",
@@ -200,6 +269,15 @@
               "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DependencyInjection.cs",
               "RelativeToolTip": "DataAccessLayer\\DependencyInjection.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA2AAAAAAAAAA==",
+=======
+              "DocumentIndex": 0,
+              "Title": "ProjectController.cs",
+              "DocumentMoniker": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "RelativeDocumentMoniker": "ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "ToolTip": "D:\\AspDotNetCore\\PMS\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "RelativeToolTip": "ProjectManagementTool\\Controllers\\ProjectController.cs",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAowPsAAAAAAAAAAAAAAA==",
+>>>>>>> Stashed changes
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T08:36:39.536Z"
             },
