@@ -3,32 +3,8 @@
   "WorkspaceRootPath": "D:\\PMS\\project-management\\ProjectManagementTool\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\views\\userstory\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\views\\userstory\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\views\\userstory\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\views\\userstory\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\controllers\\userstorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\controllers\\userstorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\views\\userstory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\views\\userstory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\dataaccesslayer\\models\\viewmodel\\userstoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\models\\viewmodel\\userstoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\dataaccesslayer\\enums\\priority.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\enums\\priority.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\dataaccesslayer\\repository\\userstoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repository\\userstoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3F895925-1DE3-4EB3-A7DF-6387A2A291F5}|BusinessLogicLayer\\BusinessLogicLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\businesslogiclayer\\service\\userstoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,8 +15,32 @@
       "RelativeMoniker": "D:0:0:{3F895925-1DE3-4EB3-A7DF-6387A2A291F5}|BusinessLogicLayer\\BusinessLogicLayer.csproj|solutionrelative:businesslogiclayer\\iservice\\iuserstoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\dataaccesslayer\\repository\\userstoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\repository\\userstoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\dataaccesslayer\\irepository\\iuserstoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\irepository\\iuserstoryrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\dataaccesslayer\\models\\viewmodel\\userstoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\models\\viewmodel\\userstoryvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\views\\userstory\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\views\\userstory\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\views\\userstory\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\views\\userstory\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\views\\userstory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|solutionrelative:projectmanagementtool\\views\\userstory\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|d:\\pms\\project-management\\projectmanagementtool\\dataaccesslayer\\enums\\priority.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}|DataAccessLayer\\DataAccessLayer.csproj|solutionrelative:dataaccesslayer\\enums\\priority.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}|ProjectManagementTool\\ProjectManagementTool.csproj|d:\\pms\\project-management\\projectmanagementtool\\projectmanagementtool\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -114,7 +114,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -134,13 +134,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Views\\UserStory\\Edit.cshtml",
               "RelativeDocumentMoniker": "ProjectManagementTool\\Views\\UserStory\\Edit.cshtml",
-              "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Views\\UserStory\\Edit.cshtml*",
-              "RelativeToolTip": "ProjectManagementTool\\Views\\UserStory\\Edit.cshtml*",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAC8AAABNAAAAAAAAAA==",
+              "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Views\\UserStory\\Edit.cshtml",
+              "RelativeToolTip": "ProjectManagementTool\\Views\\UserStory\\Edit.cshtml",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAADsAAABqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-08T09:18:10.059Z",
               "EditorCaption": ""
@@ -160,7 +160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "Priority.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\Enums\\Priority.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\Enums\\Priority.cs",
@@ -173,7 +173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "UserStoryVM.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\Models\\ViewModel\\UserStoryVM.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\Models\\ViewModel\\UserStoryVM.cs",
@@ -186,7 +186,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "Create.cshtml",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Views\\UserStory\\Create.cshtml",
               "RelativeDocumentMoniker": "ProjectManagementTool\\Views\\UserStory\\Create.cshtml",
@@ -199,7 +199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Views\\UserStory\\Index.cshtml",
               "RelativeDocumentMoniker": "ProjectManagementTool\\Views\\UserStory\\Index.cshtml",
@@ -212,59 +212,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "UserStoryController.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\UserStoryController.cs",
               "RelativeDocumentMoniker": "ProjectManagementTool\\Controllers\\UserStoryController.cs",
-              "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\UserStoryController.cs*",
-              "RelativeToolTip": "ProjectManagementTool\\Controllers\\UserStoryController.cs*",
-              "ViewState": "AgIAABsAAAAAAAAAAAAwwDIAAAAWAAAAAAAAAA==",
+              "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\Controllers\\UserStoryController.cs",
+              "RelativeToolTip": "ProjectManagementTool\\Controllers\\UserStoryController.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAuwEkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T09:30:04.178Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "UserStoryService.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\Service\\UserStoryService.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\Service\\UserStoryService.cs",
               "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\Service\\UserStoryService.cs",
               "RelativeToolTip": "BusinessLogicLayer\\Service\\UserStoryService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABcAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAIAwwCcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T09:23:20.786Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "IUserStoryService.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\IService\\IUserStoryService.cs",
               "RelativeDocumentMoniker": "BusinessLogicLayer\\IService\\IUserStoryService.cs",
               "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\IService\\IUserStoryService.cs",
               "RelativeToolTip": "BusinessLogicLayer\\IService\\IUserStoryService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T09:22:19.232Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "UserStoryRepo.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\Repository\\UserStoryRepo.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\Repository\\UserStoryRepo.cs",
               "ToolTip": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\Repository\\UserStoryRepo.cs",
               "RelativeToolTip": "DataAccessLayer\\Repository\\UserStoryRepo.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBoAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAApwCwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T09:14:56.479Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 4,
               "Title": "IUserStoryRepo.cs",
               "DocumentMoniker": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\IRepository\\IUserStoryRepo.cs",
               "RelativeDocumentMoniker": "DataAccessLayer\\IRepository\\IUserStoryRepo.cs",

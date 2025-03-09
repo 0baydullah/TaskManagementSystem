@@ -18,32 +18,66 @@ namespace DataAccessLayer.Repository
         }
         public void AddUserStory(UserStory userStory)
         {
-            _context.UserStories.Add(userStory);
-            _context.SaveChanges();
+            try
+            {
+                _context.UserStories.Add(userStory);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while adding the user story.", ex);
+            }
         }
 
         public void DeleteUserStory(UserStory userStory)
         {
-            _context.UserStories.Remove(userStory);
-            _context.SaveChanges();
+            try
+            {
+                _context.UserStories.Remove(userStory);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the user story.", ex);
+            }
         }
 
         public List<UserStory> GetAllUserStory()
         {
-            return _context.UserStories.ToList();
+            try
+            {
+                return _context.UserStories.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving all user stories.", ex);
+            }
         }
 
         public UserStory GetUserStory(int id)
         {
-            var userStory = _context.UserStories.FirstOrDefault(x => x.StoryId == id);
-            return userStory;
+            try
+            {
+                var userStory = _context.UserStories.FirstOrDefault(x => x.StoryId == id);
+                return userStory;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving the user story with ID {id}.", ex);
+            }
         }
 
         public void UpdateUserStory(UserStory userStory)
         {
-            _context.UserStories.Update(userStory);
-            _context.SaveChanges();
-            
+            try
+            {
+                _context.UserStories.Update(userStory);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while updating the user story.", ex);
+            }
         }
     }
 }
