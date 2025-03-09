@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BusinessLogicLayer.IService;
+using BusinessLogicLayer.Service;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,8 @@ namespace BusinessLogicLayer
     {
         public static IServiceCollection AddServiceLayer(this IServiceCollection services)
         {
-            //services.AddScoped<IxxxxxService, xxxxxService>();
-            //services.AddScoped<IxxxxxService, xxxxxService>();
-           
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
+
 
             return services;
         }
