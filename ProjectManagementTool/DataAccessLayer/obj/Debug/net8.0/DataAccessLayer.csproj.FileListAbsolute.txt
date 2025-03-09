@@ -1,17 +1,3 @@
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.runtimeconfig.json
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.pdb
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.AssemblyReference.cache
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfoInputs.cache
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfo.cs
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.CoreCompileInputs.cache
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\refint\DataAccessLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
-D:\Project Manament System\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.runtimeconfig.json
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
@@ -26,6 +12,7 @@ D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
 D:\PMS\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
+<<<<<<< HEAD
 D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
 D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.runtimeconfig.json
 D:\AspDotNetCore\PMS\ProjectManagementTool\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
@@ -54,3 +41,5 @@ D:\Project Manament System\PMS-Authentication\project-management\ProjectManageme
 D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
 D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
 D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
+=======
+>>>>>>> origin/UserStory

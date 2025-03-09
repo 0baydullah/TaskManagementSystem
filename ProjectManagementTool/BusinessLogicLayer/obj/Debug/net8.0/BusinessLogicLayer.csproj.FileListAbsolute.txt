@@ -1,20 +1,3 @@
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.deps.json
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.runtimeconfig.json
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.pdb
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.csproj.AssemblyReference.cache
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.GeneratedMSBuildEditorConfig.editorconfig
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.AssemblyInfoInputs.cache
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.AssemblyInfo.cs
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.csproj.CoreCompileInputs.cache
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\refint\BusinessLogicLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.pdb
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.genruntimeconfig.cache
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\ref\BusinessLogicLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\DataAccessLayer.dll
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\DataAccessLayer.pdb
-D:\Project Manament System\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\Business.450209FB.Up2Date
 D:\PMS\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.deps.json
 D:\PMS\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.runtimeconfig.json
 D:\PMS\project-management\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.dll
@@ -32,6 +15,7 @@ D:\PMS\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net
 D:\PMS\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.pdb
 D:\PMS\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.genruntimeconfig.cache
 D:\PMS\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\ref\BusinessLogicLayer.dll
+<<<<<<< HEAD
 D:\AspDotNetCore\PMS\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.deps.json
 D:\AspDotNetCore\PMS\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.runtimeconfig.json
 D:\AspDotNetCore\PMS\ProjectManagementTool\BusinessLogicLayer\bin\Debug\net8.0\BusinessLogicLayer.dll
@@ -66,3 +50,5 @@ D:\Project Manament System\PMS-Authentication\project-management\ProjectManageme
 D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.pdb
 D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\BusinessLogicLayer.genruntimeconfig.cache
 D:\Project Manament System\PMS-Authentication\project-management\ProjectManagementTool\BusinessLogicLayer\obj\Debug\net8.0\ref\BusinessLogicLayer.dll
+=======
+>>>>>>> origin/UserStory

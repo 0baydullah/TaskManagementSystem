@@ -596,6 +596,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "Microsoft.AspNetCore.Cryptography.Internal/8.0.13": {
         "runtime": {
           "lib/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll": {
@@ -637,6 +638,12 @@
             "assemblyVersion": "8.0.13.0",
             "fileVersion": "8.0.1325.6610"
           }
+=======
+      "Microsoft.AspNetCore.Http.Features/5.0.17": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "8.0.0",
+          "System.IO.Pipelines": "7.0.0"
+>>>>>>> origin/UserStory
         }
       },
       "Microsoft.AspNetCore.Razor.Language/6.0.24": {
@@ -2016,8 +2023,12 @@
       },
       "DataAccessLayer/1.0.0": {
         "dependencies": {
+<<<<<<< HEAD
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.13",
           "Microsoft.AspNetCore.Identity.UI": "8.0.13",
+=======
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
+>>>>>>> origin/UserStory
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.13"
         },
         "runtime": {
@@ -2399,6 +2410,7 @@
       "path": "humanizer.core.zh-hant/2.14.1",
       "hashPath": "humanizer.core.zh-hant.2.14.1.nupkg.sha512"
     },
+<<<<<<< HEAD
     "Microsoft.AspNetCore.Cryptography.Internal/8.0.13": {
       "type": "package",
       "serviceable": true,
@@ -2426,6 +2438,14 @@
       "sha512": "sha512-3vN6k8MHgWQ2FguHTNYJqC2RWvwlqMxaVgrPJuUscMacSRJ/CjJvx0Z+FNIqjuaY+0rM5sGnnN6eE0ypUEKxhA==",
       "path": "microsoft.aspnetcore.identity.ui/8.0.13",
       "hashPath": "microsoft.aspnetcore.identity.ui.8.0.13.nupkg.sha512"
+=======
+    "Microsoft.AspNetCore.Http.Features/5.0.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
+      "path": "microsoft.aspnetcore.http.features/5.0.17",
+      "hashPath": "microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512"
+>>>>>>> origin/UserStory
     },
     "Microsoft.AspNetCore.Razor.Language/6.0.24": {
       "type": "package",

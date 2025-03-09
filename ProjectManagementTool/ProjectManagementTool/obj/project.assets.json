@@ -641,6 +641,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "Microsoft.AspNetCore.Cryptography.Internal/8.0.13": {
         "type": "package",
         "compile": {
@@ -661,15 +662,30 @@
         },
         "compile": {
           "lib/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
+=======
+      "Microsoft.AspNetCore.Http.Features/5.0.17": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "5.0.1",
+          "System.IO.Pipelines": "5.0.2"
+        },
+        "compile": {
+          "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll": {
+>>>>>>> origin/UserStory
             "related": ".xml"
           }
         },
         "runtime": {
+<<<<<<< HEAD
           "lib/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll": {
+=======
+          "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll": {
+>>>>>>> origin/UserStory
             "related": ".xml"
           }
         }
       },
+<<<<<<< HEAD
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore/8.0.13": {
         "type": "package",
         "dependencies": {
@@ -714,6 +730,8 @@
           "buildMultiTargeting/Microsoft.AspNetCore.Identity.UI.targets": {}
         }
       },
+=======
+>>>>>>> origin/UserStory
       "Microsoft.AspNetCore.Razor.Language/6.0.24": {
         "type": "package",
         "compile": {
@@ -2892,6 +2910,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.13"
         },
         "compile": {
@@ -3688,15 +3707,23 @@
         "logo.png"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.AspNetCore.Cryptography.Internal/8.0.13": {
       "sha512": "ajbViewn2/4ZwE5jeP5t+JqF3KvagBsPxFADZd0zR6fw5HDvPmeFtaGP57p2ofg9yeLSKw9sug4n351UiRKwpA==",
       "type": "package",
       "path": "microsoft.aspnetcore.cryptography.internal/8.0.13",
+=======
+    "Microsoft.AspNetCore.Http.Features/5.0.17": {
+      "sha512": "3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.http.features/5.0.17",
+>>>>>>> origin/UserStory
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "THIRD-PARTY-NOTICES.TXT",
+<<<<<<< HEAD
         "lib/net462/Microsoft.AspNetCore.Cryptography.Internal.dll",
         "lib/net462/Microsoft.AspNetCore.Cryptography.Internal.xml",
         "lib/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll",
@@ -3857,6 +3884,16 @@
         "staticwebassets/V5/lib/jquery/dist/jquery.js",
         "staticwebassets/V5/lib/jquery/dist/jquery.min.js",
         "staticwebassets/V5/lib/jquery/dist/jquery.min.map"
+=======
+        "lib/net461/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/net461/Microsoft.AspNetCore.Http.Features.xml",
+        "lib/net5.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/net5.0/Microsoft.AspNetCore.Http.Features.xml",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.dll",
+        "lib/netstandard2.0/Microsoft.AspNetCore.Http.Features.xml",
+        "microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+        "microsoft.aspnetcore.http.features.nuspec"
+>>>>>>> origin/UserStory
       ]
     },
     "Microsoft.AspNetCore.Razor.Language/6.0.24": {

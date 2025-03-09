@@ -13,8 +13,14 @@ namespace BusinessLogicLayer
     {
         public static IServiceCollection AddServiceLayer(this IServiceCollection services)
         {
+<<<<<<< HEAD
             services.AddScoped<IEmailSenderService, EmailSenderService>();
 
+=======
+            //services.AddScoped<IxxxxxService, xxxxxService>();
+            //services.AddScoped<IxxxxxService, xxxxxService>();
+            services.AddScoped<IUserStoryService, UserStoryService>();
+>>>>>>> origin/UserStory
 
             return services;
         }
