@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "siQknpmnuco=",
   "success": true,
   "projectFilePath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj",
+=======
+  "dgSpecHash": "D1u66mHi7RA=",
+  "success": true,
+  "projectFilePath": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj",
+>>>>>>> d3c43fbf4b7a5e9bf40f33a38277595904fc7681
   "expectedPackageFiles": [
     "C:\\Users\\OPL\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\OPL\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj": {}
   },
   "projects": {
@@ -12,6 +13,19 @@
         "projectPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
         "packagesPath": "C:\\Users\\OPL\\.nuget\\packages\\",
         "outputPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\obj\\",
+=======
+    "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj": {}
+  },
+  "projects": {
+    "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
+        "projectName": "BusinessLogicLayer",
+        "projectPath": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj",
+        "packagesPath": "C:\\Users\\OPL\\.nuget\\packages\\",
+        "outputPath": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\obj\\",
+>>>>>>> d3c43fbf4b7a5e9bf40f33a38277595904fc7681
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,8 +47,13 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+<<<<<<< HEAD
               "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj": {
                 "projectPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj"
+=======
+              "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj": {
+                "projectPath": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj"
+>>>>>>> d3c43fbf4b7a5e9bf40f33a38277595904fc7681
               }
             }
           }
@@ -87,6 +106,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
@@ -99,6 +119,20 @@
         "projectPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj",
         "packagesPath": "C:\\Users\\OPL\\.nuget\\packages\\",
         "outputPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\DataAccessLayer\\obj\\",
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj",
+        "projectName": "DataAccessLayer",
+        "projectPath": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\DataAccessLayer.csproj",
+        "packagesPath": "C:\\Users\\OPL\\.nuget\\packages\\",
+        "outputPath": "D:\\PMS\\project-management\\ProjectManagementTool\\DataAccessLayer\\obj\\",
+>>>>>>> d3c43fbf4b7a5e9bf40f33a38277595904fc7681
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -170,6 +204,7 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
@@ -182,6 +217,20 @@
         "projectPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj",
         "packagesPath": "C:\\Users\\OPL\\.nuget\\packages\\",
         "outputPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\ProjectManagementTool\\obj\\",
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj",
+        "projectName": "ProjectManagementTool",
+        "projectPath": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\ProjectManagementTool.csproj",
+        "packagesPath": "C:\\Users\\OPL\\.nuget\\packages\\",
+        "outputPath": "D:\\PMS\\project-management\\ProjectManagementTool\\ProjectManagementTool\\obj\\",
+>>>>>>> d3c43fbf4b7a5e9bf40f33a38277595904fc7681
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -203,8 +252,13 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+<<<<<<< HEAD
               "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj": {
                 "projectPath": "D:\\Project Manament System\\PMS-Authentication\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj"
+=======
+              "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj": {
+                "projectPath": "D:\\PMS\\project-management\\ProjectManagementTool\\BusinessLogicLayer\\BusinessLogicLayer.csproj"
+>>>>>>> d3c43fbf4b7a5e9bf40f33a38277595904fc7681
               }
             }
           }
@@ -264,7 +318,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+>>>>>>> d3c43fbf4b7a5e9bf40f33a38277595904fc7681
         }
       }
     }
