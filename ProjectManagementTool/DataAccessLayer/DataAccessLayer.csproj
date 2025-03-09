@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,10 +21,13 @@
     </PackageReference>
   </ItemGroup>
 
+
   <ItemGroup>
+
     <Folder Include="Models\ViewModel\" />
     <Folder Include="IRepository\" />
     <Folder Include="Repository\" />
   </ItemGroup>
+
 
 </Project>
