@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< HEAD
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.13" />
+=======
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+>>>>>>> origin/UserStory
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,11 +24,16 @@
     </PackageReference>
   </ItemGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
-    <Folder Include="Models\Entity\" />
+<<<<<<< HEAD
     <Folder Include="Models\ViewModel\" />
+=======
+>>>>>>> PMS-Authentication
     <Folder Include="IRepository\" />
     <Folder Include="Repository\" />
   </ItemGroup>
 
+=======
+>>>>>>> origin/UserStory
 </Project>
