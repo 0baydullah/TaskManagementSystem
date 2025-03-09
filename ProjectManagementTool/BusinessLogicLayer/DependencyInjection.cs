@@ -19,8 +19,12 @@ namespace BusinessLogicLayer
 =======
             //services.AddScoped<IxxxxxService, xxxxxService>();
             //services.AddScoped<IxxxxxService, xxxxxService>();
+<<<<<<< HEAD
             services.AddScoped<IUserStoryService, UserStoryService>();
 >>>>>>> origin/UserStory
+=======
+            services.AddScoped<IProjectInfoService, ProjectInfoService>();
+>>>>>>> origin/Project-CRUD
 
             return services;
         }

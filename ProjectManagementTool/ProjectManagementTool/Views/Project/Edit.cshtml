@@ -1,0 +1,169 @@
+﻿@model DataAccessLayer.Models.ViewModel.EditProjectInfoVM
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Project</h1>
+
+<div id="response-message">
+
+</div>
+
+<h1 class="fw-bold text-center">Welcome to Edit Page </h1>
+
+<form id="editForm" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label for="ProjectId">ProjectId</label>
+        <input id="ProjectId" name="ProjectId" type="text" value="@Model.ProjectId" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Name"> </label>
+        <input asp-for="@Model.Name" class="form-control" id="name">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Key"> </label>
+        <input asp-for="@Model.Key" class="form-control" id="key">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Description"> </label>
+        <input asp-for="@Model.Description" class="form-control" id="description">
+    </div>
+    <div class="form-group">
+        <label>Existing Files</label>
+        @if (Model.ExistingFiles != null && Model.ExistingFiles.Any())
+        {
+            foreach (var item in Model.ExistingFiles)
+            {
+                <img src="/files/@item"  style="width:50px; height:50px; margin-right: 5px"/>
+                <button type="button" class="btn btn-danger" onclick="deletePhoto('@item');">Delete</button>
+                <br />
+            }
+        }
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Files"> </label>
+        <input asp-for="@Model.Files" class="form-control" id="files">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.StartDate"> </label>
+        <input asp-for="@Model.StartDate" class="form-control" id="startDate">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.EndDate"> </label>
+        <input asp-for="@Model.EndDate" class="form-control" id="endDate">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.CompanyName"> </label>
+        <input asp-for="@Model.CompanyName" class="form-control" id="companyName">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.ProjectOwnerId"> </label>
+        <input asp-for="@Model.ProjectOwnerId" class="form-control" id="projectOwnerId">
+    </div>
+    <br /> <br />
+    <input type="button" onclick="editProject();" value="Save Changes" class="btn btn-primary"/>
+    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+    function editProject() {
+
+        var formData = new FormData(document.getElementById("editForm"));
+        var id = $('input[name="ProjectId"]').val();
+
+        $.ajax({
+            url: `/Project/Edit/${id}`,
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+
+                    $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                    setTimeout(() => {
+                        window.location.href = '/Project/Index';
+                    }, 2000);
+                }
+
+                else {
+                    $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function (xhr, status, error) {
+
+                $('#response-message').removeClass('alert-success').addClass('alert-danger')
+                    .html('An error occurred: ' + xhr.responseText);
+            }
+        });
+    }
+
+    function deletePhoto(file) {
+
+            //var id = $('input[name="ProjectId"]').val();
+            var id = $('#ProjectId').val();
+            //debugger;
+
+            $.ajax({
+                url: '/Project/DeletePhoto',
+                method: 'POST',
+                data: { file: file, id:id },
+                success: function (response) {
+                    if (response.success) {
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    }
+
+                    else {
+                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $('#response-message').removeClass('alert-success').addClass('alert-danger')
+                        .html('An error occurred: ' + xhr.responseText);
+                }
+            });
+
+
+    }
+
+    // function validateSize() {
+    //     const maxSize = 100;
+    //     let isValid = true;
+    //     let messages = [];
+
+    //     const files = $("#files")[0].files;
+
+    //     $.each(files, function (index, file) {
+    //         const fileSize = file.size / 1024;
+
+
+    //         if (fileSize > maxSize) {
+    //             messages.push(`image "${file.name}" is too big`);
+    //             isValid = false;
+    //         }
+    //     });
+
+
+    //     if (!isValid) {
+    //         $("#response-message").html(messages.join("<br>"));
+    //         $("#files").val("");
+    //     }
+
+    //     else {
+    //         $("#response-message").html('<span class="alert alert-success">All Files are valid. </span>');
+    //     }
+    // }
+
+</script>
