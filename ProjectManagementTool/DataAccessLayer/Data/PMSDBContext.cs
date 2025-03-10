@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Data
 {
@@ -17,7 +16,8 @@ namespace DataAccessLayer.Data
 
         }
 
-         public DbSet<ProjectInfo> ProjectInfo { get; set; }
-         public DbSet<UserStory> UserStories { get; set; }
+        public DbSet<ProjectInfo> ProjectInfo { get; set; }
+        public DbSet<UserStory> UserStories { get; set; }
+        public DbSet<Task> Tasks { get; set; }
     }
 }
