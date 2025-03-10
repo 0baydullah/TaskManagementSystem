@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.IService;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
