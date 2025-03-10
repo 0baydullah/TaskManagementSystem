@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DataAccessLayer.Enums;
 using Microsoft.AspNetCore.Http;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Models.Entity
 {
     public class UserStory
     {
@@ -32,7 +32,7 @@ namespace DataAccessLayer.Models
 
         public int SprintId { get; set; } = -1;
 
-       // public IEnumerable<IFormFile> Files { get; set; }  
+        // public IEnumerable<IFormFile> Files { get; set; }  
 
         // Navigation Properties
         //public Sprint Sprint { get; set; }
