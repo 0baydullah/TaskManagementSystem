@@ -33,7 +33,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] UserInfoVM model)
         {
             if (ModelState.IsValid == false)
