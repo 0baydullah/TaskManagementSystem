@@ -48,6 +48,7 @@ namespace ProjectManagementTool.Controllers
                 {
                     Pin = model.Pin,
                     UserName = model.Email,
+                    Name = model.Name,
                     Email = model.Email,
                     EmailConfirmed = true
                 };

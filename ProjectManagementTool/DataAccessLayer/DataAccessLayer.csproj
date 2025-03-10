@@ -25,10 +25,6 @@
 
 
   <ItemGroup>
-
-    <Folder Include="Models\ViewModel\" />
-    <Folder Include="IRepository\" />
-    <Folder Include="Repository\" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="4.0.0" />
   </ItemGroup>
 
