@@ -2,21 +2,27 @@
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class ProjectController : Controller
     {
         private readonly IProjectInfoService _projectInfoService;
         private readonly IWebHostEnvironment _env;
+        private readonly UserManager<UserInfo> _userManager;
 
-        public ProjectController(IWebHostEnvironment env, IProjectInfoService projectInfoService)
+        public ProjectController(IWebHostEnvironment env, IProjectInfoService projectInfoService, 
+            UserManager<UserInfo> userManager)
         {
             _env = env;
             _projectInfoService = projectInfoService;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -69,6 +75,7 @@ namespace ProjectManagementTool.Controllers
                         files.Add(fileName);
                       }
                 }
+                var user = await _userManager.GetUserAsync(User);
                 var project = new ProjectInfo
                 {
                     Name = model.Name,
@@ -77,7 +84,7 @@ namespace ProjectManagementTool.Controllers
                     StartDate = model.StartDate,
                     EndDate = model.EndDate,
                     CompanyName = model.CompanyName,
-                    ProjectOwnerId = model.ProjectOwnerId,
+                    ProjectOwnerId = user.Id,
                     Files = files
                 };
 

@@ -47,6 +47,7 @@ namespace ProjectManagementTool.Controllers
                 var user = new UserInfo
                 {
                     Pin = model.Pin,
+                    Name = model.Name,
                     UserName = model.Email,
                     Email = model.Email,
                     EmailConfirmed = true

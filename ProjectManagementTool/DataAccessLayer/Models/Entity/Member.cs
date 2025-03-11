@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models.Entity
 {
-    public class UserInfo : IdentityUser<int>
+    public class Member
     {
-        public int Pin {  get; set; }
-        public string Name { get; set; }
+        public int MemberId { get; set; }
+        public string Email { get; set; }
+        public int RoleId { get; set; }
+
     }
 }

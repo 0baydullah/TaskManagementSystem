@@ -21,5 +21,6 @@ namespace DataAccessLayer.Data
          public DbSet<ProjectInfo> ProjectInfo { get; set; }
          public DbSet<UserStory> UserStories { get; set; }
          public DbSet<Member> Members { get; set; }
+         public DbSet<Tasks> Tasks { get; set; }
     }
 }

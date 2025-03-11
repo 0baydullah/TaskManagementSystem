@@ -1,0 +1,65 @@
+﻿@model DataAccessLayer.Models.Entity.Member
+@{
+    ViewData["Title"] = "Create Member";
+}
+
+<div id="response-message">
+</div>
+
+<h1 class="fw-bold text-center">Welcome to Create Page </h1>
+
+<form id="form">
+    <div class="form-group">
+        <label asp-for="@Model.Email"> </label>
+        <input asp-for="@Model.Email" class="form-control" id="email" placeholder="Enter User Email">
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.RoleId" class="control-label"></label>
+        <select asp-for="@Model.RoleId" class="form-control" asp-items="ViewBag.RoleId">
+            <option value="">-- Select Role --</option>
+        </select>
+    </div>
+
+   
+
+    <br/><br/>
+
+    <input type="button" onclick="createMember();" value="Create" class="btn btn-primary" />
+    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function createMember() 
+    {
+
+        var formData = new FormData(document.getElementById("form"));
+
+        $.ajax({
+            url: `/Member/Create/`,
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
+
+                    $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                    setTimeout(() => {
+                        window.location.href = '@Url.Action("Index", "Member")';
+                    }, 2000);
+                }
+
+                else {
+                    $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function (xhr, status, error) {
+
+                $('#response-message').removeClass('alert-success').addClass('alert-danger')
+                    .html('An error occurred: ' + xhr.responseText);
+            }
+        });
+    }
+</script>
