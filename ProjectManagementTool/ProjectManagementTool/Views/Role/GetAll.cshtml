@@ -1,0 +1,250 @@
+﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.RoleVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Role</h1>
+<button id="createButton">Create</button>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoleName)
+                </td>
+                
+                <td>
+                    <a class="btn btn-primary" onclick="openUpdateModal('@item.RoleId')">Edit</a>
+                    <a class="btn btn-danger" onclick="openDeleteModal('@item.RoleId')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Role !!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-capitalize text-danger">
+                You are deleting a Role....after clicking on "Delete" button it wont be undone and it will be deleted forever!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Pop-up create Modal -->
+<div id="popupCreateModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <input type="text" id="inputText" placeholder="Enter something..." />
+        <button id="submitButton">Submit</button>
+        <div id="responseMessage"></div>
+    </div>
+</div>
+
+<!-- Pop-up Update Modal -->
+<div id="popupUpdateModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <input type="text" id="updateInputText" />
+        <button id="updateSubmitButton">Submit</button>
+        <div id="updateResponseMessage"></div>
+    </div>
+</div>
+
+
+<!-- CSS -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 20% auto;
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .close {
+        float: right;
+        cursor: pointer;
+    }
+</style>
+
+<!--Create modal-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById("popupCreateModal");
+        var createButton = document.getElementById("createButton");
+        var closeButton = document.querySelector(".close");
+
+        createButton.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+
+        $("#submitButton").click(function () {
+             var inputText = $("#inputText").val();
+             $.ajax({
+                url: "/Role/Create",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ roleName: inputText }),
+                success: function (response) {
+                    $("#responseMessage").html("<p style='color:green;'> Successful!</p>");
+                    window.location.href = response.redirectUrl; 
+                },
+                error: function (xhr) {
+                 if (xhr.status === 400) { 
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.errors) {
+                            var errorList = response.errors.map(e => `<li>${e}</li>`).join("");
+                            $("#responseMessage").html(`<div class='error' style='color:red;'>${errorList}</div>`);
+                        } 
+                    } 
+                    else {
+                        $("#responseMessage").html("<p style='color:red;'>An error occurred. Please try again.</p>");
+                    }
+                }
+            });
+        }); 
+    });
+
+</script>
+
+
+<!--UPdate modal-->
+<script>
+    let roleIdToUpdate = 0;
+
+    function openUpdateModal(id) {
+        roleIdToUpdate = id;
+        $("#popupUpdateModal").show();
+        
+        $(".close").click(function () {
+            $("#popupUpdateModal").hide();
+        });
+
+        $.ajax({
+            url: '/Role/GetById', 
+            type: 'GET',
+            data: { id: roleIdToUpdate },   
+            success: function (response) {
+                if (response.success) {
+                    $("#updateInputText").val(response.data.roleName);
+                } 
+                else {
+                    $("#updateResponseMessage").html("Error fetching role details.");
+                }
+            },
+            error: function () {
+                $("#updateResponseMessage").html("Error fetching role details.");
+            }
+           
+        });
+
+
+        $("#updateSubmitButton").click(function () {
+            let updatedValue = $("#updateInputText").val();
+
+            if (updatedValue.trim() === "") {
+                alert("Please enter a valid value!");
+                return;
+            }
+
+            $.ajax({
+                url: '/Role/Update',
+                type: 'POST',
+                data: { RoleId: roleIdToUpdate, RoleName: updatedValue },
+                success: function (response) {
+                    if (response.success) {
+                        $("#updateResponseMessage").html("Role updated successfully!");
+                        setTimeout(function () {
+                            $("#popupUpdateModal").hide();
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        $("#updateResponseMessage").html("Error updating role.");
+                    }
+                },
+                error: function () {
+                    $("#updateResponseMessage").html("Error updating role.");
+                }
+            });
+        });
+
+    };
+
+
+    
+</script>
+
+
+<!--Delete modal-->
+@section Scripts {
+    <script>
+        let roleIdToDelete = 0;
+
+        function openDeleteModal(id) {
+            roleIdToDelete = id;
+            $("#modal").modal('show');
+        }
+
+        function confirmDelete() {
+            $.ajax({
+                url: `/Role/Delete/${roleIdToDelete}`,
+                type: 'POST',
+                success: function (result) {
+                    $("#modal").modal('hide');
+                    location.reload();
+                    console.log(result);
+                },
+                error: function (err) {
+                    alert('Error deleting role' + err);
+                }
+            });
+        }
+    </script>
+}

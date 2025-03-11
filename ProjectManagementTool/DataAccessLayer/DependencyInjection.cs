@@ -13,8 +13,10 @@ namespace DataAccessLayer
     {
         public static IServiceCollection AddRepositoryLayer(this IServiceCollection services)
         {
+            services.AddScoped<IRoleRepo, RoleRepo>();
             services.AddScoped<IUserStoryRepo, UserStoryRepo>();
             services.AddScoped<IProjectInfoRepo, ProjectInfoRepo>();
+            services.AddScoped<IMemberRepo, MemberRepo>();
             services.AddScoped<ITasksRepo, TasksRepo>();
 
             return services;

@@ -60,10 +60,6 @@
         <label asp-for="@Model.CompanyName"> </label>
         <input asp-for="@Model.CompanyName" class="form-control" id="companyName">
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.ProjectOwnerId"> </label>
-        <input asp-for="@Model.ProjectOwnerId" class="form-control" id="projectOwnerId">
-    </div>
     <br /> <br />
     <input type="button" onclick="editProject();" value="Save Changes" class="btn btn-primary"/>
     <a class="btn btn-success float-end" asp-action="Index">Back to List</a>

@@ -1,17 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Models.Entity
+namespace DataAccessLayer.Models.ViewModel
 {
-    public class Member
+    public class MemberWithRoleVM
     {
         public int MemberId { get; set; }
+        public string Name { get; set; }
         public string Email { get; set; }
-        public int RoleId { get; set; }
-
+        public string Role { get; set; }
     }
 }
