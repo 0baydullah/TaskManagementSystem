@@ -27,7 +27,7 @@
                 </td>
                 
                 <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.RoleId">Edit</a> |
+                    <a class="btn btn-primary" onclick="openUpdateModal('@item.RoleId')">Edit</a>
                     <a class="btn btn-danger" onclick="openDeleteModal('@item.RoleId')">Delete</a>
                 </td>
             </tr>
@@ -56,8 +56,8 @@
 
 
 
-<!-- Pop-up Modal -->
-<div id="popupModal" class="modal">
+<!-- Pop-up create Modal -->
+<div id="popupCreateModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <input type="text" id="inputText" placeholder="Enter something..." />
@@ -65,6 +65,17 @@
         <div id="responseMessage"></div>
     </div>
 </div>
+
+<!-- Pop-up Update Modal -->
+<div id="popupUpdateModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <input type="text" id="updateInputText" />
+        <button id="updateSubmitButton">Submit</button>
+        <div id="updateResponseMessage"></div>
+    </div>
+</div>
+
 
 <!-- CSS -->
 <style>
@@ -92,10 +103,10 @@
     }
 </style>
 
-
+<!--Create modal-->
 <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        var modal = document.getElementById("popupModal");
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById("popupCreateModal");
         var createButton = document.getElementById("createButton");
         var closeButton = document.querySelector(".close");
 
@@ -130,7 +141,7 @@
                         var response = JSON.parse(xhr.responseText);
                         if (response.errors) {
                             var errorList = response.errors.map(e => `<li>${e}</li>`).join("");
-                            $("#errorMessage").html(`<div class='error' style='color:red;'>${errorList}</div>`);
+                            $("#responseMessage").html(`<div class='error' style='color:red;'>${errorList}</div>`);
                         } 
                     } 
                     else {
@@ -138,26 +149,92 @@
                     }
                 }
             });
-        });
-
-       
+        }); 
     });
 
 </script>
 
+
+<!--UPdate modal-->
+<script>
+    let roleIdToUpdate = 0;
+
+    function openUpdateModal(id) {
+        roleIdToUpdate = id;
+        $("#popupUpdateModal").show();
+        
+        $(".close").click(function () {
+            $("#popupUpdateModal").hide();
+        });
+
+        $.ajax({
+            url: '/Role/GetById', 
+            type: 'GET',
+            data: { id: roleIdToUpdate },   
+            success: function (response) {
+                if (response.success) {
+                    $("#updateInputText").val(response.data.roleName);
+                } 
+                else {
+                    $("#updateResponseMessage").html("Error fetching role details.");
+                }
+            },
+            error: function () {
+                $("#updateResponseMessage").html("Error fetching role details.");
+            }
+           
+        });
+
+
+        $("#updateSubmitButton").click(function () {
+            let updatedValue = $("#updateInputText").val();
+
+            if (updatedValue.trim() === "") {
+                alert("Please enter a valid value!");
+                return;
+            }
+
+            $.ajax({
+                url: '/Role/Update',
+                type: 'POST',
+                data: { RoleId: roleIdToUpdate, RoleName: updatedValue },
+                success: function (response) {
+                    if (response.success) {
+                        $("#updateResponseMessage").html("Role updated successfully!");
+                        setTimeout(function () {
+                            $("#popupUpdateModal").hide();
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        $("#updateResponseMessage").html("Error updating role.");
+                    }
+                },
+                error: function () {
+                    $("#updateResponseMessage").html("Error updating role.");
+                }
+            });
+        });
+
+    };
+
+
+    
+</script>
+
+
+<!--Delete modal-->
 @section Scripts {
     <script>
-        let projectIdToDelete = 0;
+        let roleIdToDelete = 0;
 
         function openDeleteModal(id) {
-            projectIdToDelete = id;
+            roleIdToDelete = id;
             $("#modal").modal('show');
         }
 
         function confirmDelete() {
             $.ajax({
-                url: `/Role/Delete/${projectIdToDelete}`,
-                //url: '/Project/Delete/' + userStoryIdToDelete,
+                url: `/Role/Delete/${roleIdToDelete}`,
                 type: 'POST',
                 success: function (result) {
                     $("#modal").modal('hide');
@@ -165,7 +242,7 @@
                     console.log(result);
                 },
                 error: function (err) {
-                    alert('Error deleting user story' + err);
+                    alert('Error deleting role' + err);
                 }
             });
         }

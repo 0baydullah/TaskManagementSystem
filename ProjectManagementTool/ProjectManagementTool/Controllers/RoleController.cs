@@ -2,6 +2,7 @@
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -31,6 +32,7 @@ namespace ProjectManagementTool.Controllers
             }
             try
             {
+
                 bool roleExists = await _roleManager.RoleExistsAsync(roleModel?.RoleName);
 
                 if (roleExists == true)
@@ -65,21 +67,97 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var model = _roleService.GetAllRole();
-            return View(model);
+            try
+            {
+                var model = _roleService.GetAllRole();
+                return View(model);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                var role = _roleService.GetRoleById(id);
+                return Json(new
+                {
+                    success = true,
+                    data = role
+                });
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(RoleVM model)
         {
-            return Ok();
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new { success = false, errors });
+            }
+            try
+            {
+                var role = await _roleManager.FindByIdAsync(model.RoleId.ToString());
+                if(role == null)
+                {
+                    return BadRequest(new { success = false, errors = new List<string> { "Role can not be found" } });
+                }
+                else
+                {
+                    role.Name = model.RoleName;
+                    var result = await _roleManager.UpdateAsync(role);
+                    if (result.Succeeded)
+                    {
+                        return Ok(new { success = true, redirectUrl = Url.Action("GetAll", "Role") });
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await _roleService.DeleteRole(id);
-            return Ok();
+            try
+            {
+                var role = await _roleManager.FindByIdAsync(id.ToString());
+                if (role == null)
+                {
+                    return BadRequest(new { success = false, errors = new List<string> { "Role can not be found" } });
+                }
+                else
+                {
+                    var result = await _roleManager.DeleteAsync(role);
+                    if (result.Succeeded)
+                    {
+                        return Ok(new { success = true, redirectUrl = Url.Action("GetAll", "Role") });
+                    }
+                    else
+                    {
+                        return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                    }
+                }
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }

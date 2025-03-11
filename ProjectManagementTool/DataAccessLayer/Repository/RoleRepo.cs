@@ -20,33 +20,30 @@ namespace DataAccessLayer.Repository
             _context = context;
         }
 
-        public async Task<bool> AddRole(RoleVM role)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<RoleVM> GetAllRole()
         {
-            var roles = _context.Roles.Select(x => new RoleVM { RoleId = x.Id, RoleName = x.Name }).ToList();
-            return roles;
+            try
+            {
+                var roles = _context.Roles.Select(x => new RoleVM { RoleId = x.Id, RoleName = x.Name }).ToList();
+                return roles;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
 
         public RoleVM GetRoleById(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> UpdateRole(RoleVM role)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> DeleteRole(int id)
-        {
-            var role = await _context.Roles.FirstOrDefaultAsync(x => x.Id == id);
-            _context.Roles.Remove(role);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+            try
+            {
+                var role = _context.Roles.Where(x => x.Id == id).Select(x => new RoleVM { RoleId = x.Id, RoleName = x.Name }).ToList();
+                return role[0];
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }  
     }
 }

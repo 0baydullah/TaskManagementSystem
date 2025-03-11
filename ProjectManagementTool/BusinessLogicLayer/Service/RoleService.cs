@@ -17,30 +17,29 @@ namespace BusinessLogicLayer.Service
         {
             _roleRepo = roleRepo;
         }
-        public async Task<bool> AddRole(RoleVM role)
-        {
-            throw new NotImplementedException();
-        }
 
         public List<RoleVM> GetAllRole()
         {
-            return _roleRepo.GetAllRole();
+            try
+            {
+                return _roleRepo.GetAllRole();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public RoleVM GetRoleById(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> UpdateRole(RoleVM role)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> DeleteRole(int id)
-        {
-            var result = _roleRepo.DeleteRole(id);
-            return result;
-        }
+            try
+            {
+                return _roleRepo.GetRoleById(id);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        } 
     }
 }
