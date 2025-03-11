@@ -69,10 +69,10 @@
                     <a class="btn btn-light" asp-action="Details" asp-route-id="@item.StoryId">
                         <i class="text-danger fa-solid fa-circle-info"></i>
                     </a>
-                    <a class="btn btn-light" asp-action="add_task" asp-route-id="@item.StoryId">
+                    <a class="btn btn-light" asp-controller="Tasks" asp-action="Create" asp-route-id="@item.StoryId">
                             <i class="text-success fa-solid fa-plus"></i> <small>Task</small>
                     </a>
-                    <a class="btn btn-light" asp-action="add_bug" asp-route-id="@item.StoryId">
+                    <a class="btn btn-light" asp-controller="Bugs" asp-action="Create" asp-route-id="@item.StoryId">
                         <i class="text-danger fa-solid fa-plus"></i> <small>Bug</small>
                     </a>
 

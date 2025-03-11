@@ -15,6 +15,7 @@ namespace DataAccessLayer
         {
             services.AddScoped<IUserStoryRepo, UserStoryRepo>();
             services.AddScoped<IProjectInfoRepo, ProjectInfoRepo>();
+            services.AddScoped<ITasksRepo, TasksRepo>();
 
             return services;
         }

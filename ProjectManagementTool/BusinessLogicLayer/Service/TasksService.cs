@@ -49,8 +49,8 @@ namespace BusinessLogicLayer.Service
             {
                 existingTask.Name = tasks.Name;
                 existingTask.Descripton = tasks.Descripton;
-                existingTask.Assignee = tasks.Assignee;
-                existingTask.Reviewer = tasks.Reviewer;
+                existingTask.AssignMembersId = tasks.AssignMembersId;
+                existingTask.ReviewerMemberId = tasks.ReviewerMemberId;
                 existingTask.EstimatedTime = tasks.EstimatedTime;
                 existingTask.Tag = tasks.Tag;
                 existingTask.Status = tasks.Status;

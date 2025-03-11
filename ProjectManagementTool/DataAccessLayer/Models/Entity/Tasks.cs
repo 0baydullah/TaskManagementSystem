@@ -15,8 +15,8 @@ namespace DataAccessLayer.Models.Entity
         public string Name { get; set; }
         public string Descripton { get; set; }
 
-        public string Assignee { get; set; }
-        public string Reviewer { get; set; }
+        public int AssignMembersId { get; set; }
+        public int ReviewerMemberId { get; set; }
         public double EstimatedTime { get; set; }
         public string Tag { get; set; }
         public Status Status { get; set; }

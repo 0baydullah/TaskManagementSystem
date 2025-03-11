@@ -1,0 +1,96 @@
+﻿@model DataAccessLayer.Models.Entity.Tasks
+@using static DataAccessLayer.Enums.Priority
+@using static DataAccessLayer.Enums.Status
+
+@{
+    ViewData["Title"] = "Task-Create";
+}
+
+<h1 class="text-center">Create Task</h1>
+<hr />
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Create" id="createForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-2">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Descripton" class="control-label"></label>
+                <textarea asp-for="Descripton" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Descripton" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="AssignMembersId" class="control-label">Assignee</label>
+                <select asp-for="@Model.AssignMembersId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
+                    <option value="">-- Select Assignee --</option>
+                </select>
+                <span asp-validation-for="AssignMembersId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="ReviewerMemberId" class="control-label">Reviewer</label>
+                <select asp-for="@Model.ReviewerMemberId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
+                    <option value="">-- Select Reviewer --</option>
+                </select>
+                <span asp-validation-for="ReviewerMemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="EstimatedTime" class="control-label"></label>
+                <input asp-for="EstimatedTime" class="form-control" />
+                <span asp-validation-for="EstimatedTime" class="text-danger"></span>
+                <label asp-for="Tag" class="control-label"></label>
+                <input asp-for="Tag" class="form-control"  />
+                <span asp-validation-for="Tag" class="text-danger"></span>
+            </div>
+            <div class="form-group d-flex justify-content-evenly mt-2">
+                <label asp-for="Status" class="control-label"></label>
+
+                <select asp-for="Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Status>()"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+
+                <label asp-for="Priority" class="control-label"></label>
+                <select asp-for="Priority" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Priority>()"></select>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+             
+                <input asp-for="UserStoryId" class="form-control" type="hidden" value="@ViewBag.Id" />
+            </div>
+            <div class="form-group mt-3 d-flex justify-content-center">
+                <input type="button" onclick="submitForm()" value="Create" class="btn btn-success w-50" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-5 " >
+    <a class="btn btn-outline-danger w-25" asp-action="#">Back to User Story</a>
+</div>
+
+@section Scripts {
+
+    <script>
+        function submitForm() {
+            var form = $('#createForm');
+            var formData = new FormData(form[0]);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create", "Tasks")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.href = '@Url.Action("Index", "UserStory")';
+                },
+                error: function (error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
