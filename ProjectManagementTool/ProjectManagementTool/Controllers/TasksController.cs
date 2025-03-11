@@ -50,5 +50,51 @@ namespace ProjectManagementTool.Controllers
 
             return Json(new { success = true });
         }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Tasks task = _tasksService.GetTasks(id);
+
+            var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
+                .Where(x => x.m.Email == x.u.Email)
+                .Select(x => new ResponsibleVM { Id = x.m.MemberId, Name = x.u.Name }).ToList();
+            ViewBag.Id = id;
+            ViewBag.Members = new SelectList(users, "Id", "Name");
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return View(task);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, Tasks taskVM)
+        {
+            Tasks task = _tasksService.GetTasks(id);
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            task.Name = taskVM.Name;
+            task.Descripton = taskVM.Descripton;
+            task.AssignMembersId = taskVM.AssignMembersId;
+            task.ReviewerMemberId = taskVM.ReviewerMemberId;
+            task.EstimatedTime = taskVM.EstimatedTime;
+            task.Tag = taskVM.Tag;
+            task.Status = taskVM.Status;
+            task.Priority = taskVM.Priority;
+            task.UserStoryId = taskVM.UserStoryId;
+
+            _tasksService.UpdateTasks(task);
+
+            return Json(new { success = true });
+        }
+
+
+
     }
 }
