@@ -12,6 +12,7 @@ namespace DataAccessLayer.Models.Entity
     {
         [Key]
         public int TaskId { get; set; }
+        public string Name { get; set; }
         public string Descripton { get; set; }
 
         public string Assignee { get; set; }
