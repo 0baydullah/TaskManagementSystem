@@ -8,7 +8,7 @@ using DataAccessLayer.Enums;
 
 namespace DataAccessLayer.Models.Entity
 {
-    public class Task
+    public class Tasks
     {
         [Key]
         public int TaskId { get; set; }
