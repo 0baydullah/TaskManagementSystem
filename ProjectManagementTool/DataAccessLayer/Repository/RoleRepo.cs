@@ -2,6 +2,7 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,14 +36,17 @@ namespace DataAccessLayer.Repository
             throw new NotImplementedException();
         }
 
-        public bool UpdateRole(RoleVM role)
+        public async Task<bool> UpdateRole(RoleVM role)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteRole(int id)
+        public async Task<bool> DeleteRole(int id)
         {
-            throw new NotImplementedException();
+            var role = await _context.Roles.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Roles.Remove(role);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

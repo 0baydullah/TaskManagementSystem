@@ -32,14 +32,15 @@ namespace BusinessLogicLayer.Service
             throw new NotImplementedException();
         }
 
-        public bool UpdateRole(RoleVM role)
+        public Task<bool> UpdateRole(RoleVM role)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteRole(int id)
+        public Task<bool> DeleteRole(int id)
         {
-            throw new NotImplementedException();
+            var result = _roleRepo.DeleteRole(id);
+            return result;
         }
     }
 }

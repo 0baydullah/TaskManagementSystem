@@ -12,8 +12,8 @@ namespace DataAccessLayer.IRepository
         public Task<bool> AddRole(RoleVM role);
         public RoleVM GetRoleById(int id);
         public List<RoleVM> GetAllRole(); 
-        public bool UpdateRole(RoleVM role);
-        public bool DeleteRole(int id);
+        public Task<bool> UpdateRole(RoleVM role);
+        public Task<bool> DeleteRole(int id);
 
     }
 }

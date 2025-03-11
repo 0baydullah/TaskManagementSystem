@@ -27,12 +27,12 @@ namespace ProjectManagementTool.Controllers
             if (ModelState.IsValid == false)
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
-
                 return BadRequest(new { success = false, errors });
             }
             try
             {
                 bool roleExists = await _roleManager.RoleExistsAsync(roleModel?.RoleName);
+
                 if (roleExists == true)
                 {
                     return BadRequest(new { success = false, errors = new List<string> { "Role already exist" } });
@@ -67,6 +67,19 @@ namespace ProjectManagementTool.Controllers
         {
             var model = _roleService.GetAllRole();
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id)
+        {
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _roleService.DeleteRole(id);
+            return Ok();
         }
     }
 }

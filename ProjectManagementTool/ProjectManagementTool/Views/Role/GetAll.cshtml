@@ -40,11 +40,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Role !!</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
-                You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
+                You are deleting a Role....after clicking on "Delete" button it wont be undone and it will be deleted forever!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
@@ -144,3 +144,30 @@
     });
 
 </script>
+
+@section Scripts {
+    <script>
+        let projectIdToDelete = 0;
+
+        function openDeleteModal(id) {
+            projectIdToDelete = id;
+            $("#modal").modal('show');
+        }
+
+        function confirmDelete() {
+            $.ajax({
+                url: `/Role/Delete/${projectIdToDelete}`,
+                //url: '/Project/Delete/' + userStoryIdToDelete,
+                type: 'POST',
+                success: function (result) {
+                    $("#modal").modal('hide');
+                    location.reload();
+                    console.log(result);
+                },
+                error: function (err) {
+                    alert('Error deleting user story' + err);
+                }
+            });
+        }
+    </script>
+}
