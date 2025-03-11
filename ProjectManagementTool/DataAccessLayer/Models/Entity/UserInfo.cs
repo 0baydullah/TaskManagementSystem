@@ -9,6 +9,7 @@ namespace DataAccessLayer.Models.Entity
 {
     public class UserInfo : IdentityUser<int>
     {
+        public string Name { get; set; }
         public int Pin {  get; set; }
         public string Name { get; set; }
     }
