@@ -11,5 +11,9 @@ namespace DataAccessLayer.IRepository
     public interface IFeatureRepo
     {
         public Task<bool> Create(Feature feature);
+        public Task<List<Feature>> GetAllFeature();
+        public Task<Feature> GetFeatureById(int id);
+        public Task<bool> Update(int id);
+        public Task<bool> Delete(int id);
     }
 }

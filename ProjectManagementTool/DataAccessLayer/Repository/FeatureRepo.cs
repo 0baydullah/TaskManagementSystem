@@ -39,5 +39,26 @@ namespace DataAccessLayer.Repository
                 throw;
             }
         }
+
+        public async Task<List<Feature>> GetAllFeature()
+        {
+            var features = await _context.Features.ToListAsync();
+            return features;
+        }
+
+        public Task<Feature> GetFeatureById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Update(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

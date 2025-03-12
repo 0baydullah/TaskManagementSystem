@@ -39,5 +39,26 @@ namespace BusinessLogicLayer.Service
                 throw;
             }
         }
+
+        public Task<List<Feature>> GetAllFeature()
+        {
+            var features = _featureRepo.GetAllFeature();
+            return features;
+        }
+
+        public Task<Feature> GetFeatureById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Update(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

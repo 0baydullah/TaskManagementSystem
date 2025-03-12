@@ -62,8 +62,8 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-
-            return View();
+            var features = await _featureService.GetAllFeature();
+            return View(features);
         }
 
     }
