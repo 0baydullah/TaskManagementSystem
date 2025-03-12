@@ -1,4 +1,3 @@
-using DataAccessLayer.Models;
 using DataAccessLayer.Models.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Data
 {
@@ -18,9 +16,10 @@ namespace DataAccessLayer.Data
 
         }
 
-         public DbSet<ProjectInfo> ProjectInfo { get; set; }
-         public DbSet<UserStory> UserStories { get; set; }
-         public DbSet<Member> Members { get; set; }
-         public DbSet<Tasks> Tasks { get; set; }
+        public DbSet<ProjectInfo> ProjectInfo { get; set; }
+        public DbSet<UserStory> UserStories { get; set; }
+        public DbSet<Tasks> Tasks { get; set; }
+        public DbSet<Member> Members { get; set; }
+
     }
 }

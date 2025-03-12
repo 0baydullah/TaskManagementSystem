@@ -17,6 +17,7 @@ namespace BusinessLogicLayer
             services.AddScoped<IEmailSenderService, EmailSenderService>();
             services.AddScoped<IUserStoryService, UserStoryService>();
             services.AddScoped<IProjectInfoService, ProjectInfoService>();
+            services.AddScoped<ITasksService, TasksService>();
             services.AddScoped<IMemberService, MemberService>();
 
             return services;

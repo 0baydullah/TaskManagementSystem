@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
-using DataAccessLayer.Models;
+using DataAccessLayer.Models.Entity;
 
 namespace DataAccessLayer.Repository
 {

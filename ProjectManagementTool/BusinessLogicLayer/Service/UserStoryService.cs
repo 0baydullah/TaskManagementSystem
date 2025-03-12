@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
-using DataAccessLayer.Models;
 using DataAccessLayer.IRepository;
+using DataAccessLayer.Models.Entity;
 
 namespace BusinessLogicLayer.Service
 {
