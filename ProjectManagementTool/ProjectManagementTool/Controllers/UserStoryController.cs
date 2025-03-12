@@ -3,6 +3,7 @@ using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -39,6 +40,12 @@ namespace ProjectManagementTool.Controllers
             }
 
             return Json(new { success = true });
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            return View();
         }
 
         [HttpPost]
