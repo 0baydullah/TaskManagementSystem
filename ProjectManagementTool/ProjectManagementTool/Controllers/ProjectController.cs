@@ -151,6 +151,7 @@ namespace ProjectManagementTool.Controllers
                 {
                     isSuccess = false;
                     message = "Student not found!";
+
                     return Json(new { success = $"{isSuccess}", message = $"{message}" });
                 }
 

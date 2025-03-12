@@ -20,6 +20,7 @@ namespace DataAccessLayer.Data
         public DbSet<UserStory> UserStories { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
         public DbSet<Member> Members { get; set; }
+        public DbSet<Release> Releases { get; set; }
 
     }
 }

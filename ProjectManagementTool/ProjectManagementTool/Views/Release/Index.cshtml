@@ -1,0 +1,125 @@
+﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.ReleaseVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center fw-bold">Release Panel</h1>
+
+<div class="m-3">
+    <a asp-action="Create" class="btn btn-success p-2 float-end">Create New Release</a>
+</div>
+<br /> <br />
+<div>
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReleaseName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectKey)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sprints)
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if( Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReleaseName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectKey)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sprints)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ReleaseId">Edit</a> |
+                            <a asp-action="Delete" onclick="openDeleteModal('@item.ReleaseId')">Delete</a>
+                        </td>
+                    </tr>
+                }
+                
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center fw-bold text-danger">No data found!</td>
+                </tr>
+            }
+
+    </tbody>
+</table>
+</div>
+
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-capitalize text-danger">
+               After clicking on "Delete" button it will be deleted forever!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let releaseIdToDelete = 0;
+
+        function openDeleteModal(id)
+        {
+            releaseIdToDelete = id;
+            $("#modal").modal('show');
+        }
+
+        function confirmDelete() {
+            $.ajax({
+                url: `/Project/Delete/${releaseIdToDelete}`,
+                type: 'POST',
+                success: function (result) {
+                    $("#modal").modal('hide');
+                    location.reload();
+                    console.log(result);
+                },
+                error: function (err) {
+                    alert('Error deleting ' + err);
+                }
+            });
+        }
+    </script>
+}
