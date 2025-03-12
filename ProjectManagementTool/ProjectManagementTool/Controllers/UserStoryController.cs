@@ -12,9 +12,10 @@ namespace ProjectManagementTool.Controllers
         private readonly IUserStoryService _userStoryService;
         private readonly ITasksService _tasksService;
 
-        public UserStoryController(IUserStoryService userStoryService)
+        public UserStoryController(IUserStoryService userStoryService, ITasksService tasksService)
         {
             _userStoryService = userStoryService;
+            _tasksService = tasksService;
         }
 
         public IActionResult Index()
@@ -48,7 +49,7 @@ namespace ProjectManagementTool.Controllers
         {
             var storyDetails = new UserStoryDetailsVM();
             var story = _userStoryService.GetUserStory(id);
-            var tasks = _tasksService.GetAllTasks();
+            var tasks = _tasksService.GetAllTasks(id);
             var bugs = tasks; // Bug will be added later after implementation
 
             storyDetails.Story = story;

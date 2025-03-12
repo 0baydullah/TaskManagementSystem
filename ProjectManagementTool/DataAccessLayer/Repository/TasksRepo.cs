@@ -58,6 +58,20 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public List<Tasks> GetAllTasks(int id)
+        {
+            try
+            {
+                var tasks = _context.Tasks.Where(x=>x.UserStoryId == id ).ToList();
+
+                return tasks;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving all tasks.", ex);
+            }
+        }
+
         public Tasks GetTasks(int id)
         {
             try

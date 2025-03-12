@@ -28,7 +28,7 @@ namespace ProjectManagementTool.Controllers
 
         public IActionResult Create(int id)
         {
-            // will be changed to layered
+            // will be changed with Member service [GetAllMember] Method
             var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
                 .Where(x => x.m.Email == x.u.Email)
                 .Select(x => new ResponsibleVM{ Id = x.m.MemberId, Name = x.u.Name }).ToList();

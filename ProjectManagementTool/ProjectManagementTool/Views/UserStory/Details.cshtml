@@ -1,65 +1,199 @@
-﻿@model DataAccessLayer.Models.Entity.UserStory
+﻿@model DataAccessLayer.Models.ViewModel.UserStoryDetailsVM
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "User Story Details";
 }
 
-<h1>Details</h1>
+<h3 class="text-center">User Story : @Model.Story.StoryName</h3>
+<hr />
 
 <div>
-    <h4>UserStory</h4>
+	@Model.Story.Description 
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StoryName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StoryName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Points)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Points)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstimateTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstimateTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SprintId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SprintId)
-        </dd>
-    </dl>
 </div>
+<div>
+    <table>
+        <tbody>
+            <tr>
+                <td>Points :</td>
+                <th><i>@Model.Story.Points</i></th>
+            </tr>
+            <tr>
+                <td>Status :</td>
+                <th><i>@Model.Story.Status</i></th>
+            </tr>
+            <tr>
+                <td>Priority :</td>
+                <th><i>@Model.Story.Priority</i></th>
+            </tr>
+            <tr>
+                <td>Estimated Time :</td>
+                <th><i>@Model.Story.EstimateTime hr.</i></th>
+            </tr>
+            <tr>
+                <td>Category :</td>
+                <th><i>@Model.Story.Category</i></th>
+            </tr>
+            <tr>
+                <td>Sprint :</td>
+                <th><i>@Model.Story.SprintId</i></th>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+</div>
+<div class="d-flex justify-content-end">
+    <a class="btn btn-success w-25" asp-controller="Tasks" asp-action="Create" asp-route-id="@Model.Story.StoryId">
+        <i class="text-light fa-solid fa-plus"></i> Task
+    </a>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Task
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Estimated Time
+				</th>
+				<th>
+					Priority
+				</th>
+                <th>
+                    Assignee
+                </th>
+                <th>
+                    Reviewer
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Tasks)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    <td>
+                        @item.EstimatedTime
+                    </td>
+                    <td>
+                        @item.Priority
+                    </td>
+                    <td>
+                        @item.AssignMembersId
+                    </td>
+                    <td>
+                        @item.ReviewerMemberId
+                    </td>
+                    <td>
+
+                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
+                            <i class="text-success fa-solid fa-pen"></i>
+                        </a>
+                        <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
+                            <i class="text-success fa-solid fa-trash"></i>
+                        </a>
+                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
+                            <i class="text-success fa-solid fa-circle-info"></i>
+                        </a>
+                        <a class="btn btn-light" asp-controller="SubTasks" asp-action="Create" asp-route-id="@item.TaskId">
+                            <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<hr />
+</div>
+
+
+<div class="d-flex justify-content-end">
+    <a class="btn btn-danger w-25" asp-controller="Bug" asp-action="Create" asp-route-id="@Model.Story.StoryId">
+        <i class="text-light fa-solid fa-plus"></i> Bug
+    </a>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Bug
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Estimated Time
+                </th>
+                <th>
+                    Priority
+                </th>
+                <th>
+                    Assignee
+                </th>
+                <th>
+                    Reviewer
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Tasks)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    <td>
+                        @item.EstimatedTime
+                    </td>
+                    <td>
+                        @item.Priority
+                    </td>
+                    <td>
+                        @item.AssignMembersId
+                    </td>
+                    <td>
+                        @item.ReviewerMemberId
+                    </td>
+                    <td>
+
+                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
+                            <i class="text-danger fa-solid fa-pen"></i>
+                        </a>
+                        <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
+                            <i class="text-danger fa-solid fa-trash"></i>
+                        </a>
+                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
+                            <i class="text-danger fa-solid fa-circle-info"></i>
+                        </a>
+                        <a class="btn btn-light" asp-controller="SubTasks" asp-action="Create" asp-route-id="@item.TaskId">
+                            <i class="text-danger fa-solid fa-check"></i> <small>Resolved</small>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <hr />
+</div>
+
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.StoryId">Edit</a> |
     <a asp-action="Index">Back to List</a>
