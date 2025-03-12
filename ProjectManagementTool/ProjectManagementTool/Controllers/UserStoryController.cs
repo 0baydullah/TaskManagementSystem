@@ -10,6 +10,7 @@ namespace ProjectManagementTool.Controllers
     public class UserStoryController : Controller
     {
         private readonly IUserStoryService _userStoryService;
+        private readonly ITasksService _tasksService;
 
         public UserStoryController(IUserStoryService userStoryService)
         {
@@ -45,7 +46,16 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            return View();
+            var storyDetails = new UserStoryDetailsVM();
+            var story = _userStoryService.GetUserStory(id);
+            var tasks = _tasksService.GetAllTasks();
+            var bugs = tasks; // Bug will be added later after implementation
+
+            storyDetails.Story = story;
+            storyDetails.Tasks = tasks;
+            storyDetails.Bugs = bugs;
+
+            return View(storyDetails);
         }
 
         [HttpPost]
