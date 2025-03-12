@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ProjectManagementTool.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ProjectController : Controller
     {
         private readonly IProjectInfoService _projectInfoService;

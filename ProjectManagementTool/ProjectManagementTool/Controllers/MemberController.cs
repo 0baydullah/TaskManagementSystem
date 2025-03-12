@@ -11,9 +11,11 @@ namespace ProjectManagementTool.Controllers
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;
-        public MemberController(IMemberService memberService)
+        private readonly IRoleService _roleService;
+        public MemberController(IMemberService memberService, IRoleService roleService)
         {
             _memberService = memberService;
+            _roleService = roleService;
         }
        
         [HttpGet]
@@ -26,13 +28,9 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name");
-            ViewData["RoleId"] = new SelectList(new List<SelectListItem>
-            {
-                new SelectListItem { Value = "14", Text = "Admin" },
-                new SelectListItem { Value = "20", Text = "User" }
-            }, "Value", "Text");
+            var roles = _roleService.GetAllRole();
 
+            ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
             return View();
         }
 
