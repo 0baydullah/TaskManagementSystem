@@ -18,6 +18,7 @@ namespace DataAccessLayer
             services.AddScoped<IProjectInfoRepo, ProjectInfoRepo>();
             services.AddScoped<IMemberRepo, MemberRepo>();
             services.AddScoped<ITasksRepo, TasksRepo>();
+            services.AddScoped<IFeatureRepo, FeatureRepo>();
 
             return services;
         }

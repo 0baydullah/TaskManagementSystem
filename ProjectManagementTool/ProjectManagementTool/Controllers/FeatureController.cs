@@ -8,9 +8,11 @@ namespace ProjectManagementTool.Controllers
     public class FeatureController : Controller
     {
         private readonly IMemberService _memberService;
-        public FeatureController(IMemberService memberService) 
+        public readonly IFeatureService _featureService;
+        public FeatureController(IMemberService memberService, IFeatureService featureService) 
         { 
             _memberService = memberService;
+            _featureService = featureService;
         }
 
         [HttpGet]
@@ -30,9 +32,39 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(FeatureVM featureVM)
+        public async Task<IActionResult> Create(FeatureVM featureVM)
         {
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new { success = false, errors });
+            }
+
+            try
+            {
+                var result =  await _featureService.Create(featureVM);
+
+                if (result == true)
+                {
+                    return Ok(new { success = true, redirectUrl = Url.Action("GetAll", "Feature") });
+                }
+                else
+                {
+                    return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                }
+            }
+            catch (Exception)
+            {
+                return View(featureVM);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+
             return View();
         }
+
     }
 }
