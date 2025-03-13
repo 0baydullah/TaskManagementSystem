@@ -35,9 +35,40 @@ namespace DataAccessLayer.Repository
             }  
         }
 
-        public async Task<List<Feature>> GetAllFeature()
+        public async Task<List<FeatureWithMemberReleaseVM>> GetAllFeature()
         {
-            var features = await _context.Features.ToListAsync();
+            var features = await _context.Features.Join(_context.Members, f => f.MemberId, m=> m.MemberId, (f,m) => new
+            {
+                FeatureId = f.FeatureId,
+                FeatureName = f.Name,
+                Description = f.Description,
+                EstimatedPoint = f.EstimatedPoint,
+                ReleaseId = f.ReleaseId,
+                MemberId = f.MemberId,
+                Tag = f.Tag,
+                Email = m.Email 
+            }).Join(_context.Users, f=> f.Email, u => u.Email, (f,u) => new
+            {
+                FeatureId = f.FeatureId,
+                FeatureName = f.FeatureName,
+                Description = f.Description,
+                EstimatedPoint = f.EstimatedPoint,
+                ReleaseId = f.ReleaseId,
+                MemberId = f.MemberId,
+                Tag = f.Tag,
+                MemberName = u.Name,
+            }).Join(_context.Releases, f=> f.ReleaseId, r => r.ReleaseId,(f,r) => new FeatureWithMemberReleaseVM
+            {
+                FeatureId = f.FeatureId,
+                Name = f.FeatureName,
+                Description = f.Description,
+                EstimatedPoint = f.EstimatedPoint,
+                ReleaseId = f.ReleaseId,
+                MemberId = f.MemberId,
+                Tag = f.Tag,
+                MemberName = f.MemberName,
+                ReleaseName = r.ReleaseName
+            }).ToListAsync();
             return features;
         }
 

@@ -40,7 +40,7 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public Task<List<Feature>> GetAllFeature()
+        public Task<List<FeatureWithMemberReleaseVM>> GetAllFeature()
         {
             try
             {

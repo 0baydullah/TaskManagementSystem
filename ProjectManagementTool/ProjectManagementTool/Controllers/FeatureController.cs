@@ -25,7 +25,8 @@ namespace ProjectManagementTool.Controllers
             ViewBag.Releases = new SelectList(new List<SelectListItem>
             {
                 new SelectListItem { Value = "1", Text = "Release-1" },
-                new SelectListItem { Value = "2", Text = "Release-2" }
+                new SelectListItem { Value = "2", Text = "Release-2" },
+                new SelectListItem { Value = "7", Text = "Release-7" }
             }, "Value", "Text");
 
             return View();
@@ -86,7 +87,8 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.Releases = new SelectList(new List<SelectListItem>
                 {
                     new SelectListItem { Value = "1", Text = "Release-1" },
-                    new SelectListItem { Value = "2", Text = "Release-2" }
+                    new SelectListItem { Value = "2", Text = "Release-2" },
+                    new SelectListItem { Value = "7", Text = "Release-7" }
                 }, "Value", "Text");
 
                 return View(feature);
