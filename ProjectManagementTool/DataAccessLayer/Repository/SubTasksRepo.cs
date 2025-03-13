@@ -9,20 +9,20 @@ using DataAccessLayer.Models.Entity;
 
 namespace DataAccessLayer.Repository
 {
-    public class TasksRepo : ITasksRepo
+    public class SubTasksRepo : ISubTasksRepo
     {
         private readonly PMSDBContext _context;
 
-        public TasksRepo(PMSDBContext context)
+        public SubTasksRepo(PMSDBContext context)
         {
             _context = context;
         }
 
-        public void AddTasks(Tasks tasks)
+        public void AddSubTasks(Tasks tasks)
         {
             try
             {
-                _context.Tasks.Add(tasks);
+                _context.SubTask.Add(tasks);
                 _context.SaveChanges();
             }
             catch(Exception ex)
@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public void DeleteTasks(Tasks tasks)
+        public void DeleteSubTasks(Tasks tasks)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public List<Tasks> GetAllTasks()
+        public List<Tasks> GetAllSubTasks()
         {
             try
             {
@@ -58,7 +58,7 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public List<Tasks> GetAllTasks(int id)
+        public List<Tasks> GetAllSubTasksByTask(int id)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public Tasks GetTasks(int id)
+        public Tasks GetSubTasks(int id)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public void UpdateTasks(Tasks tasks)
+        public void UpdateSubTasks(Tasks tasks)
         {
             try
             {
