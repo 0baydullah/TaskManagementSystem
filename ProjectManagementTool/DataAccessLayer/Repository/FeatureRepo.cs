@@ -19,25 +19,20 @@ namespace DataAccessLayer.Repository
         {
             _context = context;
         }
-        public async Task<bool> Create(Feature feature)
+        public async Task<bool> CreateFeature(Feature feature)
         {
-            try
+            var existFeature = await _context.Features.FirstOrDefaultAsync(f => f.Name.Equals(feature.Name));
+
+            if (existFeature == null)
             {
-                var existFeature = await _context.Features.FirstOrDefaultAsync(f => f.Name == feature.Name);
-
-                if (existFeature == null)
-                {
-                    _context.Features.Add(feature);
-                    await _context.SaveChangesAsync();
-                    return true;
-                }
-
+                _context.Features.Add(feature);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
                 return false;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            }  
         }
 
         public async Task<List<Feature>> GetAllFeature()
@@ -46,19 +41,30 @@ namespace DataAccessLayer.Repository
             return features;
         }
 
-        public Task<Feature> GetFeatureById(int id)
+        public async Task<Feature> GetFeatureById(int id)
         {
-            throw new NotImplementedException();
+            var feature = await _context.Features.FirstOrDefaultAsync(f => f.FeatureId.Equals(id));
+            return feature;
         }
 
-        public Task<bool> Update(int id)
+        public async Task<Feature> GetFeatureByName(string name, int id) 
         {
-            throw new NotImplementedException();
+            var feature = await _context.Features.FirstOrDefaultAsync(f => f.Name == name && f.FeatureId != id);
+            return feature;
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> UpdateFeature(Feature feature)
         {
-            throw new NotImplementedException();
+              _context.Features.Update(feature);
+              await _context.SaveChangesAsync();
+              return true;
+        }
+
+        public async Task<bool> DeleteFeature(Feature feature)
+        {
+            _context.Features.Remove(feature);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

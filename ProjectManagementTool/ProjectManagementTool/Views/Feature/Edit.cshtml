@@ -1,14 +1,16 @@
-﻿@model DataAccessLayer.Models.ViewModel.FeatureVM
+﻿@model DataAccessLayer.Models.Entity.Feature
+@using static DataAccessLayer.Enums.Priority
+@using static DataAccessLayer.Enums.Status
 
 @{
-    ViewData["Title"] = "Feature-Create";
+    ViewData["Title"] = "Feature-Edit";
 }
 
-<h1 class="text-center">Create Feature</h1>
+<h1 class="text-center">Update Feature</h1>
 <hr />
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
-        <form asp-action="Create" id="createForm">
+        <form asp-action="Edit" id="editForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-2">
                 <label asp-for="Name" class="control-label"></label>
@@ -39,7 +41,7 @@
                 </select>
                 <span asp-validation-for="MemberId" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group mt-3">
                 <label asp-for="Tag" class="control-label"></label>
                 <input asp-for="Tag" class="form-control" />
@@ -47,7 +49,7 @@
             </div>
 
             <div class="form-group mt-3 d-flex justify-content-center">
-                <input type="button" onclick="submitForm()" value="Create" class="btn btn-success w-50" />
+                <input type="button" onclick="submitForm()" value="Update" class="btn btn-success w-50" />
             </div>
         </form>
     </div>
@@ -61,11 +63,11 @@
 
     <script>
         function submitForm() {
-            var form = $('#createForm');
+            var form = $('#editForm');
             var formData = new FormData(form[0]);
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Create", "Feature")',
+                url: '@Url.Action("Edit", "Feature")',
                 data: formData,
                 processData: false,
                 contentType: false,

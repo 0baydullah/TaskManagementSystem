@@ -80,11 +80,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Feature !!</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
-                You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
+                You are deleting a Feature....after clicking on "Delete" button it wont be undone and all associate properties will be deleted forever!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
@@ -97,16 +97,16 @@
 
 @section Scripts {
     <script>
-        let userStoryIdToDelete = 0;
+        let featureIdToDelete = 0;
 
         function openDeleteModal(id) {
-            userStoryIdToDelete = id;
+            featureIdToDelete = id;
             $("#modal").modal('show');
         }
 
         function confirmDelete() {
             $.ajax({
-                url: '/UserStory/Delete/' + userStoryIdToDelete,
+                url: '/Feature/Delete/' + featureIdToDelete,
                 type: 'POST',
                 success: function (result) {
                     $("#modal").modal('hide');
@@ -114,7 +114,7 @@
                     console.log(result);
                 },
                 error: function (err) {
-                    alert('Error deleting user story' + err);
+                    alert('Error occured deleting feture' + err);
                 }
             });
         }

@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Service
         {
             _featureRepo = featureRepo;
         }
-        public async Task<bool> Create(FeatureVM featureVM)
+        public async Task<bool> CreateFeature(FeatureVM featureVM) 
         {
             try
             {
@@ -31,7 +31,7 @@ namespace BusinessLogicLayer.Service
                     Tag = featureVM.Tag,
                 };
 
-                var result = await _featureRepo.Create(feature);
+                var result = await _featureRepo.CreateFeature(feature);
                 return result;
             }
             catch (Exception)
@@ -42,23 +42,77 @@ namespace BusinessLogicLayer.Service
 
         public Task<List<Feature>> GetAllFeature()
         {
-            var features = _featureRepo.GetAllFeature();
-            return features;
+            try
+            {
+                var features = _featureRepo.GetAllFeature();
+                return features;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public Task<Feature> GetFeatureById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var feature = _featureRepo.GetFeatureById(id);
+                return feature;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<bool> Update(int id)
+        public async Task<bool> UpdateFeature(int id, FeatureVM featureVM)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var existFeature = await _featureRepo.GetFeatureById(id);
+                var existFeatureName = await _featureRepo.GetFeatureByName(featureVM.Name, id);
+
+                if (existFeature == null || (existFeatureName != null))
+                {
+                    return false;
+                }
+
+                existFeature.Name = featureVM.Name;
+                existFeature.Description = featureVM.Description;
+                existFeature.EstimatedPoint = featureVM.EstimatedPoint;
+                existFeature.ReleaseId = featureVM.ReleaseId;
+                existFeature.MemberId = featureVM.MemberId;
+                existFeature.Tag = featureVM.Tag;
+
+                var result = await _featureRepo.UpdateFeature(existFeature);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> DeleteFeature(int id) 
         {
-            throw new NotImplementedException();
+            try
+            {
+                var feature = await _featureRepo.GetFeatureById(id);
+                if (feature == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var result = await _featureRepo.DeleteFeature(feature);
+                    return result;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
