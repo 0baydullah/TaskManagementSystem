@@ -11,9 +11,11 @@ namespace ProjectManagementTool.Controllers
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;
-        public MemberController(IMemberService memberService)
+        private readonly IRoleService _roleService;
+        public MemberController(IMemberService memberService, IRoleService roleService)
         {
             _memberService = memberService;
+            _roleService = roleService;
         }
        
         [HttpGet]
@@ -26,13 +28,8 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            //ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name");
-            ViewData["RoleId"] = new SelectList(new List<SelectListItem>
-            {
-                new SelectListItem { Value = "14", Text = "Admin" },
-                new SelectListItem { Value = "20", Text = "User" }
-            }, "Value", "Text");
-
+            var roles = _roleService.GetAllRole();
+            ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
             return View();
         }
 
@@ -54,12 +51,21 @@ namespace ProjectManagementTool.Controllers
             }
             else
             {
-                _memberService.AddMember(model);
-                isSuccess = true;
-                message = "Member added successfully!";
+                if(_memberService.GetUserByEmail(model.Email) == null)
+                {
+                    isSuccess = false;
+                    message = "User is not exists!";
+                    return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                }
+                else
+                {
+                    _memberService.AddMember(model);
+                    isSuccess = true;
+                    message = "Member added successfully!";
+                }
             }
 
-            return Json( new {isSuccess, message});
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
 
         [HttpGet]
@@ -77,6 +83,8 @@ namespace ProjectManagementTool.Controllers
                 Email = member.Email,
                 RoleId = member.RoleId
             };
+            var roles = _roleService.GetAllRole();
+            ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
 
             return View(model);
         }
@@ -112,7 +120,7 @@ namespace ProjectManagementTool.Controllers
                 message = "Member updated successfully!";
             }
 
-            return Json(new { isSuccess, message });
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
 
         [HttpPost]
@@ -127,7 +135,7 @@ namespace ProjectManagementTool.Controllers
 
             _memberService.DeleteMember(member);
 
-            return Json(new { success = true });
+            return Json(new { success = true , message = "Member deleted successfully!"});
 
         }
     }

@@ -62,13 +62,19 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('#response-message').html(response);
-                    setTimeout(function(){
+                    if(response.success){
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(function(){
                         window.location.href = '@Url.Action("Index", "Release")';
-                    }, 2000);
+                        }, 2000);
+                    }
+                    else{
+                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+
                 },
                 error: function(response){
-                    $('#response-message').html(response);
+                    $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
                 }
 
 

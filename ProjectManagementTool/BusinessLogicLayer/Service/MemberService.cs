@@ -51,5 +51,11 @@ namespace BusinessLogicLayer.Service
                 throw new Exception("Member not found");
             }
         }
+
+        public UserInfo GetUserByEmail(string email)
+        {
+            var user = _memberRepo.GetUserByEmail(email);
+            return user;
+        }
     }
 }

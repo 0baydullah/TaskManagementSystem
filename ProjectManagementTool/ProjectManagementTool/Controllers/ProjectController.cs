@@ -76,6 +76,12 @@ namespace ProjectManagementTool.Controllers
                       }
                 }
                 var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    isSuccess = false;
+                    message = "User not found!";
+                    return Json(new { isSuccess, message });
+                }
                 var project = new ProjectInfo
                 {
                     Name = model.Name,
@@ -95,7 +101,7 @@ namespace ProjectManagementTool.Controllers
 
             }
 
-            return Json(new { isSuccess, message });
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
 
         [HttpGet]
@@ -194,7 +200,7 @@ namespace ProjectManagementTool.Controllers
 
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             var project = _projectInfoService.GetProjectInfo(id);
 

@@ -19,5 +19,7 @@ namespace BusinessLogicLayer.IService
 
         public List<MemberWithRoleVM> GetAllMember();
 
+        public UserInfo GetUserByEmail(string email);
+
     }
 }

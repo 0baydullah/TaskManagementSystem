@@ -27,7 +27,7 @@
 
     <div class="form-group">
         <label asp-for="@Model.Files"> </label>
-        <input asp-for="@Model.Files" class="form-control" id="files" placeholder="Upload Necessary Files">
+        <input asp-for="@Model.Files" class="form-control" id="files" onchange="validateSize();" placeholder="Upload Necessary Files">
     </div>
     <div class="form-group">
         <label asp-for="@Model.StartDate"> </label>
@@ -68,13 +68,19 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    $('#response-message').html(response);
-                    setTimeout(function(){
+                    if(response.success){
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(function(){
                         window.location.href = '@Url.Action("Index", "Project")';
-                    }, 2000);
+                        }, 2000);
+                    }
+                    else{
+                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                    
                 },
                 error: function(response){
-                    $('#response-message').html(response);
+                    $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
                 }
 
 
@@ -82,4 +88,33 @@
         });
 
     });
+
+     function validateSize()
+    {
+        const maxSize = 100;
+        let isValid = true;
+        let messages = [];
+
+        const files = $("#files")[0].files;
+
+        $.each(files, function (index, file) {
+            const fileSize = file.size / 1024;
+
+
+            if (fileSize > maxSize) {
+                messages.push(`image "${file.name}" is too big`);
+                isValid = false;
+            }
+        });
+
+
+        if (!isValid) {
+            $("#response-message").html(messages.join("<br>"));
+            $("#files").val("");
+        }
+
+        else {
+            $("#response-message").html('<span class="alert alert-success">All Files are valid. </span>');
+        }
+    }
 </script>

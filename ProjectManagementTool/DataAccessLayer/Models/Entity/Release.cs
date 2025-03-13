@@ -11,10 +11,20 @@ namespace DataAccessLayer.Models.Entity
     {
         [Key]
         public int ReleaseId { get; set; }
+
+        [Required]
         public int ProjectId { get; set; }
-        public string ReleaseName { get; set; }
-        public string Description { get; set; }
+
+        [Required]
+        public string? ReleaseName { get; set; }
+
+        [Required]
+        public string? Description { get; set; }
+
+        [Required]
         public DateTime StartDate { get; set; }
+
+        [Required]
         public DateTime EndDate { get; set; }
 
     }

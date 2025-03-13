@@ -51,18 +51,6 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                //var roles = _context.Roles.Select(x => new RolesVM { RoleId = x.Id, RoleName = x.Name}).ToList();
-                //var result = _context.Members.Join(_context.Users, member => member.Email, user => user.Email, (member, user) => 
-                //new MemberWithRoleVM {
-                //    Name = user.Name,
-                //    Email = member.Email,
-                //    Roles = roles,
-
-                //}).ToList();
-                //return result;
-
-               // var x = _context.Users.ToList();
-
                 var result = _context.Members.Join(_context.Users, member => member.Email, user => user.Email, (member, user) =>
                 new 
                 {
@@ -116,5 +104,22 @@ namespace DataAccessLayer.Repository
                 throw new Exception("An error occurred while updating member.", ex);
             }
         }
+
+        public UserInfo GetUserByEmail(string email)
+        {
+            try
+            {
+                var user = _context.Users.FirstOrDefault( u => u.Email == email);
+                return user;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("An error occurred while finding user.", ex);
+            }
+        }
+
+
     }
 }

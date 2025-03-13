@@ -5,10 +5,10 @@
 
 <h1 class="text-center fw-bold">Release Panel</h1>
 
-<div class="m-3">
-    <a asp-action="Create" class="btn btn-success p-2 float-end">Create New Release</a>
+<div>
+    <a asp-action="Create" class="btn btn-success fw-bold">Create Release</a>
 </div>
-<br /> <br />
+<br />
 <div>
     <table class="table table-bordered table-hover table-striped">
         <thead>
@@ -61,8 +61,8 @@
                             @Html.DisplayFor(modelItem => item.Sprints)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.ReleaseId">Edit</a> |
-                            <a asp-action="Delete" onclick="openDeleteModal('@item.ReleaseId')">Delete</a>
+                            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ReleaseId">Edit</a> |
+                            <a class="btn btn-danger" onclick="openDeleteModal(@item.ReleaseId)">Delete</a>
                         </td>
                     </tr>
                 }
@@ -82,8 +82,8 @@
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+            <div class="modal-header text-center">
+                <h3 class="modal-title text-black text-center" id="exampleModalLabel">Delete Release !!</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
@@ -96,6 +96,7 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @section Scripts {
     <script>
@@ -109,7 +110,7 @@
 
         function confirmDelete() {
             $.ajax({
-                url: `/Project/Delete/${releaseIdToDelete}`,
+                url: `/Release/Delete/${releaseIdToDelete}`,
                 type: 'POST',
                 success: function (result) {
                     $("#modal").modal('hide');

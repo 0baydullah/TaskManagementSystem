@@ -6,8 +6,11 @@
 <h1>Index</h1>
 
 <p>
-    <a class="btn btn-success fw-bold" asp-action="Create">Create</a>
+    <a class="btn btn-success fw-bold" asp-action="Create">Create Project</a>
 </p>
+<div id="response-message">
+
+</div>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -31,27 +34,38 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if( Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Key)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
+                        <a class="btn btn-danger" onclick="openDeleteModal('@item.ProjectId')">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Key)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
-                </td>
-                <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ProjectId">Edit</a> |
-                    <a class="btn btn-danger" onclick="openDeleteModal('@item.ProjectId')">Delete</a>
-                </td>
+                <td colspan="7" class="text-center fw-bold text-danger">No data found!</td>
             </tr>
         }
+      
+        
     </tbody>
 
 </table>
@@ -64,7 +78,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
-                You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
+                After clicking on "Delete" button it wont be undone!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
@@ -92,9 +106,10 @@
                     $("#modal").modal('hide');
                     location.reload();
                     console.log(result);
+
                 },
                 error: function (err) {
-                    alert('Error deleting user story' + err);
+                    alert('Error occurred on deleting project' + err);
                 }
             });
         }

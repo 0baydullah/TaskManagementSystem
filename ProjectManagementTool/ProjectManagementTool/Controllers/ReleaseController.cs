@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.IService;
+using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -63,18 +64,72 @@ namespace ProjectManagementTool.Controllers
                 message = "Release added successfully!";
             }
 
-            return Json(new { isSuccess, message });
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
 
-        public IActionResult Edit()
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            return View();
+            var projects = _projectInfoService.GetAllProjectInfo();
+            var release = _releaseService.GetRelease(id);
+            ViewBag.Projects = new SelectList(projects, "ProjectId", "Name",release.ProjectId);
+            return View(release);
         }
 
-        public IActionResult Delete()
+        [HttpPost]
+        public IActionResult Edit(Release release, int id)
         {
-            return View();
+            bool isSuccess = false;
+            string message = "Invalid Data Submitted!";
+
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(m => m.ErrorMessage);
+                foreach (var error in errors)
+                {
+                    message += error + " ";
+                    Console.WriteLine(error);
+                }
+            }
+            else
+            {
+
+                var data = _releaseService.GetRelease(id);
+                if (data == null)
+                {
+                    return NotFound("Data is not exist");
+                }
+
+                data.ReleaseName = release.ReleaseName;
+                data.Description = release.Description;
+                data.StartDate = release.StartDate;
+                data.EndDate = release.EndDate;
+                data.ProjectId = release.ProjectId;
+
+                _releaseService.UpdateRelease(data);
+                isSuccess = true;
+                message = "Release updated successfully!";
+                
+            }
+
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var release = _releaseService.GetRelease(id);
+
+            if (release == null)
+            {
+                return NotFound("Release not found!");
+            }
+
+            _releaseService.DeleteRelease(release);
+            return Json(new { success = "true", message = "Project deleted successfully!" });
+
+        }
+
 
     }
 }
