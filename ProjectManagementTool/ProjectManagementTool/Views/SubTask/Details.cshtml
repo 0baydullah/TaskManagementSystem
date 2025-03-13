@@ -1,0 +1,133 @@
+﻿@model DataAccessLayer.Models.ViewModel.TaskDetailsVM
+
+@{
+    ViewData["Title"] = "Task Details";
+}
+
+<div class="d-flex justify-content-between">
+	<h3 class="text-center">Task : @Model.Tasks.Name</h3>
+	<div>
+		<a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Tasks.TaskId">
+			<i class="text-success fa-solid fa-pen"> Edit</i>
+		</a>
+		<a class="btn btn-light" onclick="openDeleteModal('@Model.Tasks.TaskId')">
+			<i class="text-danger fa-solid fa-trash"> Delete</i>
+		</a>
+	</div>
+</div>
+
+<hr />
+
+<div>
+	@Model.Tasks.Descripton
+    <hr />
+</div>
+<div>
+    <table>
+        <tbody>
+            <tr>
+                <td>Estimated Time :  </td>
+                <th><i>@Model.Tasks.EstimatedTime</i></th>
+            </tr>
+            <tr>
+                <td>Assignee :</td>
+                <th><i>@Model.Tasks.AssignMembersId</i></th>
+            </tr>
+            <tr>
+                <td>Reviewer :</td>
+                <th><i>@Model.Tasks.ReviewerMemberId</i></th>
+            </tr>
+            <tr>
+                <td>Status :</td>
+                <th><i>@Model.Tasks.Status</i></th>
+            </tr>
+            <tr>
+                <td>Priority :</td>
+                <th><i>@Model.Tasks.Priority</i></th>
+            </tr>
+            <tr>
+                <td>User Story :</td>
+                <th><i>@Model.Tasks.UserStoryId</i></th>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+</div>
+<div class="d-flex justify-content-between">
+    <h3>Sub Tasks</h3>
+    <a class="btn btn-success w-25" asp-controller="SubTask" asp-action="Create" asp-route-id="@Model.Tasks.TaskId">
+        <i class="text-light fa-solid fa-plus"></i> Sub Task
+    </a>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Sub Task
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Estimated Time
+				</th>
+				<th>
+					Priority
+				</th>
+                <th>
+                    Assignee
+                </th>
+                <th>
+                    Reviewer
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SubTask)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Status
+                    </td>
+                    <td>
+                        @item.EstimatedTime
+                    </td>
+                    <td>
+                        @item.Priority
+                    </td>
+                    <td>
+                        @item.AssignMembersId
+                    </td>
+                    <td>
+                        @item.ReviewerMemberId
+                    </td>
+                    <td>
+
+                        <a class="btn btn-light" asp-controller="SubTask" asp-action="Edit" asp-route-id="@item.SubTaskId">
+                            <i class="text-success fa-solid fa-pen"></i>
+                        </a>
+                        <a class="btn btn-light" onclick="openDeleteModal(@item.SubTaskId)">
+                            <i class="text-success fa-solid fa-trash"></i>
+                        </a>
+                        <a class="btn btn-light" asp-controller="SubTask" asp-action="Details" asp-route-id="@item.SubTaskId">
+                            <i class="text-success fa-solid fa-circle-info"></i>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<hr />
+</div>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Tasks.TaskId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
