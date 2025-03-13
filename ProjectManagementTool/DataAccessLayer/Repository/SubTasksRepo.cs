@@ -18,39 +18,53 @@ namespace DataAccessLayer.Repository
             _context = context;
         }
 
-        public void AddSubTasks(Tasks tasks)
+        public void AddSubTask(SubTask subTask)
         {
             try
             {
-                _context.SubTask.Add(tasks);
+                _context.SubTask.Add(subTask);
                 _context.SaveChanges();
             }
             catch(Exception ex)
             {
-                throw new Exception("An error occurred while adding the task.", ex);
+                throw new Exception("An error occurred while adding the sub task.", ex);
             }
         }
 
-        public void DeleteSubTasks(Tasks tasks)
+        public void DeleteSubTask(SubTask subTask)
         {
             try
             {
-                _context.Tasks.Remove(tasks);
+                _context.SubTask.Remove(subTask);
                 _context.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while deleting the task.", ex);
+                throw new Exception("An error occurred while deleting the sub task.", ex);
             }
         }
 
-        public List<Tasks> GetAllSubTasks()
+        public List<SubTask> GetAllSubTask()
         {
             try
             {
-                var tasks = _context.Tasks.ToList();
+                var subTask = _context.SubTask.ToList();
 
-                return tasks;
+                return subTask;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving all sub tasks.", ex);
+            }
+        }
+
+        public List<SubTask> GetAllSubTaskByTask(int id)
+        {
+            try
+            {
+                var subTask = _context.SubTask.Where(x=>x.TaskId == id ).ToList();
+
+                return subTask;
             }
             catch (Exception ex)
             {
@@ -58,26 +72,12 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public List<Tasks> GetAllSubTasksByTask(int id)
+        public SubTask GetSubTask(int id)
         {
             try
             {
-                var tasks = _context.Tasks.Where(x=>x.UserStoryId == id ).ToList();
-
-                return tasks;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("An error occurred while retrieving all tasks.", ex);
-            }
-        }
-
-        public Tasks GetSubTasks(int id)
-        {
-            try
-            {
-                var task = _context.Tasks.FirstOrDefault(x => x.TaskId == id);
-                return task;
+                var subTask = _context.SubTask.FirstOrDefault(x => x.SubTaskId == id);
+                return subTask;
             }
             catch (Exception ex)
             {
@@ -85,11 +85,11 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public void UpdateSubTasks(Tasks tasks)
+        public void UpdateSubTask(SubTask subTask)
         {
             try
             {
-                _context.Tasks.Update(tasks);
+                _context.SubTask.Update(subTask);
                 _context.SaveChanges();
             }
             catch (Exception ex)
