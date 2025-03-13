@@ -1,0 +1,139 @@
+﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.SprintVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="fw-bold text-center">Sprint Panel</h1>
+
+<p>
+    <a class="btn btn-success fw-bold" asp-action="Create">Create Sprint</a>
+</p>
+<div id="response-message">
+
+</div>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+
+            <th>
+                Key
+            </th>
+
+            <th>
+                Start Date
+            </th>
+
+            <th>
+                End Date
+            </th>
+            <th>
+                Effort
+            </th>
+            <th>
+                Velocity
+            </th>
+
+            <th>
+                Release
+            </th>
+            <th>
+                Action
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SprintName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectKey)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Points)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Velocity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseName)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.SprintId">Edit</a> |
+                        <a class="btn btn-danger" onclick="openDeleteModal('@item.SprintId')">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center fw-bold text-danger">No data found!</td>
+            </tr>
+        }
+
+
+    </tbody>
+
+</table>
+
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-capitalize text-danger">
+                After clicking on "Delete" button it wont be undone!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let sprintIdToDelete = 0;
+
+        function openDeleteModal(id)
+        {
+            sprintIdToDelete = id;
+            $("#modal").modal('show');
+        }
+
+        function confirmDelete() {
+            $.ajax({
+                url: `/Project/Delete/${sprintIdToDelete}`,
+                type: 'POST',
+                success: function (result) {
+                    $("#modal").modal('hide');
+                    location.reload();
+                    console.log(result);
+
+                },
+                error: function (err) {
+                    alert('Error occurred on deleting sprint' + err);
+                }
+            });
+        }
+    </script>
+}

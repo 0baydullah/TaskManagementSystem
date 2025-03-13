@@ -20,6 +20,7 @@ namespace BusinessLogicLayer
             services.AddScoped<ITasksService, TasksService>();
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IReleaseService, ReleaseService>();
+            services.AddScoped<ISprintService, SprintService>();
 
             return services;
         }
