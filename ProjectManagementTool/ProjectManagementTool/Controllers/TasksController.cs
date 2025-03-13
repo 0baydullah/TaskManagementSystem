@@ -12,12 +12,14 @@ namespace ProjectManagementTool.Controllers
     public class TasksController : Controller
     {
         private readonly ITasksService _tasksService;
+        private readonly ISubTaskService _subTaskService;
         private readonly PMSDBContext _context;
 
-        public TasksController(ITasksService tasksService, PMSDBContext context) 
+        public TasksController(ITasksService tasksService, PMSDBContext context, ISubTaskService subTaskService) 
         {
             _tasksService = tasksService;
             _context = context;
+            _subTaskService = subTaskService;
         }
 
         public IActionResult Index()
@@ -50,6 +52,21 @@ namespace ProjectManagementTool.Controllers
 
             return Json(new { success = true });
         }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var tasksDetails = new TaskDetailsVM();
+            var task = _tasksService.GetTasks(id);
+            var subtasks = _subTaskService.GetAllSubTaskByTask(id);
+
+            tasksDetails.Tasks = task;
+            tasksDetails.SubTask = subtasks;
+
+            return View(tasksDetails);
+        }
+
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
