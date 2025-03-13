@@ -7,7 +7,7 @@
 <div class="d-flex justify-content-between">
 	<h3 class="text-center">Task : @Model.Tasks.Name</h3>
 	<div>
-		<a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Tasks.TaskId">
+		<a class="btn btn-light" asp-controller="UserStory" asp-action="Edit" asp-route-id="@Model.Tasks.TaskId">
 			<i class="text-success fa-solid fa-pen"> Edit</i>
 		</a>
 		<a class="btn btn-light" onclick="openDeleteModal('@Model.Tasks.TaskId')">
