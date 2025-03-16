@@ -21,7 +21,7 @@ namespace DataAccessLayer.Data
         public DbSet<Tasks> Tasks { get; set; }
         public DbSet<SubTask> SubTask { get; set; }
         public DbSet<Member> Members { get; set; }
-
+        public DbSet<Release> Releases { get; set; }
         public DbSet<Feature> Features { get; set; }    
 
     }
