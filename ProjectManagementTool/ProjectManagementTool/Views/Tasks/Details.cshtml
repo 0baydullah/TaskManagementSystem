@@ -113,7 +113,7 @@
                         <a class="btn btn-light" onclick="openDeleteModal(@item.SubTaskId)">
                             <i class="text-success fa-solid fa-trash"></i>
                         </a>
-                        <a class="btn btn-light" onclick="openDetailsModal(@item.SubTaskId)">
+                        <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton')">
                             <i class="text-success fa-solid fa-circle-info"></i> 
                         </a> 
                     </td>
@@ -130,11 +130,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Sub Task !!</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
-                You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
+                After clicking on "Delete" button it won't be undone!!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
@@ -145,28 +145,39 @@
 </div>
 
 <!-- Sub Task Details Modal -->
-<div class="modal fade" id="subTaskDetailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel">Sub Task Details</h5>
+                <h5 class="modal-title" id="detailsModalLabel">Sub Task Description</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="subTaskDetailsContent">
-                
+            <div class="modal-body" id="modalDescription">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
+
 @section Scripts {
     <script>
-                var deleteSubTaskId = null;
+
+        function openDetailsModal(description) {
+            document.getElementById('modalDescription').innerText = description;
+            var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            myModal.show();
+        }
+
+        var deleteSubTaskId = null;
 
         function openDeleteModal(subTaskId) {
             deleteSubTaskId = subTaskId;
             $('#modal').modal('show'); 
         }
+
 
         function confirmDelete() {
             if (deleteSubTaskId) {
@@ -184,18 +195,5 @@
             }
         }
 
-        function openDetailsModal(subTaskId) {
-            $.ajax({
-                url: '/SubTask/Details/' + subTaskId,
-                type: 'GET',
-                success: function (data) {
-                    $('#subTaskDetailsContent').html(data);
-                    $('#subTaskDetailsModal').modal('show');
-                },
-                error: function () {
-                    alert('Error fetching sub-task details.');
-                }
-            });
-        }
     </script>
 }
