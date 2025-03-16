@@ -17,8 +17,8 @@ namespace DataAccessLayer.Models.ViewModel
         [Required]
         public string? Description { get; set; }
 
-        [Required]
-        public string? ProjectKey { get; set; }
+        //[Required]
+        //public string? ProjectKey { get; set; }
 
         [Required]
         public DateTime? StartDate { get; set; }

@@ -19,9 +19,9 @@
                 Name
             </th>
 
-            <th>
+            @* <th>
                 Key
-            </th>
+            </th> *@
 
             <th>
                 Start Date
@@ -55,9 +55,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SprintName)
                     </td>
-                    <td>
+                   @*  <td>
                         @Html.DisplayFor(modelItem => item.ProjectKey)
-                    </td>
+                    </td> *@
                     <td>
                         @Html.DisplayFor(modelItem => item.StartDate)
                     </td>
@@ -122,7 +122,7 @@
 
         function confirmDelete() {
             $.ajax({
-                url: `/Project/Delete/${sprintIdToDelete}`,
+                url: `/Sprint/Delete/${sprintIdToDelete}`,
                 type: 'POST',
                 success: function (result) {
                     $("#modal").modal('hide');

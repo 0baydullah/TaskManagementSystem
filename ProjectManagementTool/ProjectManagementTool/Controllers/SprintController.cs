@@ -1,6 +1,8 @@
 ﻿using BusinessLogicLayer.IService;
+using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -25,7 +27,7 @@ namespace ProjectManagementTool.Controllers
                 SprintId = s.SprintId,
                 SprintName = s.SprintName,
                 Description = s.Description,
-                ProjectKey = _projectInfoService.GetProjectInfo(s.ReleaseId).Key,
+                //ProjectKey = _projectInfoService.GetProjectInfo(s.ReleaseId).Key,
                 StartDate = s.StartDate,
                 EndDate = s.StartDate,
                 Points = s.Points,
@@ -39,32 +41,101 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            var releases = _releaseService.GetAllReleases();
+            ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(int id)
+        public IActionResult Create(Sprint sprint)
         {
-            return View();
+            bool isSuccess = false;
+            string message = "Invalid Data Submitted!";
+
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(m => m.ErrorMessage);
+
+                foreach (var error in errors)
+                {
+                    message += error + " ";
+                    Console.WriteLine(error);
+                }
+            }
+            else
+            {
+                _sprintService.AddSprint(sprint);
+                isSuccess = true;
+                message = "Sprint added successfully!";
+            }
+
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            return View();
-        }
-
-
-        [HttpPost]
-        public IActionResult Edit()
-        {
-            return View();
+            var sprint = _sprintService.GetSprint(id);
+            var releases = _releaseService.GetAllReleases();
+            ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName",sprint.ReleaseId);
+            return View(sprint);
         }
 
         [HttpPost]
-        public IActionResult Delete()
+        public IActionResult Edit(Sprint sprint, int id)
         {
-            return View();
+            bool isSuccess = false;
+            string message = "Invalid Data Submitted!";
+
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(m => m.ErrorMessage);
+                foreach (var error in errors)
+                {
+                    message += error + " ";
+                    Console.WriteLine(error);
+                }
+            }
+            else
+            {
+
+                var data = _sprintService.GetSprint(id);
+                if (data == null)
+                {
+                    return NotFound("Data is not exist");
+                }
+
+                data.SprintName = sprint.SprintName;
+                data.Description = sprint.Description;
+                data.StartDate = sprint.StartDate;
+                data.Duration = sprint.Duration;
+                data.Points = sprint.Points;
+                data.Velocity = sprint.Velocity;
+                data.ReleaseId = sprint.ReleaseId;
+
+
+                _sprintService.UpdateSprint(data);
+                isSuccess = true;
+                message = "Sprint updated successfully!";
+
+            }
+
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var sprint = _sprintService.GetSprint(id);
+
+            if (sprint == null)
+            {
+                return NotFound("Sprint not found!");
+            }
+
+            _sprintService.DeleteSprint(sprint);
+            return Json(new { success = "true", message = "Sprint deleted successfully!" });
+
         }
     }
 }

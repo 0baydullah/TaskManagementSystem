@@ -126,7 +126,7 @@ namespace ProjectManagementTool.Controllers
             }
 
             _releaseService.DeleteRelease(release);
-            return Json(new { success = "true", message = "Project deleted successfully!" });
+            return Json(new { success = "true", message = "Release deleted successfully!" });
 
         }
 
