@@ -1,0 +1,145 @@
+﻿@using DataAccessLayer.Models.ViewModel
+@model IEnumerable<FeatureWithMemberReleaseVM>
+
+@{
+    ViewData["Title"] = "User Story";
+}
+
+<div style="text-align: center;">
+    <h1>Feature</h1>
+</div>
+
+<div style="text-align: end;">
+    <a asp-action="Create" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> Feature</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Feature Name
+            </th>
+            <th>
+                Estimated point
+            </th>
+            <th>
+                Release
+            </th>
+            <th>
+                Member
+            </th>
+            <th>
+                Tag
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.EstimatedPoint
+                </td>
+                <td>
+                    @item.ReleaseName
+                </td>
+                <td>
+                    @item.MemberName
+                </td>
+                <td>
+                    @item.Tag
+                </td>
+                <td>
+
+                    <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.FeatureId">
+                        <i class="text-danger fa-solid fa-pen"></i>
+                    </a>
+                    <a class="btn btn-light" onclick="openDeleteModal('@item.FeatureId')">
+                        <i class="text-danger fa-solid fa-trash"></i>
+                    </a>
+                    <a class="btn btn-light" onclick="openDetailsModal('@item.Description')">
+                         <i class="text-danger fa-solid fa-circle-info"></i>
+                     </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Feature !!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-capitalize text-danger">
+                You are deleting a Feature....after clicking on "Delete" button it wont be undone and all associate properties will be deleted forever!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Pop-up details Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Feature Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalDescription">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        function openDetailsModal(description) {
+            document.getElementById('modalDescription').innerText = description;
+            var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            myModal.show();
+        }
+
+        let featureIdToDelete = 0;
+
+        function openDeleteModal(id) {
+            featureIdToDelete = id;
+            $("#modal").modal('show');
+        }
+
+        function confirmDelete() {
+            $.ajax({
+                url: '/Feature/Delete/' + featureIdToDelete,
+                type: 'POST',
+                success: function (result) {
+                    $("#modal").modal('hide');
+                    location.reload();
+                    console.log(result);
+                },
+                error: function (err) {
+                    alert('Error occured deleting feture' + err);
+                }
+            });
+        }
+    </script>
+}
+
+

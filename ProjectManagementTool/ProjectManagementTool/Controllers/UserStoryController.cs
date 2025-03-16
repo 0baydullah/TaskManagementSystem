@@ -3,16 +3,19 @@ using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ProjectManagementTool.Controllers
 {
     public class UserStoryController : Controller
     {
         private readonly IUserStoryService _userStoryService;
+        private readonly ITasksService _tasksService;
 
-        public UserStoryController(IUserStoryService userStoryService)
+        public UserStoryController(IUserStoryService userStoryService, ITasksService tasksService)
         {
             _userStoryService = userStoryService;
+            _tasksService = tasksService;
         }
 
         public IActionResult Index()
@@ -39,6 +42,21 @@ namespace ProjectManagementTool.Controllers
             }
 
             return Json(new { success = true });
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var storyDetails = new UserStoryDetailsVM();
+            var story = _userStoryService.GetUserStory(id);
+            var tasks = _tasksService.GetAllTasks(id);
+            var bugs = tasks; // Bug will be added later after implementation
+
+            storyDetails.Story = story;
+            storyDetails.Tasks = tasks;
+            storyDetails.Bugs = bugs;
+
+            return View(storyDetails);
         }
 
         [HttpPost]

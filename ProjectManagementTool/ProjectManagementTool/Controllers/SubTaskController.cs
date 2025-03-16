@@ -9,23 +9,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProjectManagementTool.Controllers
 {
-    public class TasksController : Controller
+    public class SubTaskController : Controller
     {
-        private readonly ITasksService _tasksService;
         private readonly ISubTaskService _subTaskService;
         private readonly PMSDBContext _context;
 
-        public TasksController(ITasksService tasksService, PMSDBContext context, ISubTaskService subTaskService) 
+        public SubTaskController(ISubTaskService subTaskService, PMSDBContext context) 
         {
-            _tasksService = tasksService;
-            _context = context;
             _subTaskService = subTaskService;
+            _context = context;
         }
 
         public IActionResult Index()
         {
-            var tasks = _tasksService.GetAllTasks();
-            return View(tasks);
+            var subTask = _subTaskService.GetAllSubTask();
+            return View(subTask);
         }
 
         public IActionResult Create(int id)
@@ -41,36 +39,21 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(int id, Tasks task)
+        public IActionResult Create(int id, SubTask subTask)
         {
-            _tasksService.AddTasks(task);
+            _subTaskService.AddSubTask(subTask);
 
-            if (task == null || id != task.UserStoryId)
+            if (subTask == null || id != subTask.TaskId)
             {
                 return NotFound();
             }
 
             return Json(new { success = true });
         }
-
-        [HttpGet]
-        public IActionResult Details(int id)
-        {
-            var tasksDetails = new TaskDetailsVM();
-            var task = _tasksService.GetTasks(id);
-            var subtasks = _subTaskService.GetAllSubTaskByTask(id);
-
-            tasksDetails.Tasks = task;
-            tasksDetails.SubTask = subtasks;
-
-            return View(tasksDetails);
-        }
-
-
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Tasks task = _tasksService.GetTasks(id);
+            var subTask = _subTaskService.GetSubTask(id);
 
             var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
                 .Where(x => x.m.Email == x.u.Email)
@@ -78,35 +61,35 @@ namespace ProjectManagementTool.Controllers
             ViewBag.Id = id;
             ViewBag.Members = new SelectList(users, "Id", "Name");
 
-            if (task == null)
+            if (subTask == null)
             {
                 return NotFound();
             }
 
-            return View(task);
+            return View(subTask);
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Tasks taskVM)
+        public IActionResult Edit(int id, SubTask subTaskVM)
         {
-            Tasks task = _tasksService.GetTasks(id);
+            var subTask = _subTaskService.GetSubTask(id);
 
-            if (task == null)
+            if (subTask == null)
             {
                 return NotFound();
             }
 
-            task.Name = taskVM.Name;
-            task.Descripton = taskVM.Descripton;
-            task.AssignMembersId = taskVM.AssignMembersId;
-            task.ReviewerMemberId = taskVM.ReviewerMemberId;
-            task.EstimatedTime = taskVM.EstimatedTime;
-            task.Tag = taskVM.Tag;
-            task.Status = taskVM.Status;
-            task.Priority = taskVM.Priority;
-            task.UserStoryId = taskVM.UserStoryId;
+            subTask.Name = subTaskVM.Name;
+            subTask.Descripton = subTaskVM.Descripton;
+            subTask.AssignMembersId = subTaskVM.AssignMembersId;
+            subTask.ReviewerMemberId = subTaskVM.ReviewerMemberId;
+            subTask.EstimatedTime = subTaskVM.EstimatedTime;
+            subTask.Tag = subTaskVM.Tag;
+            subTask.Status = subTaskVM.Status;
+            subTask.Priority = subTaskVM.Priority;
+            subTask.TaskId = subTaskVM.TaskId;
 
-            _tasksService.UpdateTasks(task);
+            _subTaskService.UpdateSubTask(subTask);
 
             return Json(new { success = true });
         }

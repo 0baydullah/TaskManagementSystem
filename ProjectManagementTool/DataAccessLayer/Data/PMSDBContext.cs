@@ -23,6 +23,7 @@ namespace DataAccessLayer.Data
         public DbSet<Member> Members { get; set; }
         public DbSet<Release> Releases { get; set; }
         public DbSet<Sprint> Sprints { get; set; }
+        public DbSet<Feature> Features { get; set; }    
 
     }
 }

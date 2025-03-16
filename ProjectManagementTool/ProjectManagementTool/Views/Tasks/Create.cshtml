@@ -56,7 +56,7 @@
             </div>
             <div class="form-group">
              
-                <input asp-for="UserStoryId" class="form-control" type="hidden" value="@ViewBag.Id" />
+                <input asp-for="UserStoryId" id="ID" class="form-control" type="hidden" value="@ViewBag.Id" />
             </div>
             <div class="form-group mt-3 d-flex justify-content-center">
                 <input type="button" onclick="submitForm()" value="Create" class="btn btn-success w-50" />
@@ -70,10 +70,14 @@
 </div>
 
 @section Scripts {
-
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
     <script>
+
         function submitForm() {
             var form = $('#createForm');
+            debugger;
             var formData = new FormData(form[0]);
             $.ajax({
                 type: 'POST',
@@ -82,15 +86,14 @@
                 processData: false,
                 contentType: false,
                 success: function () {
-                    window.location.href = '@Url.Action("Index", "UserStory")';
+                    window.location.href = '@Url.Action("Details", "UserStory")/'+ @ViewBag.id;
                 },
                 error: function (error) {
                     alert('An error occurred: ' + error);
                 }
             });
         }
+
     </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    
 }
