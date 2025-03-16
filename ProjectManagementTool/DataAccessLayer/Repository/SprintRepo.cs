@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,11 +49,27 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public List<Sprint> GetAllSprint()
+        public List<SprintVM> GetAllSprint(int projectId)
         {
             try
             {
-                var sprints = _context.Sprints.ToList();
+                var sprints = _context.ProjectInfo.Where(project => project.ProjectId == projectId).Join(_context.Releases, p => p.ProjectId, r => r.ProjectId, (p, r) => new  
+                {
+                    p.ProjectId,
+                    r.ReleaseId,
+                    r.ReleaseName
+                }).Join(_context.Sprints, r => r.ReleaseId, s => s.ReleaseId, (r, s) => new SprintVM
+                {
+                    SprintId = s.SprintId,
+                    SprintName = s.SprintName,
+                    Description = s.Description,
+                    StartDate = s.StartDate,
+                    EndDate = s.StartDate,
+                    Points = s.Points,
+                    Velocity = s.Velocity,
+                    ReleaseName = r.ReleaseName,
+                }).ToList();
+
                 return sprints;
 
             }

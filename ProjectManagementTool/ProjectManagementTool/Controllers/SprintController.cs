@@ -19,23 +19,23 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int projectId)
         {
-            var sprints = _sprintService.GetAllSprint();
-            var data =  sprints.Select(s => new SprintVM
-            {
-                SprintId = s.SprintId,
-                SprintName = s.SprintName,
-                Description = s.Description,
-                //ProjectKey = _projectInfoService.GetProjectInfo(s.ReleaseId).Key,
-                StartDate = s.StartDate,
-                EndDate = s.StartDate,
-                Points = s.Points,
-                Velocity = s.Velocity,
-                ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
-            }).ToList();
+            var sprints = _sprintService.GetAllSprint(projectId);
+            //var data =  sprints.Select(s => new SprintVM
+            //{
+            //    SprintId = s.SprintId,
+            //    SprintName = s.SprintName,
+            //    Description = s.Description,
+            //    //ProjectKey = _projectInfoService.GetProjectInfo(s.ReleaseId).Key,
+            //    StartDate = s.StartDate,
+            //    EndDate = s.StartDate,
+            //    Points = s.Points,
+            //    Velocity = s.Velocity,
+            //    ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
+            //}).ToList();
 
-            return View(data);
+            return View(sprints);
         }
 
         [HttpGet]

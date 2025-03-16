@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,6 @@ namespace BusinessLogicLayer.IService
         public void UpdateSprint(Sprint sprint);
         public void DeleteSprint(Sprint sprint);
         public Sprint GetSprint(int id);
-        public List<Sprint> GetAllSprint();
+        public List<SprintVM> GetAllSprint(int projectId);
     }
 }

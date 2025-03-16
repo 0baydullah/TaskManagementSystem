@@ -34,5 +34,8 @@ namespace DataAccessLayer.Models.ViewModel
 
         [Required]
         public string? ReleaseName { get; set; }
+
+        [Required]
+        public int ReleaseId { get; set; }
     }
 }

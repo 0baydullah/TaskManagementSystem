@@ -1,0 +1,33 @@
+﻿@model DataAccessLayer.Models.Entity.ProjectInfo
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="text-center fw-bold">@ViewBag.ProjectName</h1>
+
+<div>
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="UserStory" asp-action="Index">UserStory</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Member" asp-action="Index">Member</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Feature" asp-action="GetAll">Feature</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })">
+                    Release
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="@Url.Action("Index", "Sprint", new { projectId = Model.ProjectId })">
+                    Sprint
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</div>

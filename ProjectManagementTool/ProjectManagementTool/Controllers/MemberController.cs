@@ -12,10 +12,12 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly IRoleService _roleService;
-        public MemberController(IMemberService memberService, IRoleService roleService)
+        private readonly IProjectInfoService _projectInfoService;
+        public MemberController(IMemberService memberService, IRoleService roleService, IProjectInfoService projectInfoService)
         {
             _memberService = memberService;
             _roleService = roleService;
+            _projectInfoService = projectInfoService;
         }
        
         [HttpGet]
@@ -30,6 +32,9 @@ namespace ProjectManagementTool.Controllers
         {
             var roles = _roleService.GetAllRole();
             ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
+
+            var projects = _projectInfoService.GetAllProjectInfo();
+            ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name");
             return View();
         }
 

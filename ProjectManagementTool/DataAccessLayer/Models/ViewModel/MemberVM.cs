@@ -11,5 +11,6 @@ namespace DataAccessLayer.Models.ViewModel
         public int MemberId { get; set; }
         public string Email { get; set; }
         public int RoleId { get; set; }
+        public int ProjectId { get; set; }
     }
 }

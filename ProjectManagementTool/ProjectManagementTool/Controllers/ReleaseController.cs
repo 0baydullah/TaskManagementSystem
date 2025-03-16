@@ -16,9 +16,10 @@ namespace ProjectManagementTool.Controllers
             _releaseService = releaseService;
             _projectInfoService = projectInfoService;
         }
-        public IActionResult Index()
+        
+        public IActionResult Index(int projectId)
         {
-            var releases = _releaseService.GetAllReleases();
+            var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId).ToList();
             var data = releases.Select(r => new ReleaseVM
             {
                 ReleaseId = r.ReleaseId,
