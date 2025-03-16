@@ -9,26 +9,22 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IMemberService _memberService;
         public readonly IFeatureService _featureService;
-        public FeatureController(IMemberService memberService, IFeatureService featureService) 
+        public readonly IReleaseService _releaseService;
+        public FeatureController(IMemberService memberService, IFeatureService featureService, IReleaseService releaseService) 
         { 
             _memberService = memberService;
             _featureService = featureService;
+            _releaseService = releaseService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             var members = _memberService.GetAllMember();
-            // var releases = _releaseService.GetAllRelease();
+            var releases = _releaseService.GetAllReleases();
             ViewBag.Members = new SelectList(members, "MemberId", "Name");
-            //ViewBag.Releases = new SelectList(members, "ReleaseId", "Name");
-            ViewBag.Releases = new SelectList(new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "Release-1" },
-                new SelectListItem { Value = "2", Text = "Release-2" },
-                new SelectListItem { Value = "7", Text = "Release-7" }
-            }, "Value", "Text");
-
+            ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
+            
             return View();
         }
 
@@ -81,16 +77,10 @@ namespace ProjectManagementTool.Controllers
             {
                 var feature = await _featureService.GetFeatureById(id);
                 var members = _memberService.GetAllMember();
-                // var releases = _releaseService.GetAllRelease();
+                var releases = _releaseService.GetAllReleases();
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
-                //ViewBag.Releasea = new SelectList(members, "ReleaseId", "Name");
-                ViewBag.Releases = new SelectList(new List<SelectListItem>
-                {
-                    new SelectListItem { Value = "1", Text = "Release-1" },
-                    new SelectListItem { Value = "2", Text = "Release-2" },
-                    new SelectListItem { Value = "7", Text = "Release-7" }
-                }, "Value", "Text");
-
+                ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
+               
                 return View(feature);
             }
             catch (Exception)
