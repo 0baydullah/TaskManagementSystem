@@ -107,17 +107,15 @@
                         @item.ReviewerMemberId
                     </td>
                     <td>
-
                         <a class="btn btn-light" asp-controller="SubTask" asp-action="Edit" asp-route-id="@item.SubTaskId">
                             <i class="text-success fa-solid fa-pen"></i>
                         </a>
                         <a class="btn btn-light" onclick="openDeleteModal(@item.SubTaskId)">
                             <i class="text-success fa-solid fa-trash"></i>
                         </a>
-                        <a class="btn btn-light" asp-controller="SubTask" asp-action="Details" asp-route-id="@item.SubTaskId">
-                            <i class="text-success fa-solid fa-circle-info"></i>
-                        </a>
-
+                        <a class="btn btn-light" onclick="openDetailsModal(@item.SubTaskId)">
+                            <i class="text-success fa-solid fa-circle-info"></i> 
+                        </a> 
                     </td>
                 </tr>
             }
@@ -127,7 +125,77 @@
 </div>
 
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Tasks.TaskId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<!-- Delete Modal -->
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-capitalize text-danger">
+                You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Sub Task Details Modal -->
+<div class="modal fade" id="subTaskDetailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Sub Task Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="subTaskDetailsContent">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+                var deleteSubTaskId = null;
+
+        function openDeleteModal(subTaskId) {
+            deleteSubTaskId = subTaskId;
+            $('#modal').modal('show'); 
+        }
+
+        function confirmDelete() {
+            if (deleteSubTaskId) {
+                $.ajax({
+                    url: '/SubTask/Delete/' + deleteSubTaskId,
+                    type: 'POST',
+                    success: function (response) {
+                        $('#modal').modal('hide'); 
+                        location.reload(); 
+                    },
+                    error: function () {
+                        alert('Error deleting sub task.');
+                    }
+                });
+            }
+        }
+
+        function openDetailsModal(subTaskId) {
+            $.ajax({
+                url: '/SubTask/Details/' + subTaskId,
+                type: 'GET',
+                success: function (data) {
+                    $('#subTaskDetailsContent').html(data);
+                    $('#subTaskDetailsModal').modal('show');
+                },
+                error: function () {
+                    alert('Error fetching sub-task details.');
+                }
+            });
+        }
+    </script>
+}

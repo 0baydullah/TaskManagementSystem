@@ -12,11 +12,13 @@ namespace ProjectManagementTool.Controllers
     public class SubTaskController : Controller
     {
         private readonly ISubTaskService _subTaskService;
+        private readonly IMemberService _memberService;
         private readonly PMSDBContext _context;
 
-        public SubTaskController(ISubTaskService subTaskService, PMSDBContext context) 
+        public SubTaskController(ISubTaskService subTaskService, PMSDBContext context, IMemberService memberService) 
         {
             _subTaskService = subTaskService;
+            _memberService = memberService;
             _context = context;
         }
 
@@ -67,6 +69,39 @@ namespace ProjectManagementTool.Controllers
             }
 
             return View(subTask);
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var subTask = _subTaskService.GetSubTask(id);
+
+            if (subTask == null)
+            {
+                return NotFound();
+            }
+
+
+            var assignee = _memberService.GetMember(subTask.AssignMembersId);
+            var reviewer = _memberService.GetMember(subTask.ReviewerMemberId);
+
+            ViewBag.AssigneeName = assignee != null ? _context.Users.FirstOrDefault(u => u.Email == assignee.Email)?.Name : "N/A";
+            ViewBag.ReviewerName = reviewer != null ? _context.Users.FirstOrDefault(u => u.Email == reviewer.Email)?.Name : "N/A";
+
+            return PartialView("_SubTaskDetails", subTask);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var subTask = _subTaskService.GetSubTask(id);
+            if (subTask == null)
+            {
+                return NotFound();
+            }
+
+            _subTaskService.DeleteSubTask(subTask);
+            return Ok();
         }
 
         [HttpPost]
