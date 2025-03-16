@@ -6,8 +6,9 @@
 <h1>Welcome to Member Panel</h1>
 
 <p>
-    <a class="btn btn-success fw-bold" asp-action="Create">Add Member</a>
+    <a class="btn btn-success fw-bold" asp-action="Create" asp-controller="Member" asp-route-id="@Model.FirstOrDefault()?.ProjectId">Add Member</a>
 </p>
+
 
 <table class="table table-bordered table-striped table-hover">
     <thead>

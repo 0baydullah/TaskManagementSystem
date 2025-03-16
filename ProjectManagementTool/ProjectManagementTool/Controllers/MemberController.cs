@@ -21,20 +21,19 @@ namespace ProjectManagementTool.Controllers
         }
        
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int projectId)
         {
-            var members = _memberService.GetAllMember();
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
             return View(members);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int projectId)
         {
             var roles = _roleService.GetAllRole();
             ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
 
-            var projects = _projectInfoService.GetAllProjectInfo();
-            ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name");
+            ViewData["ProjectId"] = projectId;
             return View();
         }
 
@@ -86,10 +85,14 @@ namespace ProjectManagementTool.Controllers
             {
                 MemberId = member.MemberId,
                 Email = member.Email,
-                RoleId = member.RoleId
+                RoleId = member.RoleId,
+                ProjectId = member.ProjectId
             };
             var roles = _roleService.GetAllRole();
             ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
+            
+            var projects = _projectInfoService.GetAllProjectInfo();
+            ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
 
             return View(model);
         }
@@ -120,6 +123,7 @@ namespace ProjectManagementTool.Controllers
                 }
                 member.Email = model.Email;
                 member.RoleId = model.RoleId;
+                member.ProjectId = model.ProjectId;
                 _memberService.UpdateMember(member);
                 isSuccess = true;
                 message = "Member updated successfully!";
