@@ -15,6 +15,6 @@ namespace DataAccessLayer.IRepository
         public void DeleteMember(Member member);
         public Member GetMember(int id);
         public List<MemberWithRoleVM> GetAllMember();
-
+        public UserInfo GetUserByEmail(string email);
     }
 }

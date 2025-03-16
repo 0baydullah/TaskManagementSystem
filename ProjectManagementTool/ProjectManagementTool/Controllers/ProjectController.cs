@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ProjectManagementTool.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ProjectController : Controller
     {
         private readonly IProjectInfoService _projectInfoService;
@@ -76,6 +76,12 @@ namespace ProjectManagementTool.Controllers
                       }
                 }
                 var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    isSuccess = false;
+                    message = "User not found!";
+                    return Json(new { isSuccess, message });
+                }
                 var project = new ProjectInfo
                 {
                     Name = model.Name,
@@ -95,7 +101,7 @@ namespace ProjectManagementTool.Controllers
 
             }
 
-            return Json(new { isSuccess, message });
+            return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
 
         [HttpGet]
@@ -151,6 +157,7 @@ namespace ProjectManagementTool.Controllers
                 {
                     isSuccess = false;
                     message = "Student not found!";
+
                     return Json(new { success = $"{isSuccess}", message = $"{message}" });
                 }
 
@@ -193,7 +200,7 @@ namespace ProjectManagementTool.Controllers
 
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             var project = _projectInfoService.GetProjectInfo(id);
 

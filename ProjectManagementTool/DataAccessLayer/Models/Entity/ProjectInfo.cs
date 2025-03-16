@@ -12,19 +12,26 @@ namespace DataAccessLayer.Models.Entity
         [Key]
         public int ProjectId { get; set; }
 
-        public string Name { get; set; }
+        [Required]
+        public string? Name { get; set; }
 
-        public string Key { get; set; }
-        public string Description { get; set; }
+        [Required]
+        public string? Key { get; set; }
+        [Required]
+        public string? Description { get; set; }
 
         public List<string>? Files { get; set; }
 
+        [Required]
         public DateTime StartDate { get; set; }
-
+        
+        [Required]
         public DateTime EndDate { get; set; }
 
-        public string CompanyName { get; set; }
+        [Required]
+        public string? CompanyName { get; set; }
 
+        [Required]
         public int ProjectOwnerId { get; set; }
     }
 }

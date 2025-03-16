@@ -1,0 +1,90 @@
+﻿@model DataAccessLayer.Models.Entity.Release
+@{
+    ViewData["Title"] = "Edit Release";
+}
+
+<div id="response-message">
+</div>
+
+<h1 class="fw-bold text-center">Welcome to Edit Page </h1>
+
+<form id="form" method="post">
+    <div class="form-group">
+        <input asp-for="@Model.ReleaseId" name="ReleaseId" class="form-control" id="id" hidden>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.ReleaseName"> </label>
+        <input asp-for="@Model.ReleaseName" class="form-control" id="name">
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="@Model.ProjectId"> </label>
+        <select asp-for="@Model.ProjectId" class="form-control" asp-items="ViewBag.Projects">
+            <option value="">-- Select Project --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Description"> </label>
+        <textarea asp-for="@Model.Description" class="form-control" id="description"> </textarea>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.StartDate"> </label>
+        <input asp-for="@Model.StartDate" class="form-control" id="startDate">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.EndDate"> </label>
+        <input asp-for="@Model.EndDate" class="form-control" id="endDate">
+    </div>
+    <br /> <br />
+
+    <button type="button" class="btn btn-success" id="submitForm">Update Release</button>
+    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#submitForm').click( function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(form);
+            var id = $('#id').val();
+
+            for( var pair of formData.entries()) {
+                console.log(pair[0]+ ', '+ pair[1]);
+            }
+            //debugger;
+
+            $.ajax({
+                url: `/Release/Edit/${id}`,
+                method:'POST',
+                data:formData,
+                processData: false,
+                contentType: false,
+                success:function(response){
+                    if(response.success){
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(function(){
+                        window.location.href = '@Url.Action("Index", "Release")';
+                        }, 2000);
+                    }
+                    else{
+                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+
+                },
+                error: function(response){
+                    $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
+                }
+
+
+            });
+        });
+
+    });
+</script>
