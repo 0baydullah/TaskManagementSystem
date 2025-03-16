@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.Entity.Tasks
+﻿@model DataAccessLayer.Models.Entity.SubTask
 @using static DataAccessLayer.Enums.Priority
 @using static DataAccessLayer.Enums.Status
 
@@ -6,7 +6,7 @@
     ViewData["Title"] = "Task-Update";
 }
 
-<h1 class="text-center">Update Task</h1>
+<h1 class="text-center">Update SubTask</h1>
 <hr />
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
@@ -57,7 +57,7 @@
             </div>
             <div class="form-group">
 
-                <input asp-for="UserStoryId" class="form-control" type="hidden" value="@Model.UserStoryId" />
+                <input asp-for="TaskId" class="form-control" type="hidden" value="@Model.TaskId" />
             </div>
             <div class="form-group mt-3 d-flex justify-content-center">
                 <input type="button" onclick="submitForm()" value="Update" class="btn btn-success w-50" />
@@ -78,12 +78,12 @@
             var formData = new FormData(form[0]);
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Edit", "Tasks")',
+                url: '@Url.Action("Edit", "SubTask")',
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function () {
-                    window.location.href = '@Url.Action("Details", "UserStory")/'+ @Model.UserStoryId;
+                    window.location.href = '@Url.Action("Details", "Tasks")/'+ @Model.TaskId;
                 },
                 error: function (error) {
                     alert('An error occurred: ' + error);

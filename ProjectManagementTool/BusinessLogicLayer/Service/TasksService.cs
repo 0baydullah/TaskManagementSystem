@@ -35,6 +35,13 @@ namespace BusinessLogicLayer.Service
             return tasks;
         }
 
+        public List<Tasks> GetAllTasks(int id)
+        {
+            var tasks = _tasksRepo.GetAllTasks(id);
+
+            return tasks;
+        }
+
         public Tasks GetTasks(int id)
         {
             var task = _tasksRepo.GetTasks(id);

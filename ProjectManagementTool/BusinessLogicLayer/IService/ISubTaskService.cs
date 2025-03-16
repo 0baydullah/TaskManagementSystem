@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DataAccessLayer.Models.Entity;
+
+namespace BusinessLogicLayer.IService
+{
+    public interface ISubTaskService
+    {
+        public void AddSubTask(SubTask subTask);
+        public void UpdateSubTask(SubTask subTask);
+        public void DeleteSubTask(SubTask subTask);     
+        public SubTask GetSubTask(int id);
+        public List<SubTask> GetAllSubTask();
+        public List<SubTask> GetAllSubTaskByTask(int id);
+    }
+}

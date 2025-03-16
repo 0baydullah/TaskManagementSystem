@@ -14,5 +14,6 @@ namespace BusinessLogicLayer.IService
         public void DeleteTasks(Tasks tasks);
         public Tasks GetTasks(int id);
         public List<Tasks> GetAllTasks();
+        public List<Tasks> GetAllTasks(int id);
     }
 }

@@ -21,6 +21,7 @@ namespace BusinessLogicLayer
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IReleaseService, ReleaseService>();
             services.AddScoped<IFeatureService, FeatureService>();
+            services.AddScoped<ISubTaskService, SubTaskService>();
 
             return services;
         }

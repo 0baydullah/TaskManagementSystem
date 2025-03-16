@@ -20,6 +20,7 @@ namespace DataAccessLayer
             services.AddScoped<ITasksRepo, TasksRepo>();
             services.AddScoped<IReleaseRepo, ReleaseRepo>();
             services.AddScoped<IFeatureRepo, FeatureRepo>();
+            services.AddScoped<ISubTasksRepo, SubTasksRepo>();
 
             return services;
         }

@@ -1,20 +1,20 @@
-﻿using DataAccessLayer.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer.Enums;
 
 namespace DataAccessLayer.Models.Entity
 {
     public class SubTask
     {
+
         [Key]
         public int SubTaskId { get; set; }
         public string Name { get; set; }
         public string Descripton { get; set; }
-
         public int AssignMembersId { get; set; }
         public int ReviewerMemberId { get; set; }
         public double EstimatedTime { get; set; }
