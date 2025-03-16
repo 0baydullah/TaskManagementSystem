@@ -71,25 +71,6 @@ namespace ProjectManagementTool.Controllers
             return View(subTask);
         }
 
-        [HttpGet]
-        public IActionResult Details(int id)
-        {
-            var subTask = _subTaskService.GetSubTask(id);
-
-            if (subTask == null)
-            {
-                return NotFound();
-            }
-
-
-            var assignee = _memberService.GetMember(subTask.AssignMembersId);
-            var reviewer = _memberService.GetMember(subTask.ReviewerMemberId);
-
-            ViewBag.AssigneeName = assignee != null ? _context.Users.FirstOrDefault(u => u.Email == assignee.Email)?.Name : "N/A";
-            ViewBag.ReviewerName = reviewer != null ? _context.Users.FirstOrDefault(u => u.Email == reviewer.Email)?.Name : "N/A";
-
-            return PartialView("_SubTaskDetails", subTask);
-        }
 
         [HttpPost]
         public IActionResult Delete(int id)

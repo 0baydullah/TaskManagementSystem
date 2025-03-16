@@ -67,6 +67,20 @@ namespace ProjectManagementTool.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var task = _tasksService.GetTasks(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            _tasksService.DeleteTasks(task);
+            return Ok();
+        }
+
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
