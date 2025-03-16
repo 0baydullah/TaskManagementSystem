@@ -18,6 +18,7 @@ namespace DataAccessLayer.Models.Entity
         public int AssignMembersId { get; set; }
         public int ReviewerMemberId { get; set; }
         public double EstimatedTime { get; set; }
+        [Required]
         public string Tag { get; set; }
         public Status Status { get; set; }
         public Priority Priority { get; set; }
