@@ -49,14 +49,9 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var status = _statusService.GetStatusById;
+            var status = _statusService.GetStatusById(id);
 
             if (status == null)
             {
