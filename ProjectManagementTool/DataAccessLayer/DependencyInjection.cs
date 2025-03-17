@@ -22,6 +22,7 @@ namespace DataAccessLayer
             services.AddScoped<ISprintRepo, SprintRepo>();
             services.AddScoped<IFeatureRepo, FeatureRepo>();
             services.AddScoped<ISubTasksRepo, SubTasksRepo>();
+            services.AddScoped<IStatusRepo, StatusRepo>();
 
             return services;
         }
