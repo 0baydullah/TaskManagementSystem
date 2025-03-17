@@ -18,15 +18,15 @@ namespace DataAccessLayer.Models.ViewModel
 
         public string Description { get; set; }
 
-        public Category Category { get; set; }
+        public Categoryx Category { get; set; }
 
         public float Points { get; set; }
 
         public double EstimateTime { get; set; }
 
-        public Status Status { get; set; }
+        public Statusx Status { get; set; }
 
-        public Priority Priority { get; set; }
+        public Priorityx Priority { get; set; }
 
         public int SprintId { get; set; } = -1;
 

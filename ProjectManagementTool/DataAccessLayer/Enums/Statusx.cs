@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Enums
 {
-    public enum Status
+    public enum Statusx
     {
         Planned = 1,
         [Description("In Progress")] InProgress,

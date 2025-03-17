@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Enums
 {
-    public enum Category
+    public enum Categoryx
     {
         Development = 1,
         [Description("Testing & Fixing")] TestingFixing,
