@@ -12,9 +12,15 @@ namespace DataAccessLayer.Models.Entity
     {
         [Key]
         public int MemberId { get; set; }
+       
         [Required]
         public string? Email { get; set; }
+
+        [Required]
         public int RoleId { get; set; }
+
+        [Required]
+        public int ProjectId { get; set; }
 
     }
 }

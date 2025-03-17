@@ -111,7 +111,7 @@ namespace ProjectManagementTool.Controllers
                     return BadRequest(new { success = false, errors = new List<string> { "Invalid Email or Password" } });
                 }
 
-                return Ok(new { success = true, redirectUrl = Url.Action("index", "Home") });
+                return Ok(new { success = true, redirectUrl = Url.Action("index", "Project") });
             }
             catch (Exception)
             {

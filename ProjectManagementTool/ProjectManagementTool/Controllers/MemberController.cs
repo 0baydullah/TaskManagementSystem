@@ -12,24 +12,29 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IMemberService _memberService;
         private readonly IRoleService _roleService;
-        public MemberController(IMemberService memberService, IRoleService roleService)
+        private readonly IProjectInfoService _projectInfoService;
+        public MemberController(IMemberService memberService, IRoleService roleService, IProjectInfoService projectInfoService)
         {
             _memberService = memberService;
             _roleService = roleService;
+            _projectInfoService = projectInfoService;
         }
        
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int projectId)
         {
-            var members = _memberService.GetAllMember();
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
+            ViewBag.ProjectId = projectId;
             return View(members);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int projectId)
         {
             var roles = _roleService.GetAllRole();
             ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
+
+            ViewData["ProjectId"] = projectId;
             return View();
         }
 
@@ -81,10 +86,14 @@ namespace ProjectManagementTool.Controllers
             {
                 MemberId = member.MemberId,
                 Email = member.Email,
-                RoleId = member.RoleId
+                RoleId = member.RoleId,
+                ProjectId = member.ProjectId
             };
             var roles = _roleService.GetAllRole();
             ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
+            
+            var projects = _projectInfoService.GetAllProjectInfo();
+            ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
 
             return View(model);
         }
@@ -115,6 +124,7 @@ namespace ProjectManagementTool.Controllers
                 }
                 member.Email = model.Email;
                 member.RoleId = model.RoleId;
+                member.ProjectId = model.ProjectId;
                 _memberService.UpdateMember(member);
                 isSuccess = true;
                 message = "Member updated successfully!";

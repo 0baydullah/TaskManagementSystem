@@ -6,8 +6,9 @@
 <h1>Welcome to Member Panel</h1>
 
 <p>
-    <a class="btn btn-success fw-bold" asp-action="Create">Add Member</a>
+    <a class="btn btn-success fw-bold" href="@Url.Action("Create", "Member", new { projectId = ViewBag.ProjectId })">Add Member</a>
 </p>
+
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -20,6 +21,9 @@
             </th>
             <th>
                 Role
+            </th>
+            <th>
+                Project Id
             </th>
             <th>
                 Action
@@ -40,6 +44,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectId)
                     </td>
                     <td>
                         <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.MemberId">Edit</a> |

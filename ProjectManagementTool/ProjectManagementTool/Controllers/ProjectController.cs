@@ -10,19 +10,23 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ProjectManagementTool.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class ProjectController : Controller
     {
         private readonly IProjectInfoService _projectInfoService;
         private readonly IWebHostEnvironment _env;
         private readonly UserManager<UserInfo> _userManager;
+        private readonly IReleaseService _releaseService;
+        private readonly ISprintService _sprintService;
 
         public ProjectController(IWebHostEnvironment env, IProjectInfoService projectInfoService, 
-            UserManager<UserInfo> userManager)
+            UserManager<UserInfo> userManager, IReleaseService releaseService, ISprintService sprintService)
         {
             _env = env;
             _projectInfoService = projectInfoService;
             _userManager = userManager;
+            _releaseService = releaseService;
+            _sprintService = sprintService;
         }
 
         public IActionResult Index()
@@ -253,6 +257,20 @@ namespace ProjectManagementTool.Controllers
             }
             return Json(new { success = $"{isSuccess}", message = $"{message}" });
 
+        }
+
+        public IActionResult Details(int id)
+        {
+            var project = _projectInfoService.GetProjectInfo(id);
+            if (project == null)
+            {
+                return NotFound("Project not found! ");
+            }
+            ViewBag.ProjectName = project.Name;
+
+            var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == id).ToList();
+            //var sprints = _sprintService.GetAllSprint().Where(s => s.ReleaseId == id).ToList();
+            return View(project);
         }
 
     }

@@ -58,13 +58,15 @@ namespace DataAccessLayer.Repository
                     Name = user.Name,
                     Email = member.Email,
                     RoleId = member.RoleId,
+                    ProjectId = member.ProjectId
 
                 }).Join(_context.Roles, m => m.RoleId, r => r.Id, (m, r) => new MemberWithRoleVM
                 {
                     MemberId = m.MemberId,
                     Name = m.Name,
                     Email = m.Email,
-                    Role = r.Name
+                    Role = r.Name,
+                    ProjectId = m.ProjectId
                 }).ToList();
                 return result;
             }

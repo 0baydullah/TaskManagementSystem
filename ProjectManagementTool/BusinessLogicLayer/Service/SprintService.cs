@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,9 @@ namespace BusinessLogicLayer.Service
             _sprintRepo.DeleteSprint(sprint);
         }
 
-        public List<Sprint> GetAllSprint()
+        public List<SprintVM> GetAllSprint(int projectId)
         {
-           var sprints = _sprintRepo.GetAllSprint();
+           var sprints = _sprintRepo.GetAllSprint(projectId);
            return sprints;
         }
 
