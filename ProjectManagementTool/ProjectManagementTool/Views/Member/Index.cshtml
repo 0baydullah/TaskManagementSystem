@@ -6,7 +6,7 @@
 <h1>Welcome to Member Panel</h1>
 
 <p>
-    <a class="btn btn-success fw-bold" asp-action="Create" asp-controller="Member" asp-route-id="@Model.FirstOrDefault()?.ProjectId">Add Member</a>
+    <a class="btn btn-success fw-bold" href="@Url.Action("Create", "Member", new { projectId = ViewBag.ProjectId })">Add Member</a>
 </p>
 
 

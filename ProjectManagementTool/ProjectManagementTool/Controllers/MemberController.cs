@@ -24,6 +24,7 @@ namespace ProjectManagementTool.Controllers
         public IActionResult Index(int projectId)
         {
             var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
+            ViewBag.ProjectId = projectId;
             return View(members);
         }
 
