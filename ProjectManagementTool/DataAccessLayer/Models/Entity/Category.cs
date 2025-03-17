@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models.Entity
 {
-    public class Status
+    public class Category
     {
         [Key]
-        public int StatusId { get; set; }
+        public int CategoryId { get; set; }
         [Required]
         [MaxLength(20)]
         public string Name { get; set; }
