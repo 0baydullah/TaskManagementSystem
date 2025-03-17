@@ -56,6 +56,9 @@
                 <input asp-for="SprintId" class="form-control" />
                 <span asp-validation-for="SprintId" class="text-danger"></span>
             </div>
+            <div>
+                <input type="hidden" asp-for="@Model.ProjectId" hidden />
+            </div>
             <div class="form-group mt-2 d-flex justify-content-center ">
                 <button type="button" class="btn btn-success w-50 " onclick="submitForm()">Update</button>
             </div>
@@ -79,8 +82,8 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function() {
-                    window.location.href = '@Url.Action("Index", "UserStory")';
+                success: function(r) {
+                    window.location.href = r.redirectUrl;
                 },
                 error: function (error) {
                     alert('An error occurred: ' + error);
