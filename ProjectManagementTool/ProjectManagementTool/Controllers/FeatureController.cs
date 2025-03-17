@@ -2,6 +2,7 @@
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -44,7 +45,7 @@ namespace ProjectManagementTool.Controllers
 
                 if (result == true)
                 {
-                    return Ok(new { success = true, redirectUrl = Url.Action("GetAll", "Feature") });
+                    return Ok(new { success = true, redirectUrl = @Url.Action("GetAll", "Feature", new { projectId = featureVM.ProjectId })});
                 }
                 else
                 {
@@ -78,8 +79,9 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var feature = await _featureService.GetFeatureById(id);
-                var members = _memberService.GetAllMember();
-                var releases = _releaseService.GetAllReleases();
+                var members = _memberService.GetAllMember().Where(m => m.ProjectId == feature.ProjectId);
+                var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == feature.ProjectId);
+
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
                 ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
                
@@ -100,7 +102,7 @@ namespace ProjectManagementTool.Controllers
 
                 if (result == true)
                 {
-                    return Ok(new { success = true, redirectUrl = Url.Action("GetAll", "Feature") });
+                    return Ok(new { success = true, redirectUrl = @Url.Action("GetAll", "Feature", new { projectId = featureVM.ProjectId }) });
                 }
                 else
                 {

@@ -72,8 +72,8 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function () {
-                    window.location.href = '@Url.Action("GetAll", "Feature")';
+                success: function (response) {
+                    window.location.href = response.redirectUrl;
                 },
                 error: function (error) {
                     alert('An error occurred: ' + error);

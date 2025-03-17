@@ -13,7 +13,7 @@ namespace DataAccessLayer.IRepository
         public Task<bool> CreateFeature(Feature feature);
         public Task<List<FeatureWithMemberReleaseVM>> GetAllFeature(int projectId); 
         public Task<Feature> GetFeatureById(int id);
-        public Task<Feature> GetFeatureByName(string name, int id);
+        public Task<Feature> GetFeatureByName(string name, int id, int projectId);
         public Task<bool> UpdateFeature(Feature feature);
         public Task<bool> DeleteFeature(Feature feature); 
     }

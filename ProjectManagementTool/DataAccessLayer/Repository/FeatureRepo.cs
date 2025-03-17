@@ -21,7 +21,7 @@ namespace DataAccessLayer.Repository
         }
         public async Task<bool> CreateFeature(Feature feature)
         {
-            var existFeature = await _context.Features.FirstOrDefaultAsync(f => f.Name.Equals(feature.Name));
+            var existFeature = await _context.Features.FirstOrDefaultAsync(f => f.Name.Equals(feature.Name) && f.ProjectId == feature.ProjectId);
 
             if (existFeature == null)
             {
@@ -84,9 +84,9 @@ namespace DataAccessLayer.Repository
             return feature;
         }
 
-        public async Task<Feature> GetFeatureByName(string name, int id) 
+        public async Task<Feature> GetFeatureByName(string name, int id, int projectId) 
         {
-            var feature = await _context.Features.FirstOrDefaultAsync(f => f.Name == name && f.FeatureId != id);
+            var feature = await _context.Features.FirstOrDefaultAsync(f => f.Name == name && f.FeatureId != id && f.ProjectId == projectId);
             return feature;
         }
 
