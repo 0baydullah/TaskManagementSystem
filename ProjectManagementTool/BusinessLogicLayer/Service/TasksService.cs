@@ -12,10 +12,12 @@ namespace BusinessLogicLayer.Service
     public class TasksService : ITasksService
     {
         private readonly ITasksRepo _tasksRepo;
+        private readonly ISubTasksRepo _subTasksRepo;
 
-        public TasksService(ITasksRepo tasksRepo)
+        public TasksService(ITasksRepo tasksRepo, ISubTasksRepo subTasksRepo)
         {
             _tasksRepo = tasksRepo;
+            _subTasksRepo = subTasksRepo;
         }
 
         public void AddTasks(Tasks tasks)
@@ -26,6 +28,7 @@ namespace BusinessLogicLayer.Service
         public void DeleteTasks(Tasks tasks)
         {
             _tasksRepo.DeleteTasks(tasks);
+            _subTasksRepo.DeleteAllAssociation(tasks.TaskId);
         }
 
         public List<Tasks> GetAllTasks()

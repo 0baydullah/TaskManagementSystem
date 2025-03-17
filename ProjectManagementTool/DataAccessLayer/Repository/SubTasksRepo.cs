@@ -44,6 +44,20 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public void DeleteAllAssociation(int id)
+        {
+            try
+            {
+                var subTask = _context.SubTask.Where(x => x.TaskId == id).ToList();
+                _context.SubTask.RemoveRange(subTask);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the sub task.", ex);
+            }
+        }
+
         public List<SubTask> GetAllSubTask()
         {
             try
