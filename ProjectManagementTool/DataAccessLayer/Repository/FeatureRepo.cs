@@ -35,40 +35,46 @@ namespace DataAccessLayer.Repository
             }  
         }
 
-        public async Task<List<FeatureWithMemberReleaseVM>> GetAllFeature()
+        public async Task<List<FeatureWithMemberReleaseVM>> GetAllFeature(int projectId)
         {
-            var features = await _context.Features.Join(_context.Members, f => f.MemberId, m=> m.MemberId, (f,m) => new
+            var features = await _context.Features.Where(feature => feature.ProjectId == projectId).Join(_context.Members, f => f.MemberId, m => m.MemberId, (f, m) => new
             {
                 FeatureId = f.FeatureId,
                 FeatureName = f.Name,
                 Description = f.Description,
                 EstimatedPoint = f.EstimatedPoint,
-                ReleaseId = f.ReleaseId,
                 MemberId = f.MemberId,
+                ProjectId = f.ProjectId,
+                ReleaseId = f.ReleaseId,
                 Tag = f.Tag,
-                Email = m.Email 
-            }).Join(_context.Users, f=> f.Email, u => u.Email, (f,u) => new
+                Email = m.Email
+            }).Join(_context.Users, f => f.Email, u => u.Email, (f, u) => new
             {
                 FeatureId = f.FeatureId,
                 FeatureName = f.FeatureName,
                 Description = f.Description,
                 EstimatedPoint = f.EstimatedPoint,
-                ReleaseId = f.ReleaseId,
                 MemberId = f.MemberId,
+                ProjectId = f.ProjectId,
+                ReleaseId = f.ReleaseId,
                 Tag = f.Tag,
                 MemberName = u.Name,
-            }).Join(_context.Releases, f=> f.ReleaseId, r => r.ReleaseId,(f,r) => new FeatureWithMemberReleaseVM
-            {
-                FeatureId = f.FeatureId,
-                Name = f.FeatureName,
-                Description = f.Description,
-                EstimatedPoint = f.EstimatedPoint,
-                ReleaseId = f.ReleaseId,
-                MemberId = f.MemberId,
-                Tag = f.Tag,
-                MemberName = f.MemberName,
-                ReleaseName = r.ReleaseName
-            }).ToListAsync();
+
+            }).GroupJoin(_context.Releases, f => f.ReleaseId, r => r.ReleaseId, (f, r) => new { f, r }).SelectMany(
+                x => x.r.DefaultIfEmpty(), (x, r) => new FeatureWithMemberReleaseVM
+                {
+                    FeatureId = x.f.FeatureId,
+                    Name = x.f.FeatureName,
+                    Description = x.f.Description,
+                    EstimatedPoint = x.f.EstimatedPoint,
+                    ReleaseId = x.f.ReleaseId,
+                    MemberId = x.f.MemberId,
+                    ProjectId = x.f.ProjectId,
+                    Tag = x.f.Tag,
+                    MemberName = x.f.MemberName,
+                    ReleaseName = r != null ? r.ReleaseName : "No release"
+                }).ToListAsync();
+
             return features;
         }
 

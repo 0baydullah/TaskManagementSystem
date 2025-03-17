@@ -18,12 +18,13 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int projectId) 
         {
-            var members = _memberService.GetAllMember();
-            var releases = _releaseService.GetAllReleases();
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId);
+            var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId);
             ViewBag.Members = new SelectList(members, "MemberId", "Name");
             ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
+            ViewBag.ProjectId = projectId;
             
             return View();
         }
@@ -57,11 +58,12 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int projectId)
         {
             try
             {
-                var features = await _featureService.GetAllFeature();
+                var features = await _featureService.GetAllFeature(projectId);
+                ViewBag.ProjectId = projectId;
                 return View(features);
             }
             catch (Exception)

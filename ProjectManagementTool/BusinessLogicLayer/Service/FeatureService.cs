@@ -28,6 +28,7 @@ namespace BusinessLogicLayer.Service
                     EstimatedPoint = featureVM.EstimatedPoint,
                     ReleaseId = featureVM.ReleaseId,
                     MemberId = featureVM.MemberId,
+                    ProjectId = featureVM.ProjectId,
                     Tag = featureVM.Tag,
                 };
 
@@ -40,11 +41,11 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public Task<List<FeatureWithMemberReleaseVM>> GetAllFeature()
+        public Task<List<FeatureWithMemberReleaseVM>> GetAllFeature(int projectId)
         {
             try
             {
-                var features = _featureRepo.GetAllFeature();
+                var features = _featureRepo.GetAllFeature(projectId);
                 return features;
             }
             catch (Exception)
