@@ -44,6 +44,20 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public void DeleteAllAssociation(int id)
+        {
+            try
+            {
+                var tasks = _context.Tasks.Where(x => x.UserStoryId == id).ToList();
+                _context.Tasks.RemoveRange(tasks);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting all tasks associated with the user story.", ex);
+            }
+        }
+
         public List<Tasks> GetAllTasks()
         {
             try

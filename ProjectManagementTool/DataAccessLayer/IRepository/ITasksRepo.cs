@@ -12,6 +12,7 @@ namespace DataAccessLayer.IRepository
         public void AddTasks(Tasks tasks);
         public void UpdateTasks(Tasks tasks);
         public void DeleteTasks(Tasks tasks);
+        public void DeleteAllAssociation(int id);
         public Tasks GetTasks(int id);
         public List<Tasks> GetAllTasks();
         public List<Tasks> GetAllTasks(int id);

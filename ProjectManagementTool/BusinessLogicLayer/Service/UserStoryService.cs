@@ -12,9 +12,11 @@ namespace BusinessLogicLayer.Service
     public class UserStoryService : IUserStoryService
     {
         private readonly IUserStoryRepo _userStoryRepo;
-        public UserStoryService(IUserStoryRepo userStoryRepo)
+        private readonly ITasksRepo _taskRepo;
+        public UserStoryService(IUserStoryRepo userStoryRepo, ITasksRepo taskRepo)
         {
             _userStoryRepo = userStoryRepo;
+            _taskRepo = taskRepo;
         }
         public void AddUserStory(UserStory userStory)
         {
@@ -24,6 +26,7 @@ namespace BusinessLogicLayer.Service
         public void DeleteUserStory(UserStory userStory)
         {
             _userStoryRepo.DeleteUserStory(userStory);
+            _taskRepo.DeleteAllAssociation(userStory.StoryId);
         }
 
         public List<UserStory> GetAllUserStory()
