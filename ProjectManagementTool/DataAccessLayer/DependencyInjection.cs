@@ -24,6 +24,7 @@ namespace DataAccessLayer
             services.AddScoped<ISubTasksRepo, SubTasksRepo>();
             services.AddScoped<IStatusRepo, StatusRepo>();
             services.AddScoped<IPriorityRepo, PriorityRepo>();
+            services.AddScoped<ICategoryRepo, CategoryRepo>();
 
             return services;
         }
