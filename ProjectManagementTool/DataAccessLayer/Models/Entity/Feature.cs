@@ -13,13 +13,20 @@ namespace DataAccessLayer.Models.Entity
         [Key]
         public int FeatureId {  get; set; }
         [ForeignKey("Release")]
+        [Required]
         public int ReleaseId { get; set; }
         [ForeignKey("Member")]
+        [Required]
         public int MemberId { get; set; }
+        [Required]
         public int ProjectId {  get; set; }
+        [Required]
         public double EstimatedPoint { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public string Tag { get; set; }
     }
 }

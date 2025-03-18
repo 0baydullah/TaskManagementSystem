@@ -7,6 +7,7 @@
 <h1 class="text-center">Create Feature</h1>
 <hr />
 <div class="row d-flex justify-content-center">
+    <p id="errorMessage"></p>
     <div class="col-md-4">
         <form asp-action="Create" id="createForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,7 +34,7 @@
                 <span asp-validation-for="ReleaseId" class="text-danger"></span>
             </div>
             <div class="form-group mt-2">
-                <label asp-for="MemberId" class="control-label">Member</label>
+                <label asp-for="MemberId" class="control-label">Support Member</label>
                 <select asp-for="@Model.MemberId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
                     <option value="">-- Select Member --</option>
                 </select>
@@ -73,7 +74,15 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    window.location.href = response.redirectUrl;
+                    if(response.success == true){
+                        window.location.href = response.redirectUrl;
+                    }
+                    else{
+                        
+                        //$("#errorMessage").Val = response.errors;
+                        console.log(response.errors);
+                    }
+                    
                 },
                 error: function (error) {
                     alert('An error occurred: ' + error);
