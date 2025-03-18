@@ -9,10 +9,10 @@ namespace DataAccessLayer.IRepository
 {
     public interface IPriorityRepo
     {
-        List<Status> GetAllPriorities();
-        Status GetPriorityById(int id);
-        void AddPriority(Status status);
-        void UpdatePriority(Status status);
+        List<Priority> GetAllPriorities();
+        Priority GetPriorityById(int id);
+        void AddPriority(Priority priority);
+        void UpdatePriority(Priority priority);
         void DeletePriority(int id);
     }
 }
