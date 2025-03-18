@@ -24,6 +24,7 @@ namespace BusinessLogicLayer
             services.AddScoped<ISubTaskService, SubTaskService>();
             services.AddScoped<ISprintService, SprintService>();
             services.AddScoped<IStatusService, StatusService>();
+            services.AddScoped<IPriorityService, PriorityService>();
 
             return services;
         }
