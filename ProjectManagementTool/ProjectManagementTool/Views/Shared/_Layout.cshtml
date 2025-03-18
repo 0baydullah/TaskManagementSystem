@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProjectManagementTool</title>
+    <title>@ViewData["Title"] - PMS</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjectManagementTool.styles.css" asp-append-version="true" />
@@ -15,7 +15,7 @@
             <div class="container">
                 <a class="navbar-brand text-danger" asp-area="" asp-controller="Home" asp-action="Index">PMS</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -48,13 +48,19 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if(ViewData["Banner"] != null)
+            {
+                <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded text-center fw-bold">
+                    <h1>@ViewData["Banner"]</h1>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - ProjectManagementTool - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container fw-bold text-center">
+            &copy; 2025 - Project Management Tool - <a class="text-decoration-none" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

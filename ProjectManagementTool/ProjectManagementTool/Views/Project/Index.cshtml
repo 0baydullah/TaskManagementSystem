@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.Entity.ProjectInfo>
 @{
     ViewData["Title"] = "Index";
+    ViewData["Banner"] = "Projects";
 }
-
-<h1>Index</h1>
 
 <p>
     <a class="btn btn-success fw-bold" asp-action="Create">Create Project</a>
@@ -39,8 +38,8 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        <a href="/Project/Details/@item.ProjectId"> @Html.DisplayFor(modelItem => item.Name) </a>
+                    <td class="fw-bold">
+                        <a class="text-decoration-none" href="/Project/Details/@item.ProjectId"> @Html.DisplayFor(modelItem => item.Name) </a>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Key)
@@ -74,7 +73,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <h3 class="modal-title text-black" id="exampleModalLabel">Are you sure ?</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
@@ -102,14 +101,21 @@
             $.ajax({
                 url: `/Project/Delete/${projectIdToDelete}`,
                 type: 'POST',
-                success: function (result) {
-                    $("#modal").modal('hide');
-                    location.reload();
-                    console.log(result);
+                success: function (response) {
+                    if(response.success) {
+                        $("#modal").modal('hide');
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);  
+                    }
 
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
                 },
-                error: function (err) {
-                    alert('Error occurred on deleting project' + err);
+                error: function (response) {
+                      $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             });
         }

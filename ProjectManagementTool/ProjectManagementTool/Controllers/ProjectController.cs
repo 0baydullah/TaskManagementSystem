@@ -101,8 +101,7 @@ namespace ProjectManagementTool.Controllers
                 _projectInfoService.AddProjectInfo(project);
                 isSuccess = true;
                 message = "Project created successfully!";
-                
-
+               
             }
 
             return Json(new { success = $"{isSuccess}", message = $"{message}" });
@@ -133,7 +132,6 @@ namespace ProjectManagementTool.Controllers
                 };
                 
                 return View(model);
-
             }
         }
 
@@ -160,7 +158,7 @@ namespace ProjectManagementTool.Controllers
                 if (project == null)
                 {
                     isSuccess = false;
-                    message = "Student not found!";
+                    message = "Project not found!";
 
                     return Json(new { success = $"{isSuccess}", message = $"{message}" });
                 }
@@ -193,7 +191,8 @@ namespace ProjectManagementTool.Controllers
                 project.EndDate = model.EndDate;
                 project.CompanyName = model.CompanyName;
                 project.ProjectOwnerId = model.ProjectOwnerId;
-                
+                project.Files = files;
+
                 _projectInfoService.UpdateProjectInfo(project);
                 isSuccess = true;
                 message = "Data updated successfully!";
@@ -203,8 +202,8 @@ namespace ProjectManagementTool.Controllers
         }
 
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
             var project = _projectInfoService.GetProjectInfo(id);
 
