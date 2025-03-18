@@ -9,10 +9,10 @@ namespace BusinessLogicLayer.IService
 {
     public interface IPriorityService
     {
-        List<Status> GetAllPriority();
-        Status GetPriorityById(int id);
-        void AddPriority(Status status);
-        void UpdatePriority(Status status);
+        List<Priority> GetAllPriority();
+        Priority GetPriorityById(int id);
+        void AddPriority(Priority priority);
+        void UpdatePriority(Priority priority);
         void DeletePriority(int id);
     }
 }
