@@ -74,16 +74,16 @@
 
 @section Scripts {
     <script>
-        let userStoryIdToDelete = 0;
+        let statusIdToDelete = 0;
 
         function openDeleteModal(id) {
-            userStoryIdToDelete = id;
+            statusIdToDelete = id;
             $("#modal").modal('show');
         }
 
         function confirmDelete() {
             $.ajax({
-                url: '/Status/Delete/' + userStoryIdToDelete,
+                url: '/Status/Delete/' + statusIdToDelete,
                 type: 'POST',
                 success: function (result) {
                     $("#modal").modal('hide');
@@ -91,7 +91,7 @@
                     console.log(result);
                 },
                 error: function (err) {
-                    alert('Error deleting user story' + err);
+                    alert('Error deleting Status' + err);
                 }
             });
         }

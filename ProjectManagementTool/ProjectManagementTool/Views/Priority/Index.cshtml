@@ -1,7 +1,7 @@
-﻿@model IEnumerable<DataAccessLayer.Models.Entity.Status>
+﻿@model IEnumerable<DataAccessLayer.Models.Entity.Priority>
 
 @{
-    ViewData["Title"] = "Statuses";
+    ViewData["Title"] = "Priorities";
 }
 
 <div style="text-align: center;">
@@ -15,7 +15,7 @@
     <thead>
         <tr>
             <th>
-                Status Name
+                Priority Name
             </th>
             <th>
                 Color
@@ -39,10 +39,10 @@
 				@item.ColorHex
 			</td>
             <td>
-                <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.StatusId">
+                <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.PriorityId">
                     <i class="text-danger fa-solid fa-pen"></i>
                 </a>
-                <a class="btn btn-light" onclick="openDeleteModal('@item.StatusId')">
+                <a class="btn btn-light" onclick="openDeleteModal('@item.PriorityId')">
                     <i class="text-danger fa-solid fa-trash"></i>
                 </a>
             </td>
@@ -57,11 +57,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Priority?? !!</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
-                You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
+                You are deleting a Priority....after clicking on "Delete" button it wont be undone!
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
@@ -74,16 +74,16 @@
 
 @section Scripts {
     <script>
-        let userStoryIdToDelete = 0;
+        let priorityIdToDelete = 0;
 
         function openDeleteModal(id) {
-            userStoryIdToDelete = id;
+            priorityIdToDelete = id;
             $("#modal").modal('show');
         }
 
         function confirmDelete() {
             $.ajax({
-                url: '/Status/Delete/' + userStoryIdToDelete,
+                url: '/Priority/Delete/' + priorityIdToDelete,
                 type: 'POST',
                 success: function (result) {
                     $("#modal").modal('hide');
@@ -91,7 +91,7 @@
                     console.log(result);
                 },
                 error: function (err) {
-                    alert('Error deleting user story' + err);
+                    alert('Error deleting Priority' + err);
                 }
             });
         }
