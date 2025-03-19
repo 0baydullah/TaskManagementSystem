@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +73,10 @@
             <input type="password" id="password" name="password" required>
 
             <button type="submit">Login</button>
-            <p class="login-text"><a href="/Account/ForgotPassword">Forgot password</a></p>
+            <p class="login-text">
+                <a class="m-lg-5" href="/Account/ForgotPassword">Forgot password</a>
+                <a class="m-lg-5" href="/Account/Register">Sign up</a>
+             </p>
         </form>
 
         <div id="responseMessage"></div>
