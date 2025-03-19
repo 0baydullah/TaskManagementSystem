@@ -3,11 +3,10 @@
 
 @{
     ViewData["Title"] = "User Story";
+    ViewData["Banner"] = "Features";
 }
 
-<div style="text-align: center;">
-    <h1>Feature</h1>
-</div>
+
 
 <div style="text-align: end;">
     <a href="@Url.Action("Create", "Feature", new { projectId = ViewBag.ProjectId })" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> Feature</a>

@@ -16,7 +16,6 @@ namespace ProjectManagementTool.Controllers
         private readonly SignInManager<UserInfo> _signInManager;
         private readonly IEmailSenderService _emailSenderService;
 
-
         public AccountController(UserManager<UserInfo> userManager, SignInManager<UserInfo> signInManager,
             IEmailSenderService emailSenderService)
         {
@@ -123,8 +122,15 @@ namespace ProjectManagementTool.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Login","Account");
+            try
+            {
+                await _signInManager.SignOutAsync();
+                return RedirectToAction("Login", "Account");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpGet]
@@ -136,20 +142,27 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    await SendForgotPasswordEmail(user.Email, user);
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+
+                    if (user != null)
+                    {
+                        await SendForgotPasswordEmail(user.Email, user);
+                        return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                    }
+
                     return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
 
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                return View(model);
             }
-
-            return View(model);
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpGet]
@@ -160,13 +173,15 @@ namespace ProjectManagementTool.Controllers
 
         private async Task SendForgotPasswordEmail(string? email, UserInfo? user)
         {
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var passwordResetLink = Url.Action("ResetPassword", "Account",
-                new { Email = email, Token = token }, protocol: HttpContext.Request.Scheme);
-            var safeLink = HtmlEncoder.Default.Encode(passwordResetLink);
-            var subject = "Reset Your Password";
+            try
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var passwordResetLink = Url.Action("ResetPassword", "Account",
+                    new { Email = email, Token = token }, protocol: HttpContext.Request.Scheme);
+                var safeLink = HtmlEncoder.Default.Encode(passwordResetLink);
+                var subject = "Reset Your Password";
 
-            var messageBody = $@"
+                var messageBody = $@"
             <div style=""font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #333; line-height: 1.5; padding: 20px;"">
                 <h2 style=""color: #007bff; text-align: center;"">Password Reset Request</h2>
         
@@ -190,58 +205,78 @@ namespace ProjectManagementTool.Controllers
                 <p style=""margin-top: 30px;"">Thank you,<br />Project Management Tool</p>
             </div>";
 
-            await _emailSenderService.SendEmailAsync(email, subject, messageBody, IsBodyHtml: true);
+                await _emailSenderService.SendEmailAsync(email, subject, messageBody, IsBodyHtml: true);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpGet]
         public IActionResult ResetPassword(string Token, string Email)
         {
-            if (Token == null || Email == null)
+            try
             {
-                ViewBag.ErrorTitle = "Invalid Password Reset Token";
-                ViewBag.ErrorMessage = "The Link is Expired or Invalid";
-                return View("Error");
-            }
-            else
-            {
-                ResetPasswordVM model = new ResetPasswordVM()
+                if (Token == null || Email == null)
                 {
-                    Token = Token,
-                    Email = Email
-                };
+                    ViewBag.ErrorTitle = "Invalid Password Reset Token";
+                    ViewBag.ErrorMessage = "The Link is Expired or Invalid";
+                    return View("Error");
+                }
+                else
+                {
+                    ResetPasswordVM model = new ResetPasswordVM()
+                    {
+                        Token = Token,
+                        Email = Email
+                    };
 
-                return View(model);
+                    return View(model);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordVM model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                    var user = await _userManager.FindByEmailAsync(model.Email);
 
-                    if (result.Succeeded)
+                    if (user != null)
                     {
-                        return RedirectToAction("ResetPasswordConfirmation", "Account");
+                        var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("ResetPasswordConfirmation", "Account");
+                        }
+
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+
+                        return View(model);
                     }
 
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-
-                    return View(model);
+                    return RedirectToAction("ResetPasswordConfirmation", "Account");
                 }
 
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return View(model);
             }
-
-            return View(model);
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpGet]
@@ -261,30 +296,37 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordVM model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = await _userManager.GetUserAsync(User);
-                if (user == null)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Login", "Account");
-                }
-
-                var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ChangePasswordConfirmation", "Account");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
+                    var user = await _userManager.GetUserAsync(User);
+                    if (user == null)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+                        return RedirectToAction("Login", "Account");
+                    }
+
+                    var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ChangePasswordConfirmation", "Account");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
                     }
                 }
-            }
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [Authorize]

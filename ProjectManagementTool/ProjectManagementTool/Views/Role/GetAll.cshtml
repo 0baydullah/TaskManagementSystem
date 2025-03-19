@@ -19,17 +19,26 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if(Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                
+                    <td>
+                        <a class="btn btn-primary" onclick="openUpdateModal('@item.RoleId')">Edit</a>
+                        <a class="btn btn-danger" onclick="openDeleteModal('@item.RoleId')">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoleName)
-                </td>
-                
-                <td>
-                    <a class="btn btn-primary" onclick="openUpdateModal('@item.RoleId')">Edit</a>
-                    <a class="btn btn-danger" onclick="openDeleteModal('@item.RoleId')">Delete</a>
-                </td>
+                <td colspan="7" class="text-danger text-center fw-bold">No data found</td>
             </tr>
         }
     </tbody>
