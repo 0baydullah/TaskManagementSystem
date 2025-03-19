@@ -15,15 +15,17 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IProjectInfoService _projectInfoService;
         private readonly IWebHostEnvironment _env;
+        private readonly IFileService _fileService;
         private readonly UserManager<UserInfo> _userManager;
         private readonly IReleaseService _releaseService;
         private readonly ISprintService _sprintService;
 
-        public ProjectController(IWebHostEnvironment env, IProjectInfoService projectInfoService, 
+        public ProjectController(IWebHostEnvironment env, IProjectInfoService projectInfoService, IFileService fileService,
             UserManager<UserInfo> userManager, IReleaseService releaseService, ISprintService sprintService)
         {
             _env = env;
             _projectInfoService = projectInfoService;
+            _fileService = fileService;
             _userManager = userManager;
             _releaseService = releaseService;
             _sprintService = sprintService;
@@ -40,8 +42,8 @@ namespace ProjectManagementTool.Controllers
         {
             return View();
         }
-        
-        
+
+
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] ProjectInfoVM model)
         {
@@ -50,7 +52,7 @@ namespace ProjectManagementTool.Controllers
 
             if (ModelState.IsValid == false)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select( e => e.ErrorMessage);
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
 
                 foreach (var error in errors)
                 {
@@ -61,24 +63,6 @@ namespace ProjectManagementTool.Controllers
 
             else
             {
-                var files = new List<string>();
-
-                if (model.Files != null && model.Files.Count > 0)
-                {
-                      foreach(var file in model.Files)
-                      {
-                        string folder = Path.Combine(_env.WebRootPath, "files");
-                        if (Directory.Exists(folder) == false)
-                        {
-                            Directory.CreateDirectory(folder);
-                        }
-
-                        string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                        string filePath = Path.Combine(folder, fileName);
-                        await file.CopyToAsync(new FileStream(filePath, FileMode.Create));
-                        files.Add(fileName);
-                      }
-                }
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null)
                 {
@@ -86,26 +70,15 @@ namespace ProjectManagementTool.Controllers
                     message = "User not found!";
                     return Json(new { isSuccess, message });
                 }
-                var project = new ProjectInfo
-                {
-                    Name = model.Name,
-                    Key = model.Key,
-                    Description = model.Description,
-                    StartDate = model.StartDate,
-                    EndDate = model.EndDate,
-                    CompanyName = model.CompanyName,
-                    ProjectOwnerId = user.Id,
-                    Files = files
-                };
 
-                _projectInfoService.AddProjectInfo(project);
+                _projectInfoService.AddProjectInfo(model, user);
                 isSuccess = true;
                 message = "Project created successfully!";
-               
             }
 
             return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
+
 
         [HttpGet]
         public IActionResult Edit(int id)
@@ -163,37 +136,7 @@ namespace ProjectManagementTool.Controllers
                     return Json(new { success = $"{isSuccess}", message = $"{message}" });
                 }
 
-                var files = project.Files ?? new List<string>();
-
-
-                if (model.Files != null && model.Files.Count > 0)
-                {
-                    foreach (var file in model.Files)
-                    {
-                        string folder = Path.Combine(_env.WebRootPath, "files");
-                        if (Directory.Exists(folder) == false)
-                        {
-                            Directory.CreateDirectory(folder);
-                        }
-
-                        string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
-                        string filePath = Path.Combine(folder, fileName);
-                        await file.CopyToAsync(new FileStream(filePath, FileMode.Create));
-                        files.Add(fileName);
-                    }
-                }
-
-
-                project.Name = model.Name;
-                project.Key = model.Key;
-                project.Description = model.Description;
-                project.StartDate = model.StartDate;
-                project.EndDate = model.EndDate;
-                project.CompanyName = model.CompanyName;
-                project.ProjectOwnerId = model.ProjectOwnerId;
-                project.Files = files;
-
-                _projectInfoService.UpdateProjectInfo(project);
+                _projectInfoService.UpdateProjectInfo(model);
                 isSuccess = true;
                 message = "Data updated successfully!";
             }
