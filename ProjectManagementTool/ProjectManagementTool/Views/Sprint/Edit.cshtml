@@ -1,12 +1,12 @@
 ﻿@model DataAccessLayer.Models.Entity.Sprint
 @{
     ViewData["Title"] = "Edit Sprint";
+    ViewData["Banner"] = "Edit Sprint";
 }
 
 <div id="response-message">
 </div>
 
-<h1 class="fw-bold text-center">Welcome to Edit Page </h1>
 
 <form id="form" method="post">
     <div class="form-group">
@@ -77,7 +77,7 @@
                     if(response.success){
                         $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
                         setTimeout(function(){
-                        window.location.href = '@Url.Action("Index", "Sprint")';
+                        window.location.href = '@Url.Action("Index", "Sprint", new {projectId = ViewBag.ProjectId})';
                         }, 2000);
                     }
                     else{

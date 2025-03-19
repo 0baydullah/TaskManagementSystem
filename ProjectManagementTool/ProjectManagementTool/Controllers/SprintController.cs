@@ -22,27 +22,29 @@ namespace ProjectManagementTool.Controllers
         public IActionResult Index(int projectId)
         {
             var sprints = _sprintService.GetAllSprint(projectId);
-            //var data =  sprints.Select(s => new SprintVM
-            //{
-            //    SprintId = s.SprintId,
-            //    SprintName = s.SprintName,
-            //    Description = s.Description,
-            //    //ProjectKey = _projectInfoService.GetProjectInfo(s.ReleaseId).Key,
-            //    StartDate = s.StartDate,
-            //    EndDate = s.StartDate,
-            //    Points = s.Points,
-            //    Velocity = s.Velocity,
-            //    ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
-            //}).ToList();
-
-            return View(sprints);
+            ViewBag.ProjectId = projectId;
+            var data = sprints.Select(s => new SprintVM
+            {
+                SprintId = s.SprintId,
+                SprintName = s.SprintName,
+                Description = s.Description,
+                StartDate = s.StartDate,
+                EndDate = s.StartDate.AddDays(s.Duration - 1),
+                Points = s.Points,
+                Velocity = s.Velocity,
+                ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
+            }).ToList();
+            
+            return View(data);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int projectId)
         {
-            var releases = _releaseService.GetAllReleases();
+            var releases = _releaseService.GetAllReleases().Where( r => r.ProjectId == projectId).ToList();
             ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
+            ViewBag.ProjectId = projectId;
+            
             return View();
         }
 
@@ -72,12 +74,14 @@ namespace ProjectManagementTool.Controllers
             return Json(new { success = $"{isSuccess}", message = $"{message}" });
         }
 
+        
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, int projectId)
         {
             var sprint = _sprintService.GetSprint(id);
-            var releases = _releaseService.GetAllReleases();
+            var releases = _releaseService.GetAllReleases().Where( r => r.ProjectId == projectId);
             ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName",sprint.ReleaseId);
+            ViewBag.ProjectId = projectId;
             return View(sprint);
         }
 

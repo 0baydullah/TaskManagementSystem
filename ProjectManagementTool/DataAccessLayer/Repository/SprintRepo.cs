@@ -68,6 +68,8 @@ namespace DataAccessLayer.Repository
                     Points = s.Points,
                     Velocity = s.Velocity,
                     ReleaseName = r.ReleaseName,
+                    ReleaseId = r.ReleaseId,
+                    Duration = s.Duration
                 }).ToList();
 
                 return sprints;
