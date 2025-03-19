@@ -24,6 +24,9 @@ namespace DataAccessLayer.Data
         public DbSet<Release> Releases { get; set; }
         public DbSet<Sprint> Sprints { get; set; }
         public DbSet<Feature> Features { get; set; }
+        public DbSet<Status> Statuses { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
     }
 }

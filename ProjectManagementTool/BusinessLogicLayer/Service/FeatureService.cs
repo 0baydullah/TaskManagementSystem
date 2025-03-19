@@ -74,7 +74,7 @@ namespace BusinessLogicLayer.Service
                 var existFeature = await _featureRepo.GetFeatureById(id);
                 var existFeatureName = await _featureRepo.GetFeatureByName(featureVM.Name, id, featureVM.ProjectId);
 
-                if (existFeature == null || (existFeatureName != null))
+                if (existFeature == null || existFeatureName != null)
                 {
                     return false;
                 }
@@ -101,6 +101,7 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var feature = await _featureRepo.GetFeatureById(id);
+
                 if (feature == null)
                 {
                     return false;

@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectManagementTool", "ProjectManagementTool\ProjectManagementTool.csproj", "{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectManagementTool", "ProjectManagementTool\ProjectManagementTool.csproj", "{CE7A72BE-CF1A-45EE-9FEA-FD2EF9371A54}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3F895925-1DE3-4EB3-A7DF-6387A2A291F5} = {3F895925-1DE3-4EB3-A7DF-6387A2A291F5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{3F895925-1DE3-4EB3-A7DF-6387A2A291F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{3F895925-1DE3-4EB3-A7DF-6387A2A291F5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336} = {F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{F6D972EF-6DDB-44F0-8A5E-9EDEE32FC336}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

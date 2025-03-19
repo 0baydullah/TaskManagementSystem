@@ -33,7 +33,6 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromBody] UserInfoVM model)
         {
             if (ModelState.IsValid == false)
@@ -88,8 +87,11 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            // after implementing role here check to user previously signed in or not and do not sign in from other browser
-            return View();
+            //if (signInManager.IsSignedIn(User))
+            //{
+            //    return RedirectToAction("Index", "Project");
+            //}
+                return View();
         }
 
         [HttpPost]
@@ -122,7 +124,7 @@ namespace ProjectManagementTool.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Welcome","Home");
+            return RedirectToAction("Login","Account");
         }
 
         [HttpGet]
@@ -271,8 +273,6 @@ namespace ProjectManagementTool.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _signInManager.RefreshSignInAsync(user);
-
                     return RedirectToAction("ChangePasswordConfirmation", "Account");
                 }
                 else
