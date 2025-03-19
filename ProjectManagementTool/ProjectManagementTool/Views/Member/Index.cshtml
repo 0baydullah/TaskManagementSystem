@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.MemberWithRoleVM>
 @{
     ViewData["Title"] = "Index";
+    ViewData["Banner"] = "Member Panel";
 }
 
-<h1>Welcome to Member Panel</h1>
 
-<p>
+<div class="mb-3">
     <a class="btn btn-success fw-bold" href="@Url.Action("Create", "Member", new { projectId = ViewBag.ProjectId })">Add Member</a>
-</p>
+</div>
 
 
 <table class="table table-bordered table-striped table-hover">
@@ -98,13 +98,21 @@
             $.ajax({
                 url: `/Member/Delete/${memberIdToDelete}`,
                 type: 'POST',
-                success: function (result) {
-                    $("#modal").modal('hide');
-                    location.reload();
-                    console.log(result);
+                success: function (response) {
+                    if(response.success) {
+                        $("#modal").modal('hide');
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    }
+
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
                 },
-                error: function (err) {
-                    alert('Member deleting user story' + err);
+                error: function (response) {
+                      $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             });
         }
