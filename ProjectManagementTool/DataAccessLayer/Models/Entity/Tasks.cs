@@ -20,8 +20,8 @@ namespace DataAccessLayer.Models.Entity
         public double EstimatedTime { get; set; }
         [Required]
         public string Tag { get; set; }
-        public Status Status { get; set; }
-        public Priority Priority { get; set; }
+        public Statusx Status { get; set; }
+        public Priorityx Priority { get; set; }
         public int UserStoryId { get; set; }
 
         // files will be added later

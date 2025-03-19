@@ -19,8 +19,8 @@ namespace DataAccessLayer.Models.Entity
         public int ReviewerMemberId { get; set; }
         public double EstimatedTime { get; set; }
         public string Tag { get; set; }
-        public Status Status { get; set; }
-        public Priority Priority { get; set; }
+        public Statusx Status { get; set; }
+        public Priorityx Priority { get; set; }
         public int TaskId { get; set; }
 
         // files will be added later
