@@ -10,7 +10,7 @@
 </div>
 
 <div style="text-align: end;">
-    <a asp-action="Create" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> User Story</a>
+    <a href="@Url.Action("Create", "UserStory", new { projectId = ViewBag.ProjectId })" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> User Story</a>
 </div>
 
 <table class="table">
@@ -20,7 +20,7 @@
                 Story Name
             </th>
             <th>
-                Project
+                Project ID
             </th>
             <th>
                 Status
@@ -44,7 +44,7 @@
                     @item.StoryName
                 </td>
                 <td>
-                    WillBeAdded
+                   @item.ProjectId
                 </td>
                 <td>
                     @item.Status

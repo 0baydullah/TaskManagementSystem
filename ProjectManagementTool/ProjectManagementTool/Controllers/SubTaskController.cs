@@ -14,12 +14,17 @@ namespace ProjectManagementTool.Controllers
         private readonly ISubTaskService _subTaskService;
         private readonly IMemberService _memberService;
         private readonly PMSDBContext _context;
+        private readonly IUserStoryService _userStoryService;
+        private readonly ITasksService _tasksService;
 
-        public SubTaskController(ISubTaskService subTaskService, PMSDBContext context, IMemberService memberService) 
+        public SubTaskController(ISubTaskService subTaskService, PMSDBContext context, IMemberService memberService
+            , IUserStoryService userStoryService, ITasksService tasksService) 
         {
             _subTaskService = subTaskService;
             _memberService = memberService;
             _context = context;
+            _userStoryService = userStoryService;
+            _tasksService = tasksService;
         }
 
         public IActionResult Index()
@@ -30,12 +35,13 @@ namespace ProjectManagementTool.Controllers
 
         public IActionResult Create(int id)
         {
-            // will be changed with Member service [GetAllMember] Method
-            var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
-                .Where(x => x.m.Email == x.u.Email)
-                .Select(x => new ResponsibleVM{ Id = x.m.MemberId, Name = x.u.Name }).ToList();
+            
+            var task = _tasksService.GetTasks(id);
+            var story = _userStoryService.GetUserStory(task.UserStoryId);
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
+
             ViewBag.Id = id;
-            ViewBag.Members = new SelectList(users, "Id", "Name");
+            ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
             return View();
         }
@@ -52,37 +58,24 @@ namespace ProjectManagementTool.Controllers
 
             return Json(new { success = true });
         }
+        
         [HttpGet]
         public IActionResult Edit(int id)
         {
             var subTask = _subTaskService.GetSubTask(id);
 
-            var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
-                .Where(x => x.m.Email == x.u.Email)
-                .Select(x => new ResponsibleVM { Id = x.m.MemberId, Name = x.u.Name }).ToList();
-            ViewBag.Id = id;
-            ViewBag.Members = new SelectList(users, "Id", "Name");
-
             if (subTask == null)
             {
                 return NotFound();
             }
+            var task = _tasksService.GetTasks( subTask.TaskId);
+            var story = _userStoryService.GetUserStory(task.UserStoryId);
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
+
+            ViewBag.Id = id;
+            ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
             return View(subTask);
-        }
-
-
-        [HttpPost]
-        public IActionResult Delete(int id)
-        {
-            var subTask = _subTaskService.GetSubTask(id);
-            if (subTask == null)
-            {
-                return NotFound();
-            }
-
-            _subTaskService.DeleteSubTask(subTask);
-            return Ok();
         }
 
         [HttpPost]
@@ -109,6 +102,22 @@ namespace ProjectManagementTool.Controllers
 
             return Json(new { success = true });
         }
+
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var subTask = _subTaskService.GetSubTask(id);
+            if (subTask == null)
+            {
+                return NotFound();
+            }
+
+            _subTaskService.DeleteSubTask(subTask);
+            return Ok();
+        }
+
+       
 
 
 

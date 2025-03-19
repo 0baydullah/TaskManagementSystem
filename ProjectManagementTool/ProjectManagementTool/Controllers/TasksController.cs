@@ -13,13 +13,16 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly ITasksService _tasksService;
         private readonly ISubTaskService _subTaskService;
-        private readonly PMSDBContext _context;
+        private readonly IMemberService _memberService;
+        private readonly IUserStoryService _userStoryService;
 
-        public TasksController(ITasksService tasksService, PMSDBContext context, ISubTaskService subTaskService) 
+        public TasksController(ITasksService tasksService, ISubTaskService subTaskService, 
+            IMemberService memberService, IUserStoryService userStoryService) 
         {
             _tasksService = tasksService;
-            _context = context;
             _subTaskService = subTaskService;
+            _memberService = memberService;
+            _userStoryService = userStoryService;
         }
 
         public IActionResult Index()
@@ -28,14 +31,15 @@ namespace ProjectManagementTool.Controllers
             return View(tasks);
         }
 
+        [HttpGet]
         public IActionResult Create(int id)
         {
-            // will be changed with Member service [GetAllMember] Method
-            var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
-                .Where(x => x.m.Email == x.u.Email)
-                .Select(x => new ResponsibleVM{ Id = x.m.MemberId, Name = x.u.Name }).ToList();
-            ViewBag.Id = id;
-            ViewBag.Members = new SelectList(users, "Id", "Name");
+            var story = _userStoryService.GetUserStory(id);
+            ViewBag.ProjectId = story.ProjectId;
+            ViewBag.UserStoryId = id;
+
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
+            ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
             return View();
         }
@@ -86,11 +90,11 @@ namespace ProjectManagementTool.Controllers
         {
             Tasks task = _tasksService.GetTasks(id);
 
-            var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
-                .Where(x => x.m.Email == x.u.Email)
-                .Select(x => new ResponsibleVM { Id = x.m.MemberId, Name = x.u.Name }).ToList();
+            //var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
+            //    .Where(x => x.m.Email == x.u.Email)
+            //    .Select(x => new ResponsibleVM { Id = x.m.MemberId, Name = x.u.Name }).ToList();
             ViewBag.Id = id;
-            ViewBag.Members = new SelectList(users, "Id", "Name");
+            ViewBag.Members = new SelectList("Id", "Name");
 
             if (task == null)
             {

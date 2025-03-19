@@ -28,7 +28,9 @@ namespace DataAccessLayer.Models.ViewModel
 
         public Priorityx Priority { get; set; }
 
-        public int SprintId { get; set; } = -1;
+        public int SprintId { get; set; } = 0;
+
+        public int ProjectId { get; set; }
 
         // public IEnumerable<IFormFile> Files { get; set; }  
 

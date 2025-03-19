@@ -28,6 +28,7 @@ namespace BusinessLogicLayer.Service
                     EstimatedPoint = featureVM.EstimatedPoint,
                     ReleaseId = featureVM.ReleaseId,
                     MemberId = featureVM.MemberId,
+                    ProjectId = featureVM.ProjectId,
                     Tag = featureVM.Tag,
                 };
 
@@ -40,11 +41,11 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public Task<List<FeatureWithMemberReleaseVM>> GetAllFeature()
+        public Task<List<FeatureWithMemberReleaseVM>> GetAllFeature(int projectId)
         {
             try
             {
-                var features = _featureRepo.GetAllFeature();
+                var features = _featureRepo.GetAllFeature(projectId);
                 return features;
             }
             catch (Exception)
@@ -71,7 +72,7 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var existFeature = await _featureRepo.GetFeatureById(id);
-                var existFeatureName = await _featureRepo.GetFeatureByName(featureVM.Name, id);
+                var existFeatureName = await _featureRepo.GetFeatureByName(featureVM.Name, id, featureVM.ProjectId);
 
                 if (existFeature == null || (existFeatureName != null))
                 {
@@ -83,6 +84,7 @@ namespace BusinessLogicLayer.Service
                 existFeature.EstimatedPoint = featureVM.EstimatedPoint;
                 existFeature.ReleaseId = featureVM.ReleaseId;
                 existFeature.MemberId = featureVM.MemberId;
+                existFeature.ProjectId = featureVM.ProjectId;
                 existFeature.Tag = featureVM.Tag;
 
                 var result = await _featureRepo.UpdateFeature(existFeature);

@@ -18,16 +18,19 @@ namespace ProjectManagementTool.Controllers
             _tasksService = tasksService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(int projectId)
         {
-            var userStories = _userStoryService.GetAllUserStory();
+            var userStories = _userStoryService.GetAllUserStory().Where( s => s.ProjectId == projectId);
+            ViewBag.ProjectId = projectId;
 
             return View(userStories);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int projectId)
         {
+            ViewBag.ProjectId = projectId;
             return View();
         }
 
@@ -41,7 +44,7 @@ namespace ProjectManagementTool.Controllers
                 return NotFound();
             }
 
-            return Json(new { success = true });
+            return Ok(new { success = true, redirectUrl = @Url.Action("Index", "UserStory", new { projectId = userStory.ProjectId }) });
         }
 
         [HttpGet]
@@ -59,20 +62,6 @@ namespace ProjectManagementTool.Controllers
             return View(storyDetails);
         }
 
-        [HttpPost]
-        public IActionResult Delete(int id)
-        {
-            var userStory = _userStoryService.GetUserStory(id);
-
-            if (userStory == null)
-            {
-                return NotFound();
-            }
-
-            _userStoryService.DeleteUserStory(userStory);
-
-            return Json(new { success = true });
-        }
 
         [HttpGet]
         public IActionResult Edit(int id)
@@ -105,8 +94,24 @@ namespace ProjectManagementTool.Controllers
             userStory.Status = storyVM.Status;
             userStory.Priority = storyVM.Priority;
             userStory.SprintId = storyVM.SprintId;
+            userStory.ProjectId = storyVM.ProjectId;
 
             _userStoryService.UpdateUserStory(userStory);
+
+            return Ok(new { success = true, redirectUrl = @Url.Action("Index", "UserStory", new { projectId = userStory.ProjectId }) });
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var userStory = _userStoryService.GetUserStory(id);
+
+            if (userStory == null)
+            {
+                return NotFound();
+            }
+
+            _userStoryService.DeleteUserStory(userStory);
 
             return Json(new { success = true });
         }
