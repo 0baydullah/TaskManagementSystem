@@ -103,6 +103,11 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, FeatureVM featureVM)
         {
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new { success = false, errors });
+            }
             try
             {
                 var result = await _featureService.UpdateFeature(id, featureVM);
@@ -113,7 +118,7 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                    return Ok(new { success = false, errors = new List<string> { "Feature already exist" } });
                 }
             }
             catch (Exception)

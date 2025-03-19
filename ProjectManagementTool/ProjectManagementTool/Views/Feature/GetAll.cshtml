@@ -37,41 +37,50 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if(Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.EstimatedPoint
+                    </td>
+                     <td>
+                         @item.ReleaseName
+                     </td>
+                    <td>
+                        @item.MemberName
+                    </td>
+                    <td>
+                        @item.Tag
+                    </td>
+                    <td>
+
+                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.FeatureId">
+                            <i class="text-danger fa-solid fa-pen"></i>
+                        </a>
+                        <a class="btn btn-light" onclick="openDeleteModal('@item.FeatureId')">
+                            <i class="text-danger fa-solid fa-trash"></i>
+                        </a>
+                        <a class="btn btn-light" onclick="openDetailsModal('@item.Description')">
+                             <i class="text-danger fa-solid fa-circle-info"></i>
+                         </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.EstimatedPoint
-                </td>
-                 <td>
-                     @item.ReleaseName
-                 </td>
-                <td>
-                    @item.MemberName
-                </td>
-                <td>
-                    @item.Tag
-                </td>
-                <td>
-
-                    <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.FeatureId">
-                        <i class="text-danger fa-solid fa-pen"></i>
-                    </a>
-                    <a class="btn btn-light" onclick="openDeleteModal('@item.FeatureId')">
-                        <i class="text-danger fa-solid fa-trash"></i>
-                    </a>
-                    <a class="btn btn-light" onclick="openDetailsModal('@item.Description')">
-                         <i class="text-danger fa-solid fa-circle-info"></i>
-                     </a>
-                </td>
+                <td colspan="7" class="text-danger text-center fw-bold">No data found</td>
             </tr>
         }
     </tbody>
 </table>
-
 
 
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
