@@ -36,12 +36,15 @@
                             </li>
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                    <form method="post" asp-controller="Account" asp-action="Logout">
-                                        <button type="submit" style="width:auto"
-                                                class="nav-link btn btn-link py-0">
-                                            Logout @User?.Identity?.Name
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            @User?.Identity?.Name
                                         </button>
-                                    </form>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="/Account/ChangePassword">Change Password</a></li>
+                                            <li><a class="dropdown-item" href="/Account/Logout">Logout</a></li>
+                                        </ul>
+                                    </div>
                                 </li>
                             </ul>
                         }
