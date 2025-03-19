@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.ReleaseVM>
 @{
     ViewData["Title"] = "Index";
+    ViewData["Banner"] = "Release Panel";
 }
 
-<h1 class="text-center fw-bold">Release Panel</h1>
-
-<div>
-    <a asp-action="Create" class="btn btn-success fw-bold">Create Release</a>
+<div class="mb-3">
+    <a href="@Url.Action("Create", "Release", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold">Create Release</a>
 </div>
-<br />
+
+<div id="response-message">
+    
+</div>
 <div>
     <table class="table table-bordered table-hover table-striped">
         <thead>
@@ -112,13 +114,21 @@
             $.ajax({
                 url: `/Release/Delete/${releaseIdToDelete}`,
                 type: 'POST',
-                success: function (result) {
-                    $("#modal").modal('hide');
-                    location.reload();
-                    console.log(result);
+                success: function (response) {
+                    if(response.success) {
+                        $("#modal").modal('hide');
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    }
+
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
                 },
-                error: function (err) {
-                    alert('Error deleting ' + err);
+                error: function (response) {
+                      $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
             });
         }

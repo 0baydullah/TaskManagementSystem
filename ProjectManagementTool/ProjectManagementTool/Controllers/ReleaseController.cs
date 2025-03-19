@@ -11,10 +11,13 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IReleaseService _releaseService;
         private readonly IProjectInfoService _projectInfoService;
-        public ReleaseController( IReleaseService releaseService, IProjectInfoService projectInfoService)
+        private readonly ISprintService _sprintService;
+        public ReleaseController( IReleaseService releaseService, IProjectInfoService projectInfoService,
+            ISprintService sprintService)
         {
             _releaseService = releaseService;
             _projectInfoService = projectInfoService;
+            _sprintService = sprintService;
         }
         
         public IActionResult Index(int projectId)
@@ -28,17 +31,19 @@ namespace ProjectManagementTool.Controllers
                 Description = r.Description,
                 StartDate = r.StartDate,
                 EndDate = r.EndDate,
-                Sprints = "0"
+                Sprints = _sprintService.GetAllSprint(projectId).Where(s => s.ReleaseId == r.ReleaseId).Count().ToString()
             }).ToList();
+            ViewBag.ProjectId = projectId;
 
             return View(data);
         }
         
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int projectId)
         {
-            var projects = _projectInfoService.GetAllProjectInfo();
-            ViewBag.Projects = new SelectList(projects, "ProjectId", "Name");
+            //var projects = _projectInfoService.GetAllProjectInfo();
+            //ViewBag.Projects = new SelectList(projects, "ProjectId", "Name");
+            ViewBag.ProjectId = projectId;
             return View();
         }
 
@@ -71,9 +76,9 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var projects = _projectInfoService.GetAllProjectInfo();
+            //var projects = _projectInfoService.GetAllProjectInfo();
+            //ViewBag.Projects = new SelectList(projects, "ProjectId", "Name", release.ProjectId);
             var release = _releaseService.GetRelease(id);
-            ViewBag.Projects = new SelectList(projects, "ProjectId", "Name",release.ProjectId);
             return View(release);
         }
 
