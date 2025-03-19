@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Task Details";
+    Model.MemberList[0] = "N/A";
 }
 
 <div class="d-flex justify-content-between">
@@ -31,19 +32,19 @@
             </tr>
             <tr>
                 <td>Assignee :</td>
-                <th><i>@Model.Tasks.AssignMembersId</i></th>
+                <th><i>@Model.MemberList[Model.Tasks.AssignMembersId]</i></th>
             </tr>
             <tr>
                 <td>Reviewer :</td>
-                <th><i>@Model.Tasks.ReviewerMemberId</i></th>
+                <th><i>@Model.MemberList[Model.Tasks.ReviewerMemberId]</i></th>
             </tr>
             <tr>
                 <td>Status :</td>
-                <th><i>@Model.Tasks.Status</i></th>
+                <th><i>@Model.StatusList[Model.Tasks.Status]</i></th>
             </tr>
             <tr>
                 <td>Priority :</td>
-                <th><i>@Model.Tasks.Priority</i></th>
+                <th><i>@Model.PriorityList[Model.Tasks.Priority]</i></th>
             </tr>
             <tr>
                 <td>User Story :</td>
@@ -92,19 +93,19 @@
                         @item.Name
                     </td>
                     <td>
-                        @item.Status
+                        @Model.StatusList[item.Status]
                     </td>
                     <td>
                         @item.EstimatedTime
                     </td>
                     <td>
-                        @item.Priority
+                        @Model.PriorityList[item.Priority]
                     </td>
                     <td>
-                        @item.AssignMembersId
+                        @Model.MemberList[item.AssignMembersId]
                     </td>
                     <td>
-                        @item.ReviewerMemberId
+                        @Model.MemberList[item.ReviewerMemberId]
                     </td>
                     <td>
                         <a class="btn btn-light" asp-controller="SubTask" asp-action="Edit" asp-route-id="@item.SubTaskId">

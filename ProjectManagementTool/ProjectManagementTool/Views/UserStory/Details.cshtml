@@ -4,7 +4,7 @@
     ViewData["Title"] = "User Story Details";
 }
 <div class="d-flex justify-content-between">
-	<h3 class="text-center">User Story : @Model.Story.StoryName</h3>
+    <h3 class="text-center">User Story : @Model.Story.StoryName</h3>
     <div>
         <a class="btn btn-light" asp-controller="UserStory" asp-action="Edit" asp-route-id="@Model.Story.StoryId">
             <i class="text-success fa-solid fa-pen"> Edit</i>
@@ -18,7 +18,7 @@
 <hr />
 
 <div>
-	@Model.Story.Description 
+    @Model.Story.Description 
     <hr />
 </div>
 <div>
@@ -30,11 +30,17 @@
             </tr>
             <tr>
                 <td>Status :</td>
-                <th><i>@Model.Story.Status</i></th>
+                @{
+                    var statusid = (int) Model.Story.Status;
+                    var priorityid = (int)Model.Story.Priority;
+                    var categoryid = (int)Model.Story.Category;
+                }
+
+                <th><i>@Model.StatusList[statusid]</i></th>
             </tr>
             <tr>
                 <td>Priority :</td>
-                <th><i>@Model.Story.Priority</i></th>
+                <th><i>@Model.PriorityList[priorityid]</i></th>
             </tr>
             <tr>
                 <td>Estimated Time :  </td>
@@ -42,7 +48,7 @@
             </tr>
             <tr>
                 <td>Category :</td>
-                <th><i>@Model.Story.Category</i></th>
+                <th><i>@Model.CategoryList[categoryid]</i></th>
             </tr>
             <tr>
                 <td>Sprint :</td>
@@ -91,19 +97,19 @@
                         @item.Name
                     </td>
                     <td>
-                        @item.Status
+                        @Model.StatusList[item.Status]
                     </td>
                     <td>
                         @item.EstimatedTime
                     </td>
                     <td>
-                        @item.Priority
+                        @Model.PriorityList[item.Priority]
                     </td>
                     <td>
-                        @item.AssignMembersId
+                        @Model.MemberList[item.AssignMembersId]
                     </td>
                     <td>
-                        @item.ReviewerMemberId
+                        @Model.MemberList[item.ReviewerMemberId]
                     </td>
                     <td>
 
