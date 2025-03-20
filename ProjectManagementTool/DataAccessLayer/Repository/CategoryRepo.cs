@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.Data;
-using DataAccessLayer.Enums;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 

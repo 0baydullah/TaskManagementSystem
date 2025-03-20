@@ -2,14 +2,18 @@
 
 @{
     ViewData["Title"] = "User Story Details";
+    Model.MemberList[0] = "N/A";
+    Model.StatusList[0] = "N/A";
+    Model.CategoryList[0] = "N/A";
+    Model.PriorityList[0] = "N/A";
 }
 <div class="d-flex justify-content-between">
-	<h3 class="text-center">User Story : @Model.Story.StoryName</h3>
+    <h3 class="text-center">User Story : @Model.Story.StoryName</h3>
     <div>
         <a class="btn btn-light" asp-controller="UserStory" asp-action="Edit" asp-route-id="@Model.Story.StoryId">
             <i class="text-success fa-solid fa-pen"> Edit</i>
         </a>
-        <a class="btn btn-light" onclick="openDeleteModal('@Model.Story.StoryId')">
+        <a class="btn btn-light" onclick="openDeleteUSModal('@Model.Story.StoryId')">
             <i class="text-danger fa-solid fa-trash"> Delete</i>
         </a>
     </div>
@@ -18,7 +22,7 @@
 <hr />
 
 <div>
-	@Model.Story.Description 
+    @Model.Story.Description 
     <hr />
 </div>
 <div>
@@ -30,19 +34,21 @@
             </tr>
             <tr>
                 <td>Status :</td>
-                <th><i>@Model.Story.Status</i></th>
+                @{
+                    var statusid = (int) Model.Story.Status;
+                    var priorityid = (int)Model.Story.Priority;
+                    var categoryid = (int)Model.Story.Category;
+                }
+
+                <th><i>@Model.StatusList[statusid]</i></th>
             </tr>
             <tr>
                 <td>Priority :</td>
-                <th><i>@Model.Story.Priority</i></th>
-            </tr>
-            <tr>
-                <td>Estimated Time :  </td>
-                <th><i>@Model.Story.EstimateTime hr.</i></th>
+                <th><i>@Model.PriorityList[priorityid]</i></th>
             </tr>
             <tr>
                 <td>Category :</td>
-                <th><i>@Model.Story.Category</i></th>
+                <th><i>@Model.CategoryList[categoryid]</i></th>
             </tr>
             <tr>
                 <td>Sprint :</td>
@@ -91,19 +97,19 @@
                         @item.Name
                     </td>
                     <td>
-                        @item.Status
+                        @Model.StatusList[item.Status]
                     </td>
                     <td>
-                        @item.EstimatedTime
+                        @item.EstimatedTime Hour
                     </td>
                     <td>
-                        @item.Priority
+                        @Model.PriorityList[item.Priority]
                     </td>
                     <td>
-                        @item.AssignMembersId
+                        @Model.MemberList[item.AssignMembersId]
                     </td>
                     <td>
-                        @item.ReviewerMemberId
+                        @Model.MemberList[item.ReviewerMemberId]
                     </td>
                     <td>
 
@@ -142,13 +148,37 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">Delete</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="d-flex justify-content-between">
+<!-- Delete Modal for User Story-->
+<div class="modal fade" id="modalUSD" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-capitalize text-danger">
+                You are deleting this user story. After clicking on "Delete" button it won't be undone!!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" onclick="confirmUSDelete()" class="btn btn-outline-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- bug section -->
+
+<h1 class="text-danger text-center">Bug section will be added later</h1>
+@* <div class="d-flex justify-content-between">
     <h3>Bugs</h3>
     <a class="btn btn-danger w-25" asp-controller="Bug" asp-action="Create" asp-route-id="@Model.Story.StoryId">
         <i class="text-light fa-solid fa-plus"></i> Bug
@@ -224,12 +254,13 @@
     <hr />
 </div>
 
-
+ *@
 
 @section Scripts {
     <script>
         
         var deleteTaskId = null;
+        var userStoryId = null;
 
         function openDeleteModal(taskId) {
             deleteTaskId = taskId;
@@ -245,6 +276,29 @@
                     success: function (response) {
                         $('#modal').modal('hide');
                         location.reload();
+                    },
+                    error: function () {
+                        alert('Error deleting task.');
+                    }
+                });
+            }
+        }
+
+
+        function openDeleteUSModal(UsId) {
+            deleteTaskId = UsId;
+            $('#modalUSD').modal('show');
+        }
+
+
+        function confirmUSDelete() {
+            if (deleteTaskId) {
+                $.ajax({
+                    url: '/UserStory/Delete/' + deleteTaskId,
+                    type: 'POST',
+                    success: function (response) {
+                        $('#modal').modal('hide');
+                        window.location.href = '@Url.Action("Index", "UserStory", new{projectId=ViewBag.ProjectId})';
                     },
                     error: function () {
                         alert('Error deleting sub task.');

@@ -7,11 +7,9 @@ using DataAccessLayer.Models.Entity;
 
 namespace DataAccessLayer.Models.ViewModel
 {
-    public class UserStoryDetailsVM
+    public class UserStoryListVM
     {
-        public UserStory Story { get; set; }
-        public List<Tasks> Tasks { get; set; }
-        public List<Tasks> Bugs { get; set; }
+        public List<UserStory>? UserStories { get; set; }
         public Dictionary<int,string> StatusList { get; set; }
         public Dictionary<int,string> PriorityList { get; set; }
         public Dictionary<int,string> CategoryList { set; get; }

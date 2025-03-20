@@ -2,14 +2,13 @@
 
 @{
     ViewData["Title"] = "Edit Priority";
+    ViewData["Banner"] = "Edit Priority";
 }
 
-<h1 class="text-center">Edit Priority</h1>
 
-<hr />
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input asp-for="PriorityId" class="form-control" value="@Model.PriorityId" type="hidden"/>

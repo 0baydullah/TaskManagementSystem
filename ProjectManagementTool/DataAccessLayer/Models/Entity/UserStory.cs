@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DataAccessLayer.Enums;
-using Microsoft.AspNetCore.Http;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models.Entity
 {
@@ -20,15 +13,15 @@ namespace DataAccessLayer.Models.Entity
 
         public string Description { get; set; }
 
-        public Categoryx Category { get; set; }
+        public int Category { get; set; }
 
         public float Points { get; set; }
 
-        public double EstimateTime { get; set; }
+        public double EstimateTime { get; set; } = 0; // estimated time will be move later
 
-        public Statusx Status { get; set; }
+        public int Status { get; set; }
 
-        public Priorityx Priority { get; set; }
+        public int Priority { get; set; }
 
         public int SprintId { get; set; } = 0;
 

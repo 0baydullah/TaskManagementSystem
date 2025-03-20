@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewData["Banner"] = "Edit Status";
 }
 
 <h1 class="text-center">Edit Status</h1>
@@ -9,7 +10,7 @@
 <hr />
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input asp-for="StatusId" class="form-control" value="@Model.StatusId" type="hidden"/>

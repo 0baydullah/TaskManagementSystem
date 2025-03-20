@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
-using DataAccessLayer.Enums;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 

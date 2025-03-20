@@ -15,14 +15,22 @@ namespace ProjectManagementTool.Controllers
         private readonly ISubTaskService _subTaskService;
         private readonly IMemberService _memberService;
         private readonly IUserStoryService _userStoryService;
+        private readonly ICategoryService _categoryService;
+        private readonly IStatusService _statusService;
+        private readonly IPriorityService _priorityService;
 
         public TasksController(ITasksService tasksService, ISubTaskService subTaskService, 
-            IMemberService memberService, IUserStoryService userStoryService) 
+            IMemberService memberService, IUserStoryService userStoryService,
+            ICategoryService categoryService, IStatusService statusService,
+            IPriorityService prioriyService) 
         {
             _tasksService = tasksService;
             _subTaskService = subTaskService;
             _memberService = memberService;
             _userStoryService = userStoryService;
+            _categoryService = categoryService;
+            _statusService = statusService;
+            _priorityService = prioriyService;
         }
 
         public IActionResult Index()
@@ -37,6 +45,12 @@ namespace ProjectManagementTool.Controllers
             var story = _userStoryService.GetUserStory(id);
             ViewBag.ProjectId = story.ProjectId;
             ViewBag.UserStoryId = id;
+
+            var statuses = _statusService.GetAllStatuses();
+            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+            var priorities = _priorityService.GetAllPriority();
+            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
 
             var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
             ViewBag.Members = new SelectList(members, "MemberId", "Name");
@@ -66,6 +80,9 @@ namespace ProjectManagementTool.Controllers
 
             tasksDetails.Tasks = task;
             tasksDetails.SubTask = subtasks;
+            tasksDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
+            tasksDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+            tasksDetails.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
 
             return View(tasksDetails);
         }
@@ -90,11 +107,18 @@ namespace ProjectManagementTool.Controllers
         {
             Tasks task = _tasksService.GetTasks(id);
 
-            //var users = _context.Members.Join(_context.Users, m => m.Email, u => u.Email, (m, u) => new { m, u })
-            //    .Where(x => x.m.Email == x.u.Email)
-            //    .Select(x => new ResponsibleVM { Id = x.m.MemberId, Name = x.u.Name }).ToList();
+            var story = _userStoryService.GetUserStory(task.UserStoryId);
+            ViewBag.ProjectId = story.ProjectId;
             ViewBag.Id = id;
-            ViewBag.Members = new SelectList("Id", "Name");
+
+            var statuses = _statusService.GetAllStatuses();
+            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+            var priorities = _priorityService.GetAllPriority();
+            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
+
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
+            ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
             if (task == null)
             {

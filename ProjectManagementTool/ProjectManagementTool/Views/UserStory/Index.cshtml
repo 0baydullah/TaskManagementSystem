@@ -1,13 +1,12 @@
-﻿@using DataAccessLayer.Models.Entity
-@model IEnumerable<UserStory>
+﻿@using DataAccessLayer.Models.ViewModel
+@model UserStoryListVM
 
 @{
     ViewData["Title"] = "User Story";
+    ViewData["Banner"] = "User Stories";
 }
 
-<div style="text-align: center;">
-    <h1>User Stories</h1>
-</div>
+
 
 <div style="text-align: end;">
     <a href="@Url.Action("Create", "UserStory", new { projectId = ViewBag.ProjectId })" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> User Story</a>
@@ -19,9 +18,9 @@
             <th>
                 Story Name
             </th>
-            <th>
+         @*    <th>
                 Project ID
-            </th>
+            </th> *@
             <th>
                 Status
             </th>
@@ -38,25 +37,25 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model.UserStories) {
             <tr>
                 <td>
                     @item.StoryName
                 </td>
-                <td>
+             @*    <td>
                    @item.ProjectId
-                </td>
+                </td> *@
                 <td>
-                    @item.Status
+                    @Model.StatusList[item.Status]
                 </td>
                 <td>
                     @item.Points
                 </td>
                 <td>
-                    @item.Category
+                    @Model.CategoryList[item.Category]
                 </td>
                 <td>
-                    @item.Priority
+                    @Model.PriorityList[item.Priority]
                 </td>
                 <td>
                 

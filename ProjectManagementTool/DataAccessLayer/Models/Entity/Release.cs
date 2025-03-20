@@ -9,8 +9,7 @@ namespace DataAccessLayer.Models.Entity
 {
     public class Release
     {
-        [Key]
-        public int ReleaseId { get; set; }
+        [Key] public int ReleaseId { get; set; }
 
         [Required]
         public int ProjectId { get; set; }
