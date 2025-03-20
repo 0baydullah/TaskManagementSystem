@@ -1,13 +1,12 @@
 ﻿@model DataAccessLayer.Models.ViewModel.ProjectInfoVM
 @{
     ViewData["Title"] = "Create Project";
+    ViewData["Banner"] = "Create Project";
 }
 
 <div id="response-message">
 
 </div>
-
-<h1 class="fw-bold text-center">Project Panel </h1>
 
 <form id="form" enctype="multipart/form-data" method="post">
     <div class="form-group">
@@ -25,10 +24,6 @@
         <input asp-for="@Model.Description" class="form-control" id="description" placeholder="Write Short Description">
     </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Files"> </label>
-        <input asp-for="@Model.Files" class="form-control" id="files" onchange="validateSize();" placeholder="Upload Necessary Files">
-    </div>
     <div class="form-group">
         <label asp-for="@Model.StartDate"> </label>
         <input asp-for="@Model.StartDate" class="form-control" id="startDate" placeholder="Select Start Date">
@@ -109,12 +104,12 @@
 
 
         if (!isValid) {
-            $("#response-message").html(messages.join("<br>"));
+            $("#response-message").html('<div class="alert alert-danger"> Opps! ' + messages.join("<br>") + ' Try Again' +'</div>');
             $("#files").val("");
         }
 
         else {
-            $("#response-message").html('<span class="alert alert-success">All Files are valid. </span>');
+            $('#response-message').html('<div class="alert alert-success"> Hey! all files are valid..  </div>');
         }
     }
 </script>

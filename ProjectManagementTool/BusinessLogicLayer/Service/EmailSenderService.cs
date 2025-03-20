@@ -19,32 +19,39 @@ namespace BusinessLogicLayer.Service
             _configuration = configuration;
         }
 
-        public Task SendEmailAsync(string ToEmail, string Subject, string Body, bool IsBodyHtml = false)
+        public async Task SendEmailAsync(string ToEmail, string Subject, string Body, bool IsBodyHtml = false)
         {
-            string? MailServer = _configuration["EmailSettings:MailServer"];
-            string? FromEmail = _configuration["EmailSettings:FromEmail"];
-            string? Password = _configuration["EmailSettings:Password"];
-            string? SenderName = _configuration["EmailSettings:SenderName"];
-            int Port = Convert.ToInt32(_configuration["EmailSettings:MailPort"]);
-
-            var client = new SmtpClient(MailServer, Port)
+            try
             {
-                Credentials = new NetworkCredential(FromEmail, Password),
-                EnableSsl = true,
-            };
+                string? MailServer = _configuration["EmailSettings:MailServer"];
+                string? FromEmail = _configuration["EmailSettings:FromEmail"];
+                string? Password = _configuration["EmailSettings:Password"];
+                string? SenderName = _configuration["EmailSettings:SenderName"];
+                int Port = Convert.ToInt32(_configuration["EmailSettings:MailPort"]);
 
-            MailAddress fromAddress = new MailAddress(FromEmail, SenderName);
+                var client = new SmtpClient(MailServer, Port)
+                {
+                    Credentials = new NetworkCredential(FromEmail, Password),
+                    EnableSsl = true,
+                };
 
-            MailMessage mailMessage = new MailMessage
+                MailAddress fromAddress = new MailAddress(FromEmail, SenderName);
+
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = fromAddress,
+                    Subject = Subject,
+                    Body = Body,
+                    IsBodyHtml = IsBodyHtml
+                };
+
+                mailMessage.To.Add(ToEmail);
+                await client.SendMailAsync(mailMessage);
+            }
+            catch (Exception)
             {
-                From = fromAddress,
-                Subject = Subject,
-                Body = Body,
-                IsBodyHtml = IsBodyHtml
-            };
-
-            mailMessage.To.Add(ToEmail);
-            return client.SendMailAsync(mailMessage);
+                throw;
+            }
         }
     }
 

@@ -1,9 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJAX Form Submission</title>
+    <title>pms/login</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
@@ -69,7 +73,10 @@
             <input type="password" id="password" name="password" required>
 
             <button type="submit">Login</button>
-            <p class="login-text"><a href="/Account/ForgotPassword">Forgot password</a></p>
+            <p class="login-text">
+                <a class="m-lg-5" href="/Account/ForgotPassword">Forgot password</a>
+                <a class="m-lg-5" href="/Account/Register">Sign up</a>
+             </p>
         </form>
 
         <div id="responseMessage"></div>

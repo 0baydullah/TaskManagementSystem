@@ -21,13 +21,20 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(int projectId) 
         {
-            var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId);
-            var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId);
-            ViewBag.Members = new SelectList(members, "MemberId", "Name");
-            ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
-            ViewBag.ProjectId = projectId;
-            
-            return View();
+            try
+            {
+                var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId);
+                var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId);
+                ViewBag.Members = new SelectList(members, "MemberId", "Name");
+                ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
+                ViewBag.ProjectId = projectId;
+
+                return View();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
@@ -49,7 +56,7 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                    return Ok(new { success = false, errors =  "Feature already exist" });
                 }
             }
             catch (Exception)
@@ -96,6 +103,11 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, FeatureVM featureVM)
         {
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new { success = false, errors });
+            }
             try
             {
                 var result = await _featureService.UpdateFeature(id, featureVM);
@@ -106,7 +118,7 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
-                    return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                    return Ok(new { success = false, errors = new List<string> { "Feature already exist" } });
                 }
             }
             catch (Exception)

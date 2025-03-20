@@ -9,6 +9,7 @@
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
         <form asp-action="Edit" id="editForm">
+            <div class="text-danger" id="errorMessage"></div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-2">
                 <label asp-for="Name" class="control-label"></label>
@@ -73,10 +74,26 @@
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    window.location.href = response.redirectUrl;
+                    if (response.success == true) {
+                        window.location.href = response.redirectUrl;
+                    }
+                    else{
+                        $("#errorMessage").html(response.errors);
+                    }
+                    
                 },
-                error: function (error) {
-                    alert('An error occurred: ' + error);
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.errors) {
+                            console.log(response.errors);
+                            var errorList = response.errors.map(e => `<li>${e}</li>`).join("");
+                            $("#errorMessage").html(`<div class='error' style='color:red;'>${errorList}</div>`);
+                         }
+                     }
+                     else {
+                         $("#errorMessage").html("<p style='color:red;'>An error occurred. Please try again.</p>");
+                     }
                 }
             });
         }

@@ -1,14 +1,12 @@
 ﻿@model DataAccessLayer.Models.ViewModel.MemberVM
 @{
     ViewData["Title"] = "Edit";
+    ViewData["Banner"] = "Edit Member";
 }
 
-<h1>Edit Section</h1>
 
 <div id="response-message">
 </div>
-
-<h1 class="fw-bold text-center">Welcome to Create Page </h1>
 
 <form id="form">
     <div class="form-group">
@@ -17,7 +15,7 @@
 
     <div class="form-group">
         <label asp-for="@Model.Email"> </label>
-        <input asp-for="@Model.Email" class="form-control" id="role">
+        <input asp-for="@Model.Email" class="form-control" id="role" readonly>
     </div>
 
     <div class="form-group">
@@ -27,7 +25,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.ProjectId"> Role Name </label>
+        <label asp-for="@Model.ProjectId"> Project Name </label>
         <select asp-for="@Model.ProjectId" class="form-control" asp-items="ViewBag.ProjectId">
             <option value="">-- Select Project --</option>
         </select>

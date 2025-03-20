@@ -1,6 +1,8 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +14,32 @@ namespace BusinessLogicLayer.Service
     public class ProjectInfoService : IProjectInfoService
     {
         private readonly IProjectInfoRepo _projectInfoRepo;
-        public ProjectInfoService(IProjectInfoRepo projectInfoRepo)
+        private readonly IFileService _fileService;
+        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IFileService fileService)
         {
             _projectInfoRepo = projectInfoRepo;
-
+            _fileService = fileService;
         }
 
 
-        public void AddProjectInfo(ProjectInfo projectInfo)
+        public  void AddProjectInfo(ProjectInfoVM model, UserInfo user)
         {
-            _projectInfoRepo.AddProjectInfo(projectInfo);
+
+           
+
+            var project = new ProjectInfo
+            {
+                Name = model.Name,
+                Key = model.Key,
+                Description = model.Description,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                CompanyName = model.CompanyName,
+                ProjectOwnerId = user.Id,
+                
+            };
+
+            _projectInfoRepo.AddProjectInfo(project);
         }
 
         public void DeleteProjectInfo(ProjectInfo projectInfo)
@@ -39,12 +57,21 @@ namespace BusinessLogicLayer.Service
             return projectInfo;
         }
 
-        public void UpdateProjectInfo(ProjectInfo projectInfo)
+        public void UpdateProjectInfo(EditProjectInfoVM model)
         {
-            var project = _projectInfoRepo.GetProjectInfo(projectInfo.ProjectId);
+            var project = _projectInfoRepo.GetProjectInfo(model.ProjectId);
             if (project != null)
             {
-                _projectInfoRepo.UpdateProjectInfo(projectInfo);
+                
+                project.Name = model.Name;
+                project.Key = model.Key;
+                project.Description = model.Description;
+                project.StartDate = model.StartDate;
+                project.EndDate = model.EndDate;
+                project.CompanyName = model.CompanyName;
+                project.ProjectOwnerId = model.ProjectOwnerId;
+         
+                _projectInfoRepo.UpdateProjectInfo(project);
 
             }
             else
@@ -52,5 +79,6 @@ namespace BusinessLogicLayer.Service
                 throw new Exception("Project not found");
             }
         }
+
     }
 }

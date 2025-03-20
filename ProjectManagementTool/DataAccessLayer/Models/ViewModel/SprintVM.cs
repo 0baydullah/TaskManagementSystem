@@ -17,14 +17,14 @@ namespace DataAccessLayer.Models.ViewModel
         [Required]
         public string? Description { get; set; }
 
-        //[Required]
-        //public string? ProjectKey { get; set; }
+        [Required]
+        public DateTime StartDate { get; set; }
 
         [Required]
-        public DateTime? StartDate { get; set; }
+        public int Duration { get; set; }
 
         [Required]
-        public DateTime? EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         [Required]
         public int Points { get; set; }

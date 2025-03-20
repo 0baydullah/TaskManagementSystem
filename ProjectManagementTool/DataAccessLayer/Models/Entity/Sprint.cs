@@ -19,7 +19,7 @@ namespace DataAccessLayer.Models.Entity
         public string? Description { get; set; }
 
         [Required]
-        public DateTime? StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Required]
         public int Duration { get; set; }

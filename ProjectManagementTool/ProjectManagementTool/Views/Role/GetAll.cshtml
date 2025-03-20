@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.RoleVM>
 @{
     ViewData["Title"] = "Index";
+    ViewData["Banner"] = "Roles";
 }
 
-<h1>Role</h1>
-<button id="createButton">Create</button>
+<button class="btn btn-success mb-3" id="createButton">Create</button>
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -19,17 +19,26 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if(Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoleName)
+                    </td>
+                
+                    <td>
+                        <a class="btn btn-primary" onclick="openUpdateModal('@item.RoleId')">Edit</a>
+                        <a class="btn btn-danger" onclick="openDeleteModal('@item.RoleId')">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoleName)
-                </td>
-                
-                <td>
-                    <a class="btn btn-primary" onclick="openUpdateModal('@item.RoleId')">Edit</a>
-                    <a class="btn btn-danger" onclick="openDeleteModal('@item.RoleId')">Delete</a>
-                </td>
+                <td colspan="7" class="text-danger text-center fw-bold">No data found</td>
             </tr>
         }
     </tbody>
