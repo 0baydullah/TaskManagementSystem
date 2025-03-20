@@ -17,7 +17,7 @@ namespace DataAccessLayer.Models.Entity
 
         public float Points { get; set; }
 
-        public double EstimateTime { get; set; }
+        public double EstimateTime { get; set; } = 0; // estimated time will be move later
 
         public int Status { get; set; }
 

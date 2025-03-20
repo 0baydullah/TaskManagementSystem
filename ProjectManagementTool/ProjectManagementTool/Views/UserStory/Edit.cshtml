@@ -18,7 +18,7 @@
             </div>
             <div class="form-group mt-2">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"  style="height: 100px;" rows="3" >@Model.Description</textarea>
+                <textarea asp-for="Description" class="form-control" rows="6" >@Model.Description</textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group d-flex justify-content-evenly mt-2">
@@ -29,11 +29,6 @@
                 <label asp-for="Points" class="control-label"></label>
                 <input asp-for="Points" class="form-control " style="width: 60px;" />
                 <span asp-validation-for="Points" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-2">
-                <label asp-for="EstimateTime" class="control-label">Estimated Time</label>
-                <input asp-for="EstimateTime" class="form-control" />
-                <span asp-validation-for="EstimateTime" class="text-danger"></span>
             </div>
             <div class="form-group d-flex justify-content-evenly mt-2">
                 <label asp-for="Status" class="control-label"></label>
