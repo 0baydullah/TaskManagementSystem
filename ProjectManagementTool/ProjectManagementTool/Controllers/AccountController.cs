@@ -86,11 +86,7 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            //if (signInManager.IsSignedIn(User))
-            //{
-            //    return RedirectToAction("Index", "Project");
-            //}
-                return View();
+            return View();
         }
 
         [HttpPost]
@@ -257,6 +253,7 @@ namespace ProjectManagementTool.Controllers
 
                         if (result.Succeeded)
                         {
+                            await _signInManager.SignOutAsync();
                             return RedirectToAction("ResetPasswordConfirmation", "Account");
                         }
 
