@@ -6,6 +6,7 @@
     Model.StatusList[0] = "N/A";
     Model.CategoryList[0] = "N/A";
     Model.PriorityList[0] = "N/A";
+    Model.SprintList[0] = "N/A";
 }
 <div class="d-flex justify-content-between">
     <h3 class="text-center">User Story : @Model.Story.StoryName</h3>
@@ -52,7 +53,7 @@
             </tr>
             <tr>
                 <td>Sprint :</td>
-                <th><i>@Model.Story.SprintId</i></th>
+                <th><i>@Model.SprintList[Model.Story.SprintId]</i></th>
             </tr>
         </tbody>
     </table>

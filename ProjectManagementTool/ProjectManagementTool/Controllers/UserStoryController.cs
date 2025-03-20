@@ -1,9 +1,11 @@
 ﻿using BusinessLogicLayer.IService;
+using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -15,10 +17,11 @@ namespace ProjectManagementTool.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IStatusService _statusService;
         private readonly IPriorityService _priorityService;
+        private readonly ISprintService _sprintService;
 
         public UserStoryController(IUserStoryService userStoryService, ITasksService tasksService,
             IMemberService memberService, ICategoryService categoryService, IStatusService statusService,
-            IPriorityService prioriyService)
+            IPriorityService prioriyService, ISprintService sprintService)
         {
             _userStoryService = userStoryService;
             _tasksService = tasksService;
@@ -26,6 +29,7 @@ namespace ProjectManagementTool.Controllers
             _categoryService = categoryService;
             _statusService = statusService;
             _priorityService = prioriyService;
+            _sprintService = sprintService;
         }
 
         [HttpGet]
@@ -57,6 +61,9 @@ namespace ProjectManagementTool.Controllers
 
             var categories = _categoryService.GetAllCategory();
             ViewBag.Category = new SelectList(categories, "CategoryId", "Name");
+
+            var sprints = _sprintService.GetAllSprint(projectId);
+            ViewBag.Sprints = new SelectList(sprints, "SprintId", "SprintName");
 
             return View();
         }
@@ -90,6 +97,7 @@ namespace ProjectManagementTool.Controllers
             storyDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
             storyDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
             storyDetails.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
+            storyDetails.SprintList = _sprintService.GetAllSprint(story.ProjectId).ToDictionary(c => c.SprintId, c => c.SprintName);
 
             return View(storyDetails);
         }
@@ -114,6 +122,9 @@ namespace ProjectManagementTool.Controllers
 
             var categories = _categoryService.GetAllCategory();
             ViewBag.Category = new SelectList(categories, "CategoryId", "Name");
+
+            var sprints = _sprintService.GetAllSprint(userStory.ProjectId);
+            ViewBag.Sprints = new SelectList(sprints, "SprintId", "Name");
 
             return View(userStory);
         }
