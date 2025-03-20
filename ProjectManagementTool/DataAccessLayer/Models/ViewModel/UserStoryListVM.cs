@@ -9,7 +9,7 @@ namespace DataAccessLayer.Models.ViewModel
 {
     public class UserStoryListVM
     {
-        public List<UserStory> UserStories { get; set; }
+        public List<UserStory>? UserStories { get; set; }
         public Dictionary<int,string> StatusList { get; set; }
         public Dictionary<int,string> PriorityList { get; set; }
         public Dictionary<int,string> CategoryList { set; get; }

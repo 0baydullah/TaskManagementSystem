@@ -4,7 +4,6 @@ using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -32,16 +31,18 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Index(int projectId)
         {
-            var userStories = _userStoryService.GetAllUserStory().Where( s => s.ProjectId == projectId);
+            var storyList = new UserStoryListVM();
+            var userStories = _userStoryService.GetAllUserStory().Where( s => s.ProjectId == projectId).ToList();
+
             ViewBag.ProjectId = projectId;
 
+            storyList.UserStories = userStories;
+            storyList.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
+            storyList.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
+            storyList.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+            storyList.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
 
-            storyDetails.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
-            storyDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
-            storyDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
-            storyDetails.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
-
-            return View(userStories);
+            return View(storyList);
         }
 
         [HttpGet]

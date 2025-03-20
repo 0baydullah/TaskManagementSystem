@@ -1,5 +1,5 @@
-﻿@using DataAccessLayer.Models.Entity
-@model IEnumerable<UserStory>
+﻿@using DataAccessLayer.Models.ViewModel
+@model UserStoryListVM
 
 @{
     ViewData["Title"] = "User Story";
@@ -37,7 +37,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model.UserStories) {
             <tr>
                 <td>
                     @item.StoryName
@@ -46,16 +46,16 @@
                    @item.ProjectId
                 </td>
                 <td>
-                    @item.Status
+                    @Model.StatusList[item.Status]
                 </td>
                 <td>
                     @item.Points
                 </td>
                 <td>
-                    @item.Category
+                    @Model.CategoryList[item.Category]
                 </td>
                 <td>
-                    @item.Priority
+                    @Model.PriorityList[item.Priority]
                 </td>
                 <td>
                 
