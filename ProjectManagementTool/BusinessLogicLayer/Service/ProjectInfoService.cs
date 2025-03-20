@@ -22,10 +22,10 @@ namespace BusinessLogicLayer.Service
         }
 
 
-        public async void AddProjectInfo(ProjectInfoVM model, UserInfo user)
+        public  void AddProjectInfo(ProjectInfoVM model, UserInfo user)
         {
 
-            var files = _fileService.UploadFile(model.Files);
+           
 
             var project = new ProjectInfo
             {
@@ -36,7 +36,7 @@ namespace BusinessLogicLayer.Service
                 EndDate = model.EndDate,
                 CompanyName = model.CompanyName,
                 ProjectOwnerId = user.Id,
-                Files = await files
+                
             };
 
             _projectInfoRepo.AddProjectInfo(project);
@@ -57,13 +57,12 @@ namespace BusinessLogicLayer.Service
             return projectInfo;
         }
 
-        public async void UpdateProjectInfo(EditProjectInfoVM model)
+        public void UpdateProjectInfo(EditProjectInfoVM model)
         {
             var project = _projectInfoRepo.GetProjectInfo(model.ProjectId);
             if (project != null)
             {
-                var exixtingFiles = project.Files ?? new List<string>();
-                exixtingFiles.AddRange(await _fileService.UploadFile(model.Files));
+                
                 project.Name = model.Name;
                 project.Key = model.Key;
                 project.Description = model.Description;
@@ -71,21 +70,8 @@ namespace BusinessLogicLayer.Service
                 project.EndDate = model.EndDate;
                 project.CompanyName = model.CompanyName;
                 project.ProjectOwnerId = model.ProjectOwnerId;
-                project.Files = exixtingFiles;
+         
                 _projectInfoRepo.UpdateProjectInfo(project);
-
-            }
-            else
-            {
-                throw new Exception("Project not found");
-            }
-        }
-        public void UpdateProjectInfo(ProjectInfo projectInfo)
-        {
-            var project = _projectInfoRepo.GetProjectInfo(projectInfo.ProjectId);
-            if (project != null)
-            {
-                _projectInfoRepo.UpdateProjectInfo(projectInfo);
 
             }
             else

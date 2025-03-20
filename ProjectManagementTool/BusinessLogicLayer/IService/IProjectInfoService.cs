@@ -13,7 +13,6 @@ namespace BusinessLogicLayer.IService
     {
         public void AddProjectInfo(ProjectInfoVM projectInfo, UserInfo user);
         public void UpdateProjectInfo(EditProjectInfoVM projectInfo);
-        public void UpdateProjectInfo(ProjectInfo projectInfo);
 
         public void DeleteProjectInfo(ProjectInfo projectInfo);
 

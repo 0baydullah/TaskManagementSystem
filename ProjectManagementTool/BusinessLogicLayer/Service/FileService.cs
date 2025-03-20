@@ -24,7 +24,7 @@ namespace BusinessLogicLayer.Service
             {
                 foreach (var file in files)
                 {
-                    string folder = Path.Combine(_env.WebRootPath, "files");
+                    string folder = Path.Combine(Directory.GetCurrentDirectory(), "MyFile", "files");
                     if (Directory.Exists(folder) == false)
                     {
                         Directory.CreateDirectory(folder);
@@ -33,7 +33,7 @@ namespace BusinessLogicLayer.Service
                     string fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
                     string filePath = Path.Combine(folder, fileName);
                     await file.CopyToAsync(new FileStream(filePath, FileMode.Create));
-                    fileUrls.Add(fileName);
+                    fileUrls.Add($"/Myfile/files/{fileName}");
                 }
             }
 

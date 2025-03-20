@@ -14,18 +14,15 @@ namespace ProjectManagementTool.Controllers
     public class ProjectController : Controller
     {
         private readonly IProjectInfoService _projectInfoService;
-        private readonly IWebHostEnvironment _env;
-        private readonly IFileService _fileService;
         private readonly UserManager<UserInfo> _userManager;
         private readonly IReleaseService _releaseService;
         private readonly ISprintService _sprintService;
 
-        public ProjectController(IWebHostEnvironment env, IProjectInfoService projectInfoService, IFileService fileService,
+        public ProjectController( IProjectInfoService projectInfoService,
             UserManager<UserInfo> userManager, IReleaseService releaseService, ISprintService sprintService)
         {
-            _env = env;
+            
             _projectInfoService = projectInfoService;
-            _fileService = fileService;
             _userManager = userManager;
             _releaseService = releaseService;
             _sprintService = sprintService;
@@ -101,7 +98,6 @@ namespace ProjectManagementTool.Controllers
                     EndDate = project.EndDate,
                     CompanyName = project.CompanyName,
                     ProjectOwnerId = project.ProjectOwnerId,
-                    ExistingFiles = project.Files ?? new List<string>()
                 };
                 
                 return View(model);
@@ -109,7 +105,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditProjectInfoVM model, int id)
+        public IActionResult Edit(EditProjectInfoVM model, int id)
         {
             bool isSuccess = false;
             var message = "Invalid Data!";
@@ -157,49 +153,6 @@ namespace ProjectManagementTool.Controllers
             return Json(new { success = "true", message = "Project deleted successfully!" });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeletePhoto(string file, int id)
-        {
-            bool isSuccess = false;
-            var message = "Invalid Data!";
-
-            if (string.IsNullOrEmpty(file))
-            {
-                isSuccess = false;
-                message = "Photo URL Not Found!";
-            }
-
-            else
-            {
-                var filePath = Path.Combine(_env.WebRootPath, file.TrimStart('/'));
-
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-
-                var project = _projectInfoService.GetProjectInfo(id);
-
-                if (project == null)
-                {
-                    isSuccess = false;
-                    message = "Student not found!";
-                }
-
-
-                if (project.Files != null && project.Files.Contains(file))
-                {
-                    project.Files.Remove(file);
-                    _projectInfoService.UpdateProjectInfo(project);
-                    isSuccess = true;
-                    message = "Photo deleted successfully!";
-
-                }
-
-            }
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
-
-        }
 
         public IActionResult Details(int id)
         {
