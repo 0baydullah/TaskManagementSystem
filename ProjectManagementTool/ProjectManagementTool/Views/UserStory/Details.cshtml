@@ -119,7 +119,12 @@
                         <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
                             <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
                         </a>
-
+                        <a class="btn btn-light" onclick="ToggleStartPause()">
+                            <i class="text-success fa-regular fa-circle-play"></i>
+                        </a>
+                        <a class="btn btn-light" onclick="">
+                            <i class="text-success fa-regular fa-circle-pause"></i>
+                        </a>
                     </td>
                 </tr>
             }
