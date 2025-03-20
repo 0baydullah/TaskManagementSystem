@@ -2,6 +2,10 @@
 
 @{
     ViewData["Title"] = "User Story Details";
+    Model.MemberList[0] = "N/A";
+    Model.StatusList[0] = "N/A";
+    Model.CategoryList[0] = "N/A";
+    Model.PriorityList[0] = "N/A";
 }
 <div class="d-flex justify-content-between">
     <h3 class="text-center">User Story : @Model.Story.StoryName</h3>
@@ -163,7 +167,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">Delete</button>
+                <button type="button" onclick="confirmUSDelete()" class="btn btn-outline-danger">Delete</button>
             </div>
         </div>
     </div>
@@ -294,7 +298,7 @@
                     type: 'POST',
                     success: function (response) {
                         $('#modal').modal('hide');
-                        location.reload();
+                        window.location.href = '@Url.Action("Index", "UserStory", new{projectId=ViewBag.ProjectId})';
                     },
                     error: function () {
                         alert('Error deleting sub task.');

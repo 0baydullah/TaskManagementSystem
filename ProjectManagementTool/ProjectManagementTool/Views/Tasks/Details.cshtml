@@ -3,15 +3,17 @@
 @{
     ViewData["Title"] = "Task Details";
     Model.MemberList[0] = "N/A";
+    Model.StatusList[0] = "N/A";
+    Model.PriorityList[0] = "N/A";
 }
 
 <div class="d-flex justify-content-between">
 	<h3 class="text-center">Task : @Model.Tasks.Name</h3>
 	<div>
-		<a class="btn btn-light" asp-controller="UserStory" asp-action="Edit" asp-route-id="@Model.Tasks.TaskId">
+		<a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Tasks.TaskId">
 			<i class="text-success fa-solid fa-pen"> Edit</i>
 		</a>
-		<a class="btn btn-light" onclick="openDeleteModal('@Model.Tasks.TaskId')">
+		<a class="btn btn-light" onclick="openDeleteTaskModal('@Model.Tasks.TaskId')">
 			<i class="text-danger fa-solid fa-trash"> Delete</i>
 		</a>
 	</div>
@@ -28,7 +30,7 @@
         <tbody>
             <tr>
                 <td>Estimated Time :  </td>
-                <th><i>@Model.Tasks.EstimatedTime</i></th>
+                <th><i>@Model.Tasks.EstimatedTime Hour</i></th>
             </tr>
             <tr>
                 <td>Assignee :</td>
@@ -96,7 +98,7 @@
                         @Model.StatusList[item.Status]
                     </td>
                     <td>
-                        @item.EstimatedTime
+                        @item.EstimatedTime Hour
                     </td>
                     <td>
                         @Model.PriorityList[item.Priority]
@@ -162,6 +164,26 @@
     </div>
 </div>
 
+<!--Task delete modal -->
+
+<div class="modal fade" id="modalTask" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Task !!</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-capitalize text-danger">
+                You are deleting this Task. After clicking on "Delete" button it won't be undone!!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" onclick="confirmTaskDelete()" class="btn btn-outline-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <script>
@@ -173,9 +195,10 @@
         }
 
         var deleteSubTaskId = null;
+        var deleteTaskId = null;
 
-        function openDeleteModal(subTaskId) {
-            deleteSubTaskId = subTaskId;
+        function openDeleteModal(taskId) {
+            deleteTaskId = taskId;
             $('#modal').modal('show'); 
         }
 
@@ -183,7 +206,7 @@
         function confirmDelete() {
             if (deleteSubTaskId) {
                 $.ajax({
-                    url: '/SubTask/Delete/' + deleteSubTaskId,
+                    url: '/SubTask/Delete/' + deleteTaskId,
                     type: 'POST',
                     success: function (response) {
                         $('#modal').modal('hide'); 
@@ -195,6 +218,31 @@
                 });
             }
         }
+
+
+        function openDeleteTaskModal(UsId) {
+            deleteTaskId = UsId;
+            $('#modalTask').modal('show');
+        }
+
+
+        function confirmTaskDelete() {
+            if (deleteTaskId) {
+                $.ajax({
+                    url: '/Tasks/Delete/' + deleteTaskId,
+                    type: 'POST',
+                    success: function (response) {
+                        $('#modal').modal('hide');
+                        window.location.href = '@Url.Action("Details", "UserStory")'+'/@Model.Tasks.UserStoryId';
+
+                    },
+                    error: function () {
+                        alert('Error deleting sub task.');
+                    }
+                });
+            }
+        }
+
 
     </script>
 }

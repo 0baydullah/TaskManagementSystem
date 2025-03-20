@@ -79,6 +79,7 @@ namespace ProjectManagementTool.Controllers
         {
             var storyDetails = new UserStoryDetailsVM();
             var story = _userStoryService.GetUserStory(id);
+            ViewBag.ProjectId = story.ProjectId;
             var tasks = _tasksService.GetAllTasks(id);
             var bugs = tasks; // Bug will be added later after implementation
 
