@@ -67,6 +67,8 @@ namespace DataAccessLayer.Repository
                     Email = m.Email,
                     Role = r.Name,
                     ProjectId = m.ProjectId
+
+                    
                 }).ToList();
                 return result;
             }
