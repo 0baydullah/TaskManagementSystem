@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Add User";
+    ViewData["Banner"] = "Add new user";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Form Submission</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .signup {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .login-text {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+            .login-text a {
+                color: blue;
+                text-decoration: none;
+            }
+
+                .login-text a:hover {
+                    text-decoration: underline;
+                }
+
+        h2 {
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="responseMessage">
+
+    </div>
+    <div class="signup">
+        <div id="errorMessage"></div>
+        <form id="registerForm">
+            <label>PIN:</label>
+            <input type="text" id="pin" name="pin" required>
+            <span class="error" id="pinError"></span>
+
+            <label>Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label>Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label>Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label>Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <span class="error" id="passwordError"></span>
+
+            <button type="submit">Create</button>
+        </form>
+        
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#registerForm").submit(function (event) {
+                event.preventDefault();
+
+                var pinValue = $("#pin").val().trim();
+
+                $("#pinError").text("");
+                $("#passwordError").text("");
+
+                if (!/^\d{4}$/.test(pinValue)) {
+                    $("#pinError").text("PIN must be a 4-digit number.");
+                    return;
+                }
+                if ($("#password").val() !== $("#confirmPassword").val()) {
+                    $("#passwordError").text("Passwords do not match.");
+                    return;
+                }
+
+                var userInfo = {
+                    Pin: parseInt(pinValue),
+                    Name: $("#name").val().trim(),
+                    Email: $("#email").val().trim(),
+                    Password: $("#password").val(),
+                    ConfirmPassword: $("#confirmPassword").val()
+                };
+
+                $.ajax({
+                    url: '/Member/Register',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(userInfo),
+                    success: function (response) {
+                       $("#responseMessage").html("<p style='color:green;'>User successfully Added!</p>");
+                       setTimeout(() => {
+                           $("#responseMessage").html("");
+                           window.location.href = '/Member/GetAllUser';
+                       }, 1000);
+                       $("#registerForm")[0].reset();
+                    },
+                   error: function (xhr) {
+                       if (xhr.status === 400) {
+                           var response = JSON.parse(xhr.responseText);
+                           if (response.errors) {
+                               var errorList = response.errors.map(e => `<li>${e}</li>`).join("");
+                               $("#errorMessage").html(`<div class='error' style='color:red;'>${errorList}</div>`);
+                           }
+                       }
+                       else {
+                           $("#responseMessage").html("<p style='color:red;'>An error occurred. Please try again.</p>");
+                       }
+                   }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

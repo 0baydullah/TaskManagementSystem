@@ -22,8 +22,19 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                _context.Members.Add(member);
-                _context.SaveChanges();
+                var existUser = _context.Members.FirstOrDefault(m => m.Email == member.Email && m.ProjectId == member.ProjectId);
+
+                if (existUser == null)
+                {
+                    _context.Members.Add(member);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("The project already exists.");
+
+                }
+
             }
             catch (Exception ex)
             {
@@ -124,6 +135,35 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public List<AllUserVM> GetAllUser(List<UserInfo> user)
+        {
+            try
+            {
+                var result = user.Join(_context.Members, u => u.Email, m => m.Email, (u, m) => new
+                { 
+                 UserId = u.Id,
+                 Pin = u.Pin,
+                 Name = u.Name,
+                 Email = u.Email,
+                 ProjectId = m.ProjectId
+                }).
+                GroupJoin(_context.ProjectInfo, f => f.ProjectId, p => p.ProjectId, (f, p) => new { f, p }).SelectMany(
+                    x => x.p.DefaultIfEmpty(), (x, p) => new AllUserVM
+                    {
+                        Id = x.f.UserId,
+                        Pin = x.f.Pin,
+                        Name = x.f.Name,
+                        Email = x.f.Email,
+                        ProjectId = x.f.ProjectId,
+                        Projects = p != null ? ( _context.ProjectInfo.Where( z => z.ProjectId == x.f.ProjectId).Select( d => d.Key).ToList() ) : new List<string>()
+                    }).ToList();
+                return result;
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
     }
 }

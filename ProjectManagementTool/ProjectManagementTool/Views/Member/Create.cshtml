@@ -49,7 +49,7 @@
 
                     $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
                     setTimeout(() => {
-                        window.location.href = '@Url.Action("Index", "Member")';
+                        window.location.href = '@Url.Action("Index", "Member", new {projectId = ViewBag.ProjectId})';
                     }, 2000);
                 }
 

@@ -16,5 +16,6 @@ namespace DataAccessLayer.IRepository
         public Member GetMember(int id);
         public List<MemberWithRoleVM> GetAllMember();
         public UserInfo GetUserByEmail(string email);
+        public List<AllUserVM> GetAllUser(List<UserInfo> user);
     }
 }

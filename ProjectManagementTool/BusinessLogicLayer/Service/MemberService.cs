@@ -57,5 +57,12 @@ namespace BusinessLogicLayer.Service
             var user = _memberRepo.GetUserByEmail(email);
             return user;
         }
+
+
+        public List<AllUserVM> GetAllUser(List<UserInfo> user)
+        {
+            var users = _memberRepo.GetAllUser(user);
+            return users;
+        }
     }
 }

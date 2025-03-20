@@ -18,6 +18,7 @@ namespace BusinessLogicLayer.IService
         public Member GetMember(int id);
 
         public List<MemberWithRoleVM> GetAllMember();
+        public List<AllUserVM> GetAllUser(List<UserInfo> user);
 
         public UserInfo GetUserByEmail(string email);
 
