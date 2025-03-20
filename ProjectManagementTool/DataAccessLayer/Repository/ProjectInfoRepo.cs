@@ -22,9 +22,17 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                _context.ProjectInfo.Add(projectInfo);
-                _context.SaveChanges();
+                var existProject = _context.ProjectInfo.FirstOrDefault(p => p.Name == projectInfo.Name);
+                if (existProject == null)
+                {
+                    _context.ProjectInfo.Add(projectInfo);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("The project already exists.");
 
+                }   
             }
             catch (Exception ex )
             {

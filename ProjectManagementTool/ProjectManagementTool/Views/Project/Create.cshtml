@@ -25,10 +25,6 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.Files"> </label>
-        <input asp-for="@Model.Files" class="form-control" id="files" onchange="validateSize();" placeholder="Upload Necessary Files">
-    </div>
-    <div class="form-group">
         <label asp-for="@Model.StartDate"> </label>
         <input asp-for="@Model.StartDate" class="form-control" id="startDate" placeholder="Select Start Date">
     </div>
@@ -108,12 +104,12 @@
 
 
         if (!isValid) {
-            $("#response-message").html(messages.join("<br>"));
+            $("#response-message").html('<div class="alert alert-danger"> Opps! ' + messages.join("<br>") + ' Try Again' +'</div>');
             $("#files").val("");
         }
 
         else {
-            $("#response-message").html('<span class="alert alert-success">All Files are valid. </span>');
+            $('#response-message').html('<div class="alert alert-success"> Hey! all files are valid..  </div>');
         }
     }
 </script>
