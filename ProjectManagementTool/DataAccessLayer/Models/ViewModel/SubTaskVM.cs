@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Enums;
+﻿
 using DataAccessLayer.Models.Entity;
 using System;
 using System.Collections.Generic;
@@ -19,8 +19,8 @@ namespace DataAccessLayer.Models.ViewModel
         public int ReviewerMemberId { get; set; }
         public double EstimatedTime { get; set; }
         public string Tag { get; set; }
-        public Statusx Status { get; set; }
-        public Priorityx Priority { get; set; }
+        public int Status {  get; set; }
+        public int Priority {  get; set; }
         public int TaskId { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }

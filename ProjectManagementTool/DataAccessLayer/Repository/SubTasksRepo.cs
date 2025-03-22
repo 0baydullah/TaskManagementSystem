@@ -89,8 +89,6 @@ namespace DataAccessLayer.Repository
                         ReviewerMemberId = x.s.ReviewerMemberId,
                         EstimatedTime = x.s.EstimatedTime,
                         Tag = x.s.Tag,
-                        Status = x.s.Status,
-                        Priority = x.s.Priority,
                         TaskId = x.s.TaskId,
                         StartTime = t != null ? t.StartTime.ToString() : " ",
                         EndTime = t != null ? t.StartTime.ToString() : " ",
