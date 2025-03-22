@@ -79,6 +79,7 @@ namespace ProjectManagementTool.Controllers
             var subtasks = _subTaskService.GetAllSubTaskByTask(id);
 
             tasksDetails.Tasks = task;
+            tasksDetails.StoryName = _userStoryService.GetUserStory(task.UserStoryId).StoryName;
             tasksDetails.SubTask = subtasks;
             tasksDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
             tasksDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
