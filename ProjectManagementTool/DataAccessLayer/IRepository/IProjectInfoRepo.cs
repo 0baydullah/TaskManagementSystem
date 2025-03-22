@@ -13,6 +13,7 @@ namespace DataAccessLayer.IRepository
         public void UpdateProjectInfo(ProjectInfo projectInfo);
         public void DeleteProjectInfo(ProjectInfo projectInfo);
         public ProjectInfo GetProjectInfo(int id);
+        public ProjectInfo GetProjectInfo(string projectName);
         public List<ProjectInfo> GetAllProjectInfo();
     }
 }

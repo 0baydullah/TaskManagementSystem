@@ -22,5 +22,9 @@ namespace DataAccessLayer.Models.Entity
         [Required]
         public int ProjectId { get; set; }
 
+        // Navigation properties
+
+        public ICollection<ProjectInfo> ProjectInfo { get; set; }
+
     }
 }

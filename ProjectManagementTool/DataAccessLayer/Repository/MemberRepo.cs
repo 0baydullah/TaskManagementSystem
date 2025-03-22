@@ -31,7 +31,7 @@ namespace DataAccessLayer.Repository
                 }
                 else
                 {
-                    throw new Exception("The project already exists.");
+                    throw new Exception("The member already exists.");
 
                 }
 
@@ -139,13 +139,14 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var result = user.Join(_context.Members, u => u.Email, m => m.Email, (u, m) => new
+                var result = user.GroupJoin(_context.Members, u => u.Email, m => m.Email, (u, m) => new { u, m }).SelectMany(
+                    x => x.m.DefaultIfEmpty(), (x, q) => new
                 { 
-                 UserId = u.Id,
-                 Pin = u.Pin,
-                 Name = u.Name,
-                 Email = u.Email,
-                 ProjectId = m.ProjectId
+                     UserId = x.u.Id,
+                     Pin = x.u.Pin,
+                     Name = x.u.Name,
+                     Email = x.u.Email,
+                     ProjectId = q != null ? q.ProjectId : 0
                 }).
                 GroupJoin(_context.ProjectInfo, f => f.ProjectId, p => p.ProjectId, (f, p) => new { f, p }).SelectMany(
                     x => x.p.DefaultIfEmpty(), (x, p) => new AllUserVM
@@ -157,7 +158,17 @@ namespace DataAccessLayer.Repository
                         ProjectId = x.f.ProjectId,
                         Projects = p != null ? ( _context.ProjectInfo.Where( z => z.ProjectId == x.f.ProjectId).Select( d => d.Key).ToList() ) : new List<string>()
                     }).ToList();
-                return result;
+
+                var result2 = result.GroupBy(x => x.Id).Select(x => new AllUserVM
+                {
+                    Id = x.Key,
+                    Pin = x.Select(y => y.Pin).FirstOrDefault(),
+                    Name = x.Select(y => y.Name).FirstOrDefault(),
+                    Email = x.Select(y => y.Email).FirstOrDefault(),
+                    ProjectId = x.Select(y => y.ProjectId).FirstOrDefault(),
+                    Projects = x.SelectMany(y => y.Projects).ToList()
+                }).ToList();
+                return result2;
             }
             catch (Exception)
             {

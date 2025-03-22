@@ -18,6 +18,8 @@ namespace BusinessLogicLayer.IService
 
         public ProjectInfo GetProjectInfo(int id);
 
+        public ProjectInfo GetProjectInfo(string projectName);
+
         public List<ProjectInfo> GetAllProjectInfo();
 
     }

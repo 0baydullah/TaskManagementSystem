@@ -70,6 +70,20 @@ namespace DataAccessLayer.Repository
                 throw new Exception("An error occurred while getting information the project.", ex);
             }
         }
+
+        public ProjectInfo GetProjectInfo(string projectName)
+        {
+            try
+            {
+                var project = _context.ProjectInfo.FirstOrDefault( p => p.Name == projectName);
+                return project;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("An error occurred while getting information the project.", ex);
+            }
+        }
         public List<ProjectInfo> GetAllProjectInfo()
         {
             try

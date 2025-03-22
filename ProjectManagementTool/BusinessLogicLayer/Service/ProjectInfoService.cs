@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,11 +15,11 @@ namespace BusinessLogicLayer.Service
     public class ProjectInfoService : IProjectInfoService
     {
         private readonly IProjectInfoRepo _projectInfoRepo;
-        private readonly IFileService _fileService;
-        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IFileService fileService)
+        private readonly IMemberRepo _memberRepo;
+        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo)
         {
             _projectInfoRepo = projectInfoRepo;
-            _fileService = fileService;
+            _memberRepo = memberRepo;
         }
 
 
@@ -40,6 +41,16 @@ namespace BusinessLogicLayer.Service
             };
 
             _projectInfoRepo.AddProjectInfo(project);
+
+            var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
+            var member = new Member
+            {
+                ProjectId = projectId,
+                RoleId = 28, // 28 is the role id for project admin
+                Email = user.Email,
+            };
+
+            _memberRepo.AddMember(member);
         }
 
         public void DeleteProjectInfo(ProjectInfo projectInfo)
@@ -51,6 +62,13 @@ namespace BusinessLogicLayer.Service
             var projectInfo = _projectInfoRepo.GetProjectInfo(id);
             return projectInfo;
         }
+
+        public ProjectInfo GetProjectInfo(string projectName)
+        {
+            var projectInfo = _projectInfoRepo.GetProjectInfo(projectName);
+            return projectInfo;
+        }
+
         public List<ProjectInfo> GetAllProjectInfo()
         {
             var projectInfo = _projectInfoRepo.GetAllProjectInfo();
