@@ -16,86 +16,157 @@ namespace BusinessLogicLayer.Service
     {
         private readonly IProjectInfoRepo _projectInfoRepo;
         private readonly IMemberRepo _memberRepo;
-        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo)
+        private readonly IRoleRepo _roleRepo;
+        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo, IRoleRepo roleRepo)
         {
             _projectInfoRepo = projectInfoRepo;
             _memberRepo = memberRepo;
+            _roleRepo = roleRepo;
         }
 
 
-        public  void AddProjectInfo(ProjectInfoVM model, UserInfo user)
+        public  bool AddProjectInfo(ProjectInfoVM model, UserInfo user)
         {
+            try
+            {
+                var project = new ProjectInfo
+                {
+                    Name = model.Name,
+                    Key = model.Key,
+                    Description = model.Description,
+                    StartDate = model.StartDate,
+                    EndDate = model.EndDate,
+                    CompanyName = model.CompanyName,
+                    ProjectOwnerId = user.Id,
 
+                };
+
+                _projectInfoRepo.AddProjectInfo(project);
+
+                var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
+                var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Admin");
+                var member = new Member
+                {
+                    ProjectId = projectId,
+                    RoleId = role.RoleId,
+                    Email = user.Email,
+                };
+                _memberRepo.AddMember(member);
+
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
            
 
-            var project = new ProjectInfo
-            {
-                Name = model.Name,
-                Key = model.Key,
-                Description = model.Description,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
-                CompanyName = model.CompanyName,
-                ProjectOwnerId = user.Id,
-                
-            };
-
-            _projectInfoRepo.AddProjectInfo(project);
-
-            var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
-            var member = new Member
-            {
-                ProjectId = projectId,
-                RoleId = 28, // 28 is the role id for project admin
-                Email = user.Email,
-            };
-
-            _memberRepo.AddMember(member);
+            
         }
 
-        public void DeleteProjectInfo(ProjectInfo projectInfo)
+        public bool DeleteProjectInfo(ProjectInfo projectInfo)
         {
-            _projectInfoRepo.DeleteProjectInfo(projectInfo);
+            try
+            {
+                if (projectInfo == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    _projectInfoRepo.DeleteProjectInfo(projectInfo);
+                    return true;
+                }
+                
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
         public ProjectInfo GetProjectInfo(int id)
         {
-            var projectInfo = _projectInfoRepo.GetProjectInfo(id);
-            return projectInfo;
+            try
+            {
+                var projectInfo = _projectInfoRepo.GetProjectInfo(id);
+                return projectInfo;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public ProjectInfo GetProjectInfo(string projectName)
         {
-            var projectInfo = _projectInfoRepo.GetProjectInfo(projectName);
-            return projectInfo;
+            try
+            {
+                var projectInfo = _projectInfoRepo.GetProjectInfo(projectName);
+                return projectInfo;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public List<ProjectInfo> GetAllProjectInfo()
         {
-            var projectInfo = _projectInfoRepo.GetAllProjectInfo();
-            return projectInfo;
+            try
+            {
+                var projectInfo = _projectInfoRepo.GetAllProjectInfo();
+                return projectInfo;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
         }
 
-        public void UpdateProjectInfo(EditProjectInfoVM model)
+        public bool UpdateProjectInfo(EditProjectInfoVM model)
         {
-            var project = _projectInfoRepo.GetProjectInfo(model.ProjectId);
-            if (project != null)
+            try
             {
-                
-                project.Name = model.Name;
-                project.Key = model.Key;
-                project.Description = model.Description;
-                project.StartDate = model.StartDate;
-                project.EndDate = model.EndDate;
-                project.CompanyName = model.CompanyName;
-                project.ProjectOwnerId = model.ProjectOwnerId;
-         
-                _projectInfoRepo.UpdateProjectInfo(project);
+                var project = _projectInfoRepo.GetProjectInfo(model.ProjectId);
+                if (project != null)
+                {
+
+                    project.Name = model.Name;
+                    project.Key = model.Key;
+                    project.Description = model.Description;
+                    project.StartDate = model.StartDate;
+                    project.EndDate = model.EndDate;
+                    project.CompanyName = model.CompanyName;
+                    project.ProjectOwnerId = model.ProjectOwnerId;
+
+                    _projectInfoRepo.UpdateProjectInfo(project);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
             }
-            else
+            catch (Exception)
             {
-                throw new Exception("Project not found");
-            }
+
+                throw;
+            }    
         }
 
     }

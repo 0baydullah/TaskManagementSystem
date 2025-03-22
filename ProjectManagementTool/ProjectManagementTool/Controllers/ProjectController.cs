@@ -30,8 +30,18 @@ namespace ProjectManagementTool.Controllers
 
         public IActionResult Index()
         {
-            var projects = _projectInfoService.GetAllProjectInfo();
-            return View(projects);
+            try
+            {
+                var projects = _projectInfoService.GetAllProjectInfo();
+                return View(projects);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.StackTrace);
+                return View();
+            }
+            
         }
 
         [HttpGet]
@@ -56,10 +66,12 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                     message += error + " ";
                 }
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
 
-            else
+            try
             {
+                   
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null)
                 {
@@ -68,40 +80,63 @@ namespace ProjectManagementTool.Controllers
                     return Json(new { isSuccess, message });
                 }
 
-                _projectInfoService.AddProjectInfo(model, user);
-                isSuccess = true;
-                message = "Project created successfully!";
-            }
+                var response = _projectInfoService.AddProjectInfo(model, user);
+                if (response == false)
+                {
+                    isSuccess = false;
+                    message = "Project not created!";
+                }
+                else
+                {
+                    isSuccess = true;
+                    message = "Project created successfully!";
+                }
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
 
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            catch (Exception)
+            {
+
+                return View(model);
+            } 
         }
 
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var project = _projectInfoService.GetProjectInfo(id);
-            if (project == null)
+            try
             {
-                return NotFound("Project not found! ");
-            }
-
-            else
-            {
-                var model = new EditProjectInfoVM
+                var project = _projectInfoService.GetProjectInfo(id);
+                if (project == null)
                 {
-                    ProjectId = project.ProjectId,
-                    Name = project.Name,
-                    Key = project.Key,
-                    Description = project.Description,
-                    StartDate = project.StartDate,
-                    EndDate = project.EndDate,
-                    CompanyName = project.CompanyName,
-                    ProjectOwnerId = project.ProjectOwnerId,
-                };
-                
-                return View(model);
+                    return NotFound("Project not found! ");
+                }
+
+                else
+                {
+                    var model = new EditProjectInfoVM
+                    {
+                        ProjectId = project.ProjectId,
+                        Name = project.Name,
+                        Key = project.Key,
+                        Description = project.Description,
+                        StartDate = project.StartDate,
+                        EndDate = project.EndDate,
+                        CompanyName = project.CompanyName,
+                        ProjectOwnerId = project.ProjectOwnerId,
+                    };
+
+                    return View(model);
+                }
+
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         [HttpPost]
@@ -119,10 +154,12 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                     message += error + " ";
                 }
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
 
-            else
+            try
             {
+                
                 var project = _projectInfoService.GetProjectInfo(id);
                 if (project == null)
                 {
@@ -135,22 +172,49 @@ namespace ProjectManagementTool.Controllers
                 _projectInfoService.UpdateProjectInfo(model);
                 isSuccess = true;
                 message = "Data updated successfully!";
-            }
+                
 
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+
+            }
+            catch (Exception)
+            {
+
+                return View(model);
+            }           
         }
 
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var project = _projectInfoService.GetProjectInfo(id);
-
-            if (project != null)
+            try
             {
-                _projectInfoService.DeleteProjectInfo(project);
+                var isSuccess = false;
+                var message = "Project not Found!";
+                var response = _projectInfoService.GetProjectInfo(id);
+
+                if (response != null)
+                {
+                    isSuccess = true;
+                    message = "Project deleted successfully!";
+                    _projectInfoService.DeleteProjectInfo(response);
+                }
+
+                else
+                {
+                    isSuccess = false;
+                    message = "Project not found!";
+                }
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+
             }
-            return Json(new { success = "true", message = "Project deleted successfully!" });
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
 

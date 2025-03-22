@@ -9,9 +9,9 @@ namespace DataAccessLayer.IRepository
 {
     public interface IProjectInfoRepo
     {
-        public void AddProjectInfo(ProjectInfo projectInfo);
-        public void UpdateProjectInfo(ProjectInfo projectInfo);
-        public void DeleteProjectInfo(ProjectInfo projectInfo);
+        public bool AddProjectInfo(ProjectInfo projectInfo);
+        public bool UpdateProjectInfo(ProjectInfo projectInfo);
+        public bool DeleteProjectInfo(ProjectInfo projectInfo);
         public ProjectInfo GetProjectInfo(int id);
         public ProjectInfo GetProjectInfo(string projectName);
         public List<ProjectInfo> GetAllProjectInfo();

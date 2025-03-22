@@ -18,7 +18,7 @@ namespace DataAccessLayer.Repository
 
         }
 
-        public void AddProjectInfo(ProjectInfo projectInfo)
+        public bool AddProjectInfo(ProjectInfo projectInfo)
         {
             try
             {
@@ -27,32 +27,33 @@ namespace DataAccessLayer.Repository
                 {
                     _context.ProjectInfo.Add(projectInfo);
                     _context.SaveChanges();
+                    return true;
                 }
                 else
                 {
-                    throw new Exception("The project already exists.");
-
+                    return false;
                 }   
             }
-            catch (Exception ex )
+            catch (Exception  )
             {
 
-                throw new Exception("An error occurred while adding the project.", ex);
+                throw;
             }
             
         }
 
-        public void DeleteProjectInfo(ProjectInfo projectInfo)
+        public bool DeleteProjectInfo(ProjectInfo projectInfo)
         {
             try
             {
                 _context.ProjectInfo.Remove(projectInfo);
                 _context.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw new Exception("An error occurred while removing the project.", ex);
+                throw;
             }
             
         }
@@ -64,10 +65,10 @@ namespace DataAccessLayer.Repository
                 var project = _context.ProjectInfo.Find(id);
                 return project;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw new Exception("An error occurred while getting information the project.", ex);
+                throw;
             }
         }
 
@@ -78,10 +79,10 @@ namespace DataAccessLayer.Repository
                 var project = _context.ProjectInfo.FirstOrDefault( p => p.Name == projectName);
                 return project;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw new Exception("An error occurred while getting information the project.", ex);
+                throw;
             }
         }
         public List<ProjectInfo> GetAllProjectInfo()
@@ -92,24 +93,25 @@ namespace DataAccessLayer.Repository
                 return projects;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw new Exception("An error occurred while getting information the project.", ex);
+                throw;
             }
         }
-        public void UpdateProjectInfo(ProjectInfo projectInfo)
+        public bool UpdateProjectInfo(ProjectInfo projectInfo)
         {
             try
             {
                 _context.ProjectInfo.Update(projectInfo);
                 _context.SaveChanges();
+                return true;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw new Exception("An error occurred while getting information the project.", ex);
+                throw;
             }
             
         }

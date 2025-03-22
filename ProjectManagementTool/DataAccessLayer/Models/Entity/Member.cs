@@ -24,7 +24,7 @@ namespace DataAccessLayer.Models.Entity
 
         // Navigation properties
 
-        public ICollection<ProjectInfo> ProjectInfo { get; set; }
+        //public ICollection<ProjectInfo> ProjectInfo { get; set; }
 
     }
 }
