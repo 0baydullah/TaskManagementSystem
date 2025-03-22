@@ -13,18 +13,21 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly ISubTaskService _subTaskService;
         private readonly IMemberService _memberService;
-        private readonly PMSDBContext _context;
         private readonly IUserStoryService _userStoryService;
         private readonly ITasksService _tasksService;
+        private readonly IStatusService _statusService;
+        private readonly IPriorityService _priorityService;
 
-        public SubTaskController(ISubTaskService subTaskService, PMSDBContext context, IMemberService memberService
-            , IUserStoryService userStoryService, ITasksService tasksService) 
+        public SubTaskController(ISubTaskService subTaskService,IMemberService memberService
+            , IUserStoryService userStoryService, ITasksService tasksService, IStatusService statusService,
+            IPriorityService prioriyService) 
         {
             _subTaskService = subTaskService;
             _memberService = memberService;
-            _context = context;
             _userStoryService = userStoryService;
             _tasksService = tasksService;
+            _statusService = statusService;
+            _priorityService = prioriyService;
         }
 
         public IActionResult Index()
@@ -38,9 +41,16 @@ namespace ProjectManagementTool.Controllers
             
             var task = _tasksService.GetTasks(id);
             var story = _userStoryService.GetUserStory(task.UserStoryId);
-            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
-
+            
             ViewBag.Id = id;
+            
+            var statuses = _statusService.GetAllStatuses();
+            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+            var priorities = _priorityService.GetAllPriority();
+            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
+
+            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
             ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
             return View();

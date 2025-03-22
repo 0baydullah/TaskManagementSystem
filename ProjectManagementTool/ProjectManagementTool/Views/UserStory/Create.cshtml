@@ -1,18 +1,14 @@
 ﻿@model DataAccessLayer.Models.ViewModel.UserStoryVM
-@using static DataAccessLayer.Enums.Categoryx
-@using static DataAccessLayer.Enums.Priorityx
-@using static DataAccessLayer.Enums.Statusx
 
 @{
     ViewData["Title"] = "Add UserStory";
+    ViewData["Banner"] = "Create User Story";
 }
 
-<h1 class="text-center">Add User Story</h1>
 
-<hr />
 <div class="d-flex justify-content-center">
     <div class="col-md-4">
-        <form id="createForm">
+        <form id="createForm" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-2">
                 <label asp-for="StoryName" class="control-label">Story Name</label>
@@ -21,31 +17,26 @@
             </div>
             <div class="form-group mt-2">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" style="height: 100px;" rows="" ></textarea>
+                <textarea asp-for="Description" class="form-control"  rows="6" ></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group d-flex justify-content-evenly mt-2">
                 <label asp-for="Category" class="control-label"></label>  
-                <select asp-for="Category" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Categoryx>()"></select>
+                <select asp-for="@Model.Category" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Category"></select>
                 <span asp-validation-for="Category" class="text-danger"></span>  
 
                 <label asp-for="Points" class="control-label"></label>
                 <input asp-for="Points" class="form-control " style="width: 60px;"/> 
                 <span asp-validation-for="Points" class="text-danger"></span>
             </div>
-            <div class="form-group mt-2">
-                <label asp-for="EstimateTime" class="control-label">Estimated Time</label>
-                <input asp-for="EstimateTime" class="form-control" />
-                <span asp-validation-for="EstimateTime" class="text-danger"></span>
-            </div>
             <div class="form-group d-flex justify-content-evenly mt-2">
                 <label asp-for="Status" class="control-label"></label>
                 
-                <select asp-for="Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Statusx>()"></select>
+                <select asp-for="@Model.Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Status"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             
                 <label asp-for="Priority" class="control-label"></label>
-                <select asp-for="Priority" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="@Html.GetEnumSelectList<DataAccessLayer.Enums.Priorityx>()"></select>
+                <select asp-for="@Model.Priority" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Priority"></select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
             <div class="form-group mt-2">
