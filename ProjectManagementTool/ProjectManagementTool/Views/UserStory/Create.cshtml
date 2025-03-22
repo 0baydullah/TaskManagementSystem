@@ -68,20 +68,25 @@
         function submitForm() {
             var form = $('#createForm');
             var formData = new FormData(form[0]);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Create", "UserStory")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (r) {
-                    window.location.href = r.redirectUrl;
-                },
-                error: function (error) {
-                    alert('An error occurred: ' + error);
-                }
-            });
+            if (form.valid()) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Create", "UserStory")',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (r) {
+                        window.location.href = r.redirectUrl;
+                    },
+                    error: function (error) {
+                        alert('An error occurred: ' + error);
+                    }
+                });
+            }
+            
         }
     </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+   @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }

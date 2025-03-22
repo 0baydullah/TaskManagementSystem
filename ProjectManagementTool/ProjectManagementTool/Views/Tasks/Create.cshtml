@@ -23,13 +23,13 @@
             <div class="form-group d-flex justify-content-evenly mt-2">
                 <label asp-for="AssignMembersId" class="control-label">Assignee</label>
                 <select asp-for="@Model.AssignMembersId" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
-                    <option value="">Select Assignee</option>
+                    <option value="0">Select Assignee</option>
                 </select>
                 <span asp-validation-for="AssignMembersId" class="text-danger"></span>
             
                 <label asp-for="ReviewerMemberId" class="control-label">Reviewer</label>
                 <select asp-for="@Model.ReviewerMemberId" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
-                    <option value="">Select Reviewer</option>
+                    <option value="0">Select Reviewer</option>
                 </select>
                 <span asp-validation-for="ReviewerMemberId" class="text-danger"></span>
             </div>
@@ -81,19 +81,22 @@
         function submitForm() {
             var form = $('#createForm');
             var formData = new FormData(form[0]);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Create", "Tasks")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function () {
-                    window.location.href = '@Url.Action("Details", "UserStory")/'+ @ViewBag.UserStoryId;
-                },
-                error: function (error) {
-                    alert('An error occurred: ' + error);
-                }
-            });
+            if(form.valid()){
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Create", "Tasks")',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        window.location.href = '@Url.Action("Details", "UserStory")/'+ @ViewBag.UserStoryId;
+                    },
+                    error: function (error) {
+                        alert('An error occurred: ' + error);
+                    }
+                });
+            }
+
         }
 
     </script>

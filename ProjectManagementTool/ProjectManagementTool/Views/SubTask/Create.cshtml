@@ -72,19 +72,22 @@
         function submitForm() {
             var form = $('#createForm');
             var formData = new FormData(form[0]);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Create", "SubTask")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function () {
-                    window.location.href = '@Url.Action("Details", "Tasks")/'+ @ViewBag.id;
-                },
-                error: function (error) {
-                    alert('An error occurred: ' + error);
-                }
-            });
+            if(form.valid()){
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Create", "SubTask")',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function () {
+                        window.location.href = '@Url.Action("Details", "Tasks")/'+ @ViewBag.id;
+                    },
+                    error: function (error) {
+                        alert('An error occurred: ' + error);
+                    }
+                });
+            }
+            
         }
     </script>
     @{

@@ -11,6 +11,8 @@ namespace DataAccessLayer.Models.Entity
     {
         [Key]
         public int TaskId { get; set; }
+        [Required]
+        [RegularExpression(@"^(?=.*[a-zA-Z])[\w\s-]+$", ErrorMessage = "Only Numbers or Special Characters are not allowed")]
         public string Name { get; set; }
         public string Descripton { get; set; }
 
