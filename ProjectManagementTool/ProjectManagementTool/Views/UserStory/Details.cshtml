@@ -105,6 +105,22 @@
         <tbody>
             @foreach (var item in Model.Tasks)
             {
+                @if (Model.StatusList.ContainsKey(item.Status) == false)
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+                @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                {
+                    Model.StatusList[item.Priority] = "Not Found";
+                }
+                @if (Model.MemberList.ContainsKey(item.AssignMembersId) == false)
+                {
+                    Model.MemberList[item.AssignMembersId] = "Not Found";
+                }
+                @if (Model.MemberList.ContainsKey(item.ReviewerMemberId) == false)
+                {
+                    Model.MemberList[item.ReviewerMemberId] = "Not Found";
+                }
                 <tr>
                     <td>
                         @item.Name

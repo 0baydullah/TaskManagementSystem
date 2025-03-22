@@ -124,7 +124,7 @@ namespace ProjectManagementTool.Controllers
             ViewBag.Category = new SelectList(categories, "CategoryId", "Name");
 
             var sprints = _sprintService.GetAllSprint(userStory.ProjectId);
-            ViewBag.Sprints = new SelectList(sprints, "SprintId", "Name");
+            ViewBag.Sprints = new SelectList(sprints, "SprintId", "SprintName");
 
             return View(userStory);
         }
