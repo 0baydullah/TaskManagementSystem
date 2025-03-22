@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using DataAccessLayer.Repository;
 
 namespace BusinessLogicLayer.Service
@@ -36,7 +37,7 @@ namespace BusinessLogicLayer.Service
             return subTask;
         }
 
-        public List<SubTask> GetAllSubTaskByTask(int id)
+        public List<SubTaskVM> GetAllSubTaskByTask(int id)
         {
             var subTask = _subTaskRepo.GetAllSubTaskByTask(id);
 

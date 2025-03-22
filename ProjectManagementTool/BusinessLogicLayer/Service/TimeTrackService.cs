@@ -24,7 +24,7 @@ namespace BusinessLogicLayer.Service
             {
                 var existTimeTrack = _timeTrackRepo.GetByTaskIdSubTaskId(taskId, subTaskId);
 
-                if (existTimeTrack.Result == null)
+                if (existTimeTrack == null)
                 {
                     var timeTrack = new TimeTrack()
                     {
@@ -41,9 +41,9 @@ namespace BusinessLogicLayer.Service
                 }
                 else
                 {
-                    existTimeTrack.Result.TodaysTime = DateTime.Now;
-
-                    var result = await _timeTrackRepo.TimeUpdate(existTimeTrack.Result);
+                    existTimeTrack.TodaysTime = DateTime.Now;
+                    var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
+                    
                     return result;
                 }
             }
@@ -59,7 +59,7 @@ namespace BusinessLogicLayer.Service
             {
                 var existTimeTrack = _timeTrackRepo.GetByTaskIdSubTaskId(taskId, subTaskId);
 
-                if (existTimeTrack.Result == null)
+                if (existTimeTrack == null)
                 {
                     var timeTrack = new TimeTrack()
                     {
@@ -70,7 +70,6 @@ namespace BusinessLogicLayer.Service
                         TodaysTime = DateTime.Now,
                         TotalTime = 0,
                     };
-                    
 
                     var result = await _timeTrackRepo.TimeStore(timeTrack);
                     return result;
@@ -78,13 +77,11 @@ namespace BusinessLogicLayer.Service
                 else
                 {
 
-                    existTimeTrack.Result.EndTime = DateTime.Now;
-
-                    var spentTime = existTimeTrack.Result.EndTime - existTimeTrack.Result.TodaysTime;
-
-                    existTimeTrack.Result.TotalTime = existTimeTrack.Result.TotalTime + spentTime.TotalHours;
-
-                    var result = await _timeTrackRepo.TimeUpdate(existTimeTrack.Result);
+                    existTimeTrack.EndTime = DateTime.Now;
+                    var spentTime = existTimeTrack.EndTime - existTimeTrack.TodaysTime;
+                    existTimeTrack.TotalTime = existTimeTrack.TotalTime + spentTime.TotalHours;
+                    var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
+                    
                     return result;
                 }
             }

@@ -113,7 +113,7 @@
                         <a class="btn btn-light" onclick="openDeleteModal(@item.SubTaskId)">
                             <i class="text-success fa-solid fa-trash"></i>
                         </a>
-                        <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton')">
+                        <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton', '@item.StartTime', '@item.EndTime', '@item.TotalTime')">
                             <i class="text-success fa-solid fa-circle-info"></i> 
                         </a>
 
@@ -173,9 +173,15 @@
 @section Scripts {
     <script>
 
-        function openDetailsModal(description) {
-            document.getElementById('modalDescription').innerText = description;
+        function openDetailsModal(description, startTime, endTime, totalTime) {
+            description = "Description: " + description + "\n";
+            startTime = "Start time: " + startTime + "\n";
+            endTime = "End time: " + endTime + "\n";
+            totalTime = "Total working time(hour): " + Math.ceil(totalTime*100)/100;
+
+            document.getElementById('modalDescription').innerText = description  + startTime + endTime + totalTime;
             var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            
             myModal.show();
         }
 

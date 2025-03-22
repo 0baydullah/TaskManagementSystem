@@ -19,9 +19,10 @@ namespace DataAccessLayer.Repository
             _context = context;
         }
 
-        public async Task<TimeTrack> GetByTaskIdSubTaskId(int taskId, int subTaskId)
+        public TimeTrack GetByTaskIdSubTaskId(int taskId, int subTaskId)
         {
-            var existTimeTrack = await _context.TimeTracks.FirstOrDefaultAsync(t => t.TaskId == taskId && t.SubTaskId == subTaskId);
+            var existTimeTrack =  _context.TimeTracks.FirstOrDefault(t => t.TaskId == taskId && t.SubTaskId == subTaskId);
+
             return existTimeTrack;
         }
         public async Task<bool> TimeStore(TimeTrack timeTrack)

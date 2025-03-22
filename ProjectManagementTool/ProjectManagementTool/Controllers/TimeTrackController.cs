@@ -20,17 +20,17 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var result = _timeTrackService.TimeStoreStart(taskId, subTaskId);
-                return Ok(new { message = "Tracking started" });
-                //if (result != null)
-                //{
-                //    return Ok(new { success = true });
-                //}
-                //else
-                //{
-                //    return Ok(new { success = false, errors = "dont start" });
-                //}
+
+                if (result.Result == true)
+                {
+                    return Ok(new { success = true, message = "Tracking started" });
+                }
+                else
+                {
+                    return Ok(new { success = false, errors = "don't start tracking" });
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -42,15 +42,15 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var result = _timeTrackService.TimeStoreEnd(taskId, subTaskId);
-                return Ok(new { message = "Tracking started" });
-                //if (result != null)
-                //{
-                //    return Ok(new { success = true });
-                //}
-                //else
-                //{
-                //    return Ok(new { success = false, errors = "dont stop" });
-                //}
+
+                if (result.Result == true)
+                {
+                    return Ok(new { success = true, message = "Tracking stopped" });
+                }
+                else
+                {
+                    return Ok(new { success = false, errors = "don't stop tracking" });
+                }
             }
             catch(Exception)
             {

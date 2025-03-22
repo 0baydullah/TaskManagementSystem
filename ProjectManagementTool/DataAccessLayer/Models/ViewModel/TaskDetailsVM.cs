@@ -10,6 +10,6 @@ namespace DataAccessLayer.Models.ViewModel
     public class TaskDetailsVM
     {
         public Tasks Tasks { get; set; }
-        public List<SubTask> SubTask { get; set; }
+        public List<SubTaskVM> SubTask { get; set; }
     }
 }

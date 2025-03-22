@@ -9,7 +9,7 @@ namespace DataAccessLayer.IRepository
 {
     public interface ITimeTrackRepo
     {
-        public Task<TimeTrack> GetByTaskIdSubTaskId(int taskId, int subTaskId);
+        public TimeTrack GetByTaskIdSubTaskId(int taskId, int subTaskId);
         public Task<bool> TimeStore(TimeTrack timeTrack);
         public Task<bool> TimeUpdate(TimeTrack timeTrack);
     }
