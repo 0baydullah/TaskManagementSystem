@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using log4net;
 
 namespace DataAccessLayer.Repository
 {
     public class SubTasksRepo : ISubTasksRepo
     {
         private readonly PMSDBContext _context;
+        private readonly ILog _log = LogManager.GetLogger(typeof(SubTasksRepo));
 
         public SubTasksRepo(PMSDBContext context)
         {
@@ -25,9 +27,10 @@ namespace DataAccessLayer.Repository
                 _context.SubTask.Add(subTask);
                 _context.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("An error occurred while adding the sub task.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -40,7 +43,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while deleting the sub task.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -54,7 +58,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while deleting the sub task.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -63,12 +68,12 @@ namespace DataAccessLayer.Repository
             try
             {
                 var subTask = _context.SubTask.ToList();
-
                 return subTask;
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while retrieving all sub tasks.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -76,13 +81,13 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var subTask = _context.SubTask.Where(x=>x.TaskId == id ).ToList();
-
+                var subTask = _context.SubTask.Where(x => x.TaskId == id).ToList();
                 return subTask;
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while retrieving all tasks.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -95,7 +100,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while retrieving the task with ID {id}.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -108,7 +114,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while updating the task.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }

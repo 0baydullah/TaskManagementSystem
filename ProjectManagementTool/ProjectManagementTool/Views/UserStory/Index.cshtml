@@ -19,113 +19,117 @@
 }
 
 
-<div style="text-align: end;">
-    <a href="@Url.Action("Create", "UserStory", new { projectId = ViewBag.ProjectId })" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> User Story</a>
-</div>
+@if(Model != null){
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Story Name
-            </th>
-         @*    <th>
+
+    <div style="text-align: end;">
+        <a href="@Url.Action("Create", "UserStory", new { projectId = ViewBag.ProjectId })" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> User Story</a>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Story Name
+                </th>
+                @*    <th>
                 Project ID
             </th> *@
-            <th>
-                Status
-            </th>
-            <th>
-                Points
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                Priority
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.UserStories) {
-            <tr>
-                <td>
-                    @item.StoryName
-                </td>
-             @*    <td>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Points
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Priority
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserStories)
+            {
+                <tr>
+                    <td>
+                        @item.StoryName
+                    </td>
+                    @*    <td>
                    @item.ProjectId
                 </td> *@
-                <td>
-                    @Model.StatusList[item.Status]
-                </td>
-                <td>
-                    @item.Points
-                </td>
-                <td>
-                    @Model.CategoryList[item.Category]
-                </td>
-                <td>
-                    @Model.PriorityList[item.Priority]
-                </td>
-                <td>
-                
-                    <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.StoryId">
-                        <i class="text-danger fa-solid fa-pen"></i>
-                    </a>
+                    <td>
+                        @Model.StatusList[item.Status]
+                    </td>
+                    <td>
+                        @item.Points
+                    </td>
+                    <td>
+                        @Model.CategoryList[item.Category]
+                    </td>
+                    <td>
+                        @Model.PriorityList[item.Priority]
+                    </td>
+                    <td>
+
+                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.StoryId">
+                            <i class="text-danger fa-solid fa-pen"></i>
+                        </a>
                         <a class="btn btn-light" onclick="openDeleteModal('@item.StoryId')">
-                        <i class="text-danger fa-solid fa-trash"></i>
-                    </a>
-                    <a class="btn btn-light" asp-action="Details" asp-route-id="@item.StoryId">
-                        <i class="text-danger fa-solid fa-circle-info"></i>
-                    </a>
-                    <a class="btn btn-light" asp-controller="Tasks" asp-action="Create" asp-route-id="@item.StoryId">
+                            <i class="text-danger fa-solid fa-trash"></i>
+                        </a>
+                        <a class="btn btn-light" asp-action="Details" asp-route-id="@item.StoryId">
+                            <i class="text-danger fa-solid fa-circle-info"></i>
+                        </a>
+                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Create" asp-route-id="@item.StoryId">
                             <i class="text-success fa-solid fa-plus"></i> <small>Task</small>
-                    </a>
-                    <a class="btn btn-light" asp-controller="Bugs" asp-action="Create" asp-route-id="@item.StoryId">
-                        <i class="text-danger fa-solid fa-plus"></i> <small>Bug</small>
-                    </a>
+                        </a>
+                        <a class="btn btn-light" asp-controller="Bugs" asp-action="Create" asp-route-id="@item.StoryId">
+                            <i class="text-danger fa-solid fa-plus"></i> <small>Bug</small>
+                        </a>
 
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-capitalize text-danger">
-                You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-capitalize text-danger">
+                    You are deleting a User Story....after clicking on "Delete" button it wont be undone and all associate task or  other properties will be deleted forever!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">OK</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-@section Scripts {
+    @section Scripts {
     <script>
         let userStoryIdToDelete = 0;
 
         function openDeleteModal(id) {
             userStoryIdToDelete = id;
-            $("#modal").modal('show'); 
+            $("#modal").modal('show');
         }
 
         function confirmDelete() {
             $.ajax({
                 url: '/UserStory/Delete/' + userStoryIdToDelete,
-                type: 'POST', 
+                type: 'POST',
                 success: function (result) {
-                    $("#modal").modal('hide'); 
+                    $("#modal").modal('hide');
                     location.reload();
                     console.log(result);
                 },
@@ -135,5 +139,7 @@
             });
         }
     </script>
-}
+    }
 
+
+}

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using log4net;
 
 namespace DataAccessLayer.Repository
 {
     public class TasksRepo : ITasksRepo
     {
         private readonly PMSDBContext _context;
+        private readonly ILog _log = LogManager.GetLogger(typeof(TasksRepo));
 
         public TasksRepo(PMSDBContext context)
         {
@@ -25,9 +27,10 @@ namespace DataAccessLayer.Repository
                 _context.Tasks.Add(tasks);
                 _context.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("An error occurred while adding the task.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -40,7 +43,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while deleting the task.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -54,7 +58,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while deleting all tasks associated with the user story.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -63,12 +68,12 @@ namespace DataAccessLayer.Repository
             try
             {
                 var tasks = _context.Tasks.ToList();
-
                 return tasks;
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while retrieving all tasks.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -76,13 +81,13 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var tasks = _context.Tasks.Where(x=>x.UserStoryId == id ).ToList();
-
+                var tasks = _context.Tasks.Where(x => x.UserStoryId == id).ToList();
                 return tasks;
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while retrieving all tasks.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -95,7 +100,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while retrieving the task with ID {id}.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -108,7 +114,8 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while updating the task.", ex);
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }

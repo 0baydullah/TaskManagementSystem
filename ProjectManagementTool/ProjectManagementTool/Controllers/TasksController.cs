@@ -3,6 +3,7 @@ using BusinessLogicLayer.Service;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,6 +19,10 @@ namespace ProjectManagementTool.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IStatusService _statusService;
         private readonly IPriorityService _priorityService;
+
+        private readonly ILog _log = LogManager.GetLogger(typeof(TasksController));
+
+
 
         public TasksController(ITasksService tasksService, ISubTaskService subTaskService, 
             IMemberService memberService, IUserStoryService userStoryService,

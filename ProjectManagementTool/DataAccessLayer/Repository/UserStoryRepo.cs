@@ -53,6 +53,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
+            //    throw new NullReferenceException("This exception manually  thrown to test exception handled or not");
                 return _context.UserStories.ToList();
             }
             catch (Exception ex)
