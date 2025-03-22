@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 
 namespace DataAccessLayer.IRepository
 {
@@ -10,6 +11,6 @@ namespace DataAccessLayer.IRepository
         public void DeleteAllAssociation(int id);
         public SubTask GetSubTask(int id);
         public List<SubTask> GetAllSubTask();
-        public List<SubTask> GetAllSubTaskByTask(int id);
+        public List<SubTaskVM> GetAllSubTaskByTask(int id);
     }
 }

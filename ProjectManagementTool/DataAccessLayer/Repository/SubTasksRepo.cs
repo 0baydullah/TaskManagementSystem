@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repository
 {
@@ -72,13 +74,30 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public List<SubTask> GetAllSubTaskByTask(int id)
+        public List<SubTaskVM> GetAllSubTaskByTask(int id)
         {
             try
             {
-                var subTask = _context.SubTask.Where(x=>x.TaskId == id ).ToList();
+                var subTasks = _context.SubTask.Where(x=>x.TaskId == id ).ToList();
+                var subTaskWithTimeTrack = subTasks.GroupJoin(_context.TimeTracks, s => s.SubTaskId, t => t.SubTaskId, (s, t) => new { s,t }).SelectMany(
+                    x => x.t.DefaultIfEmpty(), (x, t) => new SubTaskVM
+                    {
+                        SubTaskId = x.s.SubTaskId,
+                        Name = x.s.Name,
+                        Descripton = x.s.Descripton,
+                        AssignMembersId = x.s.AssignMembersId,
+                        ReviewerMemberId = x.s.ReviewerMemberId,
+                        EstimatedTime = x.s.EstimatedTime,
+                        Tag = x.s.Tag,
+                        Status = x.s.Status,
+                        Priority = x.s.Priority,
+                        TaskId = x.s.TaskId,
+                        StartTime = t != null ? t.StartTime.ToString() : " ",
+                        EndTime = t != null ? t.StartTime.ToString() : " ",
+                        TotalTime = t != null ? t.TotalTime : 0.0,
+                    }).ToList();
 
-                return subTask;
+                return subTaskWithTimeTrack;
             }
             catch (Exception ex)
             {
