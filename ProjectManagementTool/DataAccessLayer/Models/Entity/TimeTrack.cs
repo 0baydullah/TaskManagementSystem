@@ -22,6 +22,6 @@ namespace DataAccessLayer.Models.Entity
         [Required]
         public DateTime TodaysTime { get; set; }
         [Required]
-        public double TotalTime { get; set; }
+        public long TotalTime { get; set; }
     }
 }

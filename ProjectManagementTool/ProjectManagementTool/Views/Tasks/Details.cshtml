@@ -116,7 +116,6 @@
                         <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton', '@item.StartTime', '@item.EndTime', '@item.TotalTime')">
                             <i class="text-success fa-solid fa-circle-info"></i> 
                         </a>
-
                         <a id="playButton-@item.SubTaskId" class="btn btn-light" onclick="startTracking(@item.TaskId, @item.SubTaskId)">
                             <i class="text-success fa-solid fa-circle-play"></i>
                         </a>
@@ -173,12 +172,24 @@
 @section Scripts {
     <script>
 
-        function openDetailsModal(description, startTime, endTime, totalTime) {
+        // Convert seconds into day, hour, minutes and second
+        function secondsToDHMS(seconds) {
+            seconds = Number(seconds);
+            var day = Math.floor(seconds / (3600 * 24));
+            var hour = Math.floor((seconds % (3600 * 24)) / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var sec = Math.floor(seconds % 60);
+            var dhms = day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
+            return dhms;
+        }
+
+        function openDetailsModal( description, startTime, endTime, totalTime) {
             description = "Description: " + description + "\n";
             startTime = "Start time: " + startTime + "\n";
             endTime = "End time: " + endTime + "\n";
-            totalTime = "Total working time(hour): " + Math.ceil(totalTime*100)/100;
-
+            seconds = secondsToDHMS(totalTime);
+            totalTime = "Total time: " + seconds;
+            
             document.getElementById('modalDescription').innerText = description  + startTime + endTime + totalTime;
             var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
             

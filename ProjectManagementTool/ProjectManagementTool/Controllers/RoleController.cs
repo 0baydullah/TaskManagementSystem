@@ -10,10 +10,13 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IRoleService _roleService;
-        public RoleController(RoleManager<IdentityRole<int>> roleManager, IRoleService roleService) 
+        private readonly IMemberService _memberService;
+        public RoleController(RoleManager<IdentityRole<int>> roleManager, 
+            IRoleService roleService, IMemberService memberService) 
         {
             _roleManager = roleManager;
             _roleService = roleService;
+            _memberService = memberService;
         }
 
         [HttpGet]
@@ -137,9 +140,11 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var role = await _roleManager.FindByIdAsync(id.ToString());
-                if (role == null)
+                var member  = _memberService.GetAllMember().Where(m => m.Role == role.Name).FirstOrDefault();
+                
+                if (role == null || member!= null)
                 {
-                    return BadRequest(new { success = false, errors = new List<string> { "Role can not be found" } });
+                    return BadRequest(new { success = false, error = "Role can not be deleted" });
                 }
                 else
                 {
@@ -150,7 +155,7 @@ namespace ProjectManagementTool.Controllers
                     }
                     else
                     {
-                        return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                        return BadRequest(new { success = false, error = "Delete Failed"});
                     }
                 }
             }

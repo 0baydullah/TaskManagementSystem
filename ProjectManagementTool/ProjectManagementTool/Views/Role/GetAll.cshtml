@@ -5,6 +5,8 @@
 }
 
 <button class="btn btn-success mb-3" id="createButton">Create</button>
+<p id="error-message" class="text-danger"></p>
+
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -48,8 +50,9 @@
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+            
             <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Role !!</h3>
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Role !!</h3> <br />
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
@@ -247,11 +250,23 @@
                 type: 'POST',
                 success: function (result) {
                     $("#modal").modal('hide');
-                    location.reload();
+                    window.location.reload();
                     console.log(result);
                 },
-                error: function (err) {
-                    alert('Error deleting role' + err);
+                error: function (xhr) {
+                 if (xhr.status === 400) { 
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.error) {
+                            $("#modal").modal('hide');
+                            $("#error-message").html(response.error);
+                            setTimeout(()=>{
+                                window.location.reload();
+                            },1500);
+                        } 
+                    } 
+                    else {
+                        $("#responseMessage").html("<p style='color:red;'>An error occurred. Please try again.</p>");
+                    }
                 }
             });
         }
