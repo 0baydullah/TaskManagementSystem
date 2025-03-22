@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using log4net;
 
 namespace DataAccessLayer.Repository
 {
     public class UserStoryRepo : IUserStoryRepo
     {
         private readonly PMSDBContext _context;
+
+        private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryRepo));
         public UserStoryRepo(PMSDBContext context)
         {
             _context = context;
@@ -25,7 +28,9 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while adding the user story.", ex);
+                _log.Error(ex.Message);
+
+                throw new Exception(ex.Message);
             }
         }
 
@@ -38,7 +43,9 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while deleting the user story.", ex);
+                _log.Error(ex.Message);
+
+                throw new Exception(ex.Message);
             }
         }
 
@@ -50,7 +57,9 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while retrieving all user stories.", ex);
+                _log.Error(ex.Message);
+
+                throw new Exception(ex.Message);
             }
         }
 
@@ -58,12 +67,14 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var userStory = _context.UserStories.FirstOrDefault(x => x.StoryId == id);
+                var userStory = _context.UserStories.First(x => x.StoryId == id);
                 return userStory;
             }
             catch (Exception ex)
             {
-                throw new Exception($"An error occurred while retrieving the user story with ID {id}.", ex);
+                _log.Error(ex.Message);
+
+                throw new Exception(ex.Message);
             }
         }
 
@@ -76,7 +87,9 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while updating the user story.", ex);
+                _log.Error(ex.Message);
+
+                throw new Exception(ex.Message);
             }
         }
     }

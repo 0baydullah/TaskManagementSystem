@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using log4net;
 
 namespace BusinessLogicLayer.Service
 {
@@ -13,6 +14,8 @@ namespace BusinessLogicLayer.Service
     {
         private readonly IUserStoryRepo _userStoryRepo;
         private readonly ITasksRepo _taskRepo;
+
+        private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryService));
         public UserStoryService(IUserStoryRepo userStoryRepo, ITasksRepo taskRepo)
         {
             _userStoryRepo = userStoryRepo;
@@ -20,45 +23,90 @@ namespace BusinessLogicLayer.Service
         }
         public void AddUserStory(UserStory userStory)
         {
-            _userStoryRepo.AddUserStory(userStory);
+            try
+            {
+                _userStoryRepo.AddUserStory(userStory);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                throw new ApplicationException(ex.Message);
+            }
         }
 
         public void DeleteUserStory(UserStory userStory)
         {
-            _userStoryRepo.DeleteUserStory(userStory);
-            _taskRepo.DeleteAllAssociation(userStory.StoryId);
+            try
+            {
+                _userStoryRepo.DeleteUserStory(userStory);
+                _taskRepo.DeleteAllAssociation(userStory.StoryId);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                throw new ApplicationException(ex.Message);
+            }
         }
 
         public List<UserStory> GetAllUserStory()
         {
-            return _userStoryRepo.GetAllUserStory();
+            try
+            {
+                return _userStoryRepo.GetAllUserStory();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                throw new ApplicationException(ex.Message);
+            }
         }
 
         public UserStory GetUserStory(int id)
         {
-            var userStory = _userStoryRepo.GetUserStory(id);
-            return userStory;
+            try
+            {
+                var userStory = _userStoryRepo.GetUserStory(id);
+                return userStory;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                throw new ApplicationException(ex.Message);
+            }
         }
 
         public void UpdateUserStory(UserStory userStory)
         {
-            var existingUserStory = _userStoryRepo.GetUserStory(userStory.StoryId);
-            if (existingUserStory != null)
+            try
             {
-                existingUserStory.StoryName = userStory.StoryName;
-                existingUserStory.Description = userStory.Description;
-                existingUserStory.Category = userStory.Category;
-                existingUserStory.Points = userStory.Points;
-                existingUserStory.EstimateTime = userStory.EstimateTime;
-                existingUserStory.Status = userStory.Status;
-                existingUserStory.Priority = userStory.Priority;
-                existingUserStory.SprintId = userStory.SprintId;
+                var existingUserStory = _userStoryRepo.GetUserStory(userStory.StoryId);
+                if (existingUserStory != null)
+                {
+                    existingUserStory.StoryName = userStory.StoryName;
+                    existingUserStory.Description = userStory.Description;
+                    existingUserStory.Category = userStory.Category;
+                    existingUserStory.Points = userStory.Points;
+                    existingUserStory.EstimateTime = userStory.EstimateTime;
+                    existingUserStory.Status = userStory.Status;
+                    existingUserStory.Priority = userStory.Priority;
+                    existingUserStory.SprintId = userStory.SprintId;
 
-                _userStoryRepo.UpdateUserStory(existingUserStory);
+                    _userStoryRepo.UpdateUserStory(existingUserStory);
+                }
+                else
+                {
+                    throw new ArgumentException("User story not found");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                throw new ArgumentException("User story not found");
+                _log.Error(ex.Message);
+
+                throw new ApplicationException(ex.Message);
             }
         }
     }
