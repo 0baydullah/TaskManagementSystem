@@ -25,6 +25,22 @@
 	@Model.Tasks.Descripton
     <hr />
 </div>
+@if (Model.StatusList.ContainsKey(Model.Tasks.Status) == false)
+{
+    Model.StatusList[Model.Tasks.Status] = "Not Found";
+}
+@if (Model.PriorityList.ContainsKey(Model.Tasks.Priority) == false)
+{
+    Model.StatusList[Model.Tasks.Priority] = "Not Found";
+}
+@if (Model.MemberList.ContainsKey(Model.Tasks.AssignMembersId) == false)
+{
+    Model.MemberList[Model.Tasks.AssignMembersId] = "Not Found";
+}
+@if (Model.MemberList.ContainsKey(Model.Tasks.ReviewerMemberId) == false)
+{
+    Model.MemberList[Model.Tasks.ReviewerMemberId] = "Not Found";
+}
 <div>
     <table>
         <tbody>
@@ -90,6 +106,23 @@
         <tbody>
             @foreach (var item in Model.SubTask)
             {
+
+                @if (Model.StatusList.ContainsKey(item.Status) == false)
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+                @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                {
+                    Model.StatusList[item.Priority] = "Not Found";
+                }
+                @if (Model.MemberList.ContainsKey(item.AssignMembersId) == false)
+                {
+                    Model.MemberList[item.AssignMembersId] = "Not Found";
+                }
+                @if (Model.MemberList.ContainsKey(item.ReviewerMemberId) == false)
+                {
+                    Model.MemberList[item.ReviewerMemberId] = "Not Found";
+                }
                 <tr>
                     <td>
                         @item.Name
