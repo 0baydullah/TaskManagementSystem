@@ -2,6 +2,7 @@
 using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,6 +20,8 @@ namespace ProjectManagementTool.Controllers
         private readonly IPriorityService _priorityService;
         private readonly ISprintService _sprintService;
 
+        private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryController));
+
         public UserStoryController(IUserStoryService userStoryService, ITasksService tasksService,
             IMemberService memberService, ICategoryService categoryService, IStatusService statusService,
             IPriorityService prioriyService, ISprintService sprintService)
@@ -35,138 +38,206 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Index(int projectId)
         {
-            var storyList = new UserStoryListVM();
-            var userStories = _userStoryService.GetAllUserStory().Where( s => s.ProjectId == projectId).ToList();
+            try
+            {
+                var storyList = new UserStoryListVM();
+                var userStories = _userStoryService.GetAllUserStory().Where(s => s.ProjectId == projectId).ToList();
 
-            ViewBag.ProjectId = projectId;
+                ViewBag.ProjectId = projectId;
 
-            storyList.UserStories = userStories;
-            storyList.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
-            storyList.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
-            storyList.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
-            storyList.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
+                storyList.UserStories = userStories;
+                storyList.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
+                storyList.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
+                storyList.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+                storyList.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
 
-            return View(storyList);
+                return View(storyList);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         [HttpGet]
         public IActionResult Create(int projectId)
         {
-            ViewBag.ProjectId = projectId;
-            var statuses = _statusService.GetAllStatuses();
-            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+            try
+            {
+                ViewBag.ProjectId = projectId;
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
 
-            var priorities = _priorityService.GetAllPriority();
-            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
+                var priorities = _priorityService.GetAllPriority();
+                ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
 
-            var categories = _categoryService.GetAllCategory();
-            ViewBag.Category = new SelectList(categories, "CategoryId", "Name");
+                var categories = _categoryService.GetAllCategory();
+                ViewBag.Category = new SelectList(categories, "CategoryId", "Name");
 
-            var sprints = _sprintService.GetAllSprint(projectId);
-            ViewBag.Sprints = new SelectList(sprints, "SprintId", "SprintName");
+                var sprints = _sprintService.GetAllSprint(projectId);
+                ViewBag.Sprints = new SelectList(sprints, "SprintId", "SprintName");
 
-            return View();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return View();
+            }
         }
 
         [HttpPost]
         public IActionResult Create(UserStory userStory)
         {
-            _userStoryService.AddUserStory(userStory);
-
-            if (userStory == null)
+            try
             {
-                return NotFound();
-            }
+                if (userStory == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(new { success = true, redirectUrl = @Url.Action("Index", "UserStory", new { projectId = userStory.ProjectId }) });
+                _userStoryService.AddUserStory(userStory);
+
+                return Ok(new { success = true, redirectUrl = @Url.Action("Index", "UserStory", new { projectId = userStory.ProjectId }) });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return StatusCode(400, ex.Message);
+            }
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var storyDetails = new UserStoryDetailsVM();
-            var story = _userStoryService.GetUserStory(id);
-            ViewBag.ProjectId = story.ProjectId;
-            var tasks = _tasksService.GetAllTasks(id);
-            var bugs = tasks; // Bug will be added later after implementation
+            try
+            {
+                var storyDetails = new UserStoryDetailsVM();
+                var story = _userStoryService.GetUserStory(id);
+                ViewBag.ProjectId = story.ProjectId;
+                var tasks = _tasksService.GetAllTasks(id);
+                var bugs = tasks; // Bug will be added later after implementation
 
-            storyDetails.Story = story;
-            storyDetails.Tasks = tasks;
-            storyDetails.Bugs = bugs;
-            storyDetails.MemberList = _memberService.GetAllMember().ToDictionary(m=> m.MemberId, m=> m.Name);
-            storyDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
-            storyDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
-            storyDetails.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
-            storyDetails.SprintList = _sprintService.GetAllSprint(story.ProjectId).ToDictionary(c => c.SprintId, c => c.SprintName);
+                storyDetails.Story = story;
+                storyDetails.Tasks = tasks;
+                storyDetails.Bugs = bugs;
+                storyDetails.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
+                storyDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
+                storyDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+                storyDetails.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
+                storyDetails.SprintList = _sprintService.GetAllSprint(story.ProjectId).ToDictionary(c => c.SprintId, c => c.SprintName);
 
-            return View(storyDetails);
+                return View(storyDetails);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return View();
+            }
         }
-
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            UserStory userStory = _userStoryService.GetUserStory(id);
-
-            if (userStory == null)
+            try
             {
-                return NotFound();
+                UserStory userStory = _userStoryService.GetUserStory(id);
+
+                if (userStory == null)
+                {
+                    return NotFound();
+                }
+
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+                var priorities = _priorityService.GetAllPriority();
+                ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
+
+                var categories = _categoryService.GetAllCategory();
+                ViewBag.Category = new SelectList(categories, "CategoryId", "Name");
+
+                var sprints = _sprintService.GetAllSprint(userStory.ProjectId);
+                ViewBag.Sprints = new SelectList(sprints, "SprintId", "SprintName");
+
+                return View(userStory);
             }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-
-            var statuses = _statusService.GetAllStatuses();
-            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
-
-            var priorities = _priorityService.GetAllPriority();
-            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
-
-            var categories = _categoryService.GetAllCategory();
-            ViewBag.Category = new SelectList(categories, "CategoryId", "Name");
-
-            var sprints = _sprintService.GetAllSprint(userStory.ProjectId);
-            ViewBag.Sprints = new SelectList(sprints, "SprintId", "SprintName");
-
-            return View(userStory);
+                return View();
+            }
         }
-        
+
         [HttpPost]
         public IActionResult Edit(int id, UserStoryVM storyVM)
         {
-            UserStory userStory = _userStoryService.GetUserStory(id);
-
-            if (userStory == null)
+            try
             {
-                return NotFound();
+                UserStory userStory = _userStoryService.GetUserStory(id);
+
+                if (userStory == null)
+                {
+                    return NotFound();
+                }
+
+                userStory.StoryName = storyVM.StoryName;
+                userStory.Description = storyVM.Description;
+                userStory.Category = storyVM.Category;
+                userStory.Points = storyVM.Points;
+                userStory.EstimateTime = storyVM.EstimateTime;
+                userStory.Status = storyVM.Status;
+                userStory.Priority = storyVM.Priority;
+                userStory.SprintId = storyVM.SprintId;
+                userStory.ProjectId = storyVM.ProjectId;
+
+                _userStoryService.UpdateUserStory(userStory);
+
+                return Ok(new { success = true, redirectUrl = @Url.Action("Index", "UserStory", new { projectId = userStory.ProjectId }) });
             }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-            userStory.StoryName = storyVM.StoryName;
-            userStory.Description = storyVM.Description;
-            userStory.Category = storyVM.Category;
-            userStory.Points = storyVM.Points;
-            userStory.EstimateTime = storyVM.EstimateTime;
-            userStory.Status = storyVM.Status;
-            userStory.Priority = storyVM.Priority;
-            userStory.SprintId = storyVM.SprintId;
-            userStory.ProjectId = storyVM.ProjectId;
-
-            _userStoryService.UpdateUserStory(userStory);
-
-            return Ok(new { success = true, redirectUrl = @Url.Action("Index", "UserStory", new { projectId = userStory.ProjectId }) });
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var userStory = _userStoryService.GetUserStory(id);
-
-            if (userStory == null)
+            try
             {
-                return NotFound();
+                var userStory = _userStoryService.GetUserStory(id);
+
+                if (userStory == null)
+                {
+                    return NotFound();
+                }
+
+                _userStoryService.DeleteUserStory(userStory);
+
+                return Json(new { success = true });
             }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-            _userStoryService.DeleteUserStory(userStory);
-
-            return Json(new { success = true });
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

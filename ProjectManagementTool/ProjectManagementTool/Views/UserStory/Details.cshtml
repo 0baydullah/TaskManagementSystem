@@ -8,6 +8,17 @@
     Model.PriorityList[0] = "N/A";
     Model.SprintList[0] = "N/A";
 }
+
+@{
+    if (TempData["error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show " role="alert" id="error">
+            <strong>Error!</strong> @TempData["error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}
+
 <div class="d-flex justify-content-between">
     <h3 class="text-center">User Story : @Model.Story.StoryName</h3>
     <div>
