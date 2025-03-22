@@ -8,6 +8,7 @@ namespace BusinessLogicLayer.IService
 {
     public interface ITimeTrackService
     {
-        public void TimeTrack(int taskId, int subTaskId);
+        public Task<bool> TimeStoreStart(int taskId, int subTaskId);
+        public Task<bool> TimeStoreEnd(int taskId, int subTaskId);
     }
 }

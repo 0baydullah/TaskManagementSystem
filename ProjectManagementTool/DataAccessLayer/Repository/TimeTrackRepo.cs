@@ -1,4 +1,7 @@
-﻿using DataAccessLayer.IRepository;
+﻿using DataAccessLayer.Data;
+using DataAccessLayer.IRepository;
+using DataAccessLayer.Models.Entity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +12,54 @@ namespace DataAccessLayer.Repository
 {
     public class TimeTrackRepo : ITimeTrackRepo
     {
-        public void TimeTrack(int taskId, int subTaskId)
+        private readonly PMSDBContext _context;
+
+        public TimeTrackRepo(PMSDBContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task<TimeTrack> GetByTaskIdSubTaskId(int taskId, int subTaskId)
+        {
+            var existTimeTrack = await _context.TimeTracks.FirstOrDefaultAsync(t => t.TaskId == taskId && t.SubTaskId == subTaskId);
+            return existTimeTrack;
+        }
+        public async Task<bool> TimeStore(TimeTrack timeTrack)
+        {
+            try
+            {
+                if (timeTrack == null)
+                {
+                    return false;
+                }
+
+                _context.TimeTracks.Add(timeTrack);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> TimeUpdate(TimeTrack timeTrack)
+        {
+            try
+            {
+                if (timeTrack == null)
+                {
+                    return false;
+                }
+
+                _context.TimeTracks.Update(timeTrack);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }

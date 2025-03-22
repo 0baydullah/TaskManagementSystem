@@ -1,4 +1,5 @@
 using DataAccessLayer.IRepository;
+using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -25,6 +26,7 @@ namespace DataAccessLayer
             services.AddScoped<IStatusRepo, StatusRepo>();
             services.AddScoped<IPriorityRepo, PriorityRepo>();
             services.AddScoped<ICategoryRepo, CategoryRepo>();
+            services.AddScoped<ITimeTrackRepo, TimeTrackRepo>();
 
             return services;
         }

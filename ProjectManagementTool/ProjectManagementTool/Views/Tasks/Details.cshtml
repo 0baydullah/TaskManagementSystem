@@ -116,12 +116,14 @@
                         <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton')">
                             <i class="text-success fa-solid fa-circle-info"></i> 
                         </a>
-                        <a class="btn btn-light" onclick="ToggleStartPause()">
-                            <i class="text-success fa-regular fa-circle-play"></i>
+
+                        <a id="playButton-@item.SubTaskId" class="btn btn-light" onclick="startTracking(@item.TaskId, @item.SubTaskId)">
+                            <i class="text-success fa-solid fa-circle-play"></i>
                         </a>
-                        <a class="btn btn-light" onclick="">
-                            <i class="text-success fa-regular fa-circle-pause"></i>
+                        <a id="pauseButton-@item.SubTaskId" class="btn btn-light d-none" onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
+                            <i class="text-success fa-solid fa-circle-pause"></i>
                         </a>
+
                     </td>
                 </tr>
             }
@@ -199,6 +201,39 @@
                     }
                 });
             }
+        }
+
+        // Time track starting
+        function startTracking(taskId, subTaskId) {
+            $.ajax({
+                url:"/TimeTrack/Start",
+                type: 'POST',
+                data: { taskId: taskId, subTaskId: subTaskId },
+                success: function(response) {
+                    $("#playButton-" + subTaskId).addClass("d-none");
+                    $("#pauseButton-" + subTaskId).removeClass("d-none");
+                },
+                error: function () {
+                    alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+
+                }
+            });
+        }
+
+        // Time track stopping
+        function stopTracking(taskId, subTaskId) { 
+            $.ajax({
+                url: "/TimeTrack/End",
+                type: 'POST',
+                data: { taskId: taskId, subTaskId: subTaskId },
+                success: function (response) {
+                    $("#pauseButton-" + subTaskId).addClass("d-none");
+                    $("#playButton-" + subTaskId).removeClass("d-none");
+                },
+                error: function () {
+                    alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+                }
+            }); 
         }
 
     </script>
