@@ -165,7 +165,12 @@
                         <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
                             <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
                         </a>
-
+                        <a id="playButton-@item.TaskId" class="btn btn-light" onclick="startTracking(@item.TaskId)">
+                            <i class="text-success fa-solid fa-circle-play"></i>
+                        </a>
+                        <a id="pauseButton-@item.TaskId" class="btn btn-light d-none" onclick="stopTracking(@item.TaskId)">
+                            <i class="text-success fa-solid fa-circle-pause"></i>
+                        </a>
                     </td>
                 </tr>
             }
@@ -345,6 +350,39 @@
                     }
                 });
             }
+        }
+
+        // Time track starting
+        function startTracking(taskId) {
+            $.ajax({
+                url: "/TimeTrack/Start",
+                type: 'POST',
+                data: { taskId: taskId, subTaskId: 0 },
+                success: function (response) {
+                    $("#playButton-" + taskId).addClass("d-none");
+                    $("#pauseButton-" + taskId).removeClass("d-none");
+                },
+                error: function () {
+                    alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+
+                }
+            });
+        }
+
+        // Time track stopping
+        function stopTracking(taskId) {
+            $.ajax({
+                url: "/TimeTrack/End",
+                type: 'POST',
+                data: { taskId: taskId, subTaskId: 0 },
+                success: function (response) {
+                    $("#pauseButton-" + taskId).addClass("d-none");
+                    $("#playButton-" + taskId).removeClass("d-none");
+                },
+                error: function () {
+                    alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+                }
+            });
         }
 
     </script>

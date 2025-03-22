@@ -50,27 +50,37 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public IActionResult Create(Release release)
         {
-            bool isSuccess = false;
-            string message = "Invalid Data Submitted!";
-
-            if (ModelState.IsValid == false)
+            try
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors).Select( m => m.ErrorMessage);
+                bool isSuccess = false;
+                string message = "Invalid Data Submitted!";
 
-                foreach (var error in errors)
+                if (ModelState.IsValid == false)
                 {
-                    message += error + " ";
-                    Console.WriteLine(error);
-                }
-            }
-            else 
-            {
-                _releaseService.AddRelease(release);
-                isSuccess = true;
-                message = "Release added successfully!";
-            }
+                    var errors = ModelState.Values.SelectMany(v => v.Errors).Select(m => m.ErrorMessage);
 
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                    foreach (var error in errors)
+                    {
+                        message += error + " ";
+                        Console.WriteLine(error);
+                    }
+                }
+                else
+                {
+                    _releaseService.AddRelease(release);
+                    isSuccess = true;
+                    message = "Release added successfully!";
+                }
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         [HttpGet]

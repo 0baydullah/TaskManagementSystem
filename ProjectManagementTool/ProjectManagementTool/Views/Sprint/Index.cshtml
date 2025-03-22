@@ -5,7 +5,7 @@
 }
 
 <div class="mb-3">
-    <a href="@Url.Action("Create", "Sprint", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold">Create Sprint</a>
+    <a href="@Url.Action("Create", "Sprint", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Sprint</a>
 </div>
 <div id="response-message">
 
@@ -66,8 +66,8 @@
                         @Html.DisplayFor(modelItem => item.ReleaseName)
                     </td>
                     <td>
-                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId">Edit</a> |
-                        <a class="btn btn-danger" onclick="openDeleteModal('@item.SprintId')">Delete</a>
+                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId"><i class="text-success fa-solid fa-pen fw-bold"></i></a> |
+                        <a class="btn btn-light" onclick="openDeleteModal('@item.SprintId')"><i class="text-danger fa-solid fa-trash fw-bold"></i></a>
                     </td>
                 </tr>
             }

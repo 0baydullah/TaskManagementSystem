@@ -1,12 +1,13 @@
-﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.MemberWithRoleVM>
+﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.AllUserVM>
 @{
-    ViewData["Title"] = "Index";
-    ViewData["Banner"] = "Member Panel";
+    ViewData["Title"] = "GetAllUser";
+    ViewData["Banner"] = "All Registered Users";
 }
 
 
+
 <div class="mb-3">
-    <a class="btn btn-success fw-bold" href="@Url.Action("Create", "Member", new { projectId = ViewBag.ProjectId })"> <i class="text-light fa-solid fa-plus fw-bold"></i> Add Member</a>
+    <a class="btn btn-success fw-bold" href="@Url.Action("Register", "Member")"> <i class="text-light fa-solid fa-plus fw-bold"></i> Add User</a>
 </div>
 
 
@@ -14,16 +15,16 @@
     <thead>
         <tr>
             <th>
+                Pin
+            </th>
+            <th>
                 Name
             </th>
             <th>
                 Email
             </th>
             <th>
-                Role
-            </th>
-            <th>
-                Action
+                Working Projects
             </th>
         </tr>
     </thead>
@@ -34,17 +35,29 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Pin)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
+                   
                     <td>
-                        @Html.DisplayFor(modelItem => item.Role)
-                    </td>
-                    <td>
-                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-pen"></i></a> |
-                        <a class="btn btn-light" onclick="openDeleteModal('@item.MemberId')"><i class="text-danger fa-solid fa-trash"></i> </a>
+                        @if (item.Projects != null && item.Projects.Any())
+                        {
+                            @foreach (var i in item.Projects)
+                            {
+                                <p>@i</p>
+                            }
+                            
+                        }
+                        else
+                        {
+                            <p class="text-danger fw-bold">No project!</p>
+
+                        }
                     </td>
                 </tr>
             }
@@ -55,7 +68,7 @@
                 <td colspan="7" class="text-center fw-bold text-danger">No data found!</td>
             </tr>
         }
-        
+
     </tbody>
 
 </table>
@@ -64,11 +77,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Are you sure?</h3>
+                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Member !!</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-capitalize text-danger">
-                After clicking on "Ok" button it wont be undone!
+                After clicking on "Delete" button it wont be undone!
             </div>
             <div class="modal-footer text-center justify-content-center">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>

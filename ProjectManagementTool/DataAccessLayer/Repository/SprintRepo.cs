@@ -23,8 +23,16 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                _context.Sprints.Add(sprint);
-                _context.SaveChanges();
+                var existSprint = _context.Sprints.FirstOrDefault(s => s.SprintName == sprint.SprintName && s.ReleaseId == sprint.ReleaseId);
+                if (existSprint == null)
+                {
+                    _context.Sprints.Add(sprint);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("The sprint already exists.");
+                }
 
             }
             catch (Exception ex)

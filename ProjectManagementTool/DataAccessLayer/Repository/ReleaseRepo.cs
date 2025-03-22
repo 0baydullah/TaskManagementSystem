@@ -20,8 +20,18 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                _context.Releases.Add(release);
-                _context.SaveChanges();
+                var existRelease = _context.Releases.FirstOrDefault(r => r.ReleaseName == release.ReleaseName && r.ProjectId == release.ProjectId);
+                if (existRelease == null)
+                {
+                    _context.Releases.Add(release);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("The release already exists.");
+
+                }
+
             }
             catch (Exception ex)
             {

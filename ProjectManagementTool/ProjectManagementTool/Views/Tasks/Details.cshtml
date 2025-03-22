@@ -149,9 +149,16 @@
                         <a class="btn btn-light" onclick="openDeleteModal(@item.SubTaskId)">
                             <i class="text-success fa-solid fa-trash"></i>
                         </a>
-                        <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton')">
+                        <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton', '@item.StartTime', '@item.EndTime', '@item.TotalTime')">
                             <i class="text-success fa-solid fa-circle-info"></i> 
-                        </a> 
+                        </a>
+                        <a id="playButton-@item.SubTaskId" class="btn btn-light" onclick="startTracking(@item.TaskId, @item.SubTaskId)">
+                            <i class="text-success fa-solid fa-circle-play"></i>
+                        </a>
+                        <a id="pauseButton-@item.SubTaskId" class="btn btn-light d-none" onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
+                            <i class="text-success fa-solid fa-circle-pause"></i>
+                        </a>
+
                     </td>
                 </tr>
             }
@@ -221,9 +228,27 @@
 @section Scripts {
     <script>
 
-        function openDetailsModal(description) {
-            document.getElementById('modalDescription').innerText = description;
+        // Convert seconds into day, hour, minutes and second
+        function secondsToDHMS(seconds) {
+            seconds = Number(seconds);
+            var day = Math.floor(seconds / (3600 * 24));
+            var hour = Math.floor((seconds % (3600 * 24)) / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var sec = Math.floor(seconds % 60);
+            var dhms = day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
+            return dhms;
+        }
+
+        function openDetailsModal( description, startTime, endTime, totalTime) {
+            description = "Description: " + description + "\n";
+            startTime = "Start time: " + startTime + "\n";
+            endTime = "End time: " + endTime + "\n";
+            seconds = secondsToDHMS(totalTime);
+            totalTime = "Total time: " + seconds;
+            
+            document.getElementById('modalDescription').innerText = description  + startTime + endTime + totalTime;
             var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            
             myModal.show();
         }
 
@@ -252,30 +277,37 @@
             }
         }
 
-
-        function openDeleteTaskModal(UsId) {
-            deleteTaskId = UsId;
-            $('#modalTask').modal('show');
+        // Time track starting
+        function startTracking(taskId, subTaskId) {
+            $.ajax({
+                url:"/TimeTrack/Start",
+                type: 'POST',
+                data: { taskId: taskId, subTaskId: subTaskId },
+                success: function(response) {
+                    $("#playButton-" + subTaskId).addClass("d-none");
+                    $("#pauseButton-" + subTaskId).removeClass("d-none");
+                },
+                error: function () {
+                    alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+				}
+            });
         }
 
-
-        function confirmTaskDelete() {
-            if (deleteTaskId) {
-                $.ajax({
-                    url: '/Tasks/Delete/' + deleteTaskId,
-                    type: 'POST',
-                    success: function (response) {
-                        $('#modal').modal('hide');
-                        window.location.href = '@Url.Action("Details", "UserStory")'+'/@Model.Tasks.UserStoryId';
-
-                    },
-                    error: function () {
-                        alert('Error deleting task.');
-                    }
-                });
-            }
+        // Time track stopping
+        function stopTracking(taskId, subTaskId) { 
+            $.ajax({
+                url: "/TimeTrack/End",
+                type: 'POST',
+                data: { taskId: taskId, subTaskId: subTaskId },
+                success: function (response) {
+                    $("#pauseButton-" + subTaskId).addClass("d-none");
+                    $("#playButton-" + subTaskId).removeClass("d-none");
+                },
+                error: function () {
+                    alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+                }
+            }); 
         }
-
 
     </script>
 }
