@@ -85,6 +85,12 @@ namespace ProjectManagementTool.Controllers
             ViewBag.Id = id;
             ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
+            var statuses = _statusService.GetAllStatuses();
+            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+            var priorities = _priorityService.GetAllPriority();
+            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
+
             return View(subTask);
         }
 
