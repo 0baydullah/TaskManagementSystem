@@ -40,6 +40,18 @@
                     var priorityid = (int)Model.Story.Priority;
                     var categoryid = (int)Model.Story.Category;
                 }
+                @if (Model.StatusList.ContainsKey(statusid) == false)
+                {
+                    Model.StatusList[statusid] = "Not Found";
+                }
+                @if (Model.PriorityList.ContainsKey(priorityid) == false)
+                {
+                    Model.StatusList[priorityid] = "Not Found";
+                }
+                @if (Model.CategoryList.ContainsKey(categoryid) == false)
+                {
+                    Model.CategoryList[categoryid] = "Not Found";
+                }
 
                 <th><i>@Model.StatusList[statusid]</i></th>
             </tr>
