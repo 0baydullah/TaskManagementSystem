@@ -4,6 +4,9 @@ using DataAccessLayer;
 using BusinessLogicLayer;
 using Microsoft.AspNetCore.Identity;
 using DataAccessLayer.Models.Entity;
+using log4net.Config;
+using log4net;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
 });
+
+
+var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());  // for logger
+XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));   // for logger
 
 
 var app = builder.Build();
