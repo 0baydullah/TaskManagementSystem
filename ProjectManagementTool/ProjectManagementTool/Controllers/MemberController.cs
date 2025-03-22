@@ -2,6 +2,7 @@
 using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,11 +14,14 @@ namespace ProjectManagementTool.Controllers
         private readonly IMemberService _memberService;
         private readonly IRoleService _roleService;
         private readonly IProjectInfoService _projectInfoService;
-        public MemberController(IMemberService memberService, IRoleService roleService, IProjectInfoService projectInfoService)
+        private readonly UserManager<UserInfo> _userManager;
+        public MemberController(IMemberService memberService, IRoleService roleService, IProjectInfoService projectInfoService
+            , UserManager<UserInfo> userManager)
         {
             _memberService = memberService;
             _roleService = roleService;
             _projectInfoService = projectInfoService;
+            _userManager = userManager;
         }
        
         [HttpGet]
@@ -26,6 +30,72 @@ namespace ProjectManagementTool.Controllers
             var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
             ViewBag.ProjectId = projectId;
             return View(members);
+        }
+
+        [HttpGet]
+
+        public IActionResult GetAllUser()
+        {
+            var users = _userManager.Users.ToList();
+
+            var allUsers = _memberService.GetAllUser(users);
+
+
+            return View(allUsers);
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] UserInfoVM model)
+        {
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+
+                return BadRequest(new { success = false, errors });
+            }
+            try
+            {
+                var user = new UserInfo
+                {
+                    Pin = model.Pin,
+                    Name = model.Name,
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailConfirmed = true
+                };
+
+                var normalizedEmail = user.Email.ToUpperInvariant();
+                user.NormalizedEmail = normalizedEmail;
+
+                var existEmployeeId = await _userManager.Users.FirstOrDefaultAsync(e => e.Email == model.Email || e.Pin == model.Pin);
+
+                if (existEmployeeId != null)
+                {
+                    return BadRequest(new { success = false, errors = new List<string> { "This email or pin is already registered." } });
+                }
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded == true)
+                {
+                    return RedirectToAction("GetAllUser", "Member");
+                }
+                else
+                {
+                    var errors = result.Errors.Select(e => e.Description).ToList();
+                    return BadRequest(new { success = false, errors });
+                }
+            }
+            catch (Exception)
+            {
+                return View(model);
+            }
         }
 
         [HttpGet]

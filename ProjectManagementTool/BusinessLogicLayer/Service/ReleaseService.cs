@@ -18,7 +18,17 @@ namespace BusinessLogicLayer.Service
         }
         public void AddRelease(Release release)
         {
-            _releaseRepo.AddRelease(release);
+            try
+            {
+                _releaseRepo.AddRelease(release);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public void DeleteRelease(Release release)

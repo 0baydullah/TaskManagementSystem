@@ -223,7 +223,7 @@
         var deleteTaskId = null;
 
         function openDeleteModal(taskId) {
-            deleteTaskId = taskId;
+            deleteSubTaskId = taskId;
             $('#modal').modal('show'); 
         }
 
@@ -231,7 +231,7 @@
         function confirmDelete() {
             if (deleteSubTaskId) {
                 $.ajax({
-                    url: '/SubTask/Delete/' + deleteTaskId,
+                    url: '/SubTask/Delete/' + deleteSubTaskId,
                     type: 'POST',
                     success: function (response) {
                         $('#modal').modal('hide'); 
@@ -256,6 +256,8 @@
                 },
                 error: function () {
                     alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+				}
+		}
 
                 }
             });

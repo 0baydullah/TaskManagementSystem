@@ -38,6 +38,8 @@
                 <label asp-for="EstimatedTime" class="control-label">Estimated Time(hr.)</label>
                 <input asp-for="EstimatedTime" class="form-control" value="@Model.EstimatedTime"/>
                 <span asp-validation-for="EstimatedTime" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
                 <label asp-for="Tag" class="control-label"></label>
                 <input asp-for="Tag" class="form-control" value="@Model.Tag"/>
                 <span asp-validation-for="Tag" class="text-danger"></span>
