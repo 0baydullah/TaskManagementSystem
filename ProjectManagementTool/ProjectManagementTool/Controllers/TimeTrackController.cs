@@ -23,7 +23,7 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                var isSavedTrackingStatus = _timeTrackService.UpdateTrackingStatus(subTaskId, "Stopped");
+                var isSavedTrackingStatus = _timeTrackService.UpdateTrackingStatus(subTaskId, "Started");
                 var result = _timeTrackService.TimeStoreStart(taskId, subTaskId);
 
                 if (result.Result == true)
@@ -65,21 +65,11 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetTimeDetails(int subTaskId)
+        public IActionResult GetTimeBySubTaskId(int subTaskId) 
         {
-            var subTask = _subTaskService.GetAllSubTaskByTask(subTaskId);
-            if (subTask == null)
-                return NotFound();
+            var timeTrack = _timeTrackService.GetBySubTaskId(subTaskId);
 
-            var response = subTask.Select(x => new
-            {
-                Description = x.Descripton,
-                StartTime = x.StartTime,
-                EndTime = x.EndTime,
-                TotalTime = x.TotalTime
-            }).FirstOrDefault();
-
-            return Json(response);
+            return Json(timeTrack);
         }
     }
 }

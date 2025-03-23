@@ -65,7 +65,7 @@ namespace DataAccessLayer.Repository
 
         public bool UpdateTrackingStatus(int subTaskId, string status)
         {
-            var timeTrack = _context.TimeTracks.Find(subTaskId);
+            var timeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
             if (timeTrack == null)
             {
                 return false;
@@ -77,6 +77,11 @@ namespace DataAccessLayer.Repository
             return true;
         }
 
-       
+        public TimeTrack GetBySubTaskId(int subTaskId)
+        {
+            var subTask = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
+            return subTask;
+        }
+
     }
 }

@@ -95,5 +95,10 @@ namespace BusinessLogicLayer.Service
         {
             return _timeTrackRepo.UpdateTrackingStatus(subTaskId, status);
         }
+
+        public TimeTrack GetBySubTaskId(int subTaskId)
+        {
+            return _timeTrackRepo.GetBySubTaskId(subTaskId);
+        }
     }
 }
