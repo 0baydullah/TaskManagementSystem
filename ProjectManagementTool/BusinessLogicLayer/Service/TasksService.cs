@@ -33,7 +33,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -47,7 +47,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -61,7 +61,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -75,7 +75,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -89,7 +89,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -119,7 +119,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }
