@@ -65,28 +65,6 @@ else
                     }
 
 					<th><i>@Model.StatusList[statusid]</i></th>
-                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
-                            <i class="text-success fa-solid fa-pen"></i>
-                        </a>
-                        <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
-                            <i class="text-success fa-solid fa-trash"></i>
-                        </a>
-                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
-                            <i class="text-success fa-solid fa-circle-info"></i>
-                        </a>
-                        <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
-                            <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
-                        </a>
-                        <a id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
-                           onclick="startTracking(@item.TaskId, @item.TaskId)">
-                            <i class="text-success fa-solid fa-circle-play"></i>
-                        </a>
-                        <a id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
-                           onclick="stopTracking(@item.TaskId, @item.TaskId)">
-                            <i class="text-success fa-solid fa-circle-pause"></i>
-                        </a>
-                    </td>
-                    
                 </tr>
                 <tr>
                     <td>Priority :</td>
@@ -102,7 +80,7 @@ else
                 </tr>
             </tbody>
         </table>
-        <hr />
+        <hr>
     </div>
     <div class="d-flex justify-content-between">
         <h3>Tasks</h3>
