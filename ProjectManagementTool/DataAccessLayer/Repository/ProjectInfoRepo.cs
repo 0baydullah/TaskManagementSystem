@@ -81,6 +81,10 @@ namespace DataAccessLayer.Repository
             try
             {
                 var project = _context.ProjectInfo.FirstOrDefault( p => p.Name == projectName);
+                if (project == null)
+                {
+                    throw new Exception("Project not found!");
+                }
                 return project;
             }
             catch (Exception)

@@ -73,17 +73,9 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                if (projectInfo == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    _projectInfoRepo.DeleteProjectInfo(projectInfo);
-                    return true;
-                }
-                
+                _projectInfoRepo.DeleteProjectInfo(projectInfo);
 
+                return true;
             }
             catch (Exception)
             {
@@ -97,8 +89,8 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var projectInfo = _projectInfoRepo.GetProjectInfo(id);
+                
                 return projectInfo;
-
             }
             catch (Exception)
             {
@@ -113,8 +105,8 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var projectInfo = _projectInfoRepo.GetProjectInfo(projectName);
+                
                 return projectInfo;
-
             }
             catch (Exception)
             {
@@ -129,12 +121,11 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var projectInfo = _projectInfoRepo.GetAllProjectInfo();
+                
                 return projectInfo;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
            

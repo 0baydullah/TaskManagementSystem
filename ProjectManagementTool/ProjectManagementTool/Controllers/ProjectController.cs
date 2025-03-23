@@ -90,13 +90,13 @@ namespace ProjectManagementTool.Controllers
                 {
                     isSuccess = false;
                     message = "Project already exist!";
-                    _log.Error(message);
+                    _log.Info(message);
                 }
                 else
                 {
                     isSuccess = true;
                     message = "Project created successfully!";
-                    _log.Error(message);
+                    _log.Info(message);
                 }
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
 
@@ -168,6 +168,7 @@ namespace ProjectManagementTool.Controllers
                 _projectInfoService.UpdateProjectInfo(model);
                 isSuccess = true;
                 message = "Project updated successfully!";
+                _log.Info(message);
                 
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
 
@@ -191,6 +192,7 @@ namespace ProjectManagementTool.Controllers
             {
                 var response = _projectInfoService.GetProjectInfo(id);
                 _projectInfoService.DeleteProjectInfo(response);
+                _log.Info(message);
 
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
