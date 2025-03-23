@@ -10,6 +10,7 @@ namespace DataAccessLayer.Models.ViewModel
         [RegularExpression(@"^(?=.*[a-zA-Z])[\w\s-]+$", ErrorMessage = "Only Numbers or Special Characters are not allowed")]
         public string StoryName { get; set; }
 
+        [Required(ErrorMessage = "Hey fool ! you shoud fill up description!")]
         public string Description { get; set; }
 
         public int Category { get; set; }

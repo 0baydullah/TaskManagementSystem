@@ -36,29 +36,33 @@ namespace ProjectManagementTool.Controllers
             _priorityService = prioriyService;
         }
 
+        [HttpGet]
         public IActionResult Err()
         {
             return View();
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             try
             {
                 var tasks = _tasksService.GetAllTasks();
                 throw new Exception("Exception thrown manually for testing");
+
                 return View(tasks);
             }
             catch (Exception ex)
             {
-                _log.Error("Index : " + ex.Message);
+                _log.Error("Something went wrong : " + ex.Message);
                 var errorModel = new ErrVM
                 {
                     Msg = ex.Message,
                     ActionMetod = "Index",
-                    CustomMsg = "abc",
+                    CustomMsg = "this is a custom message",
                     StackTrace = ex.StackTrace
                 };
+
                 return View( "Err", errorModel);
             }
         }
@@ -85,8 +89,16 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Error in Create GET method", ex);
-                return StatusCode(500, "Internal server error");
+                _log.Error("Something went wrong : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Create Get",
+                    CustomMsg = "this is a custom message",
+                    StackTrace = ex.StackTrace
+                };
+
+                return View("Err", errorModel);
             }
         }
 
@@ -106,8 +118,16 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Error in Create POST method", ex);
-                return StatusCode(500, "Internal server error");
+                _log.Error("Something went wrong : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Create Post",
+                    CustomMsg = "this is a custom message",
+                    StackTrace = ex.StackTrace
+                };
+
+                return View("Err", errorModel);
             }
         }
 
@@ -131,8 +151,16 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Error in Details method", ex);
-                return StatusCode(500, "Internal server error");
+                _log.Error("Something went wrong : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Details",
+                    CustomMsg = "this is a custom message",
+                    StackTrace = ex.StackTrace
+                };
+
+                return View("Err", errorModel);
             }
         }
 
@@ -152,8 +180,16 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Error in Delete method", ex);
-                return StatusCode(500, "Internal server error");
+                _log.Error("Something went wrong : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Delete",
+                    CustomMsg = "this is a custom message",
+                    StackTrace = ex.StackTrace
+                };
+
+                return View("Err", errorModel);
             }
         }
 
@@ -186,8 +222,16 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Error in Edit GET method", ex);
-                return StatusCode(500, "Internal server error");
+                _log.Error("Something went wrong : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Edit Get",
+                    CustomMsg = "this is a custom message",
+                    StackTrace = ex.StackTrace
+                };
+
+                return View("Err", errorModel);
             }
         }
 
@@ -219,8 +263,16 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Error in Edit POST method", ex);
-                return StatusCode(500, "Internal server error");
+                _log.Error("Something went wrong : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Edit Post",
+                    CustomMsg = "this is a custom message",
+                    StackTrace = ex.StackTrace
+                };
+
+                return View("Err", errorModel);
             }
         }
     }
