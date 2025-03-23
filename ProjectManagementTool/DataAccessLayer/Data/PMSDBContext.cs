@@ -28,6 +28,7 @@ namespace DataAccessLayer.Data
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<TimeTrack> TimeTracks { get; set; }
+        public DbSet<Bug> Bugs { get; set; }
 
     }
 }

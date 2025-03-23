@@ -8,18 +8,15 @@
 
 
 
-@{
-    if (TempData["error"] != null)
-    {
-        <div class="alert alert-danger alert-dismissible fade show " role="alert" id="error">
-            <strong>Error!</strong> @TempData["error"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show " role="alert" id="error">
+        <strong>Error!</strong> @TempData["error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
-
-
-@if(Model != null){
+else
+{
 
 
     <div style="text-align: end;">
@@ -52,7 +49,18 @@
         </thead>
         <tbody>
             @foreach (var item in Model.UserStories)
-            {
+            { @if (Model.StatusList.ContainsKey(item.Status) == false)
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+                @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                {
+                    Model.StatusList[item.Priority] = "Not Found";
+                }
+                @if (Model.CategoryList.ContainsKey(item.Category) == false)
+                {
+                    Model.CategoryList[item.Category] = "Not Found";
+                }
                 <tr>
                     <td>
                         @item.StoryName

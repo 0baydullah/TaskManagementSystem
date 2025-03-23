@@ -9,150 +9,62 @@
     Model.SprintList[0] = "N/A";
 }
 
-@{
-    if (TempData["error"] != null)
-    {
-        <div class="alert alert-danger alert-dismissible fade show " role="alert" id="error">
-            <strong>Error!</strong> @TempData["error"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-}
-
-<div class="d-flex justify-content-between">
-    <h3 class="text-center">User Story : @Model.Story.StoryName</h3>
-    <div>
-        <a class="btn btn-light" asp-controller="UserStory" asp-action="Edit" asp-route-id="@Model.Story.StoryId">
-            <i class="text-success fa-solid fa-pen"> Edit</i>
-        </a>
-        <a class="btn btn-light" onclick="openDeleteUSModal('@Model.Story.StoryId')">
-            <i class="text-danger fa-solid fa-trash"> Delete</i>
-        </a>
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show " role="alert" id="error">
+        <strong>Error!</strong> @TempData["error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-</div>
+}
+else
+{
 
-<hr />
+    <div class="d-flex justify-content-between">
+        <h3 class="text-center">User Story : @Model.Story.StoryName</h3>
+        <div>
+            <a class="btn btn-light" asp-controller="UserStory" asp-action="Edit" asp-route-id="@Model.Story.StoryId">
+                <i class="text-success fa-solid fa-pen"> Edit</i>
+            </a>
+            <a class="btn btn-light" onclick="openDeleteUSModal('@Model.Story.StoryId')">
+                <i class="text-danger fa-solid fa-trash"> Delete</i>
+            </a>
+        </div>
+    </div>
 
-<div>
-    @Model.Story.Description 
     <hr />
-</div>
-<div>
-    <table>
-        <tbody>
-            <tr>
-                <td>Points :</td>
-                <th><i>@Model.Story.Points</i></th>
-            </tr>
-            <tr>
-                <td>Status :</td>
-                @{
-                    var statusid = (int) Model.Story.Status;
-                    var priorityid = (int)Model.Story.Priority;
-                    var categoryid = (int)Model.Story.Category;
-                }
-                @if (Model.StatusList.ContainsKey(statusid) == false)
-                {
-                    Model.StatusList[statusid] = "Not Found";
-                }
-                @if (Model.PriorityList.ContainsKey(priorityid) == false)
-                {
-                    Model.StatusList[priorityid] = "Not Found";
-                }
-                @if (Model.CategoryList.ContainsKey(categoryid) == false)
-                {
-                    Model.CategoryList[categoryid] = "Not Found";
-                }
 
-                <th><i>@Model.StatusList[statusid]</i></th>
-            </tr>
-            <tr>
-                <td>Priority :</td>
-                <th><i>@Model.PriorityList[priorityid]</i></th>
-            </tr>
-            <tr>
-                <td>Category :</td>
-                <th><i>@Model.CategoryList[categoryid]</i></th>
-            </tr>
-            <tr>
-                <td>Sprint :</td>
-                <th><i>@Model.SprintList[Model.Story.SprintId]</i></th>
-            </tr>
-        </tbody>
-    </table>
-    <hr />
-</div>
-<div class="d-flex justify-content-between">
-    <h3>Tasks</h3>
-    <a class="btn btn-success w-25" asp-controller="Tasks" asp-action="Create" asp-route-id="@Model.Story.StoryId">
-        <i class="text-light fa-solid fa-plus"></i> Task
-    </a>
-</div>
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Task
-                </th>
-                <th>
-                    Status
-                </th>
-                <th>
-                    Estimated Time
-				</th>
-				<th>
-					Priority
-				</th>
-                <th>
-                    Assignee
-                </th>
-                <th>
-                    Reviewer
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Tasks)
-            {
-                @if (Model.StatusList.ContainsKey(item.Status) == false)
-                {
-                    Model.StatusList[item.Status] = "Not Found";
-                }
-                @if (Model.PriorityList.ContainsKey(item.Priority) == false)
-                {
-                    Model.StatusList[item.Priority] = "Not Found";
-                }
-                @if (Model.MemberList.ContainsKey(item.AssignMembersId) == false)
-                {
-                    Model.MemberList[item.AssignMembersId] = "Not Found";
-                }
-                @if (Model.MemberList.ContainsKey(item.ReviewerMemberId) == false)
-                {
-                    Model.MemberList[item.ReviewerMemberId] = "Not Found";
-                }
+    <div>
+        @Model.Story.Description 
+        <hr />
+    </div>
+    <div>
+        <table>
+            <tbody>
                 <tr>
-                    <td>
-                        @item.Name
-                    </td>
-                    <td>
-                        @Model.StatusList[item.Status]
-                    </td>
-                    <td>
-                        @item.EstimatedTime Hour
-                    </td>
-                    <td>
-                        @Model.PriorityList[item.Priority]
-                    </td>
-                    <td>
-                        @Model.MemberList[item.AssignMembersId]
-                    </td>
-                    <td>
-                        @Model.MemberList[item.ReviewerMemberId]
-                    </td>
-                    <td>
+                    <td>Points :</td>
+                    <th><i>@Model.Story.Points</i></th>
+                </tr>
+                <tr>
+                    <td>Status :</td>
+                    @{
+                        var statusid = (int) Model.Story.Status;
+                        var priorityid = (int)Model.Story.Priority;
+                        var categoryid = (int)Model.Story.Category;
+                    }
+                    @if (Model.StatusList.ContainsKey(statusid) == false)
+                    {
+                        Model.StatusList[statusid] = "Not Found";
+                    }
+                    @if (Model.PriorityList.ContainsKey(priorityid) == false)
+                    {
+                        Model.StatusList[priorityid] = "Not Found";
+                    }
+                    @if (Model.CategoryList.ContainsKey(categoryid) == false)
+                    {
+                        Model.CategoryList[categoryid] = "Not Found";
+                    }
 
+					<th><i>@Model.StatusList[statusid]</i></th>
                         <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
                             <i class="text-success fa-solid fa-pen"></i>
                         </a>
@@ -174,134 +86,244 @@
                             <i class="text-success fa-solid fa-circle-pause"></i>
                         </a>
                     </td>
+                    
                 </tr>
-            }
-        </tbody>
-    </table>
-<hr />
-</div>
-
-
-<!-- Delete Modal -->
-<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete Task !!</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-capitalize text-danger">
-                After clicking on "Delete" button it won't be undone!!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Delete Modal for User Story-->
-<div class="modal fade" id="modalUSD" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-capitalize text-danger">
-                You are deleting this user story. After clicking on "Delete" button it won't be undone!!
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" onclick="confirmUSDelete()" class="btn btn-outline-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- bug section -->
-
-<h1 class="text-danger text-center">Bug section will be added later</h1>
-@* <div class="d-flex justify-content-between">
-    <h3>Bugs</h3>
-    <a class="btn btn-danger w-25" asp-controller="Bug" asp-action="Create" asp-route-id="@Model.Story.StoryId">
-        <i class="text-light fa-solid fa-plus"></i> Bug
-    </a>
-</div>
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Bug
-                </th>
-                <th>
-                    Status
-                </th>
-                <th>
-                    Estimated Time
-                </th>
-                <th>
-                    Priority
-                </th>
-                <th>
-                    Assignee
-                </th>
-                <th>
-                    Reviewer
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Tasks)
-            {
                 <tr>
-                    <td>
-                        @item.Name
-                    </td>
-                    <td>
-                        @item.Status
-                    </td>
-                    <td>
-                        @item.EstimatedTime
-                    </td>
-                    <td>
-                        @item.Priority
-                    </td>
-                    <td>
-                        @item.AssignMembersId
-                    </td>
-                    <td>
-                        @item.ReviewerMemberId
-                    </td>
-                    <td>
-
-                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
-                            <i class="text-danger fa-solid fa-pen"></i>
-                        </a>
-                        <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
-                            <i class="text-danger fa-solid fa-trash"></i>
-                        </a>
-                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
-                            <i class="text-danger fa-solid fa-circle-info"></i>
-                        </a>
-                        <a class="btn btn-light" asp-controller="SubTasks" asp-action="Create" asp-route-id="@item.TaskId">
-                            <i class="text-danger fa-solid fa-check"></i> <small>Resolved</small>
-                        </a>
-
-                    </td>
+                    <td>Priority :</td>
+                    <th><i>@Model.PriorityList[priorityid]</i></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-    <hr />
-</div>
+                <tr>
+                    <td>Category :</td>
+                    <th><i>@Model.CategoryList[categoryid]</i></th>
+                </tr>
+                <tr>
+                    <td>Sprint :</td>
+                    <th><i>@Model.SprintList[Model.Story.SprintId]</i></th>
+                </tr>
+            </tbody>
+        </table>
+        <hr />
+    </div>
+    <div class="d-flex justify-content-between">
+        <h3>Tasks</h3>
+        <a class="btn btn-success w-25" asp-controller="Tasks" asp-action="Create" asp-route-id="@Model.Story.StoryId">
+            <i class="text-light fa-solid fa-plus"></i> Task
+        </a>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Task
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Estimated Time
+				    </th>
+				    <th>
+					    Priority
+				    </th>
+                    <th>
+                        Assignee
+                    </th>
+                    <th>
+                        Reviewer
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Tasks)
+                {
+                    @if (Model.StatusList.ContainsKey(item.Status) == false)
+                    {
+                        Model.StatusList[item.Status] = "Not Found";
+                    }
+                    @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                    {
+                        Model.StatusList[item.Priority] = "Not Found";
+                    }
+                    @if (Model.MemberList.ContainsKey(item.AssignMembersId) == false)
+                    {
+                        Model.MemberList[item.AssignMembersId] = "Not Found";
+                    }
+                    @if (Model.MemberList.ContainsKey(item.ReviewerMemberId) == false)
+                    {
+                        Model.MemberList[item.ReviewerMemberId] = "Not Found";
+                    }
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @Model.StatusList[item.Status]
+                        </td>
+                        <td>
+                            @item.EstimatedTime Hour
+                        </td>
+                        <td>
+                            @Model.PriorityList[item.Priority]
+                        </td>
+                        <td>
+                            @Model.MemberList[item.AssignMembersId]
+                        </td>
+                        <td>
+                            @Model.MemberList[item.ReviewerMemberId]
+                        </td>
+                        <td>
 
- *@
+                            <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
+                                <i class="text-success fa-solid fa-pen"></i>
+                            </a>
+                            <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
+                                <i class="text-success fa-solid fa-trash"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
+                                <i class="text-success fa-solid fa-circle-info"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
+                                <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
+                            </a>
+                            <a id="playButton-@item.TaskId" class="btn btn-light" onclick="startTracking(@item.TaskId)">
+                                <i class="text-success fa-solid fa-circle-play"></i>
+                            </a>
+                            <a id="pauseButton-@item.TaskId" class="btn btn-light d-none" onclick="stopTracking(@item.TaskId)">
+                                <i class="text-success fa-solid fa-circle-pause"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    <hr />
+    </div>
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-black" id="exampleModalLabel">Delete Task !!</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-capitalize text-danger">
+                    After clicking on "Delete" button it won't be undone!!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" onclick="confirmDelete()" class="btn btn-outline-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal for User Story-->
+    <div class="modal fade" id="modalUSD" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-black" id="exampleModalLabel">Delete User Story !!</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-capitalize text-danger">
+                    You are deleting this user story. After clicking on "Delete" button it won't be undone!!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" onclick="confirmUSDelete()" class="btn btn-outline-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- bug section -->
+
+    <h1 class="text-danger text-center">Bug section will be added later</h1>
+    @* <div class="d-flex justify-content-between">
+        <h3>Bugs</h3>
+        <a class="btn btn-danger w-25" asp-controller="Bug" asp-action="Create" asp-route-id="@Model.Story.StoryId">
+            <i class="text-light fa-solid fa-plus"></i> Bug
+        </a>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Bug
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Estimated Time
+                    </th>
+                    <th>
+                        Priority
+                    </th>
+                    <th>
+                        Assignee
+                    </th>
+                    <th>
+                        Reviewer
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Tasks)
+                {
+                    <tr>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Status
+                        </td>
+                        <td>
+                            @item.EstimatedTime
+                        </td>
+                        <td>
+                            @item.Priority
+                        </td>
+                        <td>
+                            @item.AssignMembersId
+                        </td>
+                        <td>
+                            @item.ReviewerMemberId
+                        </td>
+                        <td>
+
+                            <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
+                                <i class="text-danger fa-solid fa-pen"></i>
+                            </a>
+                            <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
+                                <i class="text-danger fa-solid fa-trash"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
+                                <i class="text-danger fa-solid fa-circle-info"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="SubTasks" asp-action="Create" asp-route-id="@item.TaskId">
+                                <i class="text-danger fa-solid fa-check"></i> <small>Resolved</small>
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <hr />
+    </div>
+
+     *@
+
+}
 
 @section Scripts {
     <script>
