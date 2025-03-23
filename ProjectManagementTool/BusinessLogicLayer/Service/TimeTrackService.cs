@@ -90,5 +90,10 @@ namespace BusinessLogicLayer.Service
                 throw;
             }
         }
+
+        public bool UpdateTrackingStatus(int subTaskId, string status)
+        {
+            return _timeTrackRepo.UpdateTrackingStatus(subTaskId, status);
+        }
     }
 }

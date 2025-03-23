@@ -24,6 +24,7 @@ namespace DataAccessLayer.Models.ViewModel
         public int TaskId { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-        public double TotalTime { get; set; }   
+        public double TotalTime { get; set; }
+        public string TrackingStatus {  get; set; }
     }
 }

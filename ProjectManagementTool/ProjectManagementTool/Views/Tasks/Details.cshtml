@@ -149,13 +149,15 @@
                         <a class="btn btn-light" onclick="openDeleteModal(@item.SubTaskId)">
                             <i class="text-success fa-solid fa-trash"></i>
                         </a>
-                        <a class="btn btn-light" onclick="openDetailsModal('@item.Descripton', '@item.StartTime', '@item.EndTime', '@item.TotalTime')">
+                        <a class="btn btn-light" onclick="openDetailsModal(@item.SubTaskId)">
                             <i class="text-success fa-solid fa-circle-info"></i> 
                         </a>
-                        <a id="playButton-@item.SubTaskId" class="btn btn-light" onclick="startTracking(@item.TaskId, @item.SubTaskId)">
+                        <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")" 
+                        onclick="startTracking(@item.TaskId, @item.SubTaskId)">
                             <i class="text-success fa-solid fa-circle-play"></i>
                         </a>
-                        <a id="pauseButton-@item.SubTaskId" class="btn btn-light d-none" onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
+                        <a id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")" 
+                        onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
                             <i class="text-success fa-solid fa-circle-pause"></i>
                         </a>
 
@@ -239,7 +241,8 @@
             return dhms;
         }
 
-        function openDetailsModal( description, startTime, endTime, totalTime) {
+        // Formate the details
+        function showDetailsModal( description, startTime, endTime, totalTime) {
             description = "Description: " + description + "\n";
             startTime = "Start time: " + startTime + "\n";
             endTime = "End time: " + endTime + "\n";
@@ -250,6 +253,22 @@
             var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
             
             myModal.show();
+        }
+
+        // Calling from details button
+        function openDetailsModal(subTaskId){
+            $.ajax({
+                url: "/TimeTrack/GetTimeDetails",
+                type: "GET",
+                data: { subTaskId: subTaskId 
+                },
+                success: function (response) { 
+                    showDetailsModal(response.description, response.startTime, response.endTime, response.totalTime);
+                },
+                error: function (xhr, status, error) {
+                    alert("Error stopping tracking: " + error);
+                }
+            });
         }
 
         var deleteSubTaskId = null;
@@ -276,6 +295,8 @@
                 });
             }
         }
+
+
 
         // Time track starting
         function startTracking(taskId, subTaskId) {

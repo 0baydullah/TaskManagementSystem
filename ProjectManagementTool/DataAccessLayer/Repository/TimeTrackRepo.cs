@@ -62,5 +62,21 @@ namespace DataAccessLayer.Repository
                 throw;
             }
         }
+
+        public bool UpdateTrackingStatus(int subTaskId, string status)
+        {
+            var timeTrack = _context.TimeTracks.Find(subTaskId);
+            if (timeTrack == null)
+            {
+                return false;
+            }
+
+            timeTrack.TrackingStatus = status;
+            _context.SaveChanges();
+
+            return true;
+        }
+
+       
     }
 }
