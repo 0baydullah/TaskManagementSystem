@@ -27,6 +27,7 @@ namespace DataAccessLayer.Repository
                 {
                     _context.ProjectInfo.Add(projectInfo);
                     _context.SaveChanges();
+                   
                     return true;
                 }
                 else
@@ -36,7 +37,6 @@ namespace DataAccessLayer.Repository
             }
             catch (Exception  )
             {
-
                 throw;
             }
             
@@ -48,6 +48,7 @@ namespace DataAccessLayer.Repository
             {
                 _context.ProjectInfo.Remove(projectInfo);
                 _context.SaveChanges();
+                
                 return true;
             }
             catch (Exception)
@@ -67,11 +68,11 @@ namespace DataAccessLayer.Repository
                 {
                     throw new Exception("Project not found!");
                 }
+                
                 return project;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -113,12 +114,12 @@ namespace DataAccessLayer.Repository
             {
                 _context.ProjectInfo.Update(projectInfo);
                 _context.SaveChanges();
+                
                 return true;
 
             }
             catch (Exception)
             {
-
                 throw;
             }
             

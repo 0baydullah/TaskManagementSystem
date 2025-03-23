@@ -71,6 +71,7 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                     message += error + " ";
                 }
+                
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
 
@@ -82,7 +83,8 @@ namespace ProjectManagementTool.Controllers
                 {
                     isSuccess = false;
                     message = "User not found!";
-                    return Json(new { isSuccess, message });
+
+                    return Json(new { success = $"{isSuccess}", message = $"{message}" });
                 }
 
                 var response = _projectInfoService.AddProjectInfo(model, user);
@@ -98,14 +100,15 @@ namespace ProjectManagementTool.Controllers
                     message = "Project created successfully!";
                     _log.Info(message);
                 }
+                
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
-
             }
             catch (Exception ex )
             {
                 isSuccess = false;
                 message = "Opps! Exception Occurred: " + ex.Message;
                 _log.Error(message);
+                
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             } 
         }

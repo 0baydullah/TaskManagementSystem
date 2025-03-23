@@ -16,41 +16,78 @@ namespace BusinessLogicLayer.Service
         {
             _releaseRepo = releaseRepo; 
         }
-        public void AddRelease(Release release)
+        public bool AddRelease(Release release)
         {
             try
             {
-                _releaseRepo.AddRelease(release);
+                var result = _releaseRepo.AddRelease(release);
 
+                return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
             
         }
 
-        public void DeleteRelease(Release release)
+        public bool DeleteRelease(Release release)
         {
-            _releaseRepo.DeleteRelease(release);
+            try
+            {
+                var result = _releaseRepo.DeleteRelease(release);
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
         public List<Release> GetAllReleases()
         {
-            var releases = _releaseRepo.GetAllReleases();
-            return releases;
+            try
+            {
+                var releases = _releaseRepo.GetAllReleases();
+                
+                return releases;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }
 
         public Release GetRelease(int id)
         {
-            var release = _releaseRepo.GetRelease(id);
-            return release;
+            try
+            {
+                var release = _releaseRepo.GetRelease(id);
+               
+                return release;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }     
         }
 
-        public void UpdateRelease(Release release)
+        public bool UpdateRelease(Release release)
         {
-            _releaseRepo.UpdateRelease(release);
+            try
+            {
+                var result = _releaseRepo.UpdateRelease(release);
+                
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }         
         }
     }
 }

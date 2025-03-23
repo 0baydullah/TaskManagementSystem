@@ -94,7 +94,6 @@ namespace BusinessLogicLayer.Service
             }
             catch (Exception)
             {
-
                 throw;
             }
             
@@ -158,7 +157,6 @@ namespace BusinessLogicLayer.Service
             }
             catch (Exception)
             {
-
                 throw;
             }    
         }
