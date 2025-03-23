@@ -95,6 +95,8 @@ namespace DataAccessLayer.Repository
                         EstimatedTime = x.s.EstimatedTime,
                         Tag = x.s.Tag,
                         TaskId = x.s.TaskId,
+                        Status = x.s.Status,
+                        Priority = x.s.Priority,
                         StartTime = t != null ? t.StartTime.ToString() : " ",
                         EndTime = t != null ? t.StartTime.ToString() : " ",
                         TotalTime = t != null ? t.TotalTime : 0.0,
