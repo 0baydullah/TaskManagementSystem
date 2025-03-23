@@ -41,8 +41,6 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Create(int projectId)
         {
-            //var projects = _projectInfoService.GetAllProjectInfo();
-            //ViewBag.Projects = new SelectList(projects, "ProjectId", "Name");
             ViewBag.ProjectId = projectId;
             return View();
         }
