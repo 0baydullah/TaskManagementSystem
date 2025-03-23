@@ -22,12 +22,10 @@ namespace ProjectManagementTool.Controllers
 
         private readonly ILog _log = LogManager.GetLogger(typeof(TasksController));
 
-
-
-        public TasksController(ITasksService tasksService, ISubTaskService subTaskService, 
+        public TasksController(ITasksService tasksService, ISubTaskService subTaskService,
             IMemberService memberService, IUserStoryService userStoryService,
             ICategoryService categoryService, IStatusService statusService,
-            IPriorityService prioriyService) 
+            IPriorityService prioriyService)
         {
             _tasksService = tasksService;
             _subTaskService = subTaskService;
@@ -38,128 +36,192 @@ namespace ProjectManagementTool.Controllers
             _priorityService = prioriyService;
         }
 
+        public IActionResult Err()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
-            var tasks = _tasksService.GetAllTasks();
-            return View(tasks);
+            try
+            {
+                var tasks = _tasksService.GetAllTasks();
+                throw new Exception("Exception thrown manually for testing");
+                return View(tasks);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Index : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Index",
+                    CustomMsg = "abc",
+                    StackTrace = ex.StackTrace
+                };
+                return View( "Err", errorModel);
+            }
         }
 
         [HttpGet]
         public IActionResult Create(int id)
         {
-            var story = _userStoryService.GetUserStory(id);
-            ViewBag.ProjectId = story.ProjectId;
-            ViewBag.UserStoryId = id;
+            try
+            {
+                var story = _userStoryService.GetUserStory(id);
+                ViewBag.ProjectId = story.ProjectId;
+                ViewBag.UserStoryId = id;
 
-            var statuses = _statusService.GetAllStatuses();
-            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
 
-            var priorities = _priorityService.GetAllPriority();
-            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
+                var priorities = _priorityService.GetAllPriority();
+                ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
 
-            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
-            ViewBag.Members = new SelectList(members, "MemberId", "Name");
+                var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
+                ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
-            return View();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error in Create GET method", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
         public IActionResult Create(int id, Tasks task)
         {
-            _tasksService.AddTasks(task);
-
-            if (task == null || id != task.UserStoryId)
+            try
             {
-                return NotFound();
-            }
+                _tasksService.AddTasks(task);
 
-            return Json(new { success = true });
+                if (task == null || id != task.UserStoryId)
+                {
+                    return NotFound();
+                }
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error in Create POST method", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var tasksDetails = new TaskDetailsVM();
-            var task = _tasksService.GetTasks(id);
-            var subtasks = _subTaskService.GetAllSubTaskByTask(id);
+            try
+            {
+                var tasksDetails = new TaskDetailsVM();
+                var task = _tasksService.GetTasks(id);
+                var subtasks = _subTaskService.GetAllSubTaskByTask(id);
 
-            tasksDetails.Tasks = task;
-            tasksDetails.StoryName = _userStoryService.GetUserStory(task.UserStoryId).StoryName;
-            tasksDetails.SubTask = subtasks;
-            tasksDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
-            tasksDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
-            tasksDetails.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
+                tasksDetails.Tasks = task;
+                tasksDetails.StoryName = _userStoryService.GetUserStory(task.UserStoryId).StoryName;
+                tasksDetails.SubTask = subtasks;
+                tasksDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
+                tasksDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+                tasksDetails.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
 
-            return View(tasksDetails);
+                return View(tasksDetails);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error in Details method", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
-
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var task = _tasksService.GetTasks(id);
-            if (task == null)
+            try
             {
-                return NotFound();
+                var task = _tasksService.GetTasks(id);
+                if (task == null)
+                {
+                    return NotFound();
+                }
+
+                _tasksService.DeleteTasks(task);
+                return Ok();
             }
-
-            _tasksService.DeleteTasks(task);
-            return Ok();
+            catch (Exception ex)
+            {
+                _log.Error("Error in Delete method", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
-
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Tasks task = _tasksService.GetTasks(id);
-
-            var story = _userStoryService.GetUserStory(task.UserStoryId);
-            ViewBag.ProjectId = story.ProjectId;
-            ViewBag.Id = id;
-
-            var statuses = _statusService.GetAllStatuses();
-            ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
-
-            var priorities = _priorityService.GetAllPriority();
-            ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
-
-            var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
-            ViewBag.Members = new SelectList(members, "MemberId", "Name");
-
-            if (task == null)
+            try
             {
-                return NotFound();
-            }
+                Tasks task = _tasksService.GetTasks(id);
 
-            return View(task);
+                var story = _userStoryService.GetUserStory(task.UserStoryId);
+                ViewBag.ProjectId = story.ProjectId;
+                ViewBag.Id = id;
+
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+                var priorities = _priorityService.GetAllPriority();
+                ViewBag.Priority = new SelectList(priorities, "PriorityId", "Name");
+
+                var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
+                ViewBag.Members = new SelectList(members, "MemberId", "Name");
+
+                if (task == null)
+                {
+                    return NotFound();
+                }
+
+                return View(task);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error in Edit GET method", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(int id, Tasks taskVM)
         {
-            Tasks task = _tasksService.GetTasks(id);
-
-            if (task == null)
+            try
             {
-                return NotFound();
+                Tasks task = _tasksService.GetTasks(id);
+
+                if (task == null)
+                {
+                    return NotFound();
+                }
+
+                task.Name = taskVM.Name;
+                task.Descripton = taskVM.Descripton;
+                task.AssignMembersId = taskVM.AssignMembersId;
+                task.ReviewerMemberId = taskVM.ReviewerMemberId;
+                task.EstimatedTime = taskVM.EstimatedTime;
+                task.Tag = taskVM.Tag;
+                task.Status = taskVM.Status;
+                task.Priority = taskVM.Priority;
+                task.UserStoryId = taskVM.UserStoryId;
+
+                _tasksService.UpdateTasks(task);
+
+                return Json(new { success = true });
             }
-
-            task.Name = taskVM.Name;
-            task.Descripton = taskVM.Descripton;
-            task.AssignMembersId = taskVM.AssignMembersId;
-            task.ReviewerMemberId = taskVM.ReviewerMemberId;
-            task.EstimatedTime = taskVM.EstimatedTime;
-            task.Tag = taskVM.Tag;
-            task.Status = taskVM.Status;
-            task.Priority = taskVM.Priority;
-            task.UserStoryId = taskVM.UserStoryId;
-
-            _tasksService.UpdateTasks(task);
-
-            return Json(new { success = true });
+            catch (Exception ex)
+            {
+                _log.Error("Error in Edit POST method", ex);
+                return StatusCode(500, "Internal server error");
+            }
         }
-
-
-
     }
 }
