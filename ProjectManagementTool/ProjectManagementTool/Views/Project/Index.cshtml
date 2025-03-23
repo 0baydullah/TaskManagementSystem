@@ -4,13 +4,19 @@
     ViewData["Banner"] = "Projects";
 }
 
-<div class="mb-3">
-    <a class="btn btn-success fw-bold" asp-action="Create"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Project</a>
-</div>
+@if(ViewBag.Error != null)
+{
+    <div class="alert alert-danger fw-bold">
+        @ViewBag.Error
+    </div>
+}
 <div id="response-message">
 
 </div>
 
+<div class="mb-3">
+    <a class="btn btn-success fw-bold" asp-action="Create"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Project</a>
+</div>
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>

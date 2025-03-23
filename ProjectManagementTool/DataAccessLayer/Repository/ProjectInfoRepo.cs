@@ -63,6 +63,10 @@ namespace DataAccessLayer.Repository
             try
             {
                 var project = _context.ProjectInfo.Find(id);
+                if (project == null)
+                {
+                    throw new Exception("Project not found!");
+                }
                 return project;
             }
             catch (Exception)

@@ -41,20 +41,23 @@ namespace BusinessLogicLayer.Service
 
                 };
 
-                _projectInfoRepo.AddProjectInfo(project);
+                var result = _projectInfoRepo.AddProjectInfo(project);
 
-                var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
-                var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Admin");
-                var member = new Member
+                if (result == true)
                 {
-                    ProjectId = projectId,
-                    RoleId = role.RoleId,
-                    Email = user.Email,
-                };
-                _memberRepo.AddMember(member);
+                    var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
+                    var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Admin");
+                    var member = new Member
+                    {
+                        ProjectId = projectId,
+                        RoleId = role.RoleId,
+                        Email = user.Email,
+                    };
+                    _memberRepo.AddMember(member);
 
-                return true;
+                }
 
+                return result;
             }
             catch (Exception)
             {

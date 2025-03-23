@@ -2,6 +2,8 @@
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using DataAccessLayer.Repository;
+using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +19,7 @@ namespace ProjectManagementTool.Controllers
         private readonly UserManager<UserInfo> _userManager;
         private readonly IReleaseService _releaseService;
         private readonly ISprintService _sprintService;
+        private readonly ILog _log= LogManager.GetLogger(typeof(SprintRepo));
 
         public ProjectController( IProjectInfoService projectInfoService,
             UserManager<UserInfo> userManager, IReleaseService releaseService, ISprintService sprintService)
@@ -33,12 +36,14 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var projects = _projectInfoService.GetAllProjectInfo();
+                
                 return View(projects);
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine(ex.StackTrace);
+                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(ViewBag.Error);
+                
                 return View();
             }
             
@@ -84,20 +89,24 @@ namespace ProjectManagementTool.Controllers
                 if (response == false)
                 {
                     isSuccess = false;
-                    message = "Project not created!";
+                    message = "Project already exist!";
+                    _log.Error(message);
                 }
                 else
                 {
                     isSuccess = true;
                     message = "Project created successfully!";
+                    _log.Error(message);
                 }
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
 
             }
-            catch (Exception)
+            catch (Exception ex )
             {
-
-                return View(model);
+                isSuccess = false;
+                message = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(message);
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             } 
         }
 
@@ -108,33 +117,29 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var project = _projectInfoService.GetProjectInfo(id);
-                if (project == null)
+                
+                var model = new EditProjectInfoVM
                 {
-                    return NotFound("Project not found! ");
-                }
+                    ProjectId = project.ProjectId,
+                    Name = project.Name,
+                    Key = project.Key,
+                    Description = project.Description,
+                    StartDate = project.StartDate,
+                    EndDate = project.EndDate,
+                    CompanyName = project.CompanyName,
+                    ProjectOwnerId = project.ProjectOwnerId,
+                };
 
-                else
-                {
-                    var model = new EditProjectInfoVM
-                    {
-                        ProjectId = project.ProjectId,
-                        Name = project.Name,
-                        Key = project.Key,
-                        Description = project.Description,
-                        StartDate = project.StartDate,
-                        EndDate = project.EndDate,
-                        CompanyName = project.CompanyName,
-                        ProjectOwnerId = project.ProjectOwnerId,
-                    };
-
-                    return View(model);
-                }
-
+                return View(model);
+                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(ViewBag.Error);
+
+                return View();
             }
             
         }
@@ -159,28 +164,20 @@ namespace ProjectManagementTool.Controllers
 
             try
             {
-                
                 var project = _projectInfoService.GetProjectInfo(id);
-                if (project == null)
-                {
-                    isSuccess = false;
-                    message = "Project not found!";
-
-                    return Json(new { success = $"{isSuccess}", message = $"{message}" });
-                }
-
                 _projectInfoService.UpdateProjectInfo(model);
                 isSuccess = true;
-                message = "Data updated successfully!";
+                message = "Project updated successfully!";
                 
-
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return View(model);
+                isSuccess = false;
+                message = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(message);
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }           
         }
 
@@ -188,48 +185,43 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
+            bool isSuccess = true;
+            var message = "Project deleted successfully!";
             try
             {
-                var isSuccess = false;
-                var message = "Project not Found!";
                 var response = _projectInfoService.GetProjectInfo(id);
+                _projectInfoService.DeleteProjectInfo(response);
 
-                if (response != null)
-                {
-                    isSuccess = true;
-                    message = "Project deleted successfully!";
-                    _projectInfoService.DeleteProjectInfo(response);
-                }
-
-                else
-                {
-                    isSuccess = false;
-                    message = "Project not found!";
-                }
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
-            }
-            
+                isSuccess = false;
+                message = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(message);
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            } 
         }
 
 
         public IActionResult Details(int id)
         {
-            var project = _projectInfoService.GetProjectInfo(id);
-            if (project == null)
+            try
             {
-                return NotFound("Project not found! ");
-            }
-            ViewBag.ProjectName = project.Name;
+                var project = _projectInfoService.GetProjectInfo(id);
+                ViewBag.ProjectName = project.Name;
 
-            var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == id).ToList();
-            //var sprints = _sprintService.GetAllSprint().Where(s => s.ReleaseId == id).ToList();
-            return View(project);
+                return View(project);
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(ViewBag.Error);
+
+                return View();
+            }
+            
         }
 
     }
