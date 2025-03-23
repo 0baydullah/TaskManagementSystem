@@ -13,5 +13,6 @@ namespace BusinessLogicLayer.IService
         public Task<bool> TimeStoreEnd(int taskId, int subTaskId);
         public bool UpdateTrackingStatus(int subTaskId, string status);
         public TimeTrack GetBySubTaskId(int subTaskId);
+        public TimeTrack GetByTaskId(int taskId);
     }
 }

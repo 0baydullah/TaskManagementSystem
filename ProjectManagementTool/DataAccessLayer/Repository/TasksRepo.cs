@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using log4net;
 
 namespace DataAccessLayer.Repository
@@ -77,12 +78,28 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public List<Tasks> GetAllTasks(int id)
+        public List<TasksVM> GetAllTasks(int id)
         {
             try
             {
                 var tasks = _context.Tasks.Where(x => x.UserStoryId == id).ToList();
-                return tasks;
+                var tasksVM = tasks.GroupJoin(_context.TimeTracks.Where(ttrack => ttrack.SubTaskId == 0), t=> t.TaskId, time=>time.TaskId,(t,time) => new { t, time }).SelectMany(
+                    x => x.time.DefaultIfEmpty(), (x, time) => new TasksVM
+                    {
+                    TaskId = x.t.TaskId,
+                    Name = x.t.Name,
+                    Descripton = x.t.Descripton,
+                    AssignMembersId = x.t.AssignMembersId,
+                    ReviewerMemberId = x.t.ReviewerMemberId,
+                    EstimatedTime = x.t.EstimatedTime,
+                    Tag = x.t.Tag,
+                    Status = x.t.Status,
+                    Priority = x.t.Priority,
+                    UserStoryId = x.t.UserStoryId,
+                    TrackingStatus = time!=null? time.TrackingStatus : "" 
+                }).ToList();
+
+                return tasksVM;
             }
             catch (Exception ex)
             {

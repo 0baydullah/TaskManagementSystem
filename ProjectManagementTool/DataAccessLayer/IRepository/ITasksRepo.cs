@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 
 namespace DataAccessLayer.IRepository
 {
@@ -15,6 +16,6 @@ namespace DataAccessLayer.IRepository
         public void DeleteAllAssociation(int id);
         public Tasks GetTasks(int id);
         public List<Tasks> GetAllTasks();
-        public List<Tasks> GetAllTasks(int id);
+        public List<TasksVM> GetAllTasks(int id);
     }
 }

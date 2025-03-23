@@ -165,10 +165,12 @@
                         <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
                             <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
                         </a>
-                        <a id="playButton-@item.TaskId" class="btn btn-light" onclick="startTracking(@item.TaskId)">
+                        <a id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
+                           onclick="startTracking(@item.TaskId, @item.TaskId)">
                             <i class="text-success fa-solid fa-circle-play"></i>
                         </a>
-                        <a id="pauseButton-@item.TaskId" class="btn btn-light d-none" onclick="stopTracking(@item.TaskId)">
+                        <a id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
+                           onclick="stopTracking(@item.TaskId, @item.TaskId)">
                             <i class="text-success fa-solid fa-circle-pause"></i>
                         </a>
                     </td>
@@ -351,6 +353,22 @@
                 });
             }
         }
+
+        // Button tracking handle
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("[id^=playButton-]").forEach(button => {
+                let subTaskId = button.id.split("-")[1];
+                let status = localStorage.getItem("tracking-" + subTaskId);
+
+                if (status === "Started") {
+                    document.getElementById("playButton-" + subTaskId).classList.add("d-none");
+                    document.getElementById("pauseButton-" + subTaskId).classList.remove("d-none");
+                } else {
+                    document.getElementById("playButton-" + subTaskId).classList.remove("d-none");
+                    document.getElementById("pauseButton-" + subTaskId).classList.add("d-none");
+                }
+            });
+        });
 
         // Time track starting
         function startTracking(taskId) {

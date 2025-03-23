@@ -67,9 +67,16 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult GetTimeBySubTaskId(int subTaskId) 
         {
-            var timeTrack = _timeTrackService.GetBySubTaskId(subTaskId);
+            try
+            {
+                var timeTrack = _timeTrackService.GetBySubTaskId(subTaskId);
 
-            return Json(timeTrack);
+                return Json(timeTrack);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }

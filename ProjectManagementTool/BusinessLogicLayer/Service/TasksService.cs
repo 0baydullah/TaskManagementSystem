@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using log4net;
 
 namespace BusinessLogicLayer.Service
@@ -65,7 +66,7 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public List<Tasks> GetAllTasks(int id)
+        public List<TasksVM> GetAllTasks(int id)
         {
             try
             {

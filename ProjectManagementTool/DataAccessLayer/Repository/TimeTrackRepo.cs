@@ -1,6 +1,7 @@
 ﻿using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -65,23 +66,50 @@ namespace DataAccessLayer.Repository
 
         public bool UpdateTrackingStatus(int subTaskId, string status)
         {
-            var timeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
-            if (timeTrack == null)
+            try
             {
-                return false;
+                var timeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
+                if (timeTrack == null)
+                {
+                    return false;
+                }
+
+                timeTrack.TrackingStatus = status;
+                _context.SaveChanges();
+
+                return true;
             }
-
-            timeTrack.TrackingStatus = status;
-            _context.SaveChanges();
-
-            return true;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public TimeTrack GetBySubTaskId(int subTaskId)
         {
-            var subTask = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
-            return subTask;
+            try
+            {
+                var subTask = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
+                return subTask;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
+        public TimeTrack GetByTaskId(int taskId) 
+        {
+            try
+            {
+                var task = _context.TimeTracks.FirstOrDefault(s => s.TaskId == taskId);
+                return task;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
     }
 }
