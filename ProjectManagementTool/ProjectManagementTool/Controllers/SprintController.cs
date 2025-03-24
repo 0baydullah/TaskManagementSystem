@@ -12,6 +12,7 @@ namespace ProjectManagementTool.Controllers
         private readonly ISprintService _sprintService;
         private readonly IReleaseService _releaseService;
         private readonly IProjectInfoService _projectInfoService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(SprintController));
         
         public SprintController(ISprintService sprintService, IReleaseService releaseService, IProjectInfoService projectInfoService)
         {
@@ -23,31 +24,53 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Index(int projectId)
         {
-            var sprints = _sprintService.GetAllSprint(projectId);
-            ViewBag.ProjectId = projectId;
-            var data = sprints.Select(s => new SprintVM
+            try
             {
-                SprintId = s.SprintId,
-                SprintName = s.SprintName,
-                Description = s.Description,
-                StartDate = s.StartDate,
-                EndDate = s.StartDate.AddDays(s.Duration - 1),
-                Points = s.Points,
-                Velocity = s.Velocity,
-                ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
-            }).ToList();
+                var sprints = _sprintService.GetAllSprint(projectId);
+                ViewBag.ProjectId = projectId;
+                var data = sprints.Select(s => new SprintVM
+                {
+                    SprintId = s.SprintId,
+                    SprintName = s.SprintName,
+                    Description = s.Description,
+                    StartDate = s.StartDate,
+                    EndDate = s.StartDate.AddDays(s.Duration - 1),
+                    Points = s.Points,
+                    Velocity = s.Velocity,
+                    ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
+                }).ToList();
+
+                return View(data);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Opps Exception Occurr: " + ex.Message;
+                _log.Error(ViewBag.Error);
+
+                return View();
+            }
             
-            return View(data);
         }
 
         [HttpGet]
         public IActionResult Create(int projectId)
         {
-            var releases = _releaseService.GetAllReleases().Where( r => r.ProjectId == projectId).ToList();
-            ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
-            ViewBag.ProjectId = projectId;
+            try
+            {
+                var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId).ToList();
+                ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
+                ViewBag.ProjectId = projectId;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Opps Exception Occurr: " + ex.Message;
+                _log.Error(ViewBag.Error);
+
+                return View();
+            }
             
-            return View();
         }
 
         [HttpPost]
@@ -65,15 +88,34 @@ namespace ProjectManagementTool.Controllers
                     message += error + " ";
                     Console.WriteLine(error);
                 }
-            }
-            else
-            {
-                _sprintService.AddSprint(sprint);
-                isSuccess = true;
-                message = "Sprint added successfully!";
-            }
 
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            try
+            {
+                
+                var response = _sprintService.AddSprint(sprint);
+                if( response == true)
+                {
+                    isSuccess = true;
+                    message = "Sprint added successfully!";
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Sprint alredy exist!";
+                    _log.Info(message);
+                }
+                
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         

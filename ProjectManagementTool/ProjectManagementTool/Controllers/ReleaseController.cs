@@ -146,8 +146,8 @@ namespace ProjectManagementTool.Controllers
             }
             try
             { 
-                var response = _releaseService.UpdateRelease( id, release);
-                if(response.Result == true)
+                var response = await _releaseService.UpdateRelease( id, release);
+                if(response == true)
                 {
                     isSuccess = true;
                     message = "Release updated successfully!";

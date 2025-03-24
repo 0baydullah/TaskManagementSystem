@@ -22,7 +22,7 @@ namespace DataAccessLayer.Repository
             _context = context; 
         }
 
-        public void AddSprint(Sprint sprint)
+        public bool AddSprint(Sprint sprint)
         {
             try
             {
@@ -31,34 +31,34 @@ namespace DataAccessLayer.Repository
                 {
                     _context.Sprints.Add(sprint);
                     _context.SaveChanges();
+                   
+                    return true;
                 }
                 else
                 {
-                    log.Error("The sprint already exists.");
-                    
-                    //throw new Exception("The sprint already exists.");
+
+                    return false;
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while adding the sprint!", ex);
+                throw;
             }
         }
 
-        public void DeleteSprint(Sprint sprint)
+        public bool DeleteSprint(Sprint sprint)
         {
             try
             {
                 _context.Sprints.Remove(sprint);
                 _context.SaveChanges();
-
+                
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while deleting the sprint!", ex);
+                throw;
             }
         }
 
@@ -86,12 +86,10 @@ namespace DataAccessLayer.Repository
                 }).ToList();
 
                 return sprints;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while list all the sprint!", ex);
+                throw;
             }
         }
 
@@ -100,27 +98,30 @@ namespace DataAccessLayer.Repository
             try
             {
                 var sprint = _context.Sprints.Find(id);
+                if (sprint == null)
+                {
+                    throw new Exception("Sprint not found!");
+                }
+                
                 return sprint;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while getting the sprint!", ex);
+                throw;
             }
         }
-        public void UpdateSprint(Sprint sprint)
+        public async Task<bool> UpdateSprint(Sprint sprint)
         {
             try
             {
                 _context.Sprints.Update(sprint);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while getting the sprint!", ex);
+                throw;
             }
         }
     }
