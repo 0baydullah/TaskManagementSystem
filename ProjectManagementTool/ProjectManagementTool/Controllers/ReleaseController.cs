@@ -128,7 +128,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Release release, int id)
+        public async Task<IActionResult> Edit(Release release, int id)
         {
             bool isSuccess = false;
             string message = "Invalid Data Submitted!";
@@ -147,7 +147,7 @@ namespace ProjectManagementTool.Controllers
             try
             { 
                 var response = _releaseService.UpdateRelease( id, release);
-                if(response == true)
+                if(response.Result == true)
                 {
                     isSuccess = true;
                     message = "Release updated successfully!";
@@ -156,7 +156,7 @@ namespace ProjectManagementTool.Controllers
                 else
                 {
                     isSuccess = false;
-                    message = "Release alredy exist!";
+                    message = "Release already exist!";
                     _log.Info(message);
 
                 }

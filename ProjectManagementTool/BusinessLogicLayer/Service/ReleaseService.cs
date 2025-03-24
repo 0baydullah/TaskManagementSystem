@@ -86,12 +86,12 @@ namespace BusinessLogicLayer.Service
             }     
         }
 
-        public bool UpdateRelease(int id, Release release)
+        public async Task<bool> UpdateRelease(int id, Release release)
         {
             try
             {
                 var existRelease = _releaseRepo.GetRelease(id);
-                var existReleaseName = _releaseRepo.GetReleaseByName(id, release.ReleaseId, release.ReleaseName);
+                var existReleaseName = _releaseRepo.GetReleaseByName(id, release.ProjectId, release.ReleaseName);
 
                 if ( existRelease == null || existReleaseName != null)
                 {
@@ -103,7 +103,7 @@ namespace BusinessLogicLayer.Service
                 existRelease.StartDate = release.StartDate;
                 existRelease.EndDate = release.EndDate;
                 existRelease.ProjectId = release.ProjectId;
-                var result = _releaseRepo.UpdateRelease(release);
+                var result = await _releaseRepo.UpdateRelease(existRelease);
                 
                 return result;
             }

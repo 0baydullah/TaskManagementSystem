@@ -102,12 +102,12 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public bool UpdateRelease(Release release)
+        public async Task<bool> UpdateRelease(Release release)
         {
             try
             {
                 _context.Releases.Update(release);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 
                 return true;
             }
