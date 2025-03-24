@@ -36,14 +36,12 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var projects = _projectInfoService.GetAllProjectInfo();
-                throw new DivideByZeroException() ;
                 
                 return View(projects);
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(ViewBag.Error);
+                _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
                 
                 return RedirectToAction("Exception","Error");
@@ -107,11 +105,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex )
             {
-                isSuccess = false;
-                message = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(message);
-                
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             } 
         }
 
@@ -141,10 +138,10 @@ namespace ProjectManagementTool.Controllers
             catch (Exception ex)
             {
 
-                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(ViewBag.Error);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View();
+                return RedirectToAction("Exception", "Error");
             }
             
         }
@@ -180,10 +177,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                isSuccess = false;
-                message = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(message);
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }           
         }
 
@@ -203,10 +200,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                isSuccess = false;
-                message = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(message);
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             } 
         }
 
@@ -223,10 +220,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(ViewBag.Error);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View();
+                return RedirectToAction("Exception", "Error");
             }
             
         }
