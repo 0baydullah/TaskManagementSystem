@@ -18,31 +18,85 @@ namespace BusinessLogicLayer.Service
         {
             _sprintRepo = sprintRepo;
         }
-        public void AddSprint(Sprint sprint)
+        public bool AddSprint(Sprint sprint)
         {
-            _sprintRepo.AddSprint(sprint);
+            try
+            {
+                var result = _sprintRepo.AddSprint(sprint);
+                
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
-        public void DeleteSprint(Sprint sprint)
+        public bool DeleteSprint(Sprint sprint)
         {
-            _sprintRepo.DeleteSprint(sprint);
+            try
+            {
+                var result  = _sprintRepo.DeleteSprint(sprint);
+
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public List<SprintVM> GetAllSprint(int projectId)
         {
-           var sprints = _sprintRepo.GetAllSprint(projectId);
-           return sprints;
+            try
+            {
+                var sprints = _sprintRepo.GetAllSprint(projectId);
+                
+                return sprints;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+          
         }
 
         public Sprint GetSprint(int id)
         {
-           var sprint = _sprintRepo.GetSprint(id);
-           return sprint;
+            try
+            {
+                var sprint = _sprintRepo.GetSprint(id);
+                if( sprint == null)
+                {
+                    throw new Exception("Sprint not found! ");
+                }
+                
+                return sprint;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+          
         }
 
-        public void UpdateSprint(Sprint sprint)
+        public async Task<bool> UpdateSprint(Sprint sprint)
         {
-            _sprintRepo.UpdateSprint(sprint);
+            try
+            {
+               var result = await _sprintRepo.UpdateSprint(sprint);
+               
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
     }
 }
