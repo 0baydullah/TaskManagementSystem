@@ -116,6 +116,7 @@ namespace ProjectManagementTool.Controllers
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             try

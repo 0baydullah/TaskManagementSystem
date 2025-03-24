@@ -19,7 +19,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(int projectId) 
+        public IActionResult Create(int projectId) 
         {
             try
             {

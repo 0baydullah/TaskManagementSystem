@@ -109,7 +109,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Member model)
+        public async Task<IActionResult> Create(Member model)
         {
             bool isSuccess = false;
             string message = "Invalid data submitted! ";
@@ -126,7 +126,7 @@ namespace ProjectManagementTool.Controllers
             }
             else
             {
-                if(_memberService.GetUserByEmail(model.Email) == null)
+                if (_memberService.GetUserByEmail(model.Email) == null)
                 {
                     isSuccess = false;
                     message = "User is not exists!";
@@ -134,9 +134,16 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
-                    _memberService.AddMember(model);
-                    isSuccess = true;
-                    message = "Member added successfully!";
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+
+                    if (user != null)
+                    {
+                        var roleName = _roleService.GetRoleById(model.RoleId).RoleName;
+                        await _userManager.AddToRoleAsync(user, roleName);
+                        _memberService.AddMember(model);
+                        isSuccess = true;
+                        message = "Member added successfully!";
+                    }
                 }
             }
 
