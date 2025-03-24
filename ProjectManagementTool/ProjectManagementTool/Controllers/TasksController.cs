@@ -55,15 +55,9 @@ namespace ProjectManagementTool.Controllers
             catch (Exception ex)
             {
                 _log.Error("Something went wrong : " + ex.Message);
-                var errorModel = new ErrVM
-                {
-                    Msg = ex.Message,
-                    ActionMetod = "Index",
-                    CustomMsg = "this is a custom message",
-                    StackTrace = ex.StackTrace
-                };
+                TempData["Error"] = ex.Message;
 
-                return View( "Err", errorModel);
+                return RedirectToAction("Exception", "Error");
             }
         }
 
