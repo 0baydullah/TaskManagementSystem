@@ -110,6 +110,18 @@ namespace DataAccessLayer.Repository
                 throw;
             }
         }
+        public Sprint GetSprintByName(int id, int releaseId, string name)
+        {
+            try
+            {
+                var sprint = _context.Sprints.FirstOrDefault( s => s.SprintId != id && s.SprintName == name && s.ReleaseId == releaseId );
+                return sprint;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public async Task<bool> UpdateSprint(Sprint sprint)
         {
             try

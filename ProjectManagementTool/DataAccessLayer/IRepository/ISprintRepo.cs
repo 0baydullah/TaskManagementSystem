@@ -14,6 +14,7 @@ namespace DataAccessLayer.IRepository
         public Task<bool> UpdateSprint(Sprint sprint);
         public bool DeleteSprint(Sprint sprint);
         public Sprint GetSprint(int id);
+        public Sprint GetSprintByName(int id, int releaseId, string name);
         public List<SprintVM> GetAllSprint(int projectId);
 
     }

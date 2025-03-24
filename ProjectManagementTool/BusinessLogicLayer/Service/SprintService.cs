@@ -18,11 +18,21 @@ namespace BusinessLogicLayer.Service
         {
             _sprintRepo = sprintRepo;
         }
-        public bool AddSprint(Sprint sprint)
+        public bool AddSprint(SprintCreateVM sprint)
         {
             try
             {
-                var result = _sprintRepo.AddSprint(sprint);
+                var data = new Sprint()
+                {
+                    SprintName = sprint.SprintName,
+                    Description = sprint.Description,
+                    StartDate = sprint.StartDate,
+                    Duration = sprint.Duration,
+                    Points = sprint.Points,
+                    Velocity = sprint.Velocity,
+                    ReleaseId = sprint.ReleaseId,
+                };
+                var result = _sprintRepo.AddSprint(data);
                 
                 return result;
             }
@@ -83,11 +93,27 @@ namespace BusinessLogicLayer.Service
           
         }
 
-        public async Task<bool> UpdateSprint(Sprint sprint)
+        public async Task<bool> UpdateSprint(int id, SprintCreateVM sprint)
         {
             try
             {
-               var result = await _sprintRepo.UpdateSprint(sprint);
+                var existSprint = _sprintRepo.GetSprint(id);
+                var existSprintName = _sprintRepo.GetSprintByName(id, sprint.ReleaseId, sprint.SprintName);
+
+                if( existSprint == null || existSprintName != null)
+                {
+                    return false;
+                }
+
+                existSprint.SprintName = sprint.SprintName;
+                existSprint.Description = sprint.Description;
+                existSprint.StartDate = sprint.StartDate;
+                existSprint.Duration = sprint.Duration;
+                existSprint.Points = sprint.Points;
+                existSprint.Velocity = sprint.Velocity;
+                existSprint.ReleaseId = sprint.ReleaseId;
+
+                var result = await _sprintRepo.UpdateSprint(existSprint);
                
                 return result;
             }

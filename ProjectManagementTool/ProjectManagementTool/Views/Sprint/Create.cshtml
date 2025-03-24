@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.Entity.Sprint
+﻿@model DataAccessLayer.Models.ViewModel.SprintCreateVM
 @{
     ViewData["Title"] = "Create Sprint";
     ViewData["Banner"] = "Create Sprint";
@@ -11,28 +11,34 @@
     <div class="form-group">
         <label asp-for="@Model.SprintName"> </label>
         <input asp-for="@Model.SprintName" class="form-control" id="name" placeholder="Enter Sprint Name">
+        <span asp-validation-for="SprintName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.Description"> </label>
         <textarea asp-for="@Model.Description" class="form-control" id="description" placeholder="Write Short Description"> </textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="@Model.StartDate"> </label>
         <input asp-for="@Model.StartDate" class="form-control" id="startDate" placeholder="Select Start Date" type="date">
+        <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Duration"> </label>
         <input asp-for="@Model.Duration" class="form-control" id="duration" placeholder="Select Sprint Duration" type="number">
+        <span asp-validation-for="Duration" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Points"> </label>
         <input asp-for="@Model.Points" class="form-control" id="points" placeholder="Enter Sprint Points" type="number">
+        <span asp-validation-for="Points" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="@Model.Velocity"> </label>
         <input asp-for="@Model.Velocity" class="form-control" id="velocity" placeholder="Enter Sprint Velocity" type="number">
+        <span asp-validation-for="Velocity" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -40,6 +46,7 @@
         <select asp-for="@Model.ReleaseId" class="form-control" asp-items="ViewBag.Releases">
             <option value="">-- Select Release --</option>
         </select>
+        <span asp-validation-for="ReleaseId" class="text-danger"></span>
     </div>
     <br /> <br />
 
@@ -48,41 +55,57 @@
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
 
-        $('#submitForm').click( function (e) {
-            e.preventDefault();
+@section Scripts{
 
-            var formData = new FormData(document.getElementById('form'));
 
-            for( var pair of formData.entries()) {
-                console.log(pair[0]+ ', '+ pair[1]);
-            }
 
-            $.ajax({
-                url:'@Url.Action("Create", "Sprint")',
-                method:'POST',
-                data:formData,
-                processData: false,
-                contentType: false,
-                success:function(response){
-                    if(response.success){
-                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                        setTimeout(function(){
-                        window.location.href = '@Url.Action("Index", "Sprint", new {projectId =ViewBag.ProjectId} )';
-                        }, 1000);
-                    }
-                    else{
-                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
+    <script>
+        $(document).ready(function() {
 
-                },
-                error: function(response){
-                    $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
+            $('#submitForm').click( function (e) {
+                e.preventDefault();
+
+                var form = $('#form');
+                var formData = new FormData(document.getElementById('form'));
+
+                for( var pair of formData.entries()) {
+                    console.log(pair[0]+ ', '+ pair[1]);
                 }
-            });
-        });
 
-    });
-</script>
+                if(form.valid())
+                {
+                    $.ajax({
+                    url:'@Url.Action("Create", "Sprint")',
+                    method:'POST',
+                    data:formData,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                        if(response.success){
+                            $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                            setTimeout(function(){
+                            window.location.href = '@Url.Action("Index", "Sprint", new { projectId = ViewBag.ProjectId })';
+                            }, 1000);
+                        }
+                        else{
+                            $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+
+                    },
+                    error: function(response){
+                        $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
+                    }
+                });
+
+                }
+               
+            });
+
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

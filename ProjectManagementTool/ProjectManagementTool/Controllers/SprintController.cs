@@ -74,7 +74,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Sprint sprint)
+        public IActionResult Create(SprintCreateVM sprint)
         {
             bool isSuccess = false;
             string message = "Invalid Data Submitted!";
@@ -110,10 +110,14 @@ namespace ProjectManagementTool.Controllers
                 
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                isSuccess = false;
+                message = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(message);
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
             
         }
@@ -122,15 +126,27 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Edit(int id, int projectId)
         {
-            var sprint = _sprintService.GetSprint(id);
-            var releases = _releaseService.GetAllReleases().Where( r => r.ProjectId == projectId);
-            ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName",sprint.ReleaseId);
-            ViewBag.ProjectId = projectId;
-            return View(sprint);
+            try
+            {
+                var sprint = _sprintService.GetSprint(id);
+                var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId);
+                ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName", sprint.ReleaseId);
+                ViewBag.ProjectId = projectId;
+                
+                return View(sprint);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Opps Exception Occurr: " + ex.Message;
+                _log.Error(ViewBag.Error);
+
+                return View();
+            }
+            
         }
 
         [HttpPost]
-        public IActionResult Edit(Sprint sprint, int id)
+        public async Task<IActionResult> Edit(SprintCreateVM sprint, int id)
         {
             bool isSuccess = false;
             string message = "Invalid Data Submitted!";
@@ -144,46 +160,60 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
             }
-            else
-            {
 
-                var data = _sprintService.GetSprint(id);
-                if (data == null)
+            try
+            {
+               
+                var response = await _sprintService.UpdateSprint(id, sprint);
+                if(response == true)
                 {
-                    return NotFound("Data is not exist");
+                    isSuccess = true;
+                    message = "Sprint updated successfully!";
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Sprint already exist!";
+                    _log.Error(message);
                 }
 
-                data.SprintName = sprint.SprintName;
-                data.Description = sprint.Description;
-                data.StartDate = sprint.StartDate;
-                data.Duration = sprint.Duration;
-                data.Points = sprint.Points;
-                data.Velocity = sprint.Velocity;
-                data.ReleaseId = sprint.ReleaseId;
-
-
-                _sprintService.UpdateSprint(data);
-                isSuccess = true;
-                message = "Sprint updated successfully!";
-
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
+            catch (Exception ex)
+            {
 
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                isSuccess = false;
+                message = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(message);
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var sprint = _sprintService.GetSprint(id);
-
-            if (sprint == null)
+            bool isSuccess = true;
+            string message = "Sprint deleted successfully!";
+            try
             {
-                return NotFound("Sprint not found!");
+                var sprint = _sprintService.GetSprint(id);
+                _sprintService.DeleteSprint(sprint);
+                _log.Info(message);
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
+            catch (Exception ex)
+            {
 
-            _sprintService.DeleteSprint(sprint);
-            return Json(new { success = "true", message = "Sprint deleted successfully!" });
+                isSuccess = false;
+                message = "Opps! Exception Occurred: " + ex.Message;
+                _log.Error(message);
 
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
         }
     }
 }
