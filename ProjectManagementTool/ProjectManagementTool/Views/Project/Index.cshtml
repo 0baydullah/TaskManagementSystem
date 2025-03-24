@@ -4,71 +4,81 @@
     ViewData["Banner"] = "Projects";
 }
 
-<div class="mb-3">
-    <a class="btn btn-success fw-bold" asp-action="Create"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Project</a>
-</div>
-<div id="response-message">
+@if(ViewBag.Error != null)
+{
+    <div class="alert alert-danger fw-bold">
+        @ViewBag.Error
+    </div>
+}
 
-</div>
+else{
 
-<table class="table table-bordered table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Key
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Company Name 
-            </th>
-            <th>
-                Action
-            </th>
 
-        </tr>
-    </thead>
-    <tbody>
-        @if( Model != null && Model.Any())
-        {
-            @foreach (var item in Model)
+    <div id="response-message">
+
+    </div>
+
+    <div class="mb-3">
+        <a class="btn btn-success fw-bold" asp-action="Create"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Project</a>
+    </div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Key
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Company Name 
+                </th>
+                <th>
+                    Action
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if( Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">
+                            <a class="text-decoration-none" href="/Project/Details/@item.ProjectId"> @Html.DisplayFor(modelItem => item.Name) </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Key)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.ProjectId"><i class="text-success fa-solid fa-pen"></i></a> |
+                            <a class="btn btn-light" onclick="openDeleteModal('@item.ProjectId')"><i class="text-danger fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td class="fw-bold">
-                        <a class="text-decoration-none" href="/Project/Details/@item.ProjectId"> @Html.DisplayFor(modelItem => item.Name) </a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Key)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CompanyName)
-                    </td>
-                    <td>
-                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.ProjectId"><i class="text-success fa-solid fa-pen"></i></a> |
-                        <a class="btn btn-light" onclick="openDeleteModal('@item.ProjectId')"><i class="text-danger fa-solid fa-trash"></i></a>
-                    </td>
+                    <td colspan="7" class="text-center fw-bold text-danger">No data found!</td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="7" class="text-center fw-bold text-danger">No data found!</td>
-            </tr>
-        }
       
         
-    </tbody>
+        </tbody>
 
-</table>
-
+    </table>
+}
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

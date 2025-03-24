@@ -71,9 +71,44 @@ namespace ProjectManagementTool.Controllers
             {
                 var timeTrack = _timeTrackService.GetBySubTaskId(subTaskId);
 
-                return Json(timeTrack);
+                if (timeTrack != null)
+                {
+                    var StartTime = timeTrack.StartTime.ToString("MM/dd/yyyy HH:mm");
+                    var EndTime = timeTrack.EndTime.ToString("MM/dd/yyyy HH:mm");
+                    var TotalTime = timeTrack.TotalTime;
+
+                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
             }
             catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetAllTimeByTaskId(int taskId)
+        {
+            try
+            {
+                var timeTracks = _timeTrackService.GetAllByTaskId(taskId);
+                if (timeTracks.Count != 0)
+                {
+                    var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                    var EndTime = timeTracks.Max(t => t.EndTime).ToString("MM/dd/yyyy HH:mm");
+                    var TotalTime = timeTracks.Sum(t => t.TotalTime);
+                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
+            }
+            catch (Exception)
             {
                 throw;
             }

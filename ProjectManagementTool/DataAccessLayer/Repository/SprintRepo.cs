@@ -2,8 +2,10 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace DataAccessLayer.Repository
     public class SprintRepo : ISprintRepo
     {
         private readonly PMSDBContext _context;
+        private readonly ILog log = LogManager.GetLogger(typeof(SprintRepo));
         public SprintRepo(PMSDBContext context)
         {
             _context = context; 
@@ -31,7 +34,9 @@ namespace DataAccessLayer.Repository
                 }
                 else
                 {
-                    throw new Exception("The sprint already exists.");
+                    log.Error("The sprint already exists.");
+                    
+                    //throw new Exception("The sprint already exists.");
                 }
 
             }

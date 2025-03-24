@@ -16,7 +16,7 @@ namespace DataAccessLayer.Repository
         {
             _context = context;
         }
-        public void AddRelease(Release release)
+        public bool AddRelease(Release release)
         {
             try
             {
@@ -25,32 +25,32 @@ namespace DataAccessLayer.Repository
                 {
                     _context.Releases.Add(release);
                     _context.SaveChanges();
+                    
+                    return true;
                 }
                 else
                 {
-                    throw new Exception("The release already exists.");
-
+                    return false;
                 }
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while adding the release!",ex);
+                throw;
             }
         }
 
-        public void DeleteRelease(Release release)
+        public bool DeleteRelease(Release release)
         {
             try
             {
                 _context.Releases.Remove(release);
                 _context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
 
-                throw new Exception("An error occurred while deleting the release!",ex);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
@@ -59,12 +59,12 @@ namespace DataAccessLayer.Repository
             try
             {
                 var releases = _context.Releases.ToList();
+               
                 return releases;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-              throw new Exception("An error occurred while getting all releases!", ex);
+              throw;
             }
         }
 
@@ -73,25 +73,47 @@ namespace DataAccessLayer.Repository
             try
             {
                 var release = _context.Releases.Find(id);
+                if (release == null)
+                {
+                    throw new Exception("Release not found!");
+                }
+     
                 return release;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("An error occurred while getting release!", ex);
+                throw;
             }
         }
 
-        public void UpdateRelease(Release release)
+        public Release GetReleaseByName(int id, int projectId, string name)
+        {
+
+            try
+            {
+                var release = _context.Releases.FirstOrDefault( r => r.ReleaseName == name && r.ReleaseId != id && r.ProjectId == projectId);
+
+                return release;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> UpdateRelease(Release release)
         {
             try
             {
                 _context.Releases.Update(release);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception("An error occurred while updating the release!", ex);
+                throw;
             }
         }
     }

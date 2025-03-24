@@ -14,7 +14,6 @@ namespace BusinessLogicLayer.Service
     {
         private readonly IUserStoryRepo _userStoryRepo;
         private readonly ITasksRepo _taskRepo;
-
         private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryService));
         public UserStoryService(IUserStoryRepo userStoryRepo, ITasksRepo taskRepo)
         {

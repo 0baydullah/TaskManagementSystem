@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -11,6 +12,7 @@ namespace ProjectManagementTool.Controllers
         private readonly ISprintService _sprintService;
         private readonly IReleaseService _releaseService;
         private readonly IProjectInfoService _projectInfoService;
+        
         public SprintController(ISprintService sprintService, IReleaseService releaseService, IProjectInfoService projectInfoService)
         {
             _sprintService = sprintService;

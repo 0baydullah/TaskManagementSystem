@@ -116,11 +116,11 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public TimeTrack GetByTaskId(int taskId)
+        public List<TimeTrack> GetAllByTaskId(int taskId)
         {
             try
             {
-                return _timeTrackRepo.GetByTaskId(taskId);
+                return _timeTrackRepo.GetAllByTaskId(taskId);
             }
             catch (Exception)
             {

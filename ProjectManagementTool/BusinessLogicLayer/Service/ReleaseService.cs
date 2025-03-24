@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,41 +17,100 @@ namespace BusinessLogicLayer.Service
         {
             _releaseRepo = releaseRepo; 
         }
-        public void AddRelease(Release release)
+        public bool AddRelease(ReleaseCreateVM release)
         {
             try
             {
-                _releaseRepo.AddRelease(release);
+                var model = new Release
+                {
+                    ProjectId = release.ProjectId,
+                    ReleaseName = release.ReleaseName,
+                    Description = release.Description,
+                    StartDate = release.StartDate,
+                    EndDate = release.EndDate,
+                };
 
+                var result = _releaseRepo.AddRelease(model);
+
+                return true;
             }
             catch (Exception)
             {
-
                 throw;
             }
             
         }
 
-        public void DeleteRelease(Release release)
+        public bool DeleteRelease(Release release)
         {
-            _releaseRepo.DeleteRelease(release);
+            try
+            {
+                var result = _releaseRepo.DeleteRelease(release);
+
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
         public List<Release> GetAllReleases()
         {
-            var releases = _releaseRepo.GetAllReleases();
-            return releases;
+            try
+            {
+                var releases = _releaseRepo.GetAllReleases();
+                
+                return releases;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }
 
         public Release GetRelease(int id)
         {
-            var release = _releaseRepo.GetRelease(id);
-            return release;
+            try
+            {
+                var release = _releaseRepo.GetRelease(id);
+               
+                return release;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }     
         }
 
-        public void UpdateRelease(Release release)
+        public async Task<bool> UpdateRelease(int id, Release release)
         {
-            _releaseRepo.UpdateRelease(release);
+            try
+            {
+                var existRelease = _releaseRepo.GetRelease(id);
+                var existReleaseName = _releaseRepo.GetReleaseByName(id, release.ProjectId, release.ReleaseName);
+
+                if ( existRelease == null || existReleaseName != null)
+                {
+                    return false; 
+                }
+
+                existRelease.ReleaseName = release.ReleaseName;
+                existRelease.Description = release.Description;
+                existRelease.StartDate = release.StartDate;
+                existRelease.EndDate = release.EndDate;
+                existRelease.ProjectId = release.ProjectId;
+                var result = await _releaseRepo.UpdateRelease(existRelease);
+                
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }         
         }
     }
 }

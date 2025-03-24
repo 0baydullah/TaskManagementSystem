@@ -165,11 +165,17 @@ else
                             <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
                                 <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
                             </a>
-                            <a id="playButton-@item.TaskId" class="btn btn-light" onclick="startTracking(@item.TaskId)">
+                            <a id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
+                               onclick="startTracking(@item.TaskId)">
                                 <i class="text-success fa-solid fa-circle-play"></i>
                             </a>
-                            <a id="pauseButton-@item.TaskId" class="btn btn-light d-none" onclick="stopTracking(@item.TaskId)">
+                            <a id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
+                               onclick="stopTracking(@item.TaskId)">
                                 <i class="text-success fa-solid fa-circle-pause"></i>
+                            </a>
+                            <a id="pauseButton-@item.TaskId" class="btn btn-light"
+                               onclick="timeDetails(@item.TaskId)">
+                                <i class="text-success fa-solid fa-chalkboard"></i>
                             </a>
                         </td>
                     </tr>
@@ -213,6 +219,24 @@ else
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" onclick="confirmUSDelete()" class="btn btn-outline-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Task Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Task Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalDescription">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -357,8 +381,8 @@ else
         // Button tracking handle
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
-                let subTaskId = button.id.split("-")[1];
-                let status = localStorage.getItem("tracking-" + subTaskId);
+                let taskId = button.id.split("-")[1];
+                let status = localStorage.getItem("tracking-" + taskId);
 
                 if (status === "Started") {
                     document.getElementById("playButton-" + subTaskId).classList.add("d-none");
@@ -370,6 +394,55 @@ else
             });
         });
 
+        // Convert seconds into day, hour, minutes and second
+        function secondsToDHMS(seconds) {
+            seconds = Number(seconds);
+            var day = Math.floor(seconds / (3600 * 24));
+            var hour = Math.floor((seconds % (3600 * 24)) / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var sec = Math.floor(seconds % 60);
+            var dhms = day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
+            return dhms;
+        }
+
+        // Formate the details
+        function showDetailsModal(startTime, endTime, totalTime) {
+            startTime = "Start time: " + startTime + "\n";
+            endTime = "End time: " + endTime + "\n";
+            seconds = secondsToDHMS(totalTime);
+            totalTime = "Total working time: " + seconds;
+
+            document.getElementById('modalDescription').innerText = startTime + endTime + totalTime;
+            var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+
+            myModal.show();
+        }
+
+        // Calling from details button
+        function timeDetails(taskId) {
+            $.ajax({
+                url: "/TimeTrack/GetAllTimeByTaskId",
+                type: "GET",
+                data: {
+                    taskId: taskId
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        showDetailsModal(response.startTime, response.endTime, response.totalTime);
+                    }
+                    else {
+                        document.getElementById('modalDescription').innerText = "don't work previously in this task";
+                        var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        myModal.show();
+                    }
+                    
+                },
+                error: function (xhr, status, error) {
+                    alert("Error stopping tracking: " + error);
+                }
+            });
+        }
+
         // Time track starting
         function startTracking(taskId) {
             $.ajax({
@@ -377,6 +450,9 @@ else
                 type: 'POST',
                 data: { taskId: taskId, subTaskId: 0 },
                 success: function (response) {
+                    if (response.status === "Started") {
+                        localStorage.setItem("tracking-" + taskId, "Started");
+                    }
                     $("#playButton-" + taskId).addClass("d-none");
                     $("#pauseButton-" + taskId).removeClass("d-none");
                 },
@@ -394,6 +470,9 @@ else
                 type: 'POST',
                 data: { taskId: taskId, subTaskId: 0 },
                 success: function (response) {
+                    if (response.status === "Stopped") {
+                        localStorage.setItem("tracking-" + taskId, "Stopped");
+                    }
                     $("#pauseButton-" + taskId).addClass("d-none");
                     $("#playButton-" + taskId).removeClass("d-none");
                 },

@@ -9,10 +9,11 @@ namespace DataAccessLayer.IRepository
 {
     public interface IReleaseRepo
     {
-        public void AddRelease(Release release);
-        public void UpdateRelease(Release release);
-        public void DeleteRelease(Release release);
+        public bool AddRelease(Release release);
+        public Task<bool> UpdateRelease(Release release);
+        public bool DeleteRelease(Release release);
         public Release GetRelease(int id);
+        public Release GetReleaseByName(int id, int projectId, string name);
         public List<Release> GetAllReleases();
     }
 }
