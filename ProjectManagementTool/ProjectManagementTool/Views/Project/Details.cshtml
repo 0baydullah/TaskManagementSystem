@@ -1,4 +1,5 @@
 ﻿@model DataAccessLayer.Models.Entity.ProjectInfo
+
 @{
     ViewData["Title"] = "Details";
     ViewData["Banner"] = ViewBag.ProjectName;
@@ -9,44 +10,30 @@
         @ViewBag.Error
     </div>
 }
-
 else
 {
-    <div>
-        <h1 class="text-center fw-bold">@ViewBag.ProjectName</h1>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="@Url.Action("Index", "UserStory", new { projectId = Model.ProjectId })">
-                        UserStory
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="@Url.Action("Index", "Member", new { projectId = Model.ProjectId })">
-                        Member
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="@Url.Action("GetAll", "Feature", new { projectId = Model.ProjectId })">
-                        Feature
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })">
-                        Release
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" href="@Url.Action("Index", "Sprint", new { projectId = Model.ProjectId })">
-                        Sprint
-                    </a>
-                </li>
-            </ul>
-        </div>
 
+    <div class="col-4 ">
+        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "UserStory", new { projectId = Model.ProjectId })">
+            <b>User Story</b>
+        </a>
+        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "Member", new { projectId = Model.ProjectId })">
+            <b>Member</b>
+        </a>
+        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("GetAll", "Feature", new { projectId = Model.ProjectId })">
+            <b>Feature</b>
+        </a>
+        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })">
+            <b>Release</b>
+        </a>
+        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "Sprint", new { projectId = Model.ProjectId })">
+            <b>Sprint</b>
+        </a>
     </div>
 
 }
+
+
 
 
 
