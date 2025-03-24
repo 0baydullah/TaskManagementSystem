@@ -381,8 +381,8 @@ else
         // Button tracking handle
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
-                let subTaskId = button.id.split("-")[1];
-                let status = localStorage.getItem("tracking-" + subTaskId);
+                let taskId = button.id.split("-")[1];
+                let status = localStorage.getItem("tracking-" + taskId);
 
                 if (status === "Started") {
                     document.getElementById("playButton-" + subTaskId).classList.add("d-none");
@@ -427,8 +427,15 @@ else
                     taskId: taskId
                 },
                 success: function (response) {
-                    console.log(response);
-                    showDetailsModal(response.startTime, response.endTime, response.totalTime);
+                    if (response.success == true) {
+                        showDetailsModal(response.startTime, response.endTime, response.totalTime);
+                    }
+                    else {
+                        document.getElementById('modalDescription').innerText = "don't work previously in this task";
+                        var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        myModal.show();
+                    }
+                    
                 },
                 error: function (xhr, status, error) {
                     alert("Error stopping tracking: " + error);

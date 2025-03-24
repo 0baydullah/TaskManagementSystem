@@ -263,7 +263,15 @@
                 data: { subTaskId: subTaskId 
                 },
                 success: function (response) {
-                    showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
+                    if (response.success == true) {
+                        showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
+                    }
+                    else {
+                        document.getElementById('modalDescription').innerText = "Description: " + description + "\n don't work previously in this sub-task";
+                        var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        myModal.show();
+                    }
+                    
                 },
                 error: function (xhr, status, error) {
                     alert("Error stopping tracking: " + error);
