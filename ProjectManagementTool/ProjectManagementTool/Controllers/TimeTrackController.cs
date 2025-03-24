@@ -70,8 +70,11 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var timeTrack = _timeTrackService.GetBySubTaskId(subTaskId);
+                var StartTime = timeTrack.StartTime.ToString("MM/dd/yyyy HH:mm");
+                var EndTime = timeTrack.EndTime.ToString("MM/dd/yyyy HH:mm");
+                var TotalTime = timeTrack.TotalTime;
 
-                return Json(timeTrack);
+                return Json(new { StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
             }
             catch(Exception)
             {
@@ -86,11 +89,9 @@ namespace ProjectManagementTool.Controllers
             {
                 var timeTracks = _timeTrackService.GetAllByTaskId(taskId);
 
-
-                var StartTime = timeTracks.Min(t => t.StartTime);
-                var EndTime = timeTracks.Max(t => t.EndTime);
+                var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                var EndTime = timeTracks.Max(t => t.EndTime).ToString("MM/dd/yyyy HH:mm");
                 var TotalTime = timeTracks.Sum(t => t.TotalTime);
-               
 
                 return Json(new { StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime});
             }
