@@ -97,11 +97,11 @@ namespace DataAccessLayer.Repository
                 throw;
             }
         }
-        public TimeTrack GetByTaskId(int taskId) 
+        public List<TimeTrack> GetAllByTaskId(int taskId) 
         {
             try
             {
-                var task = _context.TimeTracks.FirstOrDefault(s => s.TaskId == taskId);
+                var task = _context.TimeTracks.Where(s => s.TaskId == taskId).ToList();
                 return task;
             }
             catch (Exception)

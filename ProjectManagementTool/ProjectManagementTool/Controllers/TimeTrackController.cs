@@ -78,5 +78,26 @@ namespace ProjectManagementTool.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        public IActionResult GetAllTimeByTaskId(int taskId)
+        {
+            try
+            {
+                var timeTracks = _timeTrackService.GetAllByTaskId(taskId);
+
+
+                var StartTime = timeTracks.Min(t => t.StartTime);
+                var EndTime = timeTracks.Max(t => t.EndTime);
+                var TotalTime = timeTracks.Sum(t => t.TotalTime);
+               
+
+                return Json(new { StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime});
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
