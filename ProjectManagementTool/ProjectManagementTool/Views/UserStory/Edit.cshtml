@@ -5,75 +5,75 @@
     ViewData["Banner"] = "Edit User Story";
 }
 
-@{
-    if (TempData["error"] != null)
-    {
-        <div class="alert alert-danger alert-dismissible fade show " role="alert" id="error">
-            <strong>Error!</strong> @TempData["error"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    }
-}
-
-
-<div class="d-flex justify-content-center">
-    <div class="col-md-4">
-        <form id="createForm" autocomplete="off">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-			<input asp-for="@Model.StoryId" hidden />
-            <div class="form-group mt-2">
-                <label asp-for="StoryName" class="control-label">Story Name</label>
-                <input asp-for="StoryName" class="form-control" value="@Model.StoryName"/>
-                <span asp-validation-for="StoryName" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-2">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" rows="6" >@Model.Description</textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group d-flex justify-content-evenly mt-2">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Category" ></select>
-                <span asp-validation-for="Category" class="text-danger"></span>
-
-                <label asp-for="Points" class="control-label"></label>
-                <input asp-for="Points" class="form-control " style="width: 60px;" />
-                <span asp-validation-for="Points" class="text-danger"></span>
-            </div>
-            <div class="form-group d-flex justify-content-evenly mt-2">
-                <label asp-for="Status" class="control-label"></label>
-
-                <select asp-for="Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Status" >
-                </select>
-
-                <span asp-validation-for="Status" class="text-danger"></span>
-
-                <label asp-for="Priority" class="control-label"></label>
-                <select asp-for="Priority" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Priority">
-					
-                </select>
-                <span asp-validation-for="Priority" class="text-danger"></span>
-            </div>
-            <div class="form-group mt-2 w-100">
-                <label asp-for="SprintId" class="control-label">Select Sprint</label> <br />
-                <select asp-for="SprintId" class="btn btn-sm btn-light dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Sprints">
-                
-                </select>
-                <span asp-validation-for="SprintId" class="text-danger"></span>
-            </div>
-            <div>
-                <input type="hidden" asp-for="@Model.ProjectId" hidden />
-            </div>
-            <div class="form-group mt-2 d-flex justify-content-center ">
-                <button type="button" class="btn btn-success w-50 " onclick="submitForm()">Update</button>
-            </div>
-        </form>
+@if (TempData["error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show " role="alert" id="error">
+        <strong>Error!</strong> @TempData["error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-</div>
+}
+else{
+    <div class="d-flex justify-content-center">
+        <div class="col-md-4">
+            <form id="createForm" autocomplete="off">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			    <input asp-for="@Model.StoryId" hidden />
+                <div class="form-group mt-2">
+                    <label asp-for="StoryName" class="control-label">Story Name</label>
+                    <input asp-for="StoryName" class="form-control" value="@Model.StoryName"/>
+                    <span asp-validation-for="StoryName" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="6" >@Model.Description</textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group d-flex justify-content-evenly mt-2">
+                    <label asp-for="Category" class="control-label"></label>
+                    <select asp-for="Category" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Category" ></select>
+                    <span asp-validation-for="Category" class="text-danger"></span>
 
-<div class="text-center mt-5">
-    <a asp-action="Index" class="btn btn-outline-danger w-25">Back to User Stories</a>
-</div>
+                    <label asp-for="Points" class="control-label"></label>
+                    <input asp-for="Points" class="form-control " style="width: 60px;" />
+                    <span asp-validation-for="Points" class="text-danger"></span>
+                </div>
+                <div class="form-group d-flex justify-content-evenly mt-2">
+                    <label asp-for="Status" class="control-label"></label>
+
+                    <select asp-for="Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Status" >
+                    </select>
+
+                    <span asp-validation-for="Status" class="text-danger"></span>
+
+                    <label asp-for="Priority" class="control-label"></label>
+                    <select asp-for="Priority" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Priority">
+					
+                    </select>
+                    <span asp-validation-for="Priority" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-2 w-100">
+                    <label asp-for="SprintId" class="control-label">Select Sprint</label> <br />
+                    <select asp-for="SprintId" class="btn btn-sm btn-light dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Sprints">
+                
+                    </select>
+                    <span asp-validation-for="SprintId" class="text-danger"></span>
+                </div>
+                <div>
+                    <input type="hidden" asp-for="@Model.ProjectId" hidden />
+                </div>
+                <div class="form-group mt-2 d-flex justify-content-center ">
+                    <button type="button" class="btn btn-success w-50 " onclick="submitForm()">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a asp-action="Index" class="btn btn-outline-danger w-25">Back to User Stories</a>
+    </div>
+
+
+}
 
 @section Scripts {
 

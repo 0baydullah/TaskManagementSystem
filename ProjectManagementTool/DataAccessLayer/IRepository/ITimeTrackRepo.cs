@@ -12,5 +12,8 @@ namespace DataAccessLayer.IRepository
         public TimeTrack GetByTaskIdSubTaskId(int taskId, int subTaskId);
         public Task<bool> TimeStore(TimeTrack timeTrack);
         public Task<bool> TimeUpdate(TimeTrack timeTrack);
+        public bool UpdateTrackingStatus(int subTaskId, string status);
+        public TimeTrack GetBySubTaskId(int subTaskId);
+        public List<TimeTrack> GetAllByTaskId(int taskId); 
     }
 }

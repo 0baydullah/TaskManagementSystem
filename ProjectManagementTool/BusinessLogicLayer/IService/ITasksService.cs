@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 
 namespace BusinessLogicLayer.IService
 {
@@ -14,6 +15,6 @@ namespace BusinessLogicLayer.IService
         public void DeleteTasks(Tasks tasks);
         public Tasks GetTasks(int id);
         public List<Tasks> GetAllTasks();
-        public List<Tasks> GetAllTasks(int id);
+        public List<TasksVM> GetAllTasks(int id);
     }
 }

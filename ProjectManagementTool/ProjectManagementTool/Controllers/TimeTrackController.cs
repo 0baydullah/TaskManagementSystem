@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.IService;
+using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,12 @@ namespace ProjectManagementTool.Controllers
     public class TimeTrackController : Controller
     {
         private readonly ITimeTrackService _timeTrackService;
-        public TimeTrackController(ITimeTrackService timeTrackService) 
+        private readonly ISubTaskService _subTaskService;
+
+        public TimeTrackController(ITimeTrackService timeTrackService, ISubTaskService subTaskService) 
         { 
             _timeTrackService = timeTrackService;
+            _subTaskService = subTaskService;
         }
 
         [HttpPost]
@@ -19,11 +23,12 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+                var isSavedTrackingStatus = _timeTrackService.UpdateTrackingStatus(subTaskId, "Started");
                 var result = _timeTrackService.TimeStoreStart(taskId, subTaskId);
 
                 if (result.Result == true)
                 {
-                    return Ok(new { success = true, message = "Tracking started" });
+                    return Ok(new { success = true, message = "Tracking started", status = "Started" });
                 }
                 else
                 {
@@ -41,11 +46,12 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+                var isSavedTrackingStatus = _timeTrackService.UpdateTrackingStatus(subTaskId, "Stopped");
                 var result = _timeTrackService.TimeStoreEnd(taskId, subTaskId);
 
                 if (result.Result == true)
                 {
-                    return Ok(new { success = true, message = "Tracking stopped" });
+                    return Ok(new { success = true, message = "Tracking stopped",status = "Stopped" });
                 }
                 else
                 {
@@ -53,6 +59,56 @@ namespace ProjectManagementTool.Controllers
                 }
             }
             catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetTimeBySubTaskId(int subTaskId) 
+        {
+            try
+            {
+                var timeTrack = _timeTrackService.GetBySubTaskId(subTaskId);
+
+                if (timeTrack != null)
+                {
+                    var StartTime = timeTrack.StartTime.ToString("MM/dd/yyyy HH:mm");
+                    var EndTime = timeTrack.EndTime.ToString("MM/dd/yyyy HH:mm");
+                    var TotalTime = timeTrack.TotalTime;
+
+                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetAllTimeByTaskId(int taskId)
+        {
+            try
+            {
+                var timeTracks = _timeTrackService.GetAllByTaskId(taskId);
+                if (timeTracks.Count != 0)
+                {
+                    var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                    var EndTime = timeTracks.Max(t => t.EndTime).ToString("MM/dd/yyyy HH:mm");
+                    var TotalTime = timeTracks.Sum(t => t.TotalTime);
+                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
+            }
+            catch (Exception)
             {
                 throw;
             }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using log4net;
 
 namespace BusinessLogicLayer.Service
@@ -33,7 +34,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -47,7 +48,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -61,11 +62,11 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
-        public List<Tasks> GetAllTasks(int id)
+        public List<TasksVM> GetAllTasks(int id)
         {
             try
             {
@@ -75,7 +76,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -89,7 +90,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
 
@@ -119,7 +120,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw new ApplicationException(ex.Message);
+                throw new Exception(ex.Message);
             }
         }
     }

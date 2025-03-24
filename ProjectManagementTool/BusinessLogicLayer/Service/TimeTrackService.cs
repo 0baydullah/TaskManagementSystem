@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,42 @@ namespace BusinessLogicLayer.Service
                 }
             }
             catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool UpdateTrackingStatus(int subTaskId, string status)
+        {
+            try
+            {
+                return _timeTrackRepo.UpdateTrackingStatus(subTaskId, status);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public TimeTrack GetBySubTaskId(int subTaskId)
+        {
+            try
+            {
+                return _timeTrackRepo.GetBySubTaskId(subTaskId);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<TimeTrack> GetAllByTaskId(int taskId)
+        {
+            try
+            {
+                return _timeTrackRepo.GetAllByTaskId(taskId);
+            }
+            catch (Exception)
             {
                 throw;
             }

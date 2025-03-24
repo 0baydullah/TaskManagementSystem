@@ -23,5 +23,7 @@ namespace DataAccessLayer.Models.Entity
         public DateTime TodaysTime { get; set; }
         [Required]
         public long TotalTime { get; set; }
+        [Required]
+        public string TrackingStatus { get; set; } = "Stopped";
     }
 }
