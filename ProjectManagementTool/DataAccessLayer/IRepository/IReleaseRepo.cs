@@ -13,6 +13,7 @@ namespace DataAccessLayer.IRepository
         public bool UpdateRelease(Release release);
         public bool DeleteRelease(Release release);
         public Release GetRelease(int id);
+        public Release GetReleaseByName(int id, int projectId, string name);
         public List<Release> GetAllReleases();
     }
 }

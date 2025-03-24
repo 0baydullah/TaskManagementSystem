@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,20 @@ namespace BusinessLogicLayer.Service
         {
             _releaseRepo = releaseRepo; 
         }
-        public bool AddRelease(Release release)
+        public bool AddRelease(ReleaseCreateVM release)
         {
             try
             {
-                var result = _releaseRepo.AddRelease(release);
+                var model = new Release
+                {
+                    ProjectId = release.ProjectId,
+                    ReleaseName = release.ReleaseName,
+                    Description = release.Description,
+                    StartDate = release.StartDate,
+                    EndDate = release.EndDate,
+                };
+
+                var result = _releaseRepo.AddRelease(model);
 
                 return true;
             }
@@ -76,10 +86,23 @@ namespace BusinessLogicLayer.Service
             }     
         }
 
-        public bool UpdateRelease(Release release)
+        public bool UpdateRelease(int id, Release release)
         {
             try
             {
+                var existRelease = _releaseRepo.GetRelease(id);
+                var existReleaseName = _releaseRepo.GetReleaseByName(id, release.ReleaseId, release.ReleaseName);
+
+                if ( existRelease == null || existReleaseName != null)
+                {
+                    return false; 
+                }
+
+                existRelease.ReleaseName = release.ReleaseName;
+                existRelease.Description = release.Description;
+                existRelease.StartDate = release.StartDate;
+                existRelease.EndDate = release.EndDate;
+                existRelease.ProjectId = release.ProjectId;
                 var result = _releaseRepo.UpdateRelease(release);
                 
                 return result;

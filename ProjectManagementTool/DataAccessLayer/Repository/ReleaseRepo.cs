@@ -86,6 +86,22 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public Release GetReleaseByName(int id, int projectId, string name)
+        {
+
+            try
+            {
+                var release = _context.Releases.FirstOrDefault( r => r.ReleaseName == name && r.ReleaseId != id && r.ProjectId == projectId);
+
+                return release;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public bool UpdateRelease(Release release)
         {
             try

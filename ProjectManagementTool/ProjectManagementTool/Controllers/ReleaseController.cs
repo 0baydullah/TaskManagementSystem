@@ -60,7 +60,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Release release)
+        public IActionResult Create(ReleaseCreateVM release)
         {
            
             bool isSuccess = false;
@@ -145,20 +145,22 @@ namespace ProjectManagementTool.Controllers
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
             try
-            {
-                var data = _releaseService.GetRelease(id);
-                
-                data.ReleaseName = release.ReleaseName;
-                data.Description = release.Description;
-                data.StartDate = release.StartDate;
-                data.EndDate = release.EndDate;
-                data.ProjectId = release.ProjectId;
-                
-                _releaseService.UpdateRelease(data);
-                
-                isSuccess = true;
-                message = "Release updated successfully!";
-                _log.Info(message);
+            { 
+                var response = _releaseService.UpdateRelease( id, release);
+                if(response == true)
+                {
+                    isSuccess = true;
+                    message = "Release updated successfully!";
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Release alredy exist!";
+                    _log.Info(message);
+
+                }
+               
 
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
