@@ -165,33 +165,36 @@ namespace ProjectManagementTool.Controllers
             }
             try
             {
-                var user = _memberService.GetUserByEmail(model.Email);
-                
-                var response = _memberService.AddMember(model);
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if( response == true)
+                if (user != null)
                 {
-                    isSuccess = true;
-                    message = "Member added successfully!";
-                    _log.Info(message);
+                    var roleName = _roleService.GetRoleById(model.RoleId).RoleName;
+                    await _userManager.AddToRoleAsync(user, roleName);
+                    var response = _memberService.AddMember(model);
+                    if(response == true)
+                    {
+                        isSuccess = true;
+                        message = "Member added successfully!";
+                        _log.Info(message);
+
+                    }
+                    else
+                    {
+                        isSuccess = false;
+                        message = "Member already exist!";
+                        _log.Info(message);
+
+                    }
+
                 }
                 else
                 {
-                    isSuccess= false;
-                    message = "Member already exist!";
+                    isSuccess = false;
+                    message = "User not found!";
                     _log.Info(message);
-                    var user = await _userManager.FindByEmailAsync(model.Email);
-
-                    if (user != null)
-                    {
-                        var roleName = _roleService.GetRoleById(model.RoleId).RoleName;
-                        await _userManager.AddToRoleAsync(user, roleName);
-                        _memberService.AddMember(model);
-                        isSuccess = true;
-                        message = "Member added successfully!";
-                    }
                 }
-                
+
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
             catch (Exception ex)

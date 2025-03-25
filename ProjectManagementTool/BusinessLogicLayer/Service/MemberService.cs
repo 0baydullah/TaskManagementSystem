@@ -23,7 +23,7 @@ namespace BusinessLogicLayer.Service
             {
                var result = _memberRepo.AddMember(member);
                
-                return result;
+               return result;
             }
             catch (Exception)
             {
