@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,8 @@ namespace ProjectManagementTool.Controllers
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IRoleService _roleService;
         private readonly IMemberService _memberService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(RoleController));
+
         public RoleController(RoleManager<IdentityRole<int>> roleManager, 
             IRoleService roleService, IMemberService memberService) 
         {
@@ -63,9 +66,12 @@ namespace ProjectManagementTool.Controllers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(roleModel);
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -77,9 +83,12 @@ namespace ProjectManagementTool.Controllers
                 var model = _roleService.GetAllRole();
                 return View(model);
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -95,9 +104,12 @@ namespace ProjectManagementTool.Controllers
                     data = role
                 });
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -130,9 +142,12 @@ namespace ProjectManagementTool.Controllers
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -161,9 +176,12 @@ namespace ProjectManagementTool.Controllers
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
     }
