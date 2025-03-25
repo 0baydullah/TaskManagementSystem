@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Err\**" />
+    <Content Remove="Views\Err\**" />
+    <EmbeddedResource Remove="Views\Err\**" />
+    <None Remove="Views\Err\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 
     <PackageReference Include="log4net" Version="3.0.4" />
 
@@ -32,10 +39,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Err\" />
   </ItemGroup>
 
 </Project>

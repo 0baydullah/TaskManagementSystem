@@ -18,31 +18,111 @@ namespace BusinessLogicLayer.Service
         {
             _sprintRepo = sprintRepo;
         }
-        public void AddSprint(Sprint sprint)
+        public bool AddSprint(SprintCreateVM sprint)
         {
-            _sprintRepo.AddSprint(sprint);
+            try
+            {
+                var data = new Sprint()
+                {
+                    SprintName = sprint.SprintName,
+                    Description = sprint.Description,
+                    StartDate = sprint.StartDate,
+                    Duration = sprint.Duration,
+                    Points = sprint.Points,
+                    Velocity = sprint.Velocity,
+                    ReleaseId = sprint.ReleaseId,
+                };
+                var result = _sprintRepo.AddSprint(data);
+                
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
-        public void DeleteSprint(Sprint sprint)
+        public bool DeleteSprint(Sprint sprint)
         {
-            _sprintRepo.DeleteSprint(sprint);
+            try
+            {
+                var result  = _sprintRepo.DeleteSprint(sprint);
+
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public List<SprintVM> GetAllSprint(int projectId)
         {
-           var sprints = _sprintRepo.GetAllSprint(projectId);
-           return sprints;
+            try
+            {
+                var sprints = _sprintRepo.GetAllSprint(projectId);
+                
+                return sprints;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+          
         }
 
         public Sprint GetSprint(int id)
         {
-           var sprint = _sprintRepo.GetSprint(id);
-           return sprint;
+            try
+            {
+                var sprint = _sprintRepo.GetSprint(id);
+                if( sprint == null)
+                {
+                    throw new Exception("Sprint not found! ");
+                }
+                
+                return sprint;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+          
         }
 
-        public void UpdateSprint(Sprint sprint)
+        public async Task<bool> UpdateSprint(int id, SprintCreateVM sprint)
         {
-            _sprintRepo.UpdateSprint(sprint);
+            try
+            {
+                var existSprint = _sprintRepo.GetSprint(id);
+                var existSprintName = _sprintRepo.GetSprintByName(id, sprint.ReleaseId, sprint.SprintName);
+
+                if( existSprint == null || existSprintName != null)
+                {
+                    return false;
+                }
+
+                existSprint.SprintName = sprint.SprintName;
+                existSprint.Description = sprint.Description;
+                existSprint.StartDate = sprint.StartDate;
+                existSprint.Duration = sprint.Duration;
+                existSprint.Points = sprint.Points;
+                existSprint.Velocity = sprint.Velocity;
+                existSprint.ReleaseId = sprint.ReleaseId;
+
+                var result = await _sprintRepo.UpdateSprint(existSprint);
+               
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
     }
 }

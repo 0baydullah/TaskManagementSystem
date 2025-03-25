@@ -36,6 +36,7 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var projects = _projectInfoService.GetAllProjectInfo();
+                throw new DivideByZeroException() ;
                 
                 return View(projects);
             }
@@ -43,8 +44,9 @@ namespace ProjectManagementTool.Controllers
             {
                 ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
                 _log.Error(ViewBag.Error);
+                TempData["Error"] = ex.Message;
                 
-                return View();
+                return RedirectToAction("Exception","Error");
             }
             
         }
