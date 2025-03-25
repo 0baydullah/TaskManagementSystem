@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using BusinessLogicLayer.IService;
+using log4net;
 
 namespace ProjectManagementTool.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(CategoryController));
 
         public CategoryController(ICategoryService categoryService)
         {
@@ -23,66 +25,121 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var categories = _categoryService.GetAllCategory();
+            try
+            {
+                var categories = _categoryService.GetAllCategory();
+             //   throw new NullReferenceException();
 
-            return View(categories);
+                return View(categories);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception","Error");
+            }
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
         }
 
         [HttpPost]
         public IActionResult Create(Category category)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _categoryService.AddCategory(category);
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _categoryService.AddCategory(category);
+                    return RedirectToAction("Index");
+                }
+                return View(category);
             }
-            return View(category);
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var category = _categoryService.GetCategoryById(id);
-
-            if (category == null)
+            try
             {
-                return NotFound();
+                var category = _categoryService.GetCategoryById(id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                return View(category);
             }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-            return View(category);
+                return RedirectToAction("Exception", "Error");
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(int id, Category category)
         {
-            if (id != category.CategoryId)
+            try
             {
-                return NotFound();
-            }
+                if (id != category.CategoryId)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    _categoryService.UpdateCategory(category);
+                    return RedirectToAction("Index");
+                }
+                return View(category);
+            }
+            catch (Exception ex)
             {
-                _categoryService.UpdateCategory(category);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Exception", "Error");
             }
-
-            return View(category);
         }
 
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _categoryService.DeleteCategory(id);
+            try
+            {
+                _categoryService.DeleteCategory(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Exception", "Error");
+            }
         }
     }
 }
