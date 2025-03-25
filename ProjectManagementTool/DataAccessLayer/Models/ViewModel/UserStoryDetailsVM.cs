@@ -11,7 +11,7 @@ namespace DataAccessLayer.Models.ViewModel
     {
         public UserStory Story { get; set; }
         public List<TasksVM> Tasks { get; set; }
-        public List<TasksVM> Bugs { get; set; }
+        public List<Bug> Bugs { get; set; }
         public Dictionary<int,string> StatusList { get; set; }
         public Dictionary<int,string> PriorityList { get; set; }
         public Dictionary<int,string> CategoryList { set; get; }

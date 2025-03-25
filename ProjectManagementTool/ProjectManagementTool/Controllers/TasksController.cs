@@ -36,11 +36,6 @@ namespace ProjectManagementTool.Controllers
             _priorityService = prioriyService;
         }
 
-        [HttpGet]
-        public IActionResult Err()
-        {
-            return View();
-        }
 
         [HttpGet]
         public IActionResult Index()
@@ -54,7 +49,7 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Something went wrong : " + ex.Message);
+                _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
 
                 return RedirectToAction("Exception", "Error");
@@ -83,16 +78,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Something went wrong : " + ex.Message);
-                var errorModel = new ErrVM
-                {
-                    Msg = ex.Message,
-                    ActionMetod = "Create Get",
-                    CustomMsg = "this is a custom message",
-                    StackTrace = ex.StackTrace
-                };
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View("Err", errorModel);
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -108,20 +97,14 @@ namespace ProjectManagementTool.Controllers
                     return NotFound();
                 }
 
-                return Json(new { success = true });
+                return Json(new { success = true } );
             }
             catch (Exception ex)
             {
-                _log.Error("Something went wrong : " + ex.Message);
-                var errorModel = new ErrVM
-                {
-                    Msg = ex.Message,
-                    ActionMetod = "Create Post",
-                    CustomMsg = "this is a custom message",
-                    StackTrace = ex.StackTrace
-                };
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View("Err", errorModel);
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -145,16 +128,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Something went wrong : " + ex.Message);
-                var errorModel = new ErrVM
-                {
-                    Msg = ex.Message,
-                    ActionMetod = "Details",
-                    CustomMsg = "this is a custom message",
-                    StackTrace = ex.StackTrace
-                };
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View("Err", errorModel);
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -174,16 +151,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Something went wrong : " + ex.Message);
-                var errorModel = new ErrVM
-                {
-                    Msg = ex.Message,
-                    ActionMetod = "Delete",
-                    CustomMsg = "this is a custom message",
-                    StackTrace = ex.StackTrace
-                };
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View("Err", errorModel);
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -216,16 +187,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Something went wrong : " + ex.Message);
-                var errorModel = new ErrVM
-                {
-                    Msg = ex.Message,
-                    ActionMetod = "Edit Get",
-                    CustomMsg = "this is a custom message",
-                    StackTrace = ex.StackTrace
-                };
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View("Err", errorModel);
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -257,16 +222,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                _log.Error("Something went wrong : " + ex.Message);
-                var errorModel = new ErrVM
-                {
-                    Msg = ex.Message,
-                    ActionMetod = "Edit Post",
-                    CustomMsg = "this is a custom message",
-                    StackTrace = ex.StackTrace
-                };
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View("Err", errorModel);
+                return RedirectToAction("Exception", "Error");
             }
         }
     }

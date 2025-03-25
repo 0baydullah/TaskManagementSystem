@@ -36,7 +36,6 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var projects = _projectInfoService.GetAllProjectInfo();
-                throw new DivideByZeroException() ;
                 
                 return View(projects);
             }

@@ -20,12 +20,14 @@ namespace ProjectManagementTool.Controllers
         private readonly IPriorityService _priorityService;
         private readonly ISprintService _sprintService;
         private readonly ITimeTrackService _timeTrackService;
+        private readonly IBugService _bugService;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryController));
 
         public UserStoryController(IUserStoryService userStoryService, ITasksService tasksService,
             IMemberService memberService, ICategoryService categoryService, IStatusService statusService,
-            IPriorityService prioriyService, ISprintService sprintService, ITimeTrackService timeTrackService)
+            IPriorityService prioriyService, ISprintService sprintService, ITimeTrackService timeTrackService,
+            IBugService bugService)
         {
             _userStoryService = userStoryService;
             _tasksService = tasksService;
@@ -35,6 +37,7 @@ namespace ProjectManagementTool.Controllers
             _priorityService = prioriyService;
             _sprintService = sprintService;
             _timeTrackService = timeTrackService;
+            _bugService = bugService;
         }
 
         [HttpGet]
@@ -125,7 +128,7 @@ namespace ProjectManagementTool.Controllers
                 var story = _userStoryService.GetUserStory(id);
                 ViewBag.ProjectId = story.ProjectId;
                 var tasks = _tasksService.GetAllTasks(id);
-                var bugs = tasks; // Bug will be added later after implementation
+                var bugs = _bugService.GetAllBugOfStory(id);
 
                 storyDetails.Story = story;
                 storyDetails.Tasks = tasks;

@@ -4,24 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
+using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using log4net;
 
 namespace BusinessLogicLayer.Service
 {
     public class BugService : IBugService
     {
-        private readonly IBugService _bugService;
+        private readonly IBugRepo _bugRepo;
         private readonly ILog _log = LogManager.GetLogger(typeof(BugService));
-        public BugService(IBugService bugService)
+        public BugService(IBugRepo bugRepo)
         {
-            _bugService = bugService;
+            _bugRepo = bugRepo;
         }
-        public void AddBug(Bug bug)
+        public void AddBug(int id, BugVM bugVM)
         {
             try
             {
-                _bugService.AddBug(bug);
+                var bug = new Bug
+                {
+                    Name = bugVM.Name,
+                    Descripton = bugVM.Descripton,
+                    Status = bugVM.Status,
+                    UserStoryId = id,
+                    AssignMembersId = bugVM.AssignMembersId,
+                    QaRemarks = bugVM.QaRemarks??"",
+                    Priority = bugVM.Priority,
+                };
+                _bugRepo.AddBug(bug);
             }
             catch (Exception ex)
             {
@@ -34,7 +46,7 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                _bugService.DeleteBug(bug);
+                _bugRepo.DeleteBug(bug);
             }
             catch (Exception ex)
             {
@@ -47,7 +59,7 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var bugs = _bugService.GetAllBugOfStory(id);
+                var bugs = _bugRepo.GetAllBugOfStory(id);
                 return bugs;
             }
             catch (Exception ex)
@@ -61,7 +73,7 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var bug = _bugService.GetBug(id);
+                var bug = _bugRepo.GetBug(id);
                 return bug;
             }
             catch (Exception ex)
@@ -73,7 +85,15 @@ namespace BusinessLogicLayer.Service
 
         public void UpdateBug(Bug bug)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _bugRepo.UpdateBug(bug);
+            }
+            catch(Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
     }
 }
