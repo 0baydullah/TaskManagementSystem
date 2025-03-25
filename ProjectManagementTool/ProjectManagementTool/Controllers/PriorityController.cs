@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using BusinessLogicLayer.IService;
+using log4net;
 
 namespace ProjectManagementTool.Controllers
 {
     public class PriorityController : Controller
     {
         private readonly IPriorityService _priorityService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(PriorityController));
 
         public PriorityController(IPriorityService priorityService)
         {
@@ -23,72 +25,107 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var priority = _priorityService.GetAllPriority();
-
-            return View(priority);
+            try
+            {
+                var priority = _priorityService.GetAllPriority();
+                return View(priority);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "Internal server error");
+            }
         }
-
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "Internal server error");
+            }
         }
 
-        
         [HttpPost]
         public IActionResult Create(Priority priority)
         {
-            if (ModelState.IsValid == true)
+            try
             {
-                _priorityService.AddPriority(priority);
-
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    _priorityService.AddPriority(priority);
+                    return RedirectToAction("Index");
+                }
+                return View(priority);
             }
-            return View(priority);
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var priority = _priorityService.GetPriorityById(id);
-
-            if (priority == null)
+            try
             {
-                return NotFound();
+                var priority = _priorityService.GetPriorityById(id);
+                if (priority == null)
+                {
+                    return NotFound();
+                }
+                return View(priority);
             }
-
-            return View(priority);
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "Internal server error");
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(int id, Priority priority)
         {
-            if (id != priority.PriorityId)
+            try
             {
-                return NotFound();
-            }
+                if (id != priority.PriorityId)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid == true)
+                if (ModelState.IsValid)
+                {
+                    _priorityService.UpdatePriority(priority);
+                    return RedirectToAction("Index");
+                }
+                return View(priority);
+            }
+            catch (Exception ex)
             {
-                _priorityService.UpdatePriority(priority);
-
-                return RedirectToAction("Index");
+                // Log the exception
+                return StatusCode(500, "Internal server error");
             }
-
-            return View(priority);
         }
 
-        
-
-        
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _priorityService.DeletePriority(id);
-            
-            return RedirectToAction("Index");
+            try
+            {
+                _priorityService.DeletePriority(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                return StatusCode(500, "Internal server error");
+            }
         }
-
     }
 }

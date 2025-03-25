@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using BusinessLogicLayer.IService;
+using log4net;
 
 namespace ProjectManagementTool.Controllers
 {
     public class StatusController : Controller
     {
         private readonly IStatusService _statusService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(StatusController));
 
         public StatusController(IStatusService statusService)
         {
@@ -23,72 +25,124 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var statuses = _statusService.GetAllStatuses();
+            try
+            {
+                var statuses = _statusService.GetAllStatuses();
 
-            return View(statuses);
+                return View(statuses);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
         }
-
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
         }
 
-        
         [HttpPost]
         public IActionResult Create(Status status)
         {
-            if (ModelState.IsValid == true)
+            try
             {
-                _statusService.AddStatus(status);
+                if (ModelState.IsValid)
+                {
+                    _statusService.AddStatus(status);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+                return View(status);
             }
-            return View(status);
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var status = _statusService.GetStatusById(id);
-
-            if (status == null)
+            try
             {
-                return NotFound();
+                var status = _statusService.GetStatusById(id);
+                if (status == null)
+                {
+                    return NotFound();
+                }
+                return View(status);
             }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-            return View(status);
+                return RedirectToAction("Exception", "Error");
+            }
         }
 
         [HttpPost]
         public IActionResult Edit(int id, Status status)
         {
-            if (id != status.StatusId)
+            try
             {
-                return NotFound();
-            }
+                if (id != status.StatusId)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid == true)
+                if (ModelState.IsValid)
+                {
+                    _statusService.UpdateStatus(status);
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(status);
+            }
+            catch (Exception ex)
             {
-                _statusService.UpdateStatus(status);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Exception", "Error");
             }
-
-            return View(status);
         }
 
-        
-
-        
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
-            _statusService.DeleteStatus(id);
-            
-            return RedirectToAction("Index");
-        }
+            try
+            {
+                _statusService.DeleteStatus(id);
 
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+        }
     }
 }
