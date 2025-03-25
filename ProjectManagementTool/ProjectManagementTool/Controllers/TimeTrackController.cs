@@ -2,11 +2,13 @@
 using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class TimeTrackController : Controller
     {
         private readonly ITimeTrackService _timeTrackService;

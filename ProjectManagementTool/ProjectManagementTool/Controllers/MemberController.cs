@@ -2,6 +2,7 @@
 using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;

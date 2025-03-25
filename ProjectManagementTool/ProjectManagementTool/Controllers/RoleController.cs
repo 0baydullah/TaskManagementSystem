@@ -1,11 +1,13 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole<int>> _roleManager;

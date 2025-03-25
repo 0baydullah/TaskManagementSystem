@@ -1,11 +1,13 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class FeatureController : Controller
     {
         private readonly IMemberService _memberService;

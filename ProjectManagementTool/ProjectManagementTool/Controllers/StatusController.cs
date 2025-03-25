@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using BusinessLogicLayer.IService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class StatusController : Controller
     {
         private readonly IStatusService _statusService;
