@@ -27,6 +27,7 @@ namespace DataAccessLayer
             services.AddScoped<IPriorityRepo, PriorityRepo>();
             services.AddScoped<ICategoryRepo, CategoryRepo>();
             services.AddScoped<ITimeTrackRepo, TimeTrackRepo>();
+            services.AddScoped<IBugRepo, BugRepo>();
 
             return services;
         }

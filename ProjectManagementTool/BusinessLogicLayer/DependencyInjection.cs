@@ -28,6 +28,7 @@ namespace BusinessLogicLayer
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ITimeTrackService, TimeTrackService>();
+            services.AddScoped<IBugService, BugService>();
 
             return services;
         }
