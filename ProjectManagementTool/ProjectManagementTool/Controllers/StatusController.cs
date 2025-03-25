@@ -86,7 +86,7 @@ namespace ProjectManagementTool.Controllers
                 var status = _statusService.GetStatusById(id);
                 if (status == null)
                 {
-                    return NotFound();
+                    return RedirectToAction("NotFound", "Error");
                 }
                 return View(status);
             }
@@ -106,7 +106,7 @@ namespace ProjectManagementTool.Controllers
             {
                 if (id != status.StatusId)
                 {
-                    return NotFound();
+                    return RedirectToAction("NotFound", "Error");
                 }
 
                 if (ModelState.IsValid)

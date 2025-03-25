@@ -86,7 +86,7 @@ namespace ProjectManagementTool.Controllers
 
                 if (priority == null)
                 {
-                    return NotFound();
+                    return RedirectToAction("NotFound", "Error");
                 }
 
                 return View(priority);
@@ -107,7 +107,7 @@ namespace ProjectManagementTool.Controllers
             {
                 if (id != priority.PriorityId)
                 {
-                    return NotFound();
+                    return RedirectToAction("NotFound","Error");
                 }
 
                 if (ModelState.IsValid)

@@ -86,7 +86,7 @@ namespace ProjectManagementTool.Controllers
                 var category = _categoryService.GetCategoryById(id);
                 if (category == null)
                 {
-                    return NotFound();
+                    return RedirectToAction("NotFound", "Error");
                 }
                 return View(category);
             }
@@ -106,7 +106,7 @@ namespace ProjectManagementTool.Controllers
             {
                 if (id != category.CategoryId)
                 {
-                    return NotFound();
+                    return RedirectToAction("NotFound", "Error");
                 }
 
                 if (ModelState.IsValid)
