@@ -138,7 +138,7 @@ namespace ProjectManagementTool.Controllers
                     }
                     else
                     {
-                        return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
+                        return BadRequest(new { success = false, errors = "Failed" });
                     }
                 }
             }
