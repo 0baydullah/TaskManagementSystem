@@ -213,10 +213,6 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var member = _memberService.GetMember(id);
-                if (member == null)
-                {
-                    return NotFound("Member not found!");
-                }
 
                 var model = new MemberVM
                 {
