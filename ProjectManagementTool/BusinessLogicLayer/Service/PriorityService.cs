@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using log4net;
 
 namespace BusinessLogicLayer.Service
 {
     public class PriorityService : IPriorityService
     {
         private readonly IPriorityRepo _priorityRepo;
+        private readonly ILog _log = LogManager.GetLogger(typeof(StatusService));
 
         public PriorityService(IPriorityRepo priorityRepo)
         {
@@ -20,31 +22,71 @@ namespace BusinessLogicLayer.Service
 
         public void AddPriority(Priority priority)
         {
-            _priorityRepo.AddPriority(priority);
+            try
+            {
+                _priorityRepo.AddPriority(priority);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
 
         public void DeletePriority(int id)
         {
-            _priorityRepo.DeletePriority(id);
+            try
+            {
+                _priorityRepo.DeletePriority(id);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
 
         public List<Priority> GetAllPriority()
         {
-            var priority = _priorityRepo.GetAllPriorities();
+            try
+            {
+                var priority = _priorityRepo.GetAllPriorities();
 
-            return priority;
+                return priority;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
 
         public Priority GetPriorityById(int id)
         {
-            var priority = _priorityRepo.GetPriorityById(id);
+            try
+            {
+                var priority = _priorityRepo.GetPriorityById(id);
 
-            return priority;
+                return priority;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
 
         public void UpdatePriority(Priority priority)
         {
-            _priorityRepo.UpdatePriority(priority);
+            try
+            {
+                _priorityRepo.UpdatePriority(priority);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
     }
 }

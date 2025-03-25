@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using log4net;
 
 namespace BusinessLogicLayer.Service
 {
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepo _categoryRepo;
+        private readonly ILog _log = LogManager.GetLogger(typeof(CategoryService));
 
         public CategoryService(ICategoryRepo categoryRepo)
         {
@@ -20,29 +22,72 @@ namespace BusinessLogicLayer.Service
 
         public void AddCategory(Category category)
         {
-            _categoryRepo.AddCategory(category);
+            try
+            {
+                _categoryRepo.AddCategory(category);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
 
         public void DeleteCategory(int id)
         {
-            _categoryRepo.DeleteCategory(id);
+            try
+            {
+                _categoryRepo.DeleteCategory(id);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                throw;
+            }
         }
 
         public List<Category> GetAllCategory()
         {
-            var categories = _categoryRepo.GetAllCategories();
-            return categories;
+            try
+            {
+                var categories = _categoryRepo.GetAllCategories();
+
+                return categories;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
 
         public Category GetCategoryById(int id)
         {
-            var category = _categoryRepo.GetCategoryById(id);
-            return category;
+            try
+            {
+                var category = _categoryRepo.GetCategoryById(id);
+
+                return category;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
 
         public void UpdateCategory(Category category)
         {
-            _categoryRepo.UpdateCategory(category);
+            try
+            {
+                _categoryRepo.UpdateCategory(category);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
         }
     }
 }
