@@ -17,7 +17,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult NotFound()
+        public IActionResult Notfound()
         {
             return View();
         }
