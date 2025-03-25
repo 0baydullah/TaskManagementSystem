@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Encodings.Web;
 using BusinessLogicLayer.IService;
+using log4net;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -15,6 +16,7 @@ namespace ProjectManagementTool.Controllers
         private readonly UserManager<UserInfo> _userManager;
         private readonly SignInManager<UserInfo> _signInManager;
         private readonly IEmailSenderService _emailSenderService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(AccountController));
 
         public AccountController(UserManager<UserInfo> userManager, SignInManager<UserInfo> signInManager,
             IEmailSenderService emailSenderService)
@@ -77,9 +79,12 @@ namespace ProjectManagementTool.Controllers
                     return BadRequest(new { success = false, errors });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(model);
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -110,12 +115,16 @@ namespace ProjectManagementTool.Controllers
 
                 return Ok(new { success = true, redirectUrl = Url.Action("index", "Project") });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View();
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             try
@@ -123,9 +132,12 @@ namespace ProjectManagementTool.Controllers
                 await _signInManager.SignOutAsync();
                 return RedirectToAction("Login", "Account");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -155,9 +167,12 @@ namespace ProjectManagementTool.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -204,9 +219,12 @@ namespace ProjectManagementTool.Controllers
                 await _emailSenderService.SendEmailAsync(email, subject, messageBody, IsBodyHtml: true);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                RedirectToAction("Exception", "Error");
             }
         }
 
@@ -232,9 +250,12 @@ namespace ProjectManagementTool.Controllers
                     return View(model);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -270,9 +291,12 @@ namespace ProjectManagementTool.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -320,9 +344,12 @@ namespace ProjectManagementTool.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 

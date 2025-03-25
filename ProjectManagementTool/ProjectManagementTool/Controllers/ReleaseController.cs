@@ -3,11 +3,13 @@ using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class ReleaseController : Controller
     {
         private readonly IReleaseService _releaseService;

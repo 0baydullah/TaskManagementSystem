@@ -2,11 +2,13 @@
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class SprintController : Controller
     {
         private readonly ISprintService _sprintService;

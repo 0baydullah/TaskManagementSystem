@@ -1,16 +1,21 @@
 ﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class FeatureController : Controller
     {
         private readonly IMemberService _memberService;
         public readonly IFeatureService _featureService;
         public readonly IReleaseService _releaseService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(FeatureController));
+
         public FeatureController(IMemberService memberService, IFeatureService featureService, IReleaseService releaseService) 
         { 
             _memberService = memberService;
@@ -31,9 +36,12 @@ namespace ProjectManagementTool.Controllers
 
                 return View();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -59,9 +67,12 @@ namespace ProjectManagementTool.Controllers
                     return Ok(new { success = false, errors =  "Feature already exist" });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(featureVM);
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -74,9 +85,12 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.ProjectId = projectId;
                 return View(features);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -94,9 +108,12 @@ namespace ProjectManagementTool.Controllers
                
                 return View(feature);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -121,9 +138,12 @@ namespace ProjectManagementTool.Controllers
                     return Ok(new { success = false, errors = new List<string> { "Feature already exist" } });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -143,9 +163,12 @@ namespace ProjectManagementTool.Controllers
                     return BadRequest(new { success = false, errors = new List<string> { "Failed" } });
                 }
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
     }

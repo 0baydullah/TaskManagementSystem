@@ -29,6 +29,5 @@ namespace DataAccessLayer.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<TimeTrack> TimeTracks { get; set; }
         public DbSet<Bug> Bugs { get; set; }
-
     }
 }

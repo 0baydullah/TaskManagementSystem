@@ -3,6 +3,7 @@ using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class MemberController : Controller
     {
         private readonly IMemberService _memberService;
@@ -145,7 +147,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Member model)
+        public async Task<IActionResult> Create(Member model)
         {
             bool isSuccess = false;
             string message = "Invalid data submitted! ";
@@ -178,6 +180,16 @@ namespace ProjectManagementTool.Controllers
                     isSuccess= false;
                     message = "Member already exist!";
                     _log.Info(message);
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+
+                    if (user != null)
+                    {
+                        var roleName = _roleService.GetRoleById(model.RoleId).RoleName;
+                        await _userManager.AddToRoleAsync(user, roleName);
+                        _memberService.AddMember(model);
+                        isSuccess = true;
+                        message = "Member added successfully!";
+                    }
                 }
                 
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });

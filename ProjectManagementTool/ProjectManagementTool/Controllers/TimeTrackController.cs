@@ -2,15 +2,19 @@
 using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class TimeTrackController : Controller
     {
         private readonly ITimeTrackService _timeTrackService;
         private readonly ISubTaskService _subTaskService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(TimeTrackController));
 
         public TimeTrackController(ITimeTrackService timeTrackService, ISubTaskService subTaskService) 
         { 
@@ -35,9 +39,12 @@ namespace ProjectManagementTool.Controllers
                     return Ok(new { success = false, errors = "don't start tracking" });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -58,9 +65,12 @@ namespace ProjectManagementTool.Controllers
                     return Ok(new { success = false, errors = "don't stop tracking" });
                 }
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -84,9 +94,12 @@ namespace ProjectManagementTool.Controllers
                     return Json(new { success = false });
                 }
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -108,9 +121,12 @@ namespace ProjectManagementTool.Controllers
                     return Json(new { success = false });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
             }
         }
     }
