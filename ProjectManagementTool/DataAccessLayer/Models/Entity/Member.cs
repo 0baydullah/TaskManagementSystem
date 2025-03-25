@@ -14,7 +14,7 @@ namespace DataAccessLayer.Models.Entity
         [Key]
         public int MemberId { get; set; }
        
-        [Required]
+        [Required(ErrorMessage ="Email........")]
         public string? Email { get; set; }
 
         [Required]

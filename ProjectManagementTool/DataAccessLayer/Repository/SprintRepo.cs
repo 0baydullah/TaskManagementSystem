@@ -39,7 +39,6 @@ namespace DataAccessLayer.Repository
 
                     return false;
                 }
-
             }
             catch (Exception)
             {

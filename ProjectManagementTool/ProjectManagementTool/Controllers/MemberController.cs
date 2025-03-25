@@ -2,6 +2,7 @@
 using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using log4net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,6 +16,7 @@ namespace ProjectManagementTool.Controllers
         private readonly IRoleService _roleService;
         private readonly IProjectInfoService _projectInfoService;
         private readonly UserManager<UserInfo> _userManager;
+        private readonly ILog _log = LogManager.GetLogger(typeof(MemberController));
         public MemberController(IMemberService memberService, IRoleService roleService, IProjectInfoService projectInfoService
             , UserManager<UserInfo> userManager)
         {
@@ -27,21 +29,41 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Index(int projectId)
         {
-            var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
-            ViewBag.ProjectId = projectId;
-            return View(members);
+            try
+            {
+                var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
+                ViewBag.ProjectId = projectId;
+                
+                return View(members);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+                
+                return RedirectToAction("Exception", "Error");
+            }
+           
         }
 
         [HttpGet]
 
         public IActionResult GetAllUser()
         {
-            var users = _userManager.Users.ToList();
+            try
+            {
+                var users = _userManager.Users.ToList();
+                var allUsers = _memberService.GetAllUser(users);
 
-            var allUsers = _memberService.GetAllUser(users);
+                return View(allUsers);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-
-            return View(allUsers);
+                return RedirectToAction("Exception", "Error");
+            }  
         }
 
         [HttpGet]
@@ -92,20 +114,34 @@ namespace ProjectManagementTool.Controllers
                     return BadRequest(new { success = false, errors });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View(model);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
         }
 
         [HttpGet]
         public IActionResult Create(int projectId)
         {
-            var roles = _roleService.GetAllRole();
-            ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
+            try
+            {
+                var roles = _roleService.GetAllRole();
+                ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
+                ViewData["ProjectId"] = projectId;
 
-            ViewData["ProjectId"] = projectId;
-            return View();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+            
         }
 
         [HttpPost]
@@ -123,53 +159,76 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
-            else
+            try
             {
-                if(_memberService.GetUserByEmail(model.Email) == null)
+                var user = _memberService.GetUserByEmail(model.Email);
+                
+                var response = _memberService.AddMember(model);
+
+                if( response == true)
                 {
-                    isSuccess = false;
-                    message = "User is not exists!";
-                    return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                    isSuccess = true;
+                    message = "Member added successfully!";
+                    _log.Info(message);
                 }
                 else
                 {
-                    _memberService.AddMember(model);
-                    isSuccess = true;
-                    message = "Member added successfully!";
+                    isSuccess= false;
+                    message = "Member already exist!";
+                    _log.Info(message);
                 }
+                
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
+            catch (Exception ex)
+            {
 
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                _log.Error( ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }   
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var member = _memberService.GetMember(id);
-            if (member == null)
+            try
             {
-                return NotFound("Member not found!");
+                var member = _memberService.GetMember(id);
+                if (member == null)
+                {
+                    return NotFound("Member not found!");
+                }
+
+                var model = new MemberVM
+                {
+                    MemberId = member.MemberId,
+                    Email = member.Email,
+                    RoleId = member.RoleId,
+                    ProjectId = member.ProjectId
+                };
+                var roles = _roleService.GetAllRole();
+                ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
+                var projects = _projectInfoService.GetAllProjectInfo();
+                ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
+
+                return View(model);
             }
-
-            var model = new MemberVM
+            catch (Exception ex)
             {
-                MemberId = member.MemberId,
-                Email = member.Email,
-                RoleId = member.RoleId,
-                ProjectId = member.ProjectId
-            };
-            var roles = _roleService.GetAllRole();
-            ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
-            
-            var projects = _projectInfoService.GetAllProjectInfo();
-            ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-            return View(model);
+                return RedirectToAction("Exception", "Error");
+            }
+            
         }
 
         [HttpPost]
-        public IActionResult Edit( MemberVM model, int id)
+        public async Task<IActionResult> Edit( MemberVM model, int id)
         {
             bool isSuccess = false;
             string message = "Invalid data submitted! ";
@@ -183,39 +242,60 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
+            try
+            {
+                
+                var response = await _memberService.UpdateMember(id, model);
+                if( response == true)
+                {
+                    isSuccess = true;
+                    message = "Member updated successfully!";
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess= false;
+                    message = "Member not Updated";
+                    _log.Info(message);
+                }
+                
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-            else
+                return RedirectToAction("Exception", "Error");
+            } 
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id )
+        {
+            try
             {
                 var member = _memberService.GetMember(id);
                 if (member == null)
                 {
                     return NotFound("Member not found!");
                 }
-                member.Email = model.Email;
-                member.RoleId = model.RoleId;
-                member.ProjectId = model.ProjectId;
-                _memberService.UpdateMember(member);
-                isSuccess = true;
-                message = "Member updated successfully!";
+
+                _memberService.DeleteMember(member);
+
+                return Json(new { success = true, message = "Member deleted successfully!" });
+
             }
-
-            return Json(new { success = $"{isSuccess}", message = $"{message}" });
-        }
-
-        [HttpPost]
-        public IActionResult Delete(int id )
-        {
-            var member = _memberService.GetMember(id);
-
-            if (member == null)
+            catch (Exception ex)
             {
-                return NotFound("Member not found!");
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
-
-            _memberService.DeleteMember(member);
-
-            return Json(new { success = true , message = "Member deleted successfully!"});
+            
 
         }
     }
