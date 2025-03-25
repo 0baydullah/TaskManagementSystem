@@ -28,12 +28,15 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var priority = _priorityService.GetAllPriority();
+
                 return View(priority);
             }
             catch (Exception ex)
             {
-                // Log the exception
-                return StatusCode(500, "Internal server error");
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -46,8 +49,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                return StatusCode(500, "Internal server error");
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -65,8 +70,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception
-                return StatusCode(500, "Internal server error");
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -76,16 +83,20 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var priority = _priorityService.GetPriorityById(id);
+
                 if (priority == null)
                 {
                     return NotFound();
                 }
+
                 return View(priority);
             }
             catch (Exception ex)
             {
-                // Log the exception
-                return StatusCode(500, "Internal server error");
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -102,14 +113,17 @@ namespace ProjectManagementTool.Controllers
                 if (ModelState.IsValid)
                 {
                     _priorityService.UpdatePriority(priority);
+                    
                     return RedirectToAction("Index");
                 }
                 return View(priority);
             }
             catch (Exception ex)
             {
-                // Log the exception
-                return StatusCode(500, "Internal server error");
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
         }
 
@@ -119,12 +133,15 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 _priorityService.DeletePriority(id);
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // Log the exception
-                return StatusCode(500, "Internal server error");
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }
         }
     }
