@@ -39,7 +39,7 @@
     <br /> <br />
 
     <button type="button" class="btn btn-success" id="submitForm">Update Release</button>
-    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+    <a href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })" class="btn btn-success fw-bold float-end"> Back to List</a>
 </form>
 
 

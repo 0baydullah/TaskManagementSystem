@@ -13,7 +13,7 @@ namespace DataAccessLayer.Models.ViewModel
         public int SprintId { get; set; }
 
         [Required(ErrorMessage = "Sprint Name is required!")]
-        [RegularExpression(@"^(?=.*[a-zA-Z])[\w\s-]+$", ErrorMessage = "Only Numbers or Special Characters are not allowed")]
+        //[RegularExpression(@"^(?=.*[a-zA-Z])[\w\s-]+$", ErrorMessage = "Only Numbers or Special Characters are not allowed")]
         [DisplayName(displayName: "Sprint Name")]
         public string? SprintName { get; set; }
 
