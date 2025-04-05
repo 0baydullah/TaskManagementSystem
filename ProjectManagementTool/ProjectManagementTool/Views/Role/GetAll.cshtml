@@ -31,6 +31,8 @@
                     </td>
                 
                     <td>
+                        <a class="btn btn-light fw-bold" asp-controller="Administration" asp-action="ManageRoleClaims" asp-route-RoleId="@item.RoleId">
+                            <i class="text-success fa-solid fa-pen"></i> Manage Claims</a>
                         <a class="btn btn-light" onclick="openUpdateModal('@item.RoleId')"><i class="text-success fa-solid fa-pen"></i></a>
                         <a class="btn btn-light" onclick="openDeleteModal('@item.RoleId')"><i class="text-danger fa-solid fa-trash"></i></a>
                     </td>
