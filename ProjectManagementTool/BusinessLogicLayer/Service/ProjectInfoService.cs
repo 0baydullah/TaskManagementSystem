@@ -17,11 +17,20 @@ namespace BusinessLogicLayer.Service
         private readonly IProjectInfoRepo _projectInfoRepo;
         private readonly IMemberRepo _memberRepo;
         private readonly IRoleRepo _roleRepo;
-        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo, IRoleRepo roleRepo)
+        private readonly IReleaseRepo _releaseRepo;
+        private readonly ISprintRepo _sprintRepo;
+        private readonly IUserStoryRepo _userStoryRepo;
+        private readonly IFeatureRepo _featureRepo;
+        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo, IRoleRepo roleRepo, IReleaseRepo releaseRepo, 
+            ISprintRepo sprintRepo, IUserStoryRepo userStoryRepo, IFeatureRepo featureRepo)
         {
             _projectInfoRepo = projectInfoRepo;
             _memberRepo = memberRepo;
             _roleRepo = roleRepo;
+            _releaseRepo = releaseRepo;
+            _sprintRepo = sprintRepo;
+            _userStoryRepo = userStoryRepo;
+            _featureRepo = featureRepo;
         }
 
 
@@ -188,5 +197,37 @@ namespace BusinessLogicLayer.Service
             }    
         }
 
+        public async Task<ProjectDetailsVM> GetProjectInfoDetails(int id)
+        {
+            try
+            {
+                var projectInfo = _projectInfoRepo.GetProjectInfo(id);
+                var member = _memberRepo.GetAllMember().Where(x => x.ProjectId == id).Count();
+                var release = _releaseRepo.GetAllReleases().Where(x => x.ProjectId == id).Count();
+                var sprint = _sprintRepo.GetAllSprint(id).Count;
+                var userStory = _userStoryRepo.GetAllUserStory().Where( u => u.ProjectId == id).Count();
+                var feature = await _featureRepo.GetAllFeature(id);
+
+                var projectDetails = new ProjectDetailsVM
+                {
+                    ProjectId = projectInfo.ProjectId,
+                    ProjectName = projectInfo.Name,
+                    Member = member,
+                    Release = release,
+                    Task = 0,
+                    Bug = 0,
+                    UserStory = userStory,
+                    Feature = feature.Count,
+                    Sprint = sprint,
+                };
+                return projectDetails;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

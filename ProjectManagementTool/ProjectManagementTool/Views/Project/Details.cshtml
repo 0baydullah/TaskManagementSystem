@@ -1,39 +1,100 @@
-﻿@model DataAccessLayer.Models.Entity.ProjectInfo
+﻿@model DataAccessLayer.Models.ViewModel.ProjectDetailsVM
 
 @{
     ViewData["Title"] = "Details";
-    ViewData["Banner"] = ViewBag.ProjectName;
+    ViewData["Banner"] = Model.ProjectName;
 }
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger fw-bold">
-        @ViewBag.Error
+
+<div class="card shadow-lg">
+    <div class="card-body fw-bolder">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>@Html.DisplayNameFor(x => x.Member)</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>@Model.Member</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="@Url.Action("Index", "Member", new { projectId = Model.ProjectId })">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>@Html.DisplayNameFor(x => x.Release)</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>@Model.Release</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>@Html.DisplayNameFor(x => x.Sprint)</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>@Model.Sprint</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="@Url.Action("Index", "Sprint", new { projectId = Model.ProjectId })">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>@Html.DisplayNameFor(x => x.Feature)</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>@Model.Feature</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="@Url.Action("GetAll", "Feature", new { projectId = Model.ProjectId })">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>@Html.DisplayNameFor(x => x.UserStory)</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>@Model.UserStory</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="@Url.Action("Index", "UserStory", new { projectId = Model.ProjectId })">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>@Html.DisplayNameFor(x => x.Task) & @Html.DisplayNameFor(x => x.Bug)</h4>
+                    </div>
+                    <div class="card-body">
+                        <h4>Task: @Model.Task</h4>
+                        <h4>Bug: @Model.Bug</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-}
-else
-{
-
-    <div class="col-4 ">
-        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "UserStory", new { projectId = Model.ProjectId })">
-            <b>User Story</b>
-        </a>
-        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "Member", new { projectId = Model.ProjectId })">
-            <b>Member</b>
-        </a>
-        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("GetAll", "Feature", new { projectId = Model.ProjectId })">
-            <b>Feature</b>
-        </a>
-        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })">
-            <b>Release</b>
-        </a>
-        <a class="btn mb-4 w-50 shadow" style="background-color:aliceblue;" href="@Url.Action("Index", "Sprint", new { projectId = Model.ProjectId })">
-            <b>Sprint</b>
-        </a>
-    </div>
-
-}
-
-
+</div>
 
 
 

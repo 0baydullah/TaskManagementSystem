@@ -226,8 +226,6 @@ namespace ProjectManagementTool.Controllers
                 var projects = _projectInfoService.GetAllProjectInfo();
                 ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
 
-                //ViewBag.ProjectId1 = member.ProjectId;
-
                 return View(model);
             }
             catch (Exception ex)

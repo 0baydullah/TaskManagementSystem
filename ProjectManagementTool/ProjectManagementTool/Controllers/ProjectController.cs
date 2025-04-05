@@ -213,15 +213,13 @@ namespace ProjectManagementTool.Controllers
         }
 
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
-                var project = _projectInfoService.GetProjectInfo(id);
-                ViewBag.ProjectName = project.Name;
+                var project = await _projectInfoService.GetProjectInfoDetails(id);
 
                 return View(project);
-
             }
             catch (Exception ex)
             {
