@@ -88,18 +88,16 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var existingBug = GetBug(id);
-                var updatedBug = new Bug();
 
-                updatedBug.BugId = id;
-                updatedBug.AssignMembersId = bug.AssignMembersId;
-                updatedBug.Status = bug.Status;
-                updatedBug.QaRemarks = bug.QaRemarks;
-                updatedBug.Descripton = bug.Descripton;
-                updatedBug.Name = bug.Name;
-                updatedBug.Priority = bug.Priority;
-                updatedBug.UserStoryId = existingBug.UserStoryId;
+                existingBug.Status = bug.Status;
+                existingBug.QaRemarks = bug.QaRemarks;
+                existingBug.Descripton = bug.Descripton;
+                existingBug.Name = bug.Name;
+                existingBug.Priority = bug.Priority;
+                existingBug.AssignMembersId = bug.AssignMembersId;
 
-                _bugRepo.UpdateBug(updatedBug);
+
+                _bugRepo.UpdateBug(existingBug);
             }
             catch(Exception ex)
             {
