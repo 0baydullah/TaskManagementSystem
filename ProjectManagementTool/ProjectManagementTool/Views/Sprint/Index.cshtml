@@ -4,20 +4,14 @@
     ViewData["Banner"] = "Sprint Panel";
 }
 
-@if( ViewBag.Error != null)
-{
-    <div class="alert alert-danger fw-bold">
-        @ViewBag.Error
-    </div>
-}
 
-else
-{
-    <div class="mb-3">
-        <a href="@Url.Action("Create", "Sprint", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Sprint</a>
-    </div>
-    <div id="response-message">
-    </div>
+<div class="mb-3">
+    <a href="@Url.Action("Create", "Sprint", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Sprint</a>
+</div>
+<div id="response-message">
+</div>
+
+<div>
 
     <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -91,8 +85,7 @@ else
         </tbody>
 
     </table>
-
-}
+</div>
 
 
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">

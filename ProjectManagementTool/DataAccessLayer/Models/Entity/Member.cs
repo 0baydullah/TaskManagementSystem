@@ -13,7 +13,7 @@ namespace DataAccessLayer.Models.Entity
     {
         [Key]
         public int MemberId { get; set; }
-       
+
         [Required]
         public string? Email { get; set; }
 

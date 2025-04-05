@@ -3,6 +3,7 @@ using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ using Microsoft.CodeAnalysis;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class UserStoryController : Controller
     {
         private readonly IUserStoryService _userStoryService;

@@ -18,7 +18,7 @@ namespace DataAccessLayer.Repository
             _context = context;
         }
 
-        public void AddMember(Member member)
+        public bool AddMember(Member member)
         {
             try
             {
@@ -28,33 +28,33 @@ namespace DataAccessLayer.Repository
                 {
                     _context.Members.Add(member);
                     _context.SaveChanges();
+
+                    return true;
                 }
                 else
                 {
-                    throw new Exception("The member already exists.");
-
+                    return false;
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while adding member.", ex);
+                throw;
             }
         }
 
-        public void DeleteMember(Member member)
+        public bool DeleteMember(Member member)
         {
             try
             {
                 _context.Members.Remove(member);
                 _context.SaveChanges();
 
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while deleting member.", ex);
+                throw;
             }
         }
 
@@ -77,16 +77,14 @@ namespace DataAccessLayer.Repository
                     Name = m.Name,
                     Email = m.Email,
                     Role = r.Name,
-                    ProjectId = m.ProjectId
-
-                    
+                    ProjectId = m.ProjectId   
                 }).ToList();
+                
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while listing all member.", ex);
+                throw;
             }
         }
 
@@ -95,28 +93,31 @@ namespace DataAccessLayer.Repository
             try
             {
                 var member = _context.Members.Find(id);
+                if( member == null)
+                {
+                    throw new Exception("Member not found!");
+                }
+               
                 return member;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while getting member.", ex);
+                throw;
             }
         }
 
-        public void UpdateMember(Member member)
+        public async Task<bool> UpdateMember(Member member)
         {
             try
             {
                 _context.Members.Update(member);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while updating member.", ex);
+                throw;
             }
         }
 
@@ -125,13 +126,17 @@ namespace DataAccessLayer.Repository
             try
             {
                 var user = _context.Users.FirstOrDefault( u => u.Email == email);
+
+                if(user == null)
+                {
+                    throw new Exception("User not found!");
+                }
+
                 return user;
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw new Exception("An error occurred while finding user.", ex);
+                throw;
             }
         }
 
@@ -159,7 +164,7 @@ namespace DataAccessLayer.Repository
                         Projects = p != null ? ( _context.ProjectInfo.Where( z => z.ProjectId == x.f.ProjectId).Select( d => d.Key).ToList() ) : new List<string>()
                     }).ToList();
 
-                var result2 = result.GroupBy(x => x.Id).Select(x => new AllUserVM
+                var allUser = result.GroupBy(x => x.Id).Select(x => new AllUserVM
                 {
                     Id = x.Key,
                     Pin = x.Select(y => y.Pin).FirstOrDefault(),
@@ -168,11 +173,11 @@ namespace DataAccessLayer.Repository
                     ProjectId = x.Select(y => y.ProjectId).FirstOrDefault(),
                     Projects = x.SelectMany(y => y.Projects).ToList()
                 }).ToList();
-                return result2;
+                
+                return allUser;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

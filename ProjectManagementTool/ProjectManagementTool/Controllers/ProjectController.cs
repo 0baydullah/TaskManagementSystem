@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.IService;
+using BusinessLogicLayer.Service;
 using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Data;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -41,8 +43,7 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(ViewBag.Error);
+                _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
                 
                 return RedirectToAction("Exception","Error");
@@ -97,6 +98,8 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
+                    var roleName = "Admin"; // need update
+                    await _userManager.AddToRoleAsync(user, roleName);
                     isSuccess = true;
                     message = "Project created successfully!";
                     _log.Info(message);
@@ -106,11 +109,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex )
             {
-                isSuccess = false;
-                message = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(message);
-                
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             } 
         }
 
@@ -140,10 +142,10 @@ namespace ProjectManagementTool.Controllers
             catch (Exception ex)
             {
 
-                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(ViewBag.Error);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View();
+                return RedirectToAction("Exception", "Error");
             }
             
         }
@@ -179,10 +181,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                isSuccess = false;
-                message = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(message);
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             }           
         }
 
@@ -202,10 +204,10 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                isSuccess = false;
-                message = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(message);
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
             } 
         }
 
@@ -222,13 +224,14 @@ namespace ProjectManagementTool.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "Opps! Exception Occurred: " + ex.Message;
-                _log.Error(ViewBag.Error);
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
 
-                return View();
+                return RedirectToAction("Exception", "Error");
             }
             
         }
 
     }
 }
+

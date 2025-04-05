@@ -3,53 +3,45 @@
     ViewData["Title"] = "Edit Release";
     ViewData["Banner"] = "Edit Release";
 }
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger fw-bold">
-        @ViewBag.Error
-    </div>
-}
 
-else
-{
-    <div id="response-message">
+<div id="response-message">
 
+</div>
+
+<form id="form" method="post">
+    <div class="form-group">
+        <input asp-for="@Model.ReleaseId" name="ReleaseId" class="form-control" id="id" hidden>
     </div>
 
-    <form id="form" method="post">
-        <div class="form-group">
-            <input asp-for="@Model.ReleaseId" name="ReleaseId" class="form-control" id="id" hidden>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="@Model.ReleaseName"> </label>
-            <input asp-for="@Model.ReleaseName" class="form-control" id="name">
-        </div>
+    <div class="form-group">
+        <label asp-for="@Model.ReleaseName"> </label>
+        <input asp-for="@Model.ReleaseName" class="form-control" id="name">
+    </div>
 
 
-        <div class="form-group">
-            <input asp-for="@Model.ProjectId" class="form-control" id="projectId" hidden>
-        </div>
+    <div class="form-group">
+        <input asp-for="@Model.ProjectId" class="form-control" id="projectId" hidden>
+    </div>
 
-        <div class="form-group">
-            <label asp-for="@Model.Description"> </label>
-            <textarea asp-for="@Model.Description" class="form-control" id="description"> </textarea>
-        </div>
+    <div class="form-group">
+        <label asp-for="@Model.Description"> </label>
+        <textarea asp-for="@Model.Description" class="form-control" id="description"> </textarea>
+    </div>
 
-        <div class="form-group">
-            <label asp-for="@Model.StartDate"> </label>
-            <input asp-for="@Model.StartDate" class="form-control" id="startDate">
-        </div>
-        <div class="form-group">
-            <label asp-for="@Model.EndDate"> </label>
-            <input asp-for="@Model.EndDate" class="form-control" id="endDate">
-        </div>
-        <br /> <br />
+    <div class="form-group">
+        <label asp-for="@Model.StartDate"> </label>
+        <input asp-for="@Model.StartDate" class="form-control" id="startDate">
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.EndDate"> </label>
+        <input asp-for="@Model.EndDate" class="form-control" id="endDate">
+    </div>
+    <br /> <br />
 
-        <button type="button" class="btn btn-success" id="submitForm">Update Release</button>
-        <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
-    </form>
-}
+    <button type="button" class="btn btn-success" id="submitForm">Update Release</button>
+    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+</form>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

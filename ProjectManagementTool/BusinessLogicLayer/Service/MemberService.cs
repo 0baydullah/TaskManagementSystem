@@ -17,52 +17,107 @@ namespace BusinessLogicLayer.Service
         {
             _memberRepo = memberRepo;
         }
-        public void AddMember(Member member)
+        public bool AddMember(Member member)
         {
-            _memberRepo.AddMember(member);
+            try
+            {
+               var result = _memberRepo.AddMember(member);
+               
+               return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public void DeleteMember(Member member)
+        public bool DeleteMember(Member member)
         {
-            _memberRepo.DeleteMember(member);
+            try
+            {
+               var result = _memberRepo.DeleteMember(member);
+
+               return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<MemberWithRoleVM> GetAllMember()
         {
-            return _memberRepo.GetAllMember();
+            try
+            {
+                return _memberRepo.GetAllMember();
+            }
+            catch (Exception)
+            {
+                throw;
+            }  
         }
 
         public Member GetMember(int id)
         {
-            var member = _memberRepo.GetMember(id);
-            return member;
+            try
+            {
+                var member = _memberRepo.GetMember(id);
+               
+                return member;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public void UpdateMember(Member member)
+        public async Task<bool> UpdateMember(int id, MemberVM member)
         {
-            var memberToUpdate = _memberRepo.GetMember(member.MemberId);
-
-            if (memberToUpdate != null)
+            try
             {
-                _memberRepo.UpdateMember(member);
+                var data = _memberRepo.GetMember(id);
+                data.Email = member.Email;
+                data.RoleId = member.RoleId;
+                data.ProjectId = member.ProjectId;
+                var result = await _memberRepo.UpdateMember(data);
+                
+                return result;
             }
-            else
+            catch (Exception)
             {
-                throw new Exception("Member not found");
-            }
+                throw;
+            }   
         }
 
         public UserInfo GetUserByEmail(string email)
         {
-            var user = _memberRepo.GetUserByEmail(email);
-            return user;
+            try
+            {
+                var user = _memberRepo.GetUserByEmail(email);
+                
+                return user;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
 
         public List<AllUserVM> GetAllUser(List<UserInfo> user)
         {
-            var users = _memberRepo.GetAllUser(user);
-            return users;
+            try
+            {
+                var users = _memberRepo.GetAllUser(user);
+                
+                return users;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
     }
 }

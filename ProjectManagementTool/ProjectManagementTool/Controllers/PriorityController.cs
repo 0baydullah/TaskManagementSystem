@@ -9,9 +9,11 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using BusinessLogicLayer.IService;
 using log4net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjectManagementTool.Controllers
 {
+    [Authorize]
     public class PriorityController : Controller
     {
         private readonly IPriorityService _priorityService;

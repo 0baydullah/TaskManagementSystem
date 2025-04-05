@@ -10,10 +10,10 @@ namespace BusinessLogicLayer.IService
 {
     public interface IMemberService
     {
-        public void AddMember(Member member);
-        public void UpdateMember(Member member);
+        public bool AddMember(Member member);
+        public Task<bool> UpdateMember(int id ,MemberVM member);
 
-        public void DeleteMember(Member member);
+        public bool DeleteMember(Member member);
 
         public Member GetMember(int id);
 

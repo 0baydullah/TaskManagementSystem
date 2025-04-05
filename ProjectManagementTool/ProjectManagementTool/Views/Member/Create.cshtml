@@ -11,6 +11,7 @@
     <div class="form-group">
         <label asp-for="@Model.Email"> </label>
         <input asp-for="@Model.Email" class="form-control" id="email" placeholder="Enter User Email">
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -18,6 +19,7 @@
         <select asp-for="@Model.RoleId" class="form-control" asp-items="ViewBag.RoleId">
             <option value="">-- Select Role --</option>
         </select>
+        <span asp-validation-for="RoleId" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -32,36 +34,47 @@
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function createMember() 
-    {
 
-        var formData = new FormData(document.getElementById("form"));
+@section Scripts{
+    <script>
+        function createMember()
+        {
+            var form = $('#form');
+            var formData = new FormData(document.getElementById("form"));
 
-        $.ajax({
-            url: `/Member/Create/`,
-            method: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                if (response.success) {
+            if(form.valid())
+            {
+                $.ajax({
+                url: `/Member/Create/`,
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
 
-                    $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                    setTimeout(() => {
-                        window.location.href = '@Url.Action("Index", "Member", new {projectId = ViewBag.ProjectId})';
-                    }, 2000);
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                        setTimeout(() => {
+                            window.location.href = '@Url.Action("Index", "Member", new { projectId = ViewBag.ProjectId })';
+                        }, 2000);
+                    }
+
+                    else {
+                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    $('#response-message').removeClass('alert-success').addClass('alert-danger')
+                        .html('An error occurred: ' + xhr.responseText);
                 }
+            });
 
-                else {
-                    $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
-                }
-            },
-            error: function (xhr, status, error) {
-
-                $('#response-message').removeClass('alert-success').addClass('alert-danger')
-                    .html('An error occurred: ' + xhr.responseText);
             }
-        });
+            
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-</script>
+}

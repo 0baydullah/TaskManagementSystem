@@ -10,9 +10,9 @@ namespace DataAccessLayer.IRepository
 {
     public interface IMemberRepo
     {
-        public void AddMember(Member member);
-        public void UpdateMember(Member member);
-        public void DeleteMember(Member member);
+        public bool AddMember(Member member);
+        public Task<bool> UpdateMember(Member member);
+        public bool DeleteMember(Member member);
         public Member GetMember(int id);
         public List<MemberWithRoleVM> GetAllMember();
         public UserInfo GetUserByEmail(string email);
