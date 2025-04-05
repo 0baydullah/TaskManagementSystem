@@ -83,11 +83,23 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public void UpdateBug(Bug bug)
+        public void UpdateBug(int id, BugVM  bug)
         {
             try
             {
-                _bugRepo.UpdateBug(bug);
+                var existingBug = GetBug(id);
+                var updatedBug = new Bug();
+
+                updatedBug.BugId = id;
+                updatedBug.AssignMembersId = bug.AssignMembersId;
+                updatedBug.Status = bug.Status;
+                updatedBug.QaRemarks = bug.QaRemarks;
+                updatedBug.Descripton = bug.Descripton;
+                updatedBug.Name = bug.Name;
+                updatedBug.Priority = bug.Priority;
+                updatedBug.UserStoryId = existingBug.UserStoryId;
+
+                _bugRepo.UpdateBug(updatedBug);
             }
             catch(Exception ex)
             {

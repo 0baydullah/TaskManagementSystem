@@ -125,6 +125,8 @@ namespace ProjectManagementTool.Controllers
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
+                ViewBag.UserStoryId = bug.UserStoryId;
+
                 if (bug == null)
                 {
                     return RedirectToAction("Notfound","Error");
@@ -142,19 +144,18 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Bug bug)
+        public IActionResult Edit(int id, BugVM bug)
         {
             try
             {
-                var bug1 = _bugService.GetBug(id);
+                var existingBug = _bugService.GetBug(id);
 
-                if (bug == null)
+                if (existingBug == null)
                 {
-                    return RedirectToAction("Notfound","Error");
+                    return RedirectToAction("Notfound", "Error");
                 }
 
-
-                _bugService.UpdateBug(bug);
+                _bugService.UpdateBug(id,bug);
 
                 return Json(new { success = true });
             }

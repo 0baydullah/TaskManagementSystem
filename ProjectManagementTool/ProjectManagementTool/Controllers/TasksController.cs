@@ -180,6 +180,8 @@ namespace ProjectManagementTool.Controllers
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
+                ViewBag.UserStoryId = story.StoryId;
+
                 if (task == null)
                 {
                     return NotFound();
