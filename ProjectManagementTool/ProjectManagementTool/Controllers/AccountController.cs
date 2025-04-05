@@ -34,7 +34,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] UserInfoVM model)
+        public async Task<IActionResult> Register( UserInfoVM model)
         {
             if (ModelState.IsValid == false)
             {

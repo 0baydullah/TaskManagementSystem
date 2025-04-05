@@ -28,12 +28,13 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId);
                 var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId);
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
                 ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
                 ViewBag.ProjectId = projectId;
-
+                
                 return View();
             }
             catch (Exception ex)

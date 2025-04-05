@@ -1,128 +1,70 @@
-﻿@{
+﻿
+@model DataAccessLayer.Models.ViewModel.UserInfoVM
+
+@{ 
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJAX Form Submission</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
 
-        .container {
-            max-width: 400px;
-            margin: auto;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background: blue;
-            color: white;
-            border: none;
-        }
-
-        .error {
-            color: red;
-            font-size: 14px;
-        }
-
-        .login-text {
-            text-align: center;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .login-text a {
-            color: blue;
-            text-decoration: none;
-        }
-
-        .login-text a:hover {
-            text-decoration: underline;
-        }
-        h2{
-            text-align: center;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h2>Sign up</h2>
-        <div id="errorMessage"></div>
+<h1 class="text-center">Sign up</h1>
+<hr />
+<div class="row d-flex justify-content-center">
+    
+    <div class="col-md-4">
         <form id="registerForm">
-            <label>PIN:</label>
-            <input type="text" id="pin" name="pin" required>
-            <span class="error" id="pinError"></span>
+            @* <div class="text-danger" id="errorMessage"></div> *@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mt-2">
+                <label asp-for="Pin" class="control-label"></label>
+                <input asp-for="Pin" class="form-control" />
+                <span asp-validation-for="Pin" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control"> 
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mt-3">
+                <label asp-for="Password" class="control-label"></label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
 
-            <label>Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label>Email:</label>
-            <input type="email" id="email" name="email" required>
-
-            <label>Password:</label>
-            <input type="password" id="password" name="password" required>
-
-            <label>Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
-            <span class="error" id="passwordError"></span>
-
-            <button type="submit">Sing up</button>
+            <div class="form-group mt-3 d-flex justify-content-center">
+                <input type="button" onclick="submitForm()" value="Sign up" class="btn btn-success w-50" />
+            </div>
         </form>
-
-        <p class="login-text">Already have an account? <a href="/Account/Login">Log in</a></p>
-
-        <div id="responseMessage"></div>
     </div>
+</div>
 
-     <script>
-         $(document).ready(function () {
-             $("#registerForm").submit(function (event) {
-                 event.preventDefault(); 
 
-                 var pinValue = $("#pin").val().trim(); 
+@section Scripts {
 
-                 $("#pinError").text("");
-                 $("#passwordError").text("");
-
-                 if (!/^\d{4}$/.test(pinValue)) { 
-                     $("#pinError").text("PIN must be a 4-digit number.");
-                     return;
-                 }
-                 if ($("#password").val() !== $("#confirmPassword").val()) {
-                     $("#passwordError").text("Passwords do not match.");
-                     return;
-                 }
-
-                 var userInfo = {
-                     Pin: parseInt(pinValue), 
-                     Name: $("#name").val().trim(),
-                     Email: $("#email").val().trim(),
-                     Password: $("#password").val(),
-                     ConfirmPassword: $("#confirmPassword").val()
-                 };
-
-                 $.ajax({
-                     url: '/Account/Register',
-                     type: 'POST',
-                     contentType: 'application/json',
-                     data: JSON.stringify(userInfo), 
-                     success: function (response) {
+    <script>
+        function submitForm() {
+            
+            var form = $('#registerForm');
+            var formData = new FormData(form[0]);
+            
+            if (form.valid()) {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Register", "Account")',
+                    data:formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
                         $("#responseMessage").html("<p style='color:green;'>Registered successful!</p>");
                         setTimeout(() => {
                             $("#responseMessage").html("");
@@ -141,10 +83,12 @@
                             $("#responseMessage").html("<p style='color:red;'>An error occurred. Please try again.</p>");
                         }
                     }
-                 });
-             });
-         });
-     </script>
-
-</body>
-</html>
+                });
+            }
+            
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
