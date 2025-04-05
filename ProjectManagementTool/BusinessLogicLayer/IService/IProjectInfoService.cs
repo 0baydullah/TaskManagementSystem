@@ -22,5 +22,7 @@ namespace BusinessLogicLayer.IService
 
         public List<ProjectInfo> GetAllProjectInfo();
 
+        public List<ProjectInfo> GetAllProjectInfo(string email);
+
     }
 }

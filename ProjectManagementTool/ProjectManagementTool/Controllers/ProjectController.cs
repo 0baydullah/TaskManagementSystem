@@ -33,11 +33,12 @@ namespace ProjectManagementTool.Controllers
             _sprintService = sprintService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var projects = _projectInfoService.GetAllProjectInfo();
+                var user = await _userManager.GetUserAsync(User);
+                var projects = _projectInfoService.GetAllProjectInfo(user.Email);
                 
                 return View(projects);
             }

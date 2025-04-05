@@ -129,6 +129,33 @@ namespace BusinessLogicLayer.Service
             }
            
         }
+        public List<ProjectInfo> GetAllProjectInfo(string email)
+        {
+            try
+            {
+                var member = _memberRepo.GetAllMember().Where(x => x.Email == email).ToList();
+                var projectInfo = _projectInfoRepo.GetAllProjectInfo();
+                var memberProject = projectInfo.Join(member, p => p.ProjectId, m => m.ProjectId, (p, m) => new ProjectInfo
+                { 
+                    ProjectId = p.ProjectId,
+                    Name = p.Name,
+                    Key = p.Key,
+                    Description = p.Description,
+                    StartDate = p.StartDate,
+                    EndDate = p.EndDate,
+                    CompanyName = p.CompanyName,
+                    ProjectOwnerId = p.ProjectOwnerId,
+
+                }).ToList();
+               
+                return memberProject;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
 
         public bool UpdateProjectInfo(EditProjectInfoVM model)
         {
