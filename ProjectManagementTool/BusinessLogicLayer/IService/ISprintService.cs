@@ -15,5 +15,8 @@ namespace BusinessLogicLayer.IService
         public bool DeleteSprint(Sprint sprint);
         public Sprint GetSprint(int id);
         public List<SprintVM> GetAllSprint(int projectId);
+
+        public SprintDetailsVM GetSprintDetails(int id);
+
     }
 }

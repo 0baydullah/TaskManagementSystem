@@ -211,5 +211,23 @@ namespace ProjectManagementTool.Controllers
                 return RedirectToAction("Exception", "Error");
             }
         }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var sprint = _sprintService.GetSprintDetails(id);
+                
+                return View(sprint);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+        }
     }
 }

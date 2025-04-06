@@ -66,7 +66,8 @@
                         </td>
                         <td>
                             <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.ReleaseId"> <i class="text-success fa-solid fa-pen fw-bold"></i></a> |
-                            <a class="btn btn-light" onclick="openDeleteModal(@item.ReleaseId)"><i class="text-danger fa-solid fa-trash fw-bold"></i></a>
+                            <a class="btn btn-light" asp-action="Details" asp-route-id="@item.ReleaseId"> <i class="text-success fa-solid fa-info fw-bold"></i></a> |
+                            <a class="btn btn-light" onclick="openDeleteModal(@item.ReleaseId)"><i class="text-danger fa-solid fa-trash fw-bold"></i></a> |
                         </td>
                     </tr>
                 }

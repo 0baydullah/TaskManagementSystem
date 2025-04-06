@@ -2,6 +2,7 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using DataAccessLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace BusinessLogicLayer.Service
     public class SprintService : ISprintService
     {
         private readonly ISprintRepo _sprintRepo;
+        private readonly IUserStoryRepo _userStoryRepo;
 
-        public SprintService(ISprintRepo sprintRepo)
+        public SprintService(ISprintRepo sprintRepo, IUserStoryRepo userStoryRepo)
         {
             _sprintRepo = sprintRepo;
+            _userStoryRepo = userStoryRepo;
         }
         public bool AddSprint(SprintCreateVM sprint)
         {
@@ -91,6 +94,34 @@ namespace BusinessLogicLayer.Service
                 throw;
             }
           
+        }
+
+        public SprintDetailsVM GetSprintDetails(int id)
+        {
+            try
+            {
+                var sprint = _sprintRepo.GetSprint(id);
+                var story = _userStoryRepo.GetAllUserStory().Where( u => u.SprintId == id).ToList();
+                var sprintDetails = new SprintDetailsVM
+                {
+                    SprintId = sprint.SprintId,
+                    SprintName = sprint.SprintName,
+                    Description = sprint.Description,
+                    StartDate =  sprint.StartDate,
+                    Duration = sprint.Duration,
+                    //EndDate = 
+                    Points = sprint.Points,
+                    Velocity = sprint.Velocity,
+                    UserStroy = story
+                };
+                return sprintDetails;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<bool> UpdateSprint(int id, SprintCreateVM sprint)

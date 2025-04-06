@@ -179,7 +179,7 @@ namespace ProjectManagementTool.Controllers
         public IActionResult Delete(int id)
         {
             bool isSuccess = true;
-            var message = "Project deleted successfully!";
+            var message = "Release deleted successfully!";
             try
             {
                 var release = _releaseService.GetRelease(id);
@@ -187,6 +187,25 @@ namespace ProjectManagementTool.Controllers
                 _log.Info(message);
 
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var release = _releaseService.GetReleaseDetails(id);
+                ViewBag.ProjectId = release.ProjectId;
+
+                return View(release);
             }
             catch (Exception ex)
             {
