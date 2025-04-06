@@ -319,7 +319,8 @@
                     type: 'POST',
                     success: function (response) {
                         $('#modalTask').modal('hide');
-                        window.location.href = '@Url.Action("Details", "UserStory", new { StoryId = Model.Tasks.UserStoryId })';
+                     //   alert('@Url.Action("Details", "UserStory", new { id = Model.Tasks.UserStoryId })')
+                        window.location.href = '@Url.Action("Details", "UserStory", new { Id = Model.Tasks.UserStoryId })';
                     },
                     error: function () {
                         alert('Error deleting task.');
