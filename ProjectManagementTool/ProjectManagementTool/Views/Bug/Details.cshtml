@@ -1,5 +1,55 @@
-﻿
+﻿@model DataAccessLayer.Models.ViewModel.BugDetailsVM
+
+
 @{
 	ViewData["Title"] = "Bug Details";
 	ViewData["Banner"] = "Bug Details";
+	Model.MemberList[0] = "N/A";
+	Model.StatusList[0] = "N/A";
+	Model.PriorityList[0] = "N/A";
 }
+@if (Model.StatusList.ContainsKey(Model.Bug.Status) == false)
+{
+	Model.StatusList[Model.Bug.Status] = "Not Found";
+}
+@if (Model.PriorityList.ContainsKey(Model.Bug.Priority) == false)
+{
+	Model.StatusList[Model.Bug.Priority] = "Not Found";
+}
+@if (Model.MemberList.ContainsKey(Model.Bug.AssignMembersId) == false)
+{
+	Model.MemberList[Model.Bug.AssignMembersId] = "Not Found";
+}
+
+<div class="card p-4 " style="background-color:aliceblue">
+	<h3 class="text-center text-danger">
+		@Model.Bug.Name
+	</h3>
+	<hr />
+	Description : 
+	<div class="card p-2 mb-3" style="background-color:antiquewhite">
+		<p>@Model.Bug.Descripton</p>
+	</div>
+
+	<div class=" mb-3">
+		Assinged to : <b><i>@Model.MemberList[Model.Bug.AssignMembersId]</i></b>
+	</div>
+
+	@if(Model.Bug.QaRemarks != null && Model.Bug.QaRemarks != string.Empty)
+	{
+		<div>QA Remarks : </div>
+		<div class="card p-2 mb-3" style="background-color:antiquewhite">
+			<p>@Model.Bug.QaRemarks</p>
+		</div>
+	}
+	<div class=" mb-3 d-flex justify-content-around">
+		<div>Status : <b><i>@Model.StatusList[Model.Bug.Status]</i></b></div>
+		<div>Priority : <b><i>@Model.PriorityList[Model.Bug.Priority]</i></b></div>
+	</div>
+
+	<div class=" mb-3 d-flex justify-content-center text-capitalize text-success">
+		<h5>User Story : <b>@Model.StoryName</b></h5>
+	</div>
+	
+	
+</div>
