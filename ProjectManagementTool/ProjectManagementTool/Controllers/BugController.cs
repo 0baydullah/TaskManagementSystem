@@ -172,9 +172,16 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+                var bugDetails = new BugDetailsVM();
                 var bug = _bugService.GetBug(id);
 
-                return View();
+                bugDetails.Bug = bug;
+                bugDetails.StoryName = _userStoryService.GetUserStory(bug.UserStoryId).StoryName;
+                bugDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
+                bugDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+                bugDetails.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
+
+                return View(bugDetails);
             }
             catch (Exception ex)
             {
