@@ -319,7 +319,6 @@
                     type: 'POST',
                     success: function (response) {
                         $('#modalTask').modal('hide');
-                     //   alert('@Url.Action("Details", "UserStory", new { id = Model.Tasks.UserStoryId })')
                         window.location.href = '@Url.Action("Details", "UserStory", new { Id = Model.Tasks.UserStoryId })';
                     },
                     error: function () {
