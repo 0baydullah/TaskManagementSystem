@@ -69,7 +69,7 @@ else{
     </div>
 
     <div class="text-center mt-5">
-        <a asp-action="Index" class="btn btn-outline-danger w-25">Back to User Stories</a>
+        <a href="@Url.Action("Index", "UserStory",new{projectId = Model.ProjectId})" class="btn btn-outline-danger w-25">Back to User Stories</a>
     </div>
 
 

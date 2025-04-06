@@ -148,7 +148,7 @@ namespace ProjectManagementTool.Controllers
                 _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
 
-                return View();
+                return RedirectToAction("Exception", "Error");
             }
         }
 

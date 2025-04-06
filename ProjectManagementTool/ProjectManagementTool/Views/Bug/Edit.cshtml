@@ -2,16 +2,16 @@
 
 
 @{
-    ViewData["Title"] = "Bug-Create";
-    ViewData["Banner"] = "Create Bug";
+    ViewData["Title"] = "Bug-Update";
+    ViewData["Banner"] = "Update Bug";
 }
 
 
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
-        <form asp-action="Create" id="createForm" autocomplete="off">
+        <form  id="createForm" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="BugId" class="form-control" type="hidden" value="@Model.BugId"/>
+            @* <input asp-for="BugId" class="form-control" type="hidden" value="@Model.BugId"/> *@
             <div class="form-group mt-2">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" value="@Model.Name"/>
@@ -91,7 +91,9 @@
                     processData: false,
                     contentType: false,
                     success: function () {
-                        window.location.href = '@Url.Action("Details", "UserStory")/'+ @ViewBag.UserStoryId;
+                        // var storyId = ViewBag.UserStoryId;
+                        // console.log(storyId)
+                        window.location.href = '@Url.Action("Details", "UserStory" , new {id = ViewBag.UserStoryId})';
                     },
                     error: function (error) {
                         $('#errorModalBody').text('An error occurred: ' + error.responseText);
