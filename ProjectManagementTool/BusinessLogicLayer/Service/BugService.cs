@@ -55,6 +55,21 @@ namespace BusinessLogicLayer.Service
             }
         }
 
+        public List<Bug> GetAllBug()
+        {
+            try
+            {
+                var bugs = _bugRepo.GetAllBug();
+                return bugs;
+
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
+        }
+
         public List<Bug> GetAllBugOfStory(int id)
         {
             try

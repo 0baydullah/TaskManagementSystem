@@ -21,8 +21,11 @@ namespace BusinessLogicLayer.Service
         private readonly ISprintRepo _sprintRepo;
         private readonly IUserStoryRepo _userStoryRepo;
         private readonly IFeatureRepo _featureRepo;
+        private readonly ITasksRepo _tasksRepo;
+        private readonly IBugRepo _bugRepo;
+
         public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo, IRoleRepo roleRepo, IReleaseRepo releaseRepo, 
-            ISprintRepo sprintRepo, IUserStoryRepo userStoryRepo, IFeatureRepo featureRepo)
+            ISprintRepo sprintRepo, IUserStoryRepo userStoryRepo, IFeatureRepo featureRepo, ITasksRepo tasksRepo, IBugRepo bugRepo)
         {
             _projectInfoRepo = projectInfoRepo;
             _memberRepo = memberRepo;
@@ -31,6 +34,8 @@ namespace BusinessLogicLayer.Service
             _sprintRepo = sprintRepo;
             _userStoryRepo = userStoryRepo;
             _featureRepo = featureRepo;
+            _tasksRepo = tasksRepo;
+            _bugRepo = bugRepo;
         }
 
 
@@ -205,18 +210,34 @@ namespace BusinessLogicLayer.Service
                 var member = _memberRepo.GetAllMember().Where(x => x.ProjectId == id).Count();
                 var release = _releaseRepo.GetAllReleases().Where(x => x.ProjectId == id).Count();
                 var sprint = _sprintRepo.GetAllSprint(id).Count;
-                var userStory = _userStoryRepo.GetAllUserStory().Where( u => u.ProjectId == id).Count();
                 var feature = await _featureRepo.GetAllFeature(id);
+
+                var userStory = _userStoryRepo.GetAllUserStory().Where( u => u.ProjectId == id);
+                var tasks = _tasksRepo.GetAllTasks();
+                var bugs = _bugRepo.GetAllBug();
+                var allTasks = userStory.Join(tasks, u => u.StoryId, t => t.UserStoryId, (u, t) => new
+                {
+                    u.StoryId,
+                    t.TaskId,
+                }).ToList().Count;
+
+                var allBugs = userStory.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new
+                {
+                    u.StoryId,
+                    b.BugId,
+                }).ToList().Count;
+
 
                 var projectDetails = new ProjectDetailsVM
                 {
                     ProjectId = projectInfo.ProjectId,
                     ProjectName = projectInfo.Name,
+                    Key = projectInfo.Key,
                     Member = member,
                     Release = release,
-                    Task = 0,
-                    Bug = 0,
-                    UserStory = userStory,
+                    Task = allTasks,
+                    Bug = allBugs,
+                    UserStory = userStory.Count(),
                     Feature = feature.Count,
                     Sprint = sprint,
                 };

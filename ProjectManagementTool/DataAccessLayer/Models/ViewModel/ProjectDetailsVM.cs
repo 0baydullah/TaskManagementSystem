@@ -10,6 +10,7 @@ namespace DataAccessLayer.Models.ViewModel
     {
         public int ProjectId { get; set; }
         public string ProjectName { get; set; }
+        public string Key { get; set; }
         public int Sprint { get; set; }
         public int Release { get; set; }
         public int Member { get; set; }

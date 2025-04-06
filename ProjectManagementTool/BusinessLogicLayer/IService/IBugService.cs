@@ -15,5 +15,6 @@ namespace BusinessLogicLayer.IService
         public void DeleteBug(Bug bug);
         public Bug GetBug(int id);
         public List<Bug> GetAllBugOfStory(int id);
+        public List<Bug> GetAllBug();
     }
 }

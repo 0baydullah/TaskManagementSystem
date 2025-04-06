@@ -4,6 +4,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using DataAccessLayer.Repository;
+using DataAccessLayer.StaticClass;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -37,6 +38,7 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+                ProjectKey.SetProjectId(0);
                 var user = await _userManager.GetUserAsync(User);
                 var projects = _projectInfoService.GetAllProjectInfo(user.Email);
                 
@@ -217,7 +219,10 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+                ProjectKey.SetProjectId(id);
+                
                 var project = await _projectInfoService.GetProjectInfoDetails(id);
+                ProjectKey.SetProjectKey(project.Key);
 
                 return View(project);
             }
