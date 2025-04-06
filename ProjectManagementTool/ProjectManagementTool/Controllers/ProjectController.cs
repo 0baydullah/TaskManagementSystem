@@ -4,6 +4,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using DataAccessLayer.Repository;
+using DataAccessLayer.StaticClass;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -33,11 +34,13 @@ namespace ProjectManagementTool.Controllers
             _sprintService = sprintService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
-                var projects = _projectInfoService.GetAllProjectInfo();
+                ProjectKey.SetProjectId(0);
+                var user = await _userManager.GetUserAsync(User);
+                var projects = _projectInfoService.GetAllProjectInfo(user.Email);
                 
                 return View(projects);
             }
@@ -212,15 +215,16 @@ namespace ProjectManagementTool.Controllers
         }
 
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
-                var project = _projectInfoService.GetProjectInfo(id);
-                ViewBag.ProjectName = project.Name;
+                ProjectKey.SetProjectId(id);
+                
+                var project = await _projectInfoService.GetProjectInfoDetails(id);
+                ProjectKey.SetProjectKey(project.Key);
 
                 return View(project);
-
             }
             catch (Exception ex)
             {

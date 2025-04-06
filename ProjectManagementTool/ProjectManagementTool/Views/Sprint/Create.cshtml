@@ -50,8 +50,8 @@
     </div>
     <br /> <br />
 
-    <button type="button" class="btn btn-success" id="submitForm">Create Sprint</button>
-    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+    <button type="button" class="btn btn-success fw-bold" id="submitForm">Create Sprint</button>
+    <a href="@Url.Action("Index", "Sprint", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold float-end">Back to List</a>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -17,11 +17,25 @@ namespace BusinessLogicLayer.Service
         private readonly IProjectInfoRepo _projectInfoRepo;
         private readonly IMemberRepo _memberRepo;
         private readonly IRoleRepo _roleRepo;
-        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo, IRoleRepo roleRepo)
+        private readonly IReleaseRepo _releaseRepo;
+        private readonly ISprintRepo _sprintRepo;
+        private readonly IUserStoryRepo _userStoryRepo;
+        private readonly IFeatureRepo _featureRepo;
+        private readonly ITasksRepo _tasksRepo;
+        private readonly IBugRepo _bugRepo;
+
+        public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo, IRoleRepo roleRepo, IReleaseRepo releaseRepo, 
+            ISprintRepo sprintRepo, IUserStoryRepo userStoryRepo, IFeatureRepo featureRepo, ITasksRepo tasksRepo, IBugRepo bugRepo)
         {
             _projectInfoRepo = projectInfoRepo;
             _memberRepo = memberRepo;
             _roleRepo = roleRepo;
+            _releaseRepo = releaseRepo;
+            _sprintRepo = sprintRepo;
+            _userStoryRepo = userStoryRepo;
+            _featureRepo = featureRepo;
+            _tasksRepo = tasksRepo;
+            _bugRepo = bugRepo;
         }
 
 
@@ -129,6 +143,33 @@ namespace BusinessLogicLayer.Service
             }
            
         }
+        public List<ProjectInfo> GetAllProjectInfo(string email)
+        {
+            try
+            {
+                var member = _memberRepo.GetAllMember().Where(x => x.Email == email).ToList();
+                var projectInfo = _projectInfoRepo.GetAllProjectInfo();
+                var memberProject = projectInfo.Join(member, p => p.ProjectId, m => m.ProjectId, (p, m) => new ProjectInfo
+                { 
+                    ProjectId = p.ProjectId,
+                    Name = p.Name,
+                    Key = p.Key,
+                    Description = p.Description,
+                    StartDate = p.StartDate,
+                    EndDate = p.EndDate,
+                    CompanyName = p.CompanyName,
+                    ProjectOwnerId = p.ProjectOwnerId,
+
+                }).ToList();
+               
+                return memberProject;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
 
         public bool UpdateProjectInfo(EditProjectInfoVM model)
         {
@@ -161,5 +202,53 @@ namespace BusinessLogicLayer.Service
             }    
         }
 
+        public async Task<ProjectDetailsVM> GetProjectInfoDetails(int id)
+        {
+            try
+            {
+                var projectInfo = _projectInfoRepo.GetProjectInfo(id);
+                var member = _memberRepo.GetAllMember().Where(x => x.ProjectId == id).Count();
+                var release = _releaseRepo.GetAllReleases().Where(x => x.ProjectId == id).Count();
+                var sprint = _sprintRepo.GetAllSprint(id).Count;
+                var feature = await _featureRepo.GetAllFeature(id);
+
+                var userStory = _userStoryRepo.GetAllUserStory().Where( u => u.ProjectId == id);
+                var tasks = _tasksRepo.GetAllTasks();
+                var bugs = _bugRepo.GetAllBug();
+                var allTasks = userStory.Join(tasks, u => u.StoryId, t => t.UserStoryId, (u, t) => new
+                {
+                    u.StoryId,
+                    t.TaskId,
+                }).ToList().Count;
+
+                var allBugs = userStory.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new
+                {
+                    u.StoryId,
+                    b.BugId,
+                }).ToList().Count;
+
+
+                var projectDetails = new ProjectDetailsVM
+                {
+                    ProjectId = projectInfo.ProjectId,
+                    ProjectName = projectInfo.Name,
+                    Key = projectInfo.Key,
+                    Member = member,
+                    Release = release,
+                    Task = allTasks,
+                    Bug = allBugs,
+                    UserStory = userStory.Count(),
+                    Feature = feature.Count,
+                    Sprint = sprint,
+                };
+                return projectDetails;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

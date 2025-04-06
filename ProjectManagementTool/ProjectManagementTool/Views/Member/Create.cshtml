@@ -30,7 +30,7 @@
     <br/><br/>
 
     <input type="button" onclick="createMember();" value="Create" class="btn btn-primary" />
-    <a class="btn btn-success float-end" asp-action="Index">Back to List</a>
+    <a class="btn btn-success fw-bold float-end" href="@Url.Action("Index", "Member", new { projectId = ViewBag.ProjectId })"> Back to List</a>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -1,5 +1,6 @@
-﻿﻿@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<DataAccessLayer.Models.Entity.UserInfo> signInManager;
+@using DataAccessLayer.StaticClass;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +35,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="GetAll">Role</a>
                             </li>
+                            @if (ProjectKey.GetProjectId() != 0)
+                            {
+                                int id = ProjectKey.GetProjectId();
+                                string key = ProjectKey.GetProjectKey();
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/Project/Details/@id">@key</a>
+                                </li>
+                            }
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
                                     <div class="dropdown">

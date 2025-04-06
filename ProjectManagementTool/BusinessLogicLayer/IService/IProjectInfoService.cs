@@ -20,7 +20,11 @@ namespace BusinessLogicLayer.IService
 
         public ProjectInfo GetProjectInfo(string projectName);
 
+        public Task<ProjectDetailsVM> GetProjectInfoDetails(int id);
+
         public List<ProjectInfo> GetAllProjectInfo();
+
+        public List<ProjectInfo> GetAllProjectInfo(string email);
 
     }
 }

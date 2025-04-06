@@ -48,6 +48,21 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public List<Bug> GetAllBug()
+        {
+            try
+            {
+                var bugs = _context.Bugs.ToList();
+                return bugs;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Bug> GetAllBugOfStory(int id)
         {
             try
