@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using DataAccessLayer.Data;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using log4net;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Repository
 {
@@ -65,7 +67,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var bug = _context.Bugs.Find(id);
+                var bug = _context.Bugs.FirstOrDefault(b => b.BugId == id);
                 return bug;
             }
             catch (Exception ex)
