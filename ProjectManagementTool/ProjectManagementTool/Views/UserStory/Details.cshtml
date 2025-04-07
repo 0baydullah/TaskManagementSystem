@@ -424,11 +424,11 @@ else
                 let status = localStorage.getItem("tracking-" + taskId);
 
                 if (status === "Started") {
-                    document.getElementById("playButton-" + subTaskId).classList.add("d-none");
-                    document.getElementById("pauseButton-" + subTaskId).classList.remove("d-none");
+                    document.getElementById("playButton-" + taskId).classList.add("d-none");
+                    document.getElementById("pauseButton-" + taskId).classList.remove("d-none");
                 } else {
-                    document.getElementById("playButton-" + subTaskId).classList.remove("d-none");
-                    document.getElementById("pauseButton-" + subTaskId).classList.add("d-none");
+                    document.getElementById("playButton-" + taskId).classList.remove("d-none");
+                    document.getElementById("pauseButton-" + taskId).classList.add("d-none");
                 }
             });
         });
