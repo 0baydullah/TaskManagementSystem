@@ -165,14 +165,29 @@ else
                             <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
                                 <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
                             </a>
-                            <a id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
-                               onclick="startTracking(@item.TaskId)">
-                                <i class="text-success fa-solid fa-circle-play"></i>
-                            </a>
-                            <a id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
-                               onclick="stopTracking(@item.TaskId)">
-                                <i class="text-success fa-solid fa-circle-pause"></i>
-                            </a>
+                            @if (@item.SubTaskCount == 0 && (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberId.Contains(Model.MemberId)))
+                           {
+                                <a id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
+                                   onclick="startTracking(@item.TaskId)">
+                                    <i class="text-success fa-solid fa-circle-play"></i>
+                                </a>
+                                <a id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
+                                   onclick="stopTracking(@item.TaskId)">
+                                    <i class="text-success fa-solid fa-circle-pause"></i>
+                                </a>
+                           }
+                           else
+                           {
+                                <a style ="pointer-events:none;" id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
+                                   onclick="startTracking(@item.TaskId)">
+                                    <i style="color: grey;" class="text-success fa-solid fa-circle-xmark"></i>
+                                </a>
+                                <a style="pointer-events:none;" id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
+                                   onclick="stopTracking(@item.TaskId)">
+                                    <i style="color: grey;" class="text-success fa-solid fa-circle-xmark"></i>
+                                </a>
+                           }
+                            
                             <a id="pauseButton-@item.TaskId" class="btn btn-light"
                                onclick="timeDetails(@item.TaskId)">
                                 <i class="text-success fa-solid fa-chalkboard"></i>
@@ -346,7 +361,6 @@ else
 
 @section Scripts {
     <script>
-        
         var deleteTaskId = null;
         var userStoryId = null;
         var deleteBugId = null;

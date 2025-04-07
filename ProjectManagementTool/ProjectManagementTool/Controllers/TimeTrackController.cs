@@ -129,5 +129,30 @@ namespace ProjectManagementTool.Controllers
                 return RedirectToAction("Exception", "Error");
             }
         }
+
+        [HttpGet]
+        public IActionResult ExistSubTask(int taskId)
+        {
+            try
+            {
+                var subTasks = _subTaskService.GetAllSubTaskByTask(taskId);
+                if (subTasks != null)
+                {
+                   
+                    return Json(new { success = true,subTasks = subTasks });
+                }
+                else
+                {
+                    return Json(new { success = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
     }
 }

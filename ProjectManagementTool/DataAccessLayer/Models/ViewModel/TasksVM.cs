@@ -25,5 +25,6 @@ namespace DataAccessLayer.Models.ViewModel
         public int Priority { get; set; }
         public int UserStoryId { get; set; }
         public string TrackingStatus {  get; set; }
+        public int SubTaskCount { get; set; }
     }
 }

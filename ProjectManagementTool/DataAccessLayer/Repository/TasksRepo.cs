@@ -96,7 +96,8 @@ namespace DataAccessLayer.Repository
                     Status = x.t.Status,
                     Priority = x.t.Priority,
                     UserStoryId = x.t.UserStoryId,
-                    TrackingStatus = time!=null? time.TrackingStatus : "" 
+                    TrackingStatus = time!=null? time.TrackingStatus : "", 
+                    SubTaskCount = _context.SubTask.Where(a => a.TaskId == x.t.TaskId).ToList().Count  
                 }).ToList();
 
                 return tasksVM;

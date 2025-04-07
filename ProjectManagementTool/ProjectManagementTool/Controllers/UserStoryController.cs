@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -16,6 +17,7 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IUserStoryService _userStoryService;
         private readonly ITasksService _tasksService;
+        private readonly ISubTaskService _subTaskService;
         private readonly IMemberService _memberService;
         private readonly ICategoryService _categoryService;
         private readonly IStatusService _statusService;
@@ -23,16 +25,18 @@ namespace ProjectManagementTool.Controllers
         private readonly ISprintService _sprintService;
         private readonly ITimeTrackService _timeTrackService;
         private readonly IBugService _bugService;
+        private readonly UserManager<UserInfo> _userManager; 
 
         private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryController));
 
         public UserStoryController(IUserStoryService userStoryService, ITasksService tasksService,
-            IMemberService memberService, ICategoryService categoryService, IStatusService statusService,
-            IPriorityService prioriyService, ISprintService sprintService, ITimeTrackService timeTrackService,
-            IBugService bugService)
+            ISubTaskService subTaskService, IMemberService memberService, ICategoryService categoryService,
+            IStatusService statusService, IPriorityService prioriyService, ISprintService sprintService, ITimeTrackService timeTrackService,
+            IBugService bugService, UserManager<UserInfo> userManager)
         {
             _userStoryService = userStoryService;
             _tasksService = tasksService;
+            _subTaskService = subTaskService;
             _memberService = memberService;
             _categoryService = categoryService;
             _statusService = statusService;
@@ -40,6 +44,7 @@ namespace ProjectManagementTool.Controllers
             _sprintService = sprintService;
             _timeTrackService = timeTrackService;
             _bugService = bugService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -122,7 +127,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
@@ -131,7 +136,12 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.ProjectId = story.ProjectId;
                 var tasks = _tasksService.GetAllTasks(id);
                 var bugs = _bugService.GetAllBugOfStory(id);
+                var user = await _userManager.GetUserAsync(User);
+                var memberIds = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId && m.Role == "Admin").ToList().Select(i => i.MemberId).ToList();
+                var member = _memberService.GetAllMember().FirstOrDefault(m => m.Email == user.Email && m.ProjectId == story.ProjectId);
 
+                storyDetails.MemberId = member.MemberId; 
+                storyDetails.AdminMemberId = memberIds;
                 storyDetails.Story = story;
                 storyDetails.Tasks = tasks;
                 storyDetails.Bugs = bugs;

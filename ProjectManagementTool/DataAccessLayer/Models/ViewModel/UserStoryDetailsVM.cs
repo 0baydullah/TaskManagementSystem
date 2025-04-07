@@ -9,6 +9,8 @@ namespace DataAccessLayer.Models.ViewModel
 {
     public class UserStoryDetailsVM
     {
+        public int MemberId { get; set; } 
+        public List<int> AdminMemberId { get; set; }
         public UserStory Story { get; set; }
         public List<TasksVM> Tasks { get; set; }
         public List<Bug> Bugs { get; set; }
