@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.Entity.ProjectInfo>
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Index";
     ViewData["Banner"] = "Projects";
@@ -7,7 +8,7 @@
     // use this block for BREADCRUMBS
     var breadcrumbs = new List<KeyValuePair<string, string>>
     {
-        new KeyValuePair<string, string>("Project", Url.Action("Index", "Project")?? string.Empty)
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)?? string.Empty)
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
 }
