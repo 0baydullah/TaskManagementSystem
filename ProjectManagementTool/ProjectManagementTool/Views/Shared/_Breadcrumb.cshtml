@@ -9,8 +9,8 @@
         <ol class="breadcrumb">
             @foreach (var breadcrumb in breadcrumbs)
             {
-                <li class="breadcrumb-item">
-                    <a href="@breadcrumb.Value">@breadcrumb.Key</a>
+                <li class="breadcrumb-item fw-bold">
+                    <a class="text-decoration-none" href="@breadcrumb.Value">@breadcrumb.Key</a>
                 </li>
             }
         </ol>
