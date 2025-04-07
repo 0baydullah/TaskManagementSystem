@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.ViewModel.SprintDetailsVM  //button are no ready
+﻿@model DataAccessLayer.Models.ViewModel.SprintDetailsVM 
 @{
     ViewData["Title"] = "Details";
     ViewData["Banner"] = "Sprint Details";
@@ -6,14 +6,6 @@
 
 <div class="d-flex justify-content-between">
     <h3 class="text-center">Release: @Model.SprintName</h3>
-    <div>
-        <a class="btn btn-light" asp-controller="#" asp-action="#" asp-route-id="#">
-            <i class="text-success fa-solid fa-pen"> Edit</i>
-        </a>
-        <a class="btn btn-light" onclick="openDeleteUSModal('')">
-            <i class="text-danger fa-solid fa-trash"> Delete</i>
-        </a>
-    </div>
 </div>
 
 <hr />
@@ -32,9 +24,9 @@
 </div>
 
 <div class="d-flex justify-content-between mb-2">
-    <h3>Sprints</h3>
-    <a class="btn btn-success" asp-controller="Sprint" asp-action="Create" asp-route-id="#">
-        <i class="text-light fa-solid fa-plus"></i> Sprint
+    <h3>User Story</h3>
+    <a class="btn btn-success" asp-controller="UserStory" asp-action="Create" asp-route-id="#">
+        <i class="text-light fa-solid fa-plus"></i> User Story
     </a>
 </div>
 

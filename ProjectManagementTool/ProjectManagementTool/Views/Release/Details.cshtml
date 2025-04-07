@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.ViewModel.ReleaseDetailsVM  //button are no ready
+﻿@model DataAccessLayer.Models.ViewModel.ReleaseDetailsVM
 @{
     ViewData["Title"] = "Details";
     ViewData["Banner"] = "Release Details";
@@ -6,14 +6,6 @@
 
 <div class="d-flex justify-content-between">
     <h3 class="text-center">Release: @Model.ReleaseName</h3>
-    <div>
-        <a class="btn btn-light" asp-controller="#" asp-action="#" asp-route-id="#">
-            <i class="text-success fa-solid fa-pen"> Edit</i>
-        </a>
-        <a class="btn btn-light" onclick="openDeleteUSModal('')">
-            <i class="text-danger fa-solid fa-trash"> Delete</i>
-        </a>
-    </div>
 </div>
 
 <hr />
