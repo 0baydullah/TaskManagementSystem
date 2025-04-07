@@ -1,8 +1,20 @@
 ﻿@model DataAccessLayer.Models.Entity.UserStory
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "Add UserStory";
     ViewData["Banner"] = "Edit User Story";
+}
+@{
+    // Use this code blocks for BREADCRUMBS
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Edit", "#")
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 @if (TempData["error"] != null)
