@@ -83,10 +83,10 @@ namespace ProjectManagementTool.Controllers
 
                 if (timeTrack != null)
                 {
-                    var StartTime = timeTrack.StartTime.ToString("MM/dd/yyyy HH:mm");
-                    var EndTime = timeTrack.EndTime.ToString("MM/dd/yyyy HH:mm");
-                    var TotalTime = timeTrack.TotalTime;
-
+                    var StartTime = timeTrack.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                    var EndTime = timeTrack.Max(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                    var TotalTime = timeTrack.Sum(t => t.TotalTime);
+                  
                     return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
                 }
                 else

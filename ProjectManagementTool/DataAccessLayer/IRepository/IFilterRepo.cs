@@ -8,5 +8,6 @@ namespace DataAccessLayer.IRepository
 {
     public interface IFilterRepo
     {
+        public void InProgress(string status, int projectId);
     }
 }

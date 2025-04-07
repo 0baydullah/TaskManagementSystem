@@ -1,1 +1,7 @@
 ﻿<h1>Filter Index</h1>
+@if (ViewBag.ProjectId != null)
+{
+    int projectId = ViewBag.ProjectId;
+    <h1>@projectId</h1>
+    <a class="btn btn-primary" asp-controller="Filter" asp-action="Progress" asp-route-status="In Progress" asp-route-projectId=@projectId>In Progress</a>
+}

@@ -8,5 +8,6 @@ namespace BusinessLogicLayer.IService
 {
     public interface IFilterService
     {
+        public void InProgress(string status, int projectId);
     }
 }
