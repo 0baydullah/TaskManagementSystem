@@ -22,10 +22,11 @@ namespace DataAccessLayer.Repository
 
         public TimeTrack GetByTaskIdSubTaskId(int taskId, int subTaskId)
         {
-            var existTimeTrack =  _context.TimeTracks.FirstOrDefault(t => t.TaskId == taskId && t.SubTaskId == subTaskId);
+            var existTimeTrack =  _context.TimeTracks.FirstOrDefault(t => t.TaskId == taskId && t.SubTaskId == subTaskId && t.StartTime == t.EndTime);
 
             return existTimeTrack;
         }
+
         public async Task<bool> TimeStore(TimeTrack timeTrack)
         {
             try
@@ -85,11 +86,12 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public TimeTrack GetBySubTaskId(int subTaskId)
+        public List<TimeTrack> GetBySubTaskId(int subTaskId)
         {
             try
             {
-                var subTask = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
+                var subTask = _context.TimeTracks.Where(s => s.SubTaskId == subTaskId).ToList();
+                
                 return subTask;
             }
             catch (Exception)

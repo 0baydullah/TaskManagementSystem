@@ -83,7 +83,7 @@ namespace DataAccessLayer.Repository
             try
             {
                 var tasks = _context.Tasks.Where(x => x.UserStoryId == id).ToList();
-                var tasksVM = tasks.GroupJoin(_context.TimeTracks.Where(ttrack => ttrack.SubTaskId == 0), t=> t.TaskId, time=>time.TaskId,(t,time) => new { t, time }).SelectMany(
+                var tasksVM = tasks.GroupJoin(_context.TimeTracks.Where(ttrack => ttrack.SubTaskId == 0 && ttrack.IsTrackCompleted == false), t=> t.TaskId, time=>time.TaskId,(t,time) => new { t, time }).SelectMany(
                     x => x.time.DefaultIfEmpty(), (x, time) => new TasksVM
                     {
                     TaskId = x.t.TaskId,

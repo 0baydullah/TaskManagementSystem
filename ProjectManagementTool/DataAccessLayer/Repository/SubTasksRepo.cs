@@ -84,7 +84,7 @@ namespace DataAccessLayer.Repository
             try
             {
                 var subTasks = _context.SubTask.Where(x=>x.TaskId == id ).ToList();
-                var subTaskWithTimeTrack = subTasks.GroupJoin(_context.TimeTracks, s => s.SubTaskId, t => t.SubTaskId, (s, t) => new { s,t }).SelectMany(
+                var subTaskWithTimeTrack = subTasks.GroupJoin(_context.TimeTracks.Where(ttrack => ttrack.IsTrackCompleted == false), s => s.SubTaskId, t => t.SubTaskId, (s, t) => new { s,t }).SelectMany(
                     x => x.t.DefaultIfEmpty(), (x, t) => new SubTaskVM
                     {
                         SubTaskId = x.s.SubTaskId,

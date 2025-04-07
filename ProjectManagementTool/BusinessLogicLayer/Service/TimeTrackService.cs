@@ -23,30 +23,45 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var existTimeTrack = _timeTrackRepo.GetByTaskIdSubTaskId(taskId, subTaskId);
-
-                if (existTimeTrack == null)
+                var timeTrack = new TimeTrack()
                 {
-                    var timeTrack = new TimeTrack()
-                    {
-                        TaskId = taskId,
-                        SubTaskId = subTaskId,
-                        StartTime = DateTime.Now,
-                        EndTime = DateTime.Now,
-                        TodaysTime = DateTime.Now,
-                        TotalTime = 0,
-                    };
+                    TaskId = taskId,
+                    SubTaskId = subTaskId,
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now,
+                    //TodaysTime = DateTime.Now,
+                    TotalTime = 0,
+                };
 
-                    var result = await _timeTrackRepo.TimeStore(timeTrack);
-                    return result;
-                }
-                else
-                {
-                    existTimeTrack.TodaysTime = DateTime.Now;
-                    var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
-                    
-                    return result;
-                }
+                timeTrack.EndTime = timeTrack.StartTime;
+
+                var result = await _timeTrackRepo.TimeStore(timeTrack);
+                return result;
+
+                //var existTimeTrack = _timeTrackRepo.GetByTaskIdSubTaskId(taskId, subTaskId);
+
+                //if (existTimeTrack == null)
+                //{
+                //    var timeTrack = new TimeTrack()
+                //    {
+                //        TaskId = taskId,
+                //        SubTaskId = subTaskId,
+                //        StartTime = DateTime.Now,
+                //        EndTime = DateTime.Now,
+                //        TodaysTime = DateTime.Now,
+                //        TotalTime = 0,
+                //    };
+
+                //    var result = await _timeTrackRepo.TimeStore(timeTrack);
+                //    return result;
+                //}
+                //else
+                //{
+                //    existTimeTrack.TodaysTime = DateTime.Now;
+                //    var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
+
+                //    return result;
+                //}
             }
             catch(Exception)
             {
@@ -68,9 +83,11 @@ namespace BusinessLogicLayer.Service
                         SubTaskId = subTaskId,
                         StartTime = DateTime.Now,
                         EndTime = DateTime.Now,
-                        TodaysTime = DateTime.Now,
+                        //TodaysTime = DateTime.Now,
                         TotalTime = 0,
                     };
+
+                    timeTrack.EndTime = timeTrack.StartTime;
 
                     var result = await _timeTrackRepo.TimeStore(timeTrack);
                     return result;
@@ -79,7 +96,8 @@ namespace BusinessLogicLayer.Service
                 {
 
                     existTimeTrack.EndTime = DateTime.Now;
-                    var spentTime = existTimeTrack.EndTime - existTimeTrack.TodaysTime;
+                    existTimeTrack.IsTrackCompleted = true;
+                    var spentTime = existTimeTrack.EndTime - existTimeTrack.StartTime;
                     existTimeTrack.TotalTime = existTimeTrack.TotalTime + spentTime.Seconds;
                     var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
                     
@@ -104,11 +122,13 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public TimeTrack GetBySubTaskId(int subTaskId)
+        public List<TimeTrack> GetBySubTaskId(int subTaskId)
         {
             try
             {
-                return _timeTrackRepo.GetBySubTaskId(subTaskId);
+                var subTasksTimeTrack = _timeTrackRepo.GetBySubTaskId(subTaskId);
+
+                return subTasksTimeTrack;
             }
             catch(Exception)
             {

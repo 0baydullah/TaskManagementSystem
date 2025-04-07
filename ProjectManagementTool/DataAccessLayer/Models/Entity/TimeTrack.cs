@@ -19,11 +19,13 @@ namespace DataAccessLayer.Models.Entity
         public DateTime StartTime { get; set; }
         [Required]
         public DateTime EndTime { get; set; }
-        [Required]
-        public DateTime TodaysTime { get; set; }
+        //[Required]
+        //public DateTime TodaysTime { get; set; }
         [Required]
         public long TotalTime { get; set; }
         [Required]
         public string TrackingStatus { get; set; } = "Stopped";
+        [Required]
+        public bool IsTrackCompleted { get; set; } = false;
     }
 }
