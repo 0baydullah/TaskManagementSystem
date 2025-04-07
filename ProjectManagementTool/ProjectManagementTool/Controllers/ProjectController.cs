@@ -215,9 +215,8 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                ProjectKey.SetProjectId(id);
-                
                 var project = await _projectInfoService.GetProjectInfoDetails(id);
+                ProjectKey.SetProjectId(id);
                 ProjectKey.SetProjectKey(project.Key);
 
                 return View(project);

@@ -19,11 +19,12 @@ else
 {
 
 
-    <div style="text-align: end;">
+    <div class="mb-3">
         <a href="@Url.Action("Create", "UserStory", new { projectId = ViewBag.ProjectId })" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> User Story</a>
+        <a class="btn shadow-sm text-success fw-bold float-end mx-3" style="background-color:aliceblue;" href="#">Filter</a>
     </div>
 
-    <table class="table">
+    <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
                 <th>
@@ -41,7 +42,9 @@ else
                 <th>
                     Priority
                 </th>
-                <th></th>
+                <th class="text-center">
+                    Action
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -77,7 +80,7 @@ else
                     <td>
                         @Model.PriorityList[item.Priority]
                     </td>
-                    <td>
+                    <td class="text-center">
 
                         <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.StoryId">
                             <i class="text-danger fa-solid fa-pen"></i>

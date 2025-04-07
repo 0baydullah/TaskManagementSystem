@@ -9,7 +9,7 @@ namespace DataAccessLayer.StaticClass
     public static class ProjectKey
     {
         static int ProjectId = 0;
-        static string KeyName = null;
+        static string KeyName = string.Empty;
 
         public static void SetProjectId(int id)
         {

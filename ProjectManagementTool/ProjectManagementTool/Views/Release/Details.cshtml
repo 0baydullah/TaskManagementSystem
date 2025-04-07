@@ -21,7 +21,7 @@
 
 <div class="d-flex justify-content-between mb-2">
     <h3>Sprints</h3>
-    <a class="btn btn-success" asp-controller="Sprint" asp-action="Create" asp-route-id="#">
+    <a class="btn btn-success" asp-controller="Sprint" asp-action="Create" asp-route-projectId="@Model.ProjectId">
         <i class="text-light fa-solid fa-plus"></i> Sprint
     </a>
 </div>
@@ -47,9 +47,6 @@
                 <th>
                     Velocity
                 </th>
-                <th>
-                    Action
-                </th>
 
             </tr>
         </thead>
@@ -73,11 +70,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Velocity)
-                        </td>
-                        <td>
-                            <a class="btn btn-light" asp-controller="" asp-action="" asp-route-id="" asp-route-projectId=""><i class="text-success fa-solid fa-pen fw-bold"></i></a> |
-                            <a class="btn btn-light" asp-action="" asp-route-id="" asp-route-projectId=""><i class="text-success fa-solid fa-info fw-bold"></i></a> |
-                            <a class="btn btn-light" onclick="openDeleteModal('')"><i class="text-danger fa-solid fa-trash fw-bold"></i></a>
                         </td>
                     </tr>
                 }
