@@ -1,0 +1,18 @@
+﻿
+@{
+    var breadcrumbs = ViewData["Breadcrumbs"] as List<KeyValuePair<string, string?>>;
+}
+
+@if (breadcrumbs != null && breadcrumbs.Any())
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @foreach (var breadcrumb in breadcrumbs)
+            {
+                <li class="breadcrumb-item">
+                    <a href="@breadcrumb.Value">@breadcrumb.Key</a>
+                </li>
+            }
+        </ol>
+    </nav>
+}

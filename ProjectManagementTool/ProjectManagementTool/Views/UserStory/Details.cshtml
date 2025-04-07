@@ -1,4 +1,5 @@
 ﻿@model DataAccessLayer.Models.ViewModel.UserStoryDetailsVM
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "User Story Details";
@@ -7,6 +8,16 @@
     Model.CategoryList[0] = "N/A";
     Model.PriorityList[0] = "N/A";
     Model.SprintList[0] = "N/A";
+}
+@{ // Use this code blocks for BREADCRUMBS
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("Project", Url.Action("Index", "Project")),
+        new KeyValuePair<string, string>("Dashboard", Url.Action("Details", "Project",new{id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action("Index", "UserStory",new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Details", "#")
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 @if (TempData["error"] != null)

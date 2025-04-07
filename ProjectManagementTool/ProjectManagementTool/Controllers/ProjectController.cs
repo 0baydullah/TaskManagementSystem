@@ -1,17 +1,12 @@
-﻿using BusinessLogicLayer.IService;
-using BusinessLogicLayer.Service;
-using DataAccessLayer.Data;
+﻿using System.Data;
+using BusinessLogicLayer.IService;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
-using DataAccessLayer.Repository;
 using DataAccessLayer.StaticClass;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Data;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -20,12 +15,12 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IProjectInfoService _projectInfoService;
         private readonly UserManager<UserInfo> _userManager;
-        private readonly ILog _log= LogManager.GetLogger(typeof(ProjectController));
+        private readonly ILog _log = LogManager.GetLogger(typeof(ProjectController));
 
-        public ProjectController( IProjectInfoService projectInfoService,
+        public ProjectController(IProjectInfoService projectInfoService,
             UserManager<UserInfo> userManager)
         {
-            
+
             _projectInfoService = projectInfoService;
             _userManager = userManager;
         }
@@ -36,18 +31,18 @@ namespace ProjectManagementTool.Controllers
             {
                 ProjectKey.SetProjectId(0);
                 var user = await _userManager.GetUserAsync(User);
-                var projects = _projectInfoService.GetAllProjectInfo(user.Email);
-                
+                var projects = _projectInfoService.GetAllProjectInfo(user?.Email ?? "");
+
                 return View(projects);
             }
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
-                
-                return RedirectToAction("Exception","Error");
+
+                return RedirectToAction("Exception", "Error");
             }
-            
+
         }
 
         [HttpGet]
@@ -72,13 +67,13 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                     message += error + " ";
                 }
-                
+
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
 
             try
             {
-                   
+
                 var user = await _userManager.GetUserAsync(User);
                 if (user == null)
                 {
@@ -103,16 +98,16 @@ namespace ProjectManagementTool.Controllers
                     message = "Project created successfully!";
                     _log.Info(message);
                 }
-                
+
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
 
                 return RedirectToAction("Exception", "Error");
-            } 
+            }
         }
 
 
@@ -122,7 +117,7 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var project = _projectInfoService.GetProjectInfo(id);
-                
+
                 var model = new EditProjectInfoVM
                 {
                     ProjectId = project.ProjectId,
@@ -136,7 +131,7 @@ namespace ProjectManagementTool.Controllers
                 };
 
                 return View(model);
-                
+
             }
             catch (Exception ex)
             {
@@ -146,7 +141,7 @@ namespace ProjectManagementTool.Controllers
 
                 return RedirectToAction("Exception", "Error");
             }
-            
+
         }
 
         [HttpPost]
@@ -174,7 +169,7 @@ namespace ProjectManagementTool.Controllers
                 isSuccess = true;
                 message = "Project updated successfully!";
                 _log.Info(message);
-                
+
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
 
             }
@@ -184,7 +179,7 @@ namespace ProjectManagementTool.Controllers
                 TempData["Error"] = ex.Message;
 
                 return RedirectToAction("Exception", "Error");
-            }           
+            }
         }
 
 
@@ -207,7 +202,7 @@ namespace ProjectManagementTool.Controllers
                 TempData["Error"] = ex.Message;
 
                 return RedirectToAction("Exception", "Error");
-            } 
+            }
         }
 
 
@@ -228,7 +223,7 @@ namespace ProjectManagementTool.Controllers
 
                 return RedirectToAction("Exception", "Error");
             }
-            
+
         }
 
     }

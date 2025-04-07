@@ -1,10 +1,24 @@
 ﻿@using DataAccessLayer.Models.ViewModel
 @model UserStoryListVM
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "User Story";
     ViewData["Banner"] = "User Stories";
 }
+
+
+@{ // use this block for BREADCRUMBS
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("Project", Url.Action("Index", "Project") ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action("Details", "Project",new{id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action("Index", "UserStory",new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
+
 
 
 
