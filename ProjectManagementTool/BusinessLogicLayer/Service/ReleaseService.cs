@@ -13,9 +13,11 @@ namespace BusinessLogicLayer.Service
     public class ReleaseService : IReleaseService
     {
         private readonly IReleaseRepo _releaseRepo;
-        public ReleaseService(IReleaseRepo releaseRepo)
+        private readonly ISprintRepo _sprintRepo;
+        public ReleaseService(IReleaseRepo releaseRepo, ISprintRepo sprintRepo)
         {
-            _releaseRepo = releaseRepo; 
+            _releaseRepo = releaseRepo;
+            _sprintRepo = sprintRepo;
         }
         public bool AddRelease(ReleaseCreateVM release)
         {
@@ -32,7 +34,7 @@ namespace BusinessLogicLayer.Service
 
                 var result = _releaseRepo.AddRelease(model);
 
-                return true;
+                return result;
             }
             catch (Exception)
             {
@@ -84,6 +86,32 @@ namespace BusinessLogicLayer.Service
             {
                 throw;
             }     
+        }
+
+        public ReleaseDetailsVM GetReleaseDetails(int id)
+        {
+            try
+            {
+                var release = _releaseRepo.GetRelease(id);
+                var sprints = _sprintRepo.GetAllSprint(release.ProjectId);
+                var releaseDetails = new ReleaseDetailsVM
+                {
+                    ReleaseId = release.ReleaseId,
+                    ProjectId = release.ProjectId,
+                    ReleaseName = release.ReleaseName,
+                    Description = release.Description,
+                    StartDate = release.StartDate,
+                    EndDate = release.EndDate,
+                    Sprints = sprints
+                };
+                return releaseDetails;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task<bool> UpdateRelease(int id, Release release)

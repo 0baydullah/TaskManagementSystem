@@ -1,0 +1,97 @@
+﻿@model DataAccessLayer.Models.ViewModel.ReleaseDetailsVM
+@{
+    ViewData["Title"] = "Details";
+    ViewData["Banner"] = "Release Details";
+}
+
+<div class="d-flex justify-content-between">
+    <h3 class="text-center">Release: @Model.ReleaseName</h3>
+</div>
+
+<hr />
+
+<div>
+    Description: @Model.Description
+    <hr />
+    Start Date: @Model.StartDate
+    <hr />
+    End Date: @Model.EndDate
+    <hr />
+</div>
+
+<div class="d-flex justify-content-between mb-2">
+    <h3>Sprints</h3>
+    <a class="btn btn-success" asp-controller="Sprint" asp-action="Create" asp-route-id="#">
+        <i class="text-light fa-solid fa-plus"></i> Sprint
+    </a>
+</div>
+
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+
+                <th>
+                    Start Date
+                </th>
+
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Points
+                </th>
+                <th>
+                    Velocity
+                </th>
+                <th>
+                    Action
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Sprints.Any())
+            {
+                @foreach (var item in Model.Sprints)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SprintName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Points)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Velocity)
+                        </td>
+                        <td>
+                            <a class="btn btn-light" asp-controller="" asp-action="" asp-route-id="" asp-route-projectId=""><i class="text-success fa-solid fa-pen fw-bold"></i></a> |
+                            <a class="btn btn-light" asp-action="" asp-route-id="" asp-route-projectId=""><i class="text-success fa-solid fa-info fw-bold"></i></a> |
+                            <a class="btn btn-light" onclick="openDeleteModal('')"><i class="text-danger fa-solid fa-trash fw-bold"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center fw-bold text-danger">No Sprint found!</td>
+                </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+</div>
+

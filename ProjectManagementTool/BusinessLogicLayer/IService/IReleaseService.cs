@@ -15,6 +15,6 @@ namespace BusinessLogicLayer.IService
         public bool DeleteRelease(Release release);
         public Release GetRelease(int id);
         public List<Release> GetAllReleases();
-
+        public ReleaseDetailsVM GetReleaseDetails(int id);
     }
 }

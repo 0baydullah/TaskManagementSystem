@@ -20,18 +20,14 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IProjectInfoService _projectInfoService;
         private readonly UserManager<UserInfo> _userManager;
-        private readonly IReleaseService _releaseService;
-        private readonly ISprintService _sprintService;
-        private readonly ILog _log= LogManager.GetLogger(typeof(SprintRepo));
+        private readonly ILog _log= LogManager.GetLogger(typeof(ProjectController));
 
         public ProjectController( IProjectInfoService projectInfoService,
-            UserManager<UserInfo> userManager, IReleaseService releaseService, ISprintService sprintService)
+            UserManager<UserInfo> userManager)
         {
             
             _projectInfoService = projectInfoService;
             _userManager = userManager;
-            _releaseService = releaseService;
-            _sprintService = sprintService;
         }
 
         public async Task<IActionResult> Index()
