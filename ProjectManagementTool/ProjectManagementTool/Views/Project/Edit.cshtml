@@ -1,9 +1,19 @@
 ﻿@model DataAccessLayer.Models.ViewModel.EditProjectInfoVM
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Edit";
     ViewData["Banner"] = "Edit Project";
 }
 
+@{
+
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Edit", Url.Action(ActionNameHelper.EditActionName, ControllerNameHelper.ProjectControllerName, new { projectId = ProjectKey.GetProjectId() }) ?? string.Empty)
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
 
 <div id="response-message">
 

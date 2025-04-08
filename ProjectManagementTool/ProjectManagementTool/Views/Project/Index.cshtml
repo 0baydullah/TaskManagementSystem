@@ -1,7 +1,18 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.Entity.ProjectInfo>
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Index";
     ViewData["Banner"] = "Projects";
+}
+
+@{
+
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 

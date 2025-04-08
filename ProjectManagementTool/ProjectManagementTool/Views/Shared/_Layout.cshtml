@@ -78,14 +78,19 @@
         </nav>
     </header>
     <div class="container">
+        
+
         <main role="main" class="pb-3">
-            @if(ViewData["Banner"] != null)
-            {
-                <div class="shadow p-3 mb-5 bg-body-tertiary rounded text-center fw-bold">
-                    <h1>@ViewData["Banner"]</h1>
-                </div>
-            }
-            @RenderBody()
+           @if(ViewData["Banner"] != null)
+           {
+               <div class="shadow p-3 mb-3 bg-body-tertiary rounded text-center fw-bold">
+                   <h1>@ViewData["Banner"]</h1>
+               </div>
+           }
+
+           <partial name="_Breadcrumb" />
+
+           @RenderBody()
         </main>
     </div>
 

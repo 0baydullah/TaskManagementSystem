@@ -1,11 +1,8 @@
 ﻿using BusinessLogicLayer.IService;
-using BusinessLogicLayer.Service;
-using DataAccessLayer.Data;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -99,7 +96,7 @@ namespace ProjectManagementTool.Controllers
                     return NotFound();
                 }
 
-                return Json(new { success = true } );
+                return Json(new { success = true });
             }
             catch (Exception ex)
             {
