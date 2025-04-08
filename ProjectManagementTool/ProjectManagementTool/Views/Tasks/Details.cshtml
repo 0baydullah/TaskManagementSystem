@@ -1,10 +1,23 @@
 ﻿@model DataAccessLayer.Models.ViewModel.TaskDetailsVM
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "Task Details";
     Model.MemberList[0] = "N/A";
     Model.StatusList[0] = "N/A";
     Model.PriorityList[0] = "N/A";
+}
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = Model.Tasks.UserStoryId})?? string.Empty),
+        new KeyValuePair<string, string>("Task Details","#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 <div class="d-flex justify-content-between">
