@@ -126,9 +126,17 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var subTasksTimeTrack = _timeTrackRepo.GetBySubTaskId(subTaskId);
+                var subTasksTimeTracks = _timeTrackRepo.GetBySubTaskId(subTaskId);
+                //var formatedSubTasksTimeTrack = new List<TimeTrack>();
+                
+                //foreach (var track in subTasksTimeTracks)
+                //{
+                //    track.StartTime.ToString("MM/dd/yyyy HH:mm");
+                //    track.EndTime.ToString("MM/dd/yyyy HH:mm");
+                //    formatedSubTasksTimeTrack.Add(track);
+                //}
 
-                return subTasksTimeTrack;
+                return subTasksTimeTracks;
             }
             catch(Exception)
             {

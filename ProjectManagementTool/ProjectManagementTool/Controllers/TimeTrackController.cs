@@ -79,15 +79,15 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                var timeTrack = _timeTrackService.GetBySubTaskId(subTaskId);
+                var timeTracks = _timeTrackService.GetBySubTaskId(subTaskId);
 
-                if (timeTrack != null)
+                if (timeTracks != null)
                 {
-                    var StartTime = timeTrack.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
-                    var EndTime = timeTrack.Max(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
-                    var TotalTime = timeTrack.Sum(t => t.TotalTime);
-                  
-                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
+                    var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                    var EndTime =   timeTracks.Max(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                    var TotalTime = timeTracks.Sum(t => t.TotalTime);
+
+                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime, TimeHistory = timeTracks });
                 }
                 else
                 {

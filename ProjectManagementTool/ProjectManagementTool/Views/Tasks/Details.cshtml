@@ -154,6 +154,9 @@
                         </a>
                         @if (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId))
                         {
+                            <script>
+                                console.log("acces'");
+                            </script>
                             <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                onclick="startTracking(@item.TaskId, @item.SubTaskId)">
                                 <i class="text-success fa-solid fa-circle-play"></i>
@@ -166,17 +169,18 @@
                         }
                         else
                         {
-                            <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
+                            <script>
+                                console.log("don't acces'");
+                            </script>
+                            <a style="pointer-events:none;" id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                onclick="startTracking(@item.TaskId, @item.SubTaskId)">
                                 <i class="text-success fa-solid fa-circle-xmark"></i>
                             </a>
-                            <a id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
+                            <a style="pointer-events:none;" id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
                                onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
                                 <i class="text-success fa-solid fa-circle-xmark"></i>
                             </a>
-
                         }
-
                     </td>
                 </tr>
             }
@@ -206,15 +210,17 @@
 </div>
 
 <!-- Sub Task Details Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade col-12" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailsModalLabel">Sub Task Description</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="modalDescription">
-            </div>
+
+            <div class="modal-body" id="modalDescription"></div>
+            <div class="modal-body" id="eachTimeDescription"> </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -257,6 +263,18 @@
             return dhms;
         }
 
+        // formating date
+        function formatedDate(val) {
+            var date = new Date(val);
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${month}/${day}/${year} ${hours}:${minutes}`;
+        }
+
         // Formate the details
         function showDetailsModal( description, startTime, endTime, totalTime) {
             description = "Description: " + description + "\n";
@@ -264,12 +282,41 @@
             endTime = "End time: " + endTime + "\n";
             seconds = secondsToDHMS(totalTime);
             totalTime = "Total time: " + seconds;
-            
-            document.getElementById('modalDescription').innerText = description  + startTime + endTime + totalTime;
-            var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
-            
-            myModal.show();
+            var mainTimeDescription = description + startTime + endTime + totalTime;
+            return mainTimeDescription;
         }
+
+        function createTimeHistoryTable(data) {
+            let timeHistoryTable = `
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Total Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            data.forEach(item => {
+                const startTime = formatedDate(item.startTime);
+                const endTime = formatedDate(item.endTime);
+                const totalTime = secondsToDHMS(item.totalTime);
+
+                timeHistoryTable += `
+                    <tr>
+                        <td>${startTime}</td>
+                        <td>${endTime}</td>
+                        <td>${totalTime}</td>
+                    </tr>`;
+            });
+            timeHistoryTable += `
+                            </tbody>
+                        </table>`;
+
+            return timeHistoryTable;
+        }
+
 
         // Calling from details button
         function openDetailsModal(subTaskId,description){
@@ -280,7 +327,13 @@
                 },
                 success: function (response) {
                     if (response.success == true) {
-                        showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
+                        var mainTimeDescription = showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
+                        document.getElementById('modalDescription').innerText = mainTimeDescription;
+                        var data = response.timeHistory;
+                        var timeHistoryTable = createTimeHistoryTable(data);
+                        document.getElementById('eachTimeDescription').innerHTML = timeHistoryTable;
+                        var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        myModal.show();
                     }
                     else {
                         document.getElementById('modalDescription').innerText = "Description: " + description + "\n don't work previously in this sub-task";
