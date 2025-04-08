@@ -1,15 +1,25 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.SprintVM>
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Index";
     ViewData["Banner"] = "Sprint Panel";
 }
-
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Sprint", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.SprintControllerName, new{ projectId = ProjectKey.GetProjectId()})?? string.Empty),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+<div id="response-message">
+</div>
 
 <div class="mb-3">
     <a href="@Url.Action("Create", "Sprint", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold"> <i class="text-light fa-solid fa-plus fw-bold"></i> Create Sprint</a>
     <a class="btn shadow-sm text-success fw-bold float-end mx-3" style="background-color:aliceblue;" href="#">Filter</a>
-</div>
-<div id="response-message">
 </div>
 
 <div>

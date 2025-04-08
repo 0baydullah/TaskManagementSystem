@@ -8,10 +8,11 @@
 @{
     var breadcrumbs = new List<KeyValuePair<string, string>>
     {
-        new KeyValuePair<string, string>("Project", Url.Action("Index", "Project") ?? string.Empty),
-        new KeyValuePair<string, string>("Dashboard", Url.Action("Details", "Project",new{id = ProjectKey.GetProjectId()})?? string.Empty),
-        new KeyValuePair<string, string>("Release", Url.Action("Index", "Release",new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
-        new KeyValuePair<string, string>("Edit", Url.Action("Edit", "Release",new{id = Model.ReleaseId})?? string.Empty),
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Release", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ReleaseControllerName, new{ projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Edit", "#"),
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
 }

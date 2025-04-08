@@ -1,7 +1,20 @@
 ﻿@model DataAccessLayer.Models.ViewModel.SprintCreateVM
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Create Sprint";
     ViewData["Banner"] = "Create Sprint";
+}
+
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Sprint", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.SprintControllerName, new{ projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Create", "#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 <div id="response-message">

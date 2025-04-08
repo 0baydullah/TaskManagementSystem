@@ -6,9 +6,9 @@
 }
 
 @{
-    // use this block for BREADCRUMBS
     var breadcrumbs = new List<KeyValuePair<string, string>>
     {
+        new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
         new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new { id=Model.ProjectId }) ?? string.Empty),
     };
