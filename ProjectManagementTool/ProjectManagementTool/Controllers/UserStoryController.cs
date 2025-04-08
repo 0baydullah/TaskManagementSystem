@@ -140,7 +140,7 @@ namespace ProjectManagementTool.Controllers
                 var member = _memberService.GetAllMember().FirstOrDefault(m => m.Email == user.Email && m.ProjectId == story.ProjectId);
 
                 storyDetails.MemberId = member.MemberId; 
-                storyDetails.AdminMemberId = memberIds;
+                storyDetails.AdminMemberIds = memberIds;
                 storyDetails.Story = story;
                 storyDetails.Tasks = tasks;
                 storyDetails.Bugs = bugs;

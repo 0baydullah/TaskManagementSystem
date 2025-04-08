@@ -119,9 +119,11 @@ namespace ProjectManagementTool.Controllers
                 var task = _tasksService.GetTasks(id);
                 var subtasks = _subTaskService.GetAllSubTaskByTask(id);
                 var user = await _userManager.GetUserAsync(User);
+                var memberIds = _memberService.GetAllMember().Where(m => m.ProjectId == projectId && m.Role == "Admin").ToList().Select(i => i.MemberId).ToList();
                 var member = _memberService.GetAllMember().FirstOrDefault(m => m.Email == user.Email && m.ProjectId == projectId);
 
                 tasksDetails.MemberId = member.MemberId;
+                tasksDetails.AdminMemberIds = memberIds;
                 tasksDetails.Tasks = task;
                 tasksDetails.StoryName = _userStoryService.GetUserStory(task.UserStoryId).StoryName;
                 tasksDetails.SubTask = subtasks;

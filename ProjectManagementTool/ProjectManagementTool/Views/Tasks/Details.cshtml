@@ -152,7 +152,7 @@
                         <a class="btn btn-light" onclick="openDetailsModal(@item.SubTaskId,'@item.Descripton')">
                             <i class="text-success fa-solid fa-circle-info"></i> 
                         </a>
-                        @if (@Model.MemberId == @item.AssignMembersId)
+                        @if (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId))
                         {
                             <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                onclick="startTracking(@item.TaskId, @item.SubTaskId)">

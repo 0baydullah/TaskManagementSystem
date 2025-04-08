@@ -169,7 +169,7 @@ else
                             <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
                                 <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
                             </a>
-                            @if (@item.SubTaskCount == 0 && (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberId.Contains(Model.MemberId)))
+                            @if (@item.SubTaskCount == 0 && (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId)))
                            {
                                 <a id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                    onclick="startTracking(@item.TaskId)">
