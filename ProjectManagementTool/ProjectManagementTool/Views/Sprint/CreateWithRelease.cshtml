@@ -1,0 +1,120 @@
+﻿@model DataAccessLayer.Models.ViewModel.SprintCreateVM
+@using DataAccessLayer.StaticClass
+@{
+    ViewData["Title"] = "Create Sprint";
+    ViewData["Banner"] = "Create Sprint into Release";
+}
+
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Release", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ReleaseControllerName, new{ projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ReleaseControllerName, new{ id = ViewBag.ReleaseId}) ?? string.Empty),
+        new KeyValuePair<string, string>("CreateSprint", "#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
+<div id="response-message">
+</div>
+
+<form id="form" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.SprintName"> </label>
+        <input asp-for="@Model.SprintName" class="form-control" id="name" placeholder="Enter Sprint Name">
+        <span asp-validation-for="SprintName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Description"> </label>
+        <textarea asp-for="@Model.Description" class="form-control" id="description" placeholder="Write Short Description"> </textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.StartDate"> </label>
+        <input asp-for="@Model.StartDate" class="form-control" id="startDate" placeholder="Select Start Date" type="date">
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Duration"> </label>
+        <input asp-for="@Model.Duration" class="form-control" id="duration" placeholder="Select Sprint Duration" type="number">
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Points"> </label>
+        <input asp-for="@Model.Points" class="form-control" id="points" placeholder="Enter Sprint Points" type="number">
+        <span asp-validation-for="Points" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Velocity"> </label>
+        <input asp-for="@Model.Velocity" class="form-control" id="velocity" placeholder="Enter Sprint Velocity" type="number">
+        <span asp-validation-for="Velocity" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input asp-for="@Model.ReleaseId" type="hidden" value="@ViewBag.ReleaseId"/>
+        <span asp-validation-for="ReleaseId" class="text-danger"></span>
+    </div>
+    <br /> <br />
+
+    <button type="button" class="btn btn-success fw-bold" id="submitForm">Create Sprint</button>
+    <a href="@Url.Action("Details", "Release", new { id = @ViewBag.ReleaseId })" class="btn btn-success fw-bold float-end">Back to Details</a>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function() {
+
+            $('#submitForm').click( function (e) {
+                e.preventDefault();
+
+                var form = $('#form');
+                var formData = new FormData(document.getElementById('form'));
+
+                for( var pair of formData.entries()) {
+                    console.log(pair[0]+ ', '+ pair[1]);
+                }
+
+                if(form.valid())
+                {
+                    $.ajax({
+                    url:'@Url.Action("CreateWithRelease", "Sprint")',
+                    method:'POST',
+                    data:formData,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                        if(response.success){
+                            $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
+                            setTimeout(function(){
+                            window.location.href = '@Url.Action("Details", "Release", new { id = ViewBag.ReleaseId })';
+                            }, 1000);
+                        }
+                        else{
+                            $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                        }
+
+                    },
+                    error: function(response){
+                        $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
+                    }
+                });
+
+                }
+
+            });
+
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

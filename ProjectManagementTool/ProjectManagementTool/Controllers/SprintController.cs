@@ -122,7 +122,73 @@ namespace ProjectManagementTool.Controllers
             
         }
 
-        
+        [HttpGet]
+        public IActionResult CreateWithRelease(int releaseId)
+        {
+            try
+            {
+                ViewBag.ReleaseId = releaseId;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult CreateWithRelease(SprintCreateVM sprint)
+        {
+            bool isSuccess = false;
+            string message = "Invalid Data Submitted!";
+
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(m => m.ErrorMessage);
+
+                foreach (var error in errors)
+                {
+                    message += error + " ";
+                    Console.WriteLine(error);
+                }
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            try
+            {
+
+                var response = _sprintService.AddSprint(sprint);
+                if (response == true)
+                {
+                    isSuccess = true;
+                    message = "Sprint added successfully!";
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Sprint alredy exist!";
+                    _log.Info(message);
+                }
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+
+        }
+
+
         [HttpGet]
         public IActionResult Edit(int id, int projectId)
         {
