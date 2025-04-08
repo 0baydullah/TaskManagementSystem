@@ -27,7 +27,7 @@ namespace ProjectManagementTool.Controllers
             _projectInfoService = projectInfoService;
             _userManager = userManager;
         }
-       
+
         [HttpGet]
         public IActionResult Index(int projectId)
         {
@@ -35,17 +35,17 @@ namespace ProjectManagementTool.Controllers
             {
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
                 ViewBag.ProjectId = projectId;
-                
+
                 return View(members);
             }
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
-                
+
                 return RedirectToAction("Exception", "Error");
             }
-           
+
         }
 
         [HttpGet]
@@ -65,7 +65,7 @@ namespace ProjectManagementTool.Controllers
                 TempData["Error"] = ex.Message;
 
                 return RedirectToAction("Exception", "Error");
-            }  
+            }
         }
 
         [HttpGet]
@@ -143,7 +143,7 @@ namespace ProjectManagementTool.Controllers
 
                 return RedirectToAction("Exception", "Error");
             }
-            
+
         }
 
         [HttpPost]
@@ -172,7 +172,7 @@ namespace ProjectManagementTool.Controllers
                     var roleName = _roleService.GetRoleById(model.RoleId).RoleName;
                     await _userManager.AddToRoleAsync(user, roleName);
                     var response = _memberService.AddMember(model);
-                    if(response == true)
+                    if (response == true)
                     {
                         isSuccess = true;
                         message = "Member added successfully!";
@@ -200,11 +200,11 @@ namespace ProjectManagementTool.Controllers
             catch (Exception ex)
             {
 
-                _log.Error( ex.Message);
+                _log.Error(ex.Message);
                 TempData["Error"] = ex.Message;
 
                 return RedirectToAction("Exception", "Error");
-            }   
+            }
         }
 
         [HttpGet]
@@ -235,11 +235,11 @@ namespace ProjectManagementTool.Controllers
 
                 return RedirectToAction("Exception", "Error");
             }
-            
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit( MemberVM model, int id)
+        public async Task<IActionResult> Edit(MemberVM model, int id)
         {
             bool isSuccess = false;
             string message = "Invalid data submitted! ";
@@ -257,9 +257,9 @@ namespace ProjectManagementTool.Controllers
             }
             try
             {
-                
+
                 var response = await _memberService.UpdateMember(id, model);
-                if( response == true)
+                if (response == true)
                 {
                     isSuccess = true;
                     message = "Member updated successfully!";
@@ -267,11 +267,11 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
-                    isSuccess= false;
+                    isSuccess = false;
                     message = "Member not Updated";
                     _log.Info(message);
                 }
-                
+
                 return Json(new { success = $"{isSuccess}", message = $"{message}" });
             }
             catch (Exception ex)
@@ -280,11 +280,11 @@ namespace ProjectManagementTool.Controllers
                 TempData["Error"] = ex.Message;
 
                 return RedirectToAction("Exception", "Error");
-            } 
+            }
         }
 
         [HttpPost]
-        public IActionResult Delete(int id )
+        public IActionResult Delete(int id)
         {
             try
             {
@@ -306,8 +306,26 @@ namespace ProjectManagementTool.Controllers
 
                 return RedirectToAction("Exception", "Error");
             }
-            
 
+
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var member = _memberService.GetMemberDetails(id);
+                
+                return View(member);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
         }
     }
 }

@@ -1,0 +1,104 @@
+﻿@model DataAccessLayer.Models.ViewModel.MemberDetailsVM
+@using DataAccessLayer.StaticClass
+
+@{
+    ViewData["Title"] = "Details";
+    ViewData["Banner"] = "Member Details";
+}
+
+@* @{ *@
+@*     var breadcrumbs = new List<KeyValuePair<string, string>> *@
+@*     { *@
+@*         new KeyValuePair<string, string>("","#"), *@
+@*         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty), *@
+@*         new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ProjectKey.GetProjectId()})?? string.Empty), *@
+@*         new KeyValuePair<string, string>("Release", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ReleaseControllerName, new{ projectId = ProjectKey.GetProjectId()})?? string.Empty), *@
+@*         new KeyValuePair<string, string>("Details", "#"), *@
+@*     }; *@
+@*     ViewData["Breadcrumbs"] = breadcrumbs; *@
+@* } *@
+
+<div class="d-flex justify-content-between">
+    <h3 class="text-center">Member Name: @Model.MemberName</h3>
+</div>
+
+<hr />
+
+<div>
+    Email: @Model.Email
+    <hr />
+    Role: @Model.RoleName
+    <hr />
+</div>
+
+<div class="d-flex justify-content-between mb-2">
+    <h3>Assigned Tasks</h3>
+</div>
+
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+
+                <th>
+                    Description
+                </th>
+
+                <th>
+                   Estimated Time
+                </th>
+                <th>
+                    Tag
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Priority
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Tasks.Any())
+            {
+                @foreach (var item in Model.Tasks)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripton)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstimatedTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tag)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Priority)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center fw-bold text-danger">No Tasks found!</td>
+                </tr>
+            }
+
+
+        </tbody>
+
+    </table>
+</div>
+

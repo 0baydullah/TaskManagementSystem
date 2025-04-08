@@ -60,8 +60,9 @@
                     </td>
                     <td class="text-center">
                         <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-pen"></i></a> |
+                        <a class="btn btn-light" asp-action="Details" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-info"></i></a> |
                         <a class="btn btn-light" onclick="openDeleteModal('@item.MemberId')"><i class="text-danger fa-solid fa-trash"></i> </a>
-                    </td>
+                    </td> 
                 </tr>
             }
         }
