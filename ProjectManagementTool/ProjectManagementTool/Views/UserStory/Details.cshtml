@@ -163,7 +163,7 @@ else
                             <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
                                 <i class="text-success fa-solid fa-trash"></i>
                             </a>
-                            <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
+                            <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@Model.Story.ProjectId">
                                 <i class="text-success fa-solid fa-circle-info"></i>
                             </a>
                             <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
