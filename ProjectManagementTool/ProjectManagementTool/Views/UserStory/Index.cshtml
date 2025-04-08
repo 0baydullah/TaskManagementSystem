@@ -8,7 +8,7 @@
 }
 
 
-@{ // use this block for BREADCRUMBS
+@{
     var breadcrumbs = new List<KeyValuePair<string, string>>
     {
         new KeyValuePair<string, string>("","#"),
@@ -78,7 +78,10 @@ else
                 }
                 <tr>
                     <td>
-                        @item.StoryName
+                        <a class="text-decoration-none fw-bold" asp-action="Details" asp-route-id="@item.StoryId">
+							@item.StoryName
+                        </a>
+                        
                     </td>
                     @*    <td>
                    @item.ProjectId
@@ -98,12 +101,12 @@ else
                     <td class="text-center">
 
                         <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.StoryId">
-                            <i class="text-danger fa-solid fa-pen"></i>
+                            <i class="text-success fa-solid fa-pen"></i>
                         </a>
                         <a class="btn btn-light" onclick="openDeleteModal('@item.StoryId')">
                             <i class="text-danger fa-solid fa-trash"></i>
                         </a>
-                        <a class="btn btn-light" asp-action="Details" asp-route-id="@item.StoryId">
+						@*   <a class="btn btn-light" asp-action="Details" asp-route-id="@item.StoryId">
                             <i class="text-danger fa-solid fa-circle-info"></i>
                         </a>
                         <a class="btn btn-light" asp-controller="Tasks" asp-action="Create" asp-route-id="@item.StoryId">
@@ -111,7 +114,7 @@ else
                         </a>
                         <a class="btn btn-light" asp-controller="Bug" asp-action="Create" asp-route-id="@item.StoryId">
                             <i class="text-danger fa-solid fa-plus"></i> <small>Bug</small>
-                        </a>
+                        </a> *@
 
                     </td>
                 </tr>
