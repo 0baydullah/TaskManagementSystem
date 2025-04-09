@@ -10,9 +10,10 @@
     Model.PriorityList[0] = "N/A";
     Model.SprintList[0] = "N/A";
 }
-@{ // Use this code blocks for BREADCRUMBS
+@{ 
     var breadcrumbs = new List<KeyValuePair<string, string>>
     {
+        new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
         new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ProjectKey.GetProjectId()})?? string.Empty),
         new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
@@ -84,16 +85,15 @@ else
                 </tr>
             </tbody>
         </table>
-        <hr>
     </div>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mt-5 mb-2">
         <h3>Tasks</h3>
         <a class="btn btn-success w-25" asp-controller="Tasks" asp-action="Create" asp-route-id="@Model.Story.StoryId">
             <i class="text-light fa-solid fa-plus"></i> Task
         </a>
     </div>
     <div>
-        <table class="table">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>
@@ -114,7 +114,9 @@ else
                     <th>
                         Reviewer
                     </th>
-                    <th></th>
+                    <th class="text-center">
+                        Actions 
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -138,7 +140,9 @@ else
                     }
                     <tr>
                         <td>
-                            @item.Name
+                            <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId">
+                                @item.Name
+                            </a>
                         </td>
                         <td>
                             @Model.StatusList[item.Status]
@@ -155,53 +159,52 @@ else
                         <td>
                             @Model.MemberList[item.ReviewerMemberId]
                         </td>
-                        <td>
+                        <td class="text-center">
 
                             <a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@item.TaskId">
                                 <i class="text-success fa-solid fa-pen"></i>
                             </a>
                             <a class="btn btn-light" onclick="openDeleteModal(@item.TaskId)">
-                                <i class="text-success fa-solid fa-trash"></i>
+                                <i class="text-danger fa-solid fa-trash"></i>
                             </a>
                             <a class="btn btn-light" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@Model.Story.ProjectId">
-                                <i class="text-success fa-solid fa-circle-info"></i>
+
                             </a>
-                            <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
+                             <a class="btn btn-light" asp-controller="SubTask" asp-action="Create" asp-route-id="@item.TaskId">
                                 <i class="text-success fa-solid fa-plus"></i> <small>Sub Task</small>
-                            </a>
+                            </a> *@
                             @if (@item.SubTaskCount == 0 && (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId)))
                            {
                                 <a id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                    onclick="startTracking(@item.TaskId)">
-                                    <i class="text-success fa-solid fa-circle-play"></i>
+                                    <i class="text-warning fa-solid fa-circle-play"></i>
                                 </a>
                                 <a id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
                                    onclick="stopTracking(@item.TaskId)">
-                                    <i class="text-success fa-solid fa-circle-pause"></i>
+                                    <i class="text-warning fa-solid fa-circle-pause"></i>
                                 </a>
                            }
                            else
                            {
                                 <a style ="pointer-events:none;" id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                    onclick="startTracking(@item.TaskId)">
-                                    <i style="color: grey;" class="text-success fa-solid fa-circle-xmark"></i>
+                                    <i  class="text-secondary fa-solid fa-circle-xmark"></i>
                                 </a>
                                 <a style="pointer-events:none;" id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
                                    onclick="stopTracking(@item.TaskId)">
-                                    <i style="color: grey;" class="text-success fa-solid fa-circle-xmark"></i>
+                                    <i  class="text-secondary fa-solid fa-circle-xmark"></i>
                                 </a>
                            }
                             
                             <a id="pauseButton-@item.TaskId" class="btn btn-light"
                                onclick="timeDetails(@item.TaskId)">
-                                <i class="text-success fa-solid fa-chalkboard"></i>
+                                <i class="text-primary fa-solid fa-stopwatch"></i>
                             </a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-    <hr />
     </div>
 
 
@@ -267,21 +270,21 @@ else
 
     <!-- bug section -->
 
-     <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mt-5  mb-2">
         <h3>Bugs</h3>
         <a class="btn btn-danger w-25" asp-controller="Bug" asp-action="Create" asp-route-id="@Model.Story.StoryId">
             <i class="text-light fa-solid fa-plus"></i> Bug
         </a>
     </div>
     <div>
-        <table class="table">
+        <table class= " table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>
                         Bug
                     </th>
                     <th>
-                        Status
+                        Status 
                     </th>
                     <th>
                         Priority
@@ -289,7 +292,9 @@ else
                     <th>
                         Assignee
                     </th>
-                    <th></th>
+                    <th class="text-center">
+                        Actions
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -309,7 +314,9 @@ else
                     }
                     <tr>
                         <td>
-                            @item.Name
+                            <a class="fw-bold text-decoration-none" asp-controller="Bug" asp-action="Details" asp-route-id="@item.BugId">
+                                @item.Name
+                            </a>
                         </td>
                         <td>
                             @Model.StatusList[item.Status]
@@ -320,18 +327,19 @@ else
                         <td>
                             @Model.MemberList[item.AssignMembersId]
                         </td>
-                        <td>
+                        <td class="text-center">
 
                             <a class="btn btn-light" asp-controller="Bug" asp-action="Edit" asp-route-id="@item.BugId">
-                                <i class="text-danger fa-solid fa-pen"></i>
+                                <i class="text-success fa-solid fa-pen"></i>
                             </a>
                             <a class="btn btn-light" onclick="openDeleteBugModal(@item.BugId)">
                                 <i class="text-danger fa-solid fa-trash"></i>
                             </a>
+@* 
                             <a class="btn btn-light" asp-controller="Bug" asp-action="Details" asp-route-id="@item.BugId">
                                 <i class="text-danger fa-solid fa-circle-info"></i>
                             </a>
-
+ *@
                         </td>
                     </tr>
                 }

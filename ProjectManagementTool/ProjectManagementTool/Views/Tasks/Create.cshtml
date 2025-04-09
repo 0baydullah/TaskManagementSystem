@@ -1,8 +1,21 @@
 ﻿@model DataAccessLayer.Models.Entity.Tasks
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "Task-Create";
 	ViewData["Banner"] = "Create Task"; 
+}
+ @{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = ViewBag.UserStoryId})?? string.Empty),
+        new KeyValuePair<string, string>("Task Create","#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 

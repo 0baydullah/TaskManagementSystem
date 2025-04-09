@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
-using System.Threading.Tasks;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -24,7 +23,7 @@ namespace ProjectManagementTool.Controllers
         private readonly ISprintService _sprintService;
         private readonly ITimeTrackService _timeTrackService;
         private readonly IBugService _bugService;
-        private readonly UserManager<UserInfo> _userManager; 
+        private readonly UserManager<UserInfo> _userManager;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryController));
 
@@ -139,7 +138,7 @@ namespace ProjectManagementTool.Controllers
                 var memberIds = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId && m.Role == "Admin").ToList().Select(i => i.MemberId).ToList();
                 var member = _memberService.GetAllMember().FirstOrDefault(m => m.Email == user.Email && m.ProjectId == story.ProjectId);
 
-                storyDetails.MemberId = member.MemberId; 
+                storyDetails.MemberId = member.MemberId;
                 storyDetails.AdminMemberIds = memberIds;
                 storyDetails.Story = story;
                 storyDetails.Tasks = tasks;
