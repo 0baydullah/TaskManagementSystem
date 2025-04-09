@@ -28,7 +28,6 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                ProjectKey.SetProjectId(0);
                 var user = await _userManager.GetUserAsync(User);
                 var projects = _projectInfoService.GetAllProjectInfo(user?.Email ?? "");
 
@@ -128,6 +127,8 @@ namespace ProjectManagementTool.Controllers
                     CompanyName = project.CompanyName,
                     ProjectOwnerId = project.ProjectOwnerId,
                 };
+                ViewBag.ProjectId = id;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(model);
 
@@ -210,8 +211,8 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var project = await _projectInfoService.GetProjectInfoDetails(id);
-                ProjectKey.SetProjectId(id);
-                ProjectKey.SetProjectKey(project.Key);
+                ViewBag.ProjectId = id;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(project);
             }

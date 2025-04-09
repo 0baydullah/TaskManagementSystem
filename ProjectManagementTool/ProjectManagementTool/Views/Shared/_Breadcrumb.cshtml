@@ -9,17 +9,18 @@
         <ol class="breadcrumb">
             @foreach (var breadcrumb in breadcrumbs)
             {
-                if(breadcrumb.Key == breadcrumbs[^1].Key){
+                if (breadcrumb.Key == breadcrumbs[^1].Key)
+                {
                     <li class="breadcrumb-item fw-bold">
                         @breadcrumb.Key
                     </li>
                 }
-                else{
+                else
+                {
                     <li class="breadcrumb-item fw-bold">
                         <a class="text-decoration-none" href="@breadcrumb.Value">@breadcrumb.Key</a>
                     </li>
                 }
-                
             }
         </ol>
     </nav>

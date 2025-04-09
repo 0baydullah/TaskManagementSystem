@@ -29,7 +29,7 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var sprints = _sprintService.GetAllSprint(projectId);
-                ViewBag.ProjectId = projectId;
+                var project = _projectInfoService.GetProjectInfo(projectId);
                 var data = sprints.Select(s => new SprintVM
                 {
                     SprintId = s.SprintId,
@@ -41,6 +41,8 @@ namespace ProjectManagementTool.Controllers
                     Velocity = s.Velocity,
                     ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
                 }).ToList();
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(data);
             }
@@ -60,8 +62,10 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId).ToList();
+                var project = _projectInfoService.GetProjectInfo(projectId);
                 ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
-                ViewBag.ProjectId = projectId;
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View();
             }
@@ -122,7 +126,77 @@ namespace ProjectManagementTool.Controllers
             
         }
 
-        
+        [HttpGet]
+        public IActionResult CreateWithRelease(int releaseId)
+        {
+            try
+            {
+                var release = _releaseService.GetRelease(releaseId);
+                var project = _projectInfoService.GetProjectInfo(release.ProjectId);
+                ViewBag.ReleaseId = releaseId;
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult CreateWithRelease(SprintCreateVM sprint)
+        {
+            bool isSuccess = false;
+            string message = "Invalid Data Submitted!";
+
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(m => m.ErrorMessage);
+
+                foreach (var error in errors)
+                {
+                    message += error + " ";
+                    Console.WriteLine(error);
+                }
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            try
+            {
+
+                var response = _sprintService.AddSprint(sprint);
+                if (response == true)
+                {
+                    isSuccess = true;
+                    message = "Sprint added successfully!";
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Sprint alredy exist!";
+                    _log.Info(message);
+                }
+
+                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+
+        }
+
+
         [HttpGet]
         public IActionResult Edit(int id, int projectId)
         {
@@ -213,11 +287,13 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, int projectId, string projectKey)
         {
             try
             {
                 var sprint = _sprintService.GetSprintDetails(id);
+                ViewBag.ProjectId = projectId;
+                ViewBag.ProjectKey = projectKey;
                 
                 return View(sprint);
             }

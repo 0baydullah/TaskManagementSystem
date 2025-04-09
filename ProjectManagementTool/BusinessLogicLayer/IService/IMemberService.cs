@@ -21,6 +21,7 @@ namespace BusinessLogicLayer.IService
         public List<AllUserVM> GetAllUser(List<UserInfo> user);
 
         public UserInfo GetUserByEmail(string email);
+        public MemberDetailsVM GetMemberDetails(int id);
 
     }
 }

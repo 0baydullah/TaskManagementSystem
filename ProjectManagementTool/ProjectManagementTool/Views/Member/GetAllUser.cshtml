@@ -1,10 +1,23 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.AllUserVM>
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "GetAllUser";
     ViewData["Banner"] = "All Registered Users";
 }
+@{
 
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("AllUser", Url.Action(ActionNameHelper.GetAllUserActionName, ControllerNameHelper.MemberControllerName) ?? string.Empty),
+        
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
 
+<div id="reponse-message">
+
+</div>
 
 <div class="mb-3">
     <a class="btn btn-success fw-bold" href="@Url.Action("Register", "Member")"> <i class="text-light fa-solid fa-plus fw-bold"></i> Add User</a>

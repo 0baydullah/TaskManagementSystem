@@ -12,6 +12,7 @@ namespace DataAccessLayer.StaticClass
         public const string DetailsActionName = "Details";
         public const string EditActionName = "Edit";
         public const string CreateActionName = "Create";
+        public const string GetAllUserActionName = "GetAllUser";
     }
     public static class ControllerNameHelper
     {
@@ -19,5 +20,8 @@ namespace DataAccessLayer.StaticClass
         public const string ProjectControllerName = "Project";
         public const string TasksControllerName = "Tasks";
         public const string SubTasksControllerName = "SubTask";
+        public const string ReleaseControllerName = "Release";
+        public const string SprintControllerName = "Sprint";
+        public const string MemberControllerName = "Member";
     }
 }

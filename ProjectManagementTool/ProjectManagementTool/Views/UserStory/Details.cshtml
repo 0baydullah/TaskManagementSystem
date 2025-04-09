@@ -15,8 +15,8 @@
     {
         new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
-        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ProjectKey.GetProjectId()})?? string.Empty),
-        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
         new KeyValuePair<string, string>("Details", "#")
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
@@ -140,7 +140,7 @@ else
                     }
                     <tr>
                         <td>
-                            <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@ProjectKey.GetProjectId()">
+                            <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@ViewBag.ProjectId">
                                 @item.Name
                             </a>
                         </td>
@@ -182,11 +182,11 @@ else
                            {
                                 <a style ="pointer-events:none;" id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                    onclick="startTracking(@item.TaskId)">
-                                    <i  class="text-secondary fa-solid fa-circle-xmark"></i>
+                                    <i  class="text-danger fa-solid fa-circle-xmark"></i>
                                 </a>
                                 <a style="pointer-events:none;" id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
                                    onclick="stopTracking(@item.TaskId)">
-                                    <i  class="text-secondary fa-solid fa-circle-xmark"></i>
+                                    <i  class="text-danger fa-solid fa-circle-xmark"></i>
                                 </a>
                            }
                             
@@ -489,7 +489,7 @@ else
             const hours = String(date.getHours()).padStart(2, '0');
             const minutes = String(date.getMinutes()).padStart(2, '0');
 
-            return `${month}/${day}/${year} ${hours}:${minutes}`;
+            return `${year}/${month}/${day} ${hours}:${minutes}`;
         }
 
         // Formate the details

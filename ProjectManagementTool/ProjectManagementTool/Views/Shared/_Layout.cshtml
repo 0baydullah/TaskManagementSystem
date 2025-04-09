@@ -27,20 +27,17 @@
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Projects</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="GetAllUser">Member</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="GetAll">Role</a>
                             </li>
-                            @if (ProjectKey.GetProjectId() != 0)
+                            @if (ViewBag.ProjectId != 0)
                             {
-                                int id = ProjectKey.GetProjectId();
-                                string key = ProjectKey.GetProjectKey();
+                                var id = ViewBag.ProjectId;
+                                var key = ViewBag.ProjectKey;
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" href="/Project/Details/@id">@key</a>
+                                    <a class="nav-link text-success" href="/Project/Details/@id">@key</a>
                                 </li>
                             }
                             <ul class="navbar-nav ms-auto">

@@ -2,7 +2,7 @@
 @using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Create Sprint";
-    ViewData["Banner"] = "Create Sprint";
+    ViewData["Banner"] = "Create Sprint into Release";
 }
 
 @{
@@ -10,9 +10,10 @@
     {
         new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
-        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
-        new KeyValuePair<string, string>("Sprint", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.SprintControllerName, new{ projectId = ViewBag.ProjectId })?? string.Empty),
-        new KeyValuePair<string, string>("Create", "#"),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id =  ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Release", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ReleaseControllerName, new{ projectId =  ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ReleaseControllerName, new{ id = ViewBag.ReleaseId}) ?? string.Empty),
+        new KeyValuePair<string, string>("CreateSprint", "#"),
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
 }
@@ -55,23 +56,18 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="@Model.ReleaseId"> </label>
-        <select asp-for="@Model.ReleaseId" class="form-control" asp-items="ViewBag.Releases">
-            <option value="">-- Select Release --</option>
-        </select>
+        <input asp-for="@Model.ReleaseId" type="hidden" value="@ViewBag.ReleaseId"/>
         <span asp-validation-for="ReleaseId" class="text-danger"></span>
     </div>
     <br /> <br />
 
     <button type="button" class="btn btn-success fw-bold" id="submitForm">Create Sprint</button>
-    <a href="@Url.Action("Index", "Sprint", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold float-end">Back to List</a>
+    <a href="@Url.Action("Details", "Release", new { id = @ViewBag.ReleaseId })" class="btn btn-success fw-bold float-end">Back to Details</a>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-@section Scripts{
-
-
+@section Scripts {
 
     <script>
         $(document).ready(function() {
@@ -89,7 +85,7 @@
                 if(form.valid())
                 {
                     $.ajax({
-                    url:'@Url.Action("Create", "Sprint")',
+                    url:'@Url.Action("CreateWithRelease", "Sprint")',
                     method:'POST',
                     data:formData,
                     processData: false,
@@ -98,7 +94,7 @@
                         if(response.success){
                             $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
                             setTimeout(function(){
-                            window.location.href = '@Url.Action("Index", "Sprint", new { projectId = ViewBag.ProjectId })';
+                            window.location.href = '@Url.Action("Details", "Release", new { id = ViewBag.ReleaseId })';
                             }, 1000);
                         }
                         else{
@@ -112,7 +108,7 @@
                 });
 
                 }
-               
+
             });
 
         });

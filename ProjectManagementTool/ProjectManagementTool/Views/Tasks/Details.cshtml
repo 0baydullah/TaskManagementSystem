@@ -12,8 +12,8 @@
     {
         new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
-        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ProjectKey.GetProjectId()})?? string.Empty),
-        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
         new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = Model.Tasks.UserStoryId})?? string.Empty),
         new KeyValuePair<string, string>("Task Details","#"),
     };
@@ -160,37 +160,37 @@
                             <i class="text-success fa-solid fa-pen"></i>
                         </a>
                         <a class="btn btn-light" onclick="openDeleteModal(@item.SubTaskId)">
-                            <i class="text-success fa-solid fa-trash"></i>
+                            <i class="text-danger fa-solid fa-trash"></i>
                         </a>
                         <a class="btn btn-light" onclick="openDetailsModal(@item.SubTaskId,'@item.Descripton')">
-                            <i class="text-success fa-solid fa-circle-info"></i> 
+                            <i class="text-primary fa-solid fa-circle-info"></i> 
                         </a>
                         @if (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId))
                         {
                             <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                onclick="startTracking(@item.TaskId, @item.SubTaskId)">
-                                <i class="text-success fa-solid fa-circle-play"></i>
+                                <i class="text-warning fa-solid fa-circle-play"></i>
                             </a>
                             <a id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
                                onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
-                                <i class="text-success fa-solid fa-circle-pause"></i>
+                                <i class="text-warning fa-solid fa-circle-pause"></i>
                             </a>
-
                         }
                         else
                         {
-                            <script>
-                                console.log("don't acces'");
-                            </script>
                             <a style="pointer-events:none;" id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                onclick="startTracking(@item.TaskId, @item.SubTaskId)">
-                                <i class="text-success fa-solid fa-circle-xmark"></i>
+                                <i class="text-danger fa-solid fa-circle-xmark"></i>
                             </a>
                             <a style="pointer-events:none;" id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
                                onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
-                                <i class="text-success fa-solid fa-circle-xmark"></i>
+                                <i class="text-danger fa-solid fa-circle-xmark"></i>
                             </a>
                         }
+                        <a id="pauseButton-@item.TaskId" class="btn btn-light"
+                           onclick="timeDetails(@item.TaskId)">
+                            <i class="text-black fa-solid fa-stopwatch"></i>
+                        </a>
                     </td>
                 </tr>
             }
@@ -296,7 +296,7 @@
             const hours = String(date.getHours()).padStart(2, '0');
             const minutes = String(date.getMinutes()).padStart(2, '0');
 
-            return `${month}/${day}/${year} ${hours}:${minutes}`;
+            return `${year}/${month}/${day} ${hours}:${minutes}`;
         }
 
         // Formate the details

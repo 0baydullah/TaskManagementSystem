@@ -1,7 +1,19 @@
 ﻿@model DataAccessLayer.Models.Entity.Sprint
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Edit Sprint";
     ViewData["Banner"] = "Edit Sprint";
+}
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Sprint", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.SprintControllerName, new{ projectId = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Edit", "#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 <div id="response-message">
@@ -43,7 +55,7 @@
     <div class="form-group">
         <label asp-for="@Model.ReleaseId"> </label>
         <select asp-for="@Model.ReleaseId" class="form-control" asp-items="ViewBag.Releases">
-            <option value="">-- Select Project --</option>
+            <option value="">-- Select Release --</option>
         </select>
     </div>
     <br /> <br />
