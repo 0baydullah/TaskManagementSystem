@@ -109,6 +109,7 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var timeTracks = _timeTrackService.GetAllByTaskId(taskId);
+                
                 if (timeTracks.Count != 0)
                 {
                     var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
