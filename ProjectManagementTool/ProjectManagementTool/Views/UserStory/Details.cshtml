@@ -182,11 +182,11 @@ else
                            {
                                 <a style ="pointer-events:none;" id="playButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                    onclick="startTracking(@item.TaskId)">
-                                    <i  class="text-secondary fa-solid fa-circle-xmark"></i>
+                                    <i  class="text-danger fa-solid fa-circle-xmark"></i>
                                 </a>
                                 <a style="pointer-events:none;" id="pauseButton-@item.TaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
                                    onclick="stopTracking(@item.TaskId)">
-                                    <i  class="text-secondary fa-solid fa-circle-xmark"></i>
+                                    <i  class="text-danger fa-solid fa-circle-xmark"></i>
                                 </a>
                            }
                             
@@ -489,7 +489,7 @@ else
             const hours = String(date.getHours()).padStart(2, '0');
             const minutes = String(date.getMinutes()).padStart(2, '0');
 
-            return `${month}/${day}/${year} ${hours}:${minutes}`;
+            return `${year}/${month}/${day} ${hours}:${minutes}`;
         }
 
         // Formate the details

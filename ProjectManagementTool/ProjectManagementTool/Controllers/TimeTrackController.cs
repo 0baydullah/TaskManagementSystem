@@ -83,8 +83,8 @@ namespace ProjectManagementTool.Controllers
 
                 if (timeTracks != null)
                 {
-                    var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
-                    var EndTime =   timeTracks.Max(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
+                    var StartTime = timeTracks.Min(t => t.StartTime).ToString("yyyy/MM/dd HH:mm");
+                    var EndTime =   timeTracks.Max(t => t.StartTime).ToString("yyyy/MM/dd HH:mm");
                     var TotalTime = timeTracks.Sum(t => t.TotalTime);
 
                     return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime, TimeHistory = timeTracks });
@@ -112,8 +112,8 @@ namespace ProjectManagementTool.Controllers
                 
                 if (timeTracks.Count != 0)
                 {
-                    var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
-                    var EndTime = timeTracks.Max(t => t.EndTime).ToString("MM/dd/yyyy HH:mm");
+                    var StartTime = timeTracks.Min(t => t.StartTime).ToString("yyyy/MM/dd HH:mm");
+                    var EndTime = timeTracks.Max(t => t.EndTime).ToString("yyyy/MM/dd HH:mm");
                     var TotalTime = timeTracks.Sum(t => t.TotalTime);
 
                     return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime, TimeHistory = timeTracks });
