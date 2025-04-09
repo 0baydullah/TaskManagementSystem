@@ -1,11 +1,22 @@
 ﻿@model DataAccessLayer.Models.ViewModel.FeatureVM
-
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Feature-Create";
+    ViewData["Banner"] = "Create Feature";
 }
 
-<h1 class="text-center">Create Feature</h1>
-<hr />
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Feature", Url.Action(ActionNameHelper.GetAllActionName, ControllerNameHelper.FeatureControllerName, new{projectId = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Create", "#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
 <div class="row d-flex justify-content-center">
     
     <div class="col-md-4">
@@ -59,7 +70,7 @@
 </div>
 
 <div class="text-center mt-5 ">
-    <a class="btn btn-outline-danger w-25" asp-action="GetAll">Back to Feature</a>
+    <a class="btn btn-outline-danger w-25" asp-action="GetAll" asp-route-projectId="@ViewBag.ProjectId">Back to Feature</a>
 </div>
 
 @section Scripts {

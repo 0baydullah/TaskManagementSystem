@@ -14,13 +14,16 @@ namespace ProjectManagementTool.Controllers
         private readonly IMemberService _memberService;
         public readonly IFeatureService _featureService;
         public readonly IReleaseService _releaseService;
+        private readonly IProjectInfoService _projectInfoService;
         private readonly ILog _log = LogManager.GetLogger(typeof(FeatureController));
 
-        public FeatureController(IMemberService memberService, IFeatureService featureService, IReleaseService releaseService) 
+        public FeatureController(IMemberService memberService, IFeatureService featureService, IReleaseService releaseService,
+            IProjectInfoService projectInfoService) 
         { 
             _memberService = memberService;
             _featureService = featureService;
             _releaseService = releaseService;
+            _projectInfoService = projectInfoService;
         }
 
         [HttpGet]
@@ -31,9 +34,11 @@ namespace ProjectManagementTool.Controllers
 
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId);
                 var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId);
+                var project = _projectInfoService.GetProjectInfo(projectId);
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
                 ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
-                ViewBag.ProjectId = projectId;
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
                 
                 return View();
             }
@@ -103,7 +108,10 @@ namespace ProjectManagementTool.Controllers
                 var feature = await _featureService.GetFeatureById(id);
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == feature.ProjectId);
                 var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == feature.ProjectId);
+                var project = _projectInfoService.GetProjectInfo(members.FirstOrDefault().ProjectId);
 
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
                 ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
                

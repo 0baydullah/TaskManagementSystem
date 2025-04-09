@@ -13,23 +13,15 @@
         new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
         new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId })?? string.Empty),
-        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
-        new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = Model.Tasks.UserStoryId})?? string.Empty),
-        new KeyValuePair<string, string>("Task Details","#"),
+        new KeyValuePair<string, string>("UserStories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("StoryDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = Model.Tasks.UserStoryId})?? string.Empty),
+        new KeyValuePair<string, string>("TaskDetails","#"),
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 <div class="d-flex justify-content-between">
 	<h3 class="text-center">Task : @Model.Tasks.Name</h3>
-	<div>
-		<a class="btn btn-light" asp-controller="Tasks" asp-action="Edit" asp-route-id="@Model.Tasks.TaskId">
-			<i class="text-success fa-solid fa-pen"> Edit</i>
-		</a>
-		<a class="btn btn-light" onclick="openDeleteTaskModal('@Model.Tasks.TaskId')">
-			<i class="text-danger fa-solid fa-trash"> Delete</i>
-		</a>
-	</div>
 </div>
 
 <hr />

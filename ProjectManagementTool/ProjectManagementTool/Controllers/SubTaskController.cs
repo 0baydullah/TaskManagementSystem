@@ -76,7 +76,8 @@ namespace ProjectManagementTool.Controllers
                 var project = _projectInfoService.GetProjectInfo(story.ProjectId);
                 ViewBag.ProjectId = project.ProjectId;
                 ViewBag.ProjectKey = project.Key;
-
+                ViewBag.StoryId = story.StoryId;
+                ViewBag.TaskId = id;
                 ViewBag.Id = id;
 
                 var statuses = _statusService.GetAllStatuses();
@@ -148,7 +149,11 @@ namespace ProjectManagementTool.Controllers
                 var task = _tasksService.GetTasks(subTask.TaskId);
                 var story = _userStoryService.GetUserStory(task.UserStoryId);
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
-
+                var project = _projectInfoService.GetProjectInfo(story.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+                ViewBag.TaskId = subTask.TaskId;
+                ViewBag.StoryId = story.StoryId;
                 ViewBag.Id = id;
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
 
