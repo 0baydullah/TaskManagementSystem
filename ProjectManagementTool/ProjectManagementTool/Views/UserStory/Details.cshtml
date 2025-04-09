@@ -140,7 +140,7 @@ else
                     }
                     <tr>
                         <td>
-                            <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@ProjectKey.GetProjectId()">
+                            <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@ViewBag.ProjectId">
                                 @item.Name
                             </a>
                         </td>

@@ -20,10 +20,12 @@ namespace ProjectManagementTool.Controllers
         private readonly ITasksService _tasksService;
         private readonly IStatusService _statusService;
         private readonly IPriorityService _priorityService;
+        private readonly IProjectInfoService _projectInfoService;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(SubTaskController));
 
-        public SubTaskController(ISubTaskService subTaskService, IMemberService memberService, IUserStoryService userStoryService, ITasksService tasksService, IStatusService statusService, IPriorityService prioriyService)
+        public SubTaskController(ISubTaskService subTaskService, IMemberService memberService, IUserStoryService userStoryService, 
+            ITasksService tasksService, IStatusService statusService, IPriorityService prioriyService, IProjectInfoService projectInfoService)
         {
             _subTaskService = subTaskService;
             _memberService = memberService;
@@ -31,6 +33,7 @@ namespace ProjectManagementTool.Controllers
             _tasksService = tasksService;
             _statusService = statusService;
             _priorityService = prioriyService;
+            _projectInfoService = projectInfoService;
         }
 
 
@@ -70,6 +73,9 @@ namespace ProjectManagementTool.Controllers
             {
                 var task = _tasksService.GetTasks(id);
                 var story = _userStoryService.GetUserStory(task.UserStoryId);
+                var project = _projectInfoService.GetProjectInfo(story.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 ViewBag.Id = id;
 

@@ -20,13 +20,14 @@ namespace ProjectManagementTool.Controllers
         private readonly IStatusService _statusService;
         private readonly IPriorityService _priorityService;
         private readonly UserManager<UserInfo> _userManager;
+        private readonly IProjectInfoService _projectInfoService;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(TasksController));
 
         public TasksController(ITasksService tasksService, ISubTaskService subTaskService,
             IMemberService memberService, IUserStoryService userStoryService,
             ICategoryService categoryService, IStatusService statusService,
-            IPriorityService prioriyService, UserManager<UserInfo> userManager)
+            IPriorityService prioriyService, UserManager<UserInfo> userManager, IProjectInfoService projectInfoService)
         {
             _tasksService = tasksService;
             _subTaskService = subTaskService;
@@ -36,6 +37,7 @@ namespace ProjectManagementTool.Controllers
             _statusService = statusService;
             _priorityService = prioriyService;
             _userManager = userManager;
+            _projectInfoService = projectInfoService;
         }
 
 
@@ -64,7 +66,9 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var story = _userStoryService.GetUserStory(id);
-                ViewBag.ProjectId = story.ProjectId;
+                var project = _projectInfoService.GetProjectInfo(story.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
                 ViewBag.UserStoryId = id;
 
                 var statuses = _statusService.GetAllStatuses();
@@ -121,6 +125,9 @@ namespace ProjectManagementTool.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 var memberIds = _memberService.GetAllMember().Where(m => m.ProjectId == projectId && m.Role == "Admin").ToList().Select(i => i.MemberId).ToList();
                 var member = _memberService.GetAllMember().FirstOrDefault(m => m.Email == user.Email && m.ProjectId == projectId);
+                var project = _projectInfoService.GetProjectInfo(projectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 tasksDetails.MemberId = member.MemberId;
                 tasksDetails.AdminMemberIds = memberIds;
