@@ -29,7 +29,7 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var sprints = _sprintService.GetAllSprint(projectId);
-                ViewBag.ProjectId = projectId;
+                var project = _projectInfoService.GetProjectInfo(projectId);
                 var data = sprints.Select(s => new SprintVM
                 {
                     SprintId = s.SprintId,
@@ -41,6 +41,8 @@ namespace ProjectManagementTool.Controllers
                     Velocity = s.Velocity,
                     ReleaseName = _releaseService.GetRelease(s.ReleaseId).ReleaseName,
                 }).ToList();
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(data);
             }
@@ -60,8 +62,10 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId).ToList();
+                var project = _projectInfoService.GetProjectInfo(projectId);
                 ViewBag.Releases = new SelectList(releases, "ReleaseId", "ReleaseName");
-                ViewBag.ProjectId = projectId;
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View();
             }
@@ -127,7 +131,11 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+                var release = _releaseService.GetRelease(releaseId);
+                var project = _projectInfoService.GetProjectInfo(release.ProjectId);
                 ViewBag.ReleaseId = releaseId;
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View();
             }
@@ -279,11 +287,13 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, int projectId, string projectKey)
         {
             try
             {
                 var sprint = _sprintService.GetSprintDetails(id);
+                ViewBag.ProjectId = projectId;
+                ViewBag.ProjectKey = projectKey;
                 
                 return View(sprint);
             }

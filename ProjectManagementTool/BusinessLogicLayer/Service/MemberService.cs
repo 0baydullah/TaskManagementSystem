@@ -84,7 +84,7 @@ namespace BusinessLogicLayer.Service
                 var data = _memberRepo.GetMember(id);
                 data.Email = member.Email;
                 data.RoleId = member.RoleId;
-                data.ProjectId = member.ProjectId;
+                //data.ProjectId = member.ProjectId;
                 var result = await _memberRepo.UpdateMember(data);
                 
                 return result;
@@ -131,7 +131,6 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var member = _memberRepo.GetAllMember().Where( m => m.MemberId == id).ToList();
-                var projects = _projectInfoRepo.GetAllProjectInfo();
                 var storys = _userStoryRepo.GetAllUserStory().ToList();
                 var tasks = _tasksRepo.GetAllTasks();
                 var allTasks = tasks.Join(storys, task => task.UserStoryId, story => story.StoryId, (task, story) => new
@@ -161,15 +160,13 @@ namespace BusinessLogicLayer.Service
                     Status = t.Status,
                     Priority = t.Priority,
                     UserStoryId = t.StoryId,
-                    //StoryName = t.StoryName,
-                    //ProjectId = t.ProjectId,
-                    //MemberId = member.MemberId,
                 }).ToList();
 
 
                 var result = new MemberDetailsVM
                 {
                     MemberId = member.FirstOrDefault().MemberId,
+                    ProjectId = member.FirstOrDefault().ProjectId,
                     MemberName = member.FirstOrDefault().Name,
                     RoleName = member.FirstOrDefault().Role,
                     Email = member.FirstOrDefault().Email,

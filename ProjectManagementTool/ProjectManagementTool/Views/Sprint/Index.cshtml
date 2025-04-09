@@ -9,8 +9,8 @@
     {
         new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
-        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ProjectKey.GetProjectId()})?? string.Empty),
-        new KeyValuePair<string, string>("Sprint", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.SprintControllerName, new{ projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Sprint", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.SprintControllerName, new{ projectId = ViewBag.ProjectId })?? string.Empty),
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
 }
@@ -80,7 +80,7 @@
                         </td>
                         <td class="text-center">
                             <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId"><i class="text-success fa-solid fa-pen fw-bold"></i></a> |
-                            <a class="btn btn-light" asp-action="Details" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId"><i class="text-success fa-solid fa-info fw-bold"></i></a> |
+                            <a class="btn btn-light" asp-action="Details" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId" asp-route-projectKey="@ViewBag.ProjectKey"><i class="text-success fa-solid fa-info fw-bold"></i></a> |
                             <a class="btn btn-light" onclick="openDeleteModal('@item.SprintId')"><i class="text-danger fa-solid fa-trash fw-bold"></i></a>
                         </td>
                     </tr>

@@ -11,8 +11,8 @@
     {
         new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
-        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ProjectKey.GetProjectId()})?? string.Empty),
-        new KeyValuePair<string, string>("Release", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ReleaseControllerName, new{ projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Release", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ReleaseControllerName, new{ projectId = ViewBag.ProjectId })?? string.Empty),
         new KeyValuePair<string, string>("Details", "#"),
     };
     ViewData["Breadcrumbs"] = breadcrumbs;

@@ -33,8 +33,10 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+                var project = _projectInfoService.GetProjectInfo(projectId);
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId).ToList();
                 ViewBag.ProjectId = projectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(members);
             }
@@ -131,8 +133,11 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var roles = _roleService.GetAllRole();
+                var project = _projectInfoService.GetProjectInfo(projectId);
                 ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
-                ViewData["ProjectId"] = projectId;
+                ViewBag.ProjectId = projectId;
+                ViewBag.ProjectKey = project.Key;
+
 
                 return View();
             }
@@ -213,18 +218,22 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var member = _memberService.GetMember(id);
+                var project = _projectInfoService.GetProjectInfo(member.ProjectId);
 
                 var model = new MemberVM
                 {
                     MemberId = member.MemberId,
                     Email = member.Email,
                     RoleId = member.RoleId,
-                    ProjectId = member.ProjectId
+                    //ProjectId = member.ProjectId
                 };
                 var roles = _roleService.GetAllRole();
                 ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
-                var projects = _projectInfoService.GetAllProjectInfo();
-                ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
+                
+                //var projects = _projectInfoService.GetAllProjectInfo();
+                //ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
+                ViewBag.ProjectId = member.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(model);
             }
@@ -316,6 +325,9 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var member = _memberService.GetMemberDetails(id);
+                var project = _projectInfoService.GetProjectInfo(member.ProjectId);
+                ViewBag.ProjectId = member.ProjectId;
+                ViewBag.ProjectKey = project.Key;
                 
                 return View(member);
             }
