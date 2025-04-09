@@ -20,7 +20,6 @@ namespace ProjectManagementTool.Controllers
         public ProjectController(IProjectInfoService projectInfoService,
             UserManager<UserInfo> userManager)
         {
-
             _projectInfoService = projectInfoService;
             _userManager = userManager;
         }
