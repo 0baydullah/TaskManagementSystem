@@ -154,9 +154,6 @@
                         </a>
                         @if (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId))
                         {
-                            <script>
-                                console.log("acces'");
-                            </script>
                             <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
                                onclick="startTracking(@item.TaskId, @item.SubTaskId)">
                                 <i class="text-success fa-solid fa-circle-play"></i>
@@ -259,8 +256,22 @@
             var hour = Math.floor((seconds % (3600 * 24)) / 3600);
             var minutes = Math.floor((seconds % 3600) / 60);
             var sec = Math.floor(seconds % 60);
-            var dhms = day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
-            return dhms;
+
+            if (sec == 0) {
+                return sec + " seconds";
+            }
+            else if (minutes == 0) {
+                return sec + " seconds";
+            }
+            else if (hour == 0) {
+                return minutes + " minutes " + sec + " seconds";
+            }
+            else if (day == 0) {
+                return hour + " hours " + minutes + " minutes " + sec + " seconds";
+            }
+            else {
+                return day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
+            }
         }
 
         // formating date
@@ -286,6 +297,7 @@
             return mainTimeDescription;
         }
 
+        // History table
         function createTimeHistoryTable(data) {
             let timeHistoryTable = `
                 <table class="table table-bordered table-striped table-hover">
@@ -337,6 +349,7 @@
                     }
                     else {
                         document.getElementById('modalDescription').innerText = "Description: " + description + "\n don't work previously in this sub-task";
+                        document.getElementById('eachTimeDescription').innerHTML = `<p>No History</p>`;
                         var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
                         myModal.show();
                     }

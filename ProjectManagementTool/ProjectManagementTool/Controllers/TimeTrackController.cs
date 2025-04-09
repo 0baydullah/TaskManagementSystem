@@ -23,14 +23,14 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Start(int taskId, int subTaskId)
+        public async Task<IActionResult> Start(int taskId, int subTaskId)
         {
             try
             {
-                var isSavedTrackingStatus = _timeTrackService.UpdateTrackingStatus(subTaskId, "Started");
-                var result = _timeTrackService.TimeStoreStart(taskId, subTaskId);
+                var result = await _timeTrackService.TimeStoreStart(taskId, subTaskId);
+                var isSavedTrackingStatus =  _timeTrackService.UpdateTrackingStatus(subTaskId, "Started");
 
-                if (result.Result == true)
+                if (result == true)
                 {
                     return Ok(new { success = true, message = "Tracking started", status = "Started" });
                 }
@@ -49,14 +49,14 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult End(int taskId, int subTaskId)
+        public async Task<IActionResult> End(int taskId, int subTaskId)
         {
             try
             {
-                var isSavedTrackingStatus = _timeTrackService.UpdateTrackingStatus(subTaskId, "Stopped");
-                var result = _timeTrackService.TimeStoreEnd(taskId, subTaskId);
+                var isSavedTrackingStatus =  _timeTrackService.UpdateTrackingStatus(subTaskId, "Stopped");
+                var result = await _timeTrackService.TimeStoreEnd(taskId, subTaskId);
 
-                if (result.Result == true)
+                if (result == true)
                 {
                     return Ok(new { success = true, message = "Tracking stopped",status = "Stopped" });
                 }
@@ -114,7 +114,8 @@ namespace ProjectManagementTool.Controllers
                     var StartTime = timeTracks.Min(t => t.StartTime).ToString("MM/dd/yyyy HH:mm");
                     var EndTime = timeTracks.Max(t => t.EndTime).ToString("MM/dd/yyyy HH:mm");
                     var TotalTime = timeTracks.Sum(t => t.TotalTime);
-                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime });
+
+                    return Json(new { success = true, StartTime = StartTime, EndTime = EndTime, TotalTime = TotalTime, TimeHistory = timeTracks });
                 }
                 else
                 {

@@ -246,14 +246,16 @@ else
 
     <!-- Task Details Modal -->
     <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="detailsModalLabel">Task Description</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="modalDescription">
-                </div>
+
+                <div class="modal-body" id="modalDescription"></div>
+                <div class="modal-body" id="eachTimeDescription"> </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -458,8 +460,34 @@ else
             var hour = Math.floor((seconds % (3600 * 24)) / 3600);
             var minutes = Math.floor((seconds % 3600) / 60);
             var sec = Math.floor(seconds % 60);
-            var dhms = day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
-            return dhms;
+
+            if (sec == 0) {
+                return sec + " seconds";
+            }
+            else if (minutes == 0) {
+                return sec + " seconds";
+            }
+            else if (hour == 0) {
+                return minutes + " minutes " + sec + " seconds";
+            }
+            else if (day == 0) {
+                return hour + " hours " + minutes + " minutes " + sec + " seconds";
+            }
+            else {
+                return day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
+            }
+        }
+
+        // formating date
+        function formatedDate(val) {
+            var date = new Date(val);
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${month}/${day}/${year} ${hours}:${minutes}`;
         }
 
         // Formate the details
@@ -469,10 +497,40 @@ else
             seconds = secondsToDHMS(totalTime);
             totalTime = "Total working time: " + seconds;
 
-            document.getElementById('modalDescription').innerText = startTime + endTime + totalTime;
-            var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            var mainTimeDescription = startTime + endTime + totalTime;
+            return mainTimeDescription;
+        }
 
-            myModal.show();
+        // History table
+        function createTimeHistoryTable(data) {
+            let timeHistoryTable = `
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Total Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+            data.forEach(item => {
+                const startTime = formatedDate(item.startTime);
+                const endTime = formatedDate(item.endTime);
+                const totalTime = secondsToDHMS(item.totalTime);
+
+                timeHistoryTable += `
+                            <tr>
+                                <td>${startTime}</td>
+                                <td>${endTime}</td>
+                                <td>${totalTime}</td>
+                            </tr>`;
+            });
+            timeHistoryTable += `
+                                    </tbody>
+                                </table>`;
+
+            return timeHistoryTable;
         }
 
         // Calling from details button
@@ -485,10 +543,17 @@ else
                 },
                 success: function (response) {
                     if (response.success == true) {
-                        showDetailsModal(response.startTime, response.endTime, response.totalTime);
+                        var mainTimeDescription = showDetailsModal(response.startTime, response.endTime, response.totalTime);
+                        document.getElementById('modalDescription').innerText = mainTimeDescription;
+                        var data = response.timeHistory;
+                        var timeHistoryTable = createTimeHistoryTable(data);
+                        document.getElementById('eachTimeDescription').innerHTML = timeHistoryTable;
+                        var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        myModal.show();
                     }
                     else {
                         document.getElementById('modalDescription').innerText = "don't work previously in this task";
+                        document.getElementById('eachTimeDescription').innerHTML = `<p>No History</p>`;
                         var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
                         myModal.show();
                     }

@@ -98,7 +98,8 @@ namespace BusinessLogicLayer.Service
                     existTimeTrack.EndTime = DateTime.Now;
                     existTimeTrack.IsTrackCompleted = true;
                     var spentTime = existTimeTrack.EndTime - existTimeTrack.StartTime;
-                    existTimeTrack.TotalTime = existTimeTrack.TotalTime + spentTime.Seconds;
+                    double seconds = spentTime.TotalSeconds;
+                    existTimeTrack.TotalTime = existTimeTrack.TotalTime + (long)seconds;
                     var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
                     
                     return result;
