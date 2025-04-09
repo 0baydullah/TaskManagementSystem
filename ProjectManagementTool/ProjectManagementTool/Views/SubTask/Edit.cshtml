@@ -1,4 +1,5 @@
 ﻿@model DataAccessLayer.Models.Entity.SubTask
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "SubTask-Update";
 	ViewData["Banner"] = "Update SubTask";
@@ -82,7 +83,8 @@
                     processData: false,
                     contentType: false,
                     success: function () {
-                        window.location.href = '@Url.Action("Details", "Tasks")/'+ @Model.TaskId;
+
+                        window.location.href = '@Url.Action("Details", "Tasks", new { id = Model.TaskId, projectId = ProjectKey.GetProjectId() })';
                     },
                     error: function (error) {
                         alert('An error occurred: ' + error);

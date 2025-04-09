@@ -1,10 +1,23 @@
 ﻿@model DataAccessLayer.Models.ViewModel.TaskDetailsVM
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "Task Details";
     Model.MemberList[0] = "N/A";
     Model.StatusList[0] = "N/A";
     Model.PriorityList[0] = "N/A";
+}
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ProjectKey.GetProjectId()})?? string.Empty),
+        new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = Model.Tasks.UserStoryId})?? string.Empty),
+        new KeyValuePair<string, string>("Task Details","#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 <div class="d-flex justify-content-between">
@@ -152,15 +165,32 @@
                         <a class="btn btn-light" onclick="openDetailsModal(@item.SubTaskId,'@item.Descripton')">
                             <i class="text-success fa-solid fa-circle-info"></i> 
                         </a>
-                        <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")" 
-                        onclick="startTracking(@item.TaskId, @item.SubTaskId)">
-                            <i class="text-success fa-solid fa-circle-play"></i>
-                        </a>
-                        <a id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")" 
-                        onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
-                            <i class="text-success fa-solid fa-circle-pause"></i>
-                        </a>
+                        @if (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId))
+                        {
+                            <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
+                               onclick="startTracking(@item.TaskId, @item.SubTaskId)">
+                                <i class="text-success fa-solid fa-circle-play"></i>
+                            </a>
+                            <a id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
+                               onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
+                                <i class="text-success fa-solid fa-circle-pause"></i>
+                            </a>
 
+                        }
+                        else
+                        {
+                            <script>
+                                console.log("don't acces'");
+                            </script>
+                            <a style="pointer-events:none;" id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
+                               onclick="startTracking(@item.TaskId, @item.SubTaskId)">
+                                <i class="text-success fa-solid fa-circle-xmark"></i>
+                            </a>
+                            <a style="pointer-events:none;" id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
+                               onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
+                                <i class="text-success fa-solid fa-circle-xmark"></i>
+                            </a>
+                        }
                     </td>
                 </tr>
             }
@@ -190,15 +220,17 @@
 </div>
 
 <!-- Sub Task Details Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade col-12" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailsModalLabel">Sub Task Description</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="modalDescription">
-            </div>
+
+            <div class="modal-body" id="modalDescription"></div>
+            <div class="modal-body" id="eachTimeDescription"> </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
@@ -237,8 +269,34 @@
             var hour = Math.floor((seconds % (3600 * 24)) / 3600);
             var minutes = Math.floor((seconds % 3600) / 60);
             var sec = Math.floor(seconds % 60);
-            var dhms = day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
-            return dhms;
+
+            if (sec == 0) {
+                return sec + " seconds";
+            }
+            else if (minutes == 0) {
+                return sec + " seconds";
+            }
+            else if (hour == 0) {
+                return minutes + " minutes " + sec + " seconds";
+            }
+            else if (day == 0) {
+                return hour + " hours " + minutes + " minutes " + sec + " seconds";
+            }
+            else {
+                return day + " days " + hour + " hours " + minutes + " minutes " + sec + " seconds";
+            }
+        }
+
+        // formating date
+        function formatedDate(val) {
+            var date = new Date(val);
+            const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+
+            return `${month}/${day}/${year} ${hours}:${minutes}`;
         }
 
         // Formate the details
@@ -248,12 +306,42 @@
             endTime = "End time: " + endTime + "\n";
             seconds = secondsToDHMS(totalTime);
             totalTime = "Total time: " + seconds;
-            
-            document.getElementById('modalDescription').innerText = description  + startTime + endTime + totalTime;
-            var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
-            
-            myModal.show();
+            var mainTimeDescription = description + startTime + endTime + totalTime;
+            return mainTimeDescription;
         }
+
+        // History table
+        function createTimeHistoryTable(data) {
+            let timeHistoryTable = `
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Total Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            data.forEach(item => {
+                const startTime = formatedDate(item.startTime);
+                const endTime = formatedDate(item.endTime);
+                const totalTime = secondsToDHMS(item.totalTime);
+
+                timeHistoryTable += `
+                    <tr>
+                        <td>${startTime}</td>
+                        <td>${endTime}</td>
+                        <td>${totalTime}</td>
+                    </tr>`;
+            });
+            timeHistoryTable += `
+                            </tbody>
+                        </table>`;
+
+            return timeHistoryTable;
+        }
+
 
         // Calling from details button
         function openDetailsModal(subTaskId,description){
@@ -264,10 +352,17 @@
                 },
                 success: function (response) {
                     if (response.success == true) {
-                        showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
+                        var mainTimeDescription = showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
+                        document.getElementById('modalDescription').innerText = mainTimeDescription;
+                        var data = response.timeHistory;
+                        var timeHistoryTable = createTimeHistoryTable(data);
+                        document.getElementById('eachTimeDescription').innerHTML = timeHistoryTable;
+                        var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+                        myModal.show();
                     }
                     else {
                         document.getElementById('modalDescription').innerText = "Description: " + description + "\n don't work previously in this sub-task";
+                        document.getElementById('eachTimeDescription').innerHTML = `<p>No History</p>`;
                         var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
                         myModal.show();
                     }

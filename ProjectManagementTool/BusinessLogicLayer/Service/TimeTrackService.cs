@@ -98,7 +98,8 @@ namespace BusinessLogicLayer.Service
                     existTimeTrack.EndTime = DateTime.Now;
                     existTimeTrack.IsTrackCompleted = true;
                     var spentTime = existTimeTrack.EndTime - existTimeTrack.StartTime;
-                    existTimeTrack.TotalTime = existTimeTrack.TotalTime + spentTime.Seconds;
+                    double seconds = spentTime.TotalSeconds;
+                    existTimeTrack.TotalTime = existTimeTrack.TotalTime + (long)seconds;
                     var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
                     
                     return result;
@@ -126,9 +127,17 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var subTasksTimeTrack = _timeTrackRepo.GetBySubTaskId(subTaskId);
+                var subTasksTimeTracks = _timeTrackRepo.GetBySubTaskId(subTaskId);
+                //var formatedSubTasksTimeTrack = new List<TimeTrack>();
+                
+                //foreach (var track in subTasksTimeTracks)
+                //{
+                //    track.StartTime.ToString("MM/dd/yyyy HH:mm");
+                //    track.EndTime.ToString("MM/dd/yyyy HH:mm");
+                //    formatedSubTasksTimeTrack.Add(track);
+                //}
 
-                return subTasksTimeTrack;
+                return subTasksTimeTracks;
             }
             catch(Exception)
             {

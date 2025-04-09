@@ -69,7 +69,8 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var timeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId);
+                var timeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId && s.IsTrackCompleted == false);
+               
                 if (timeTrack == null)
                 {
                     return false;

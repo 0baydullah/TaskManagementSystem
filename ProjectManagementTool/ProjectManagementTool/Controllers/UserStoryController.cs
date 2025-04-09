@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
-using System.Threading.Tasks;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -148,8 +147,8 @@ namespace ProjectManagementTool.Controllers
                 var memberIds = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId && m.Role == "Admin").ToList().Select(i => i.MemberId).ToList();
                 var member = _memberService.GetAllMember().FirstOrDefault(m => m.Email == user.Email && m.ProjectId == story.ProjectId);
 
-                storyDetails.MemberId = member.MemberId; 
-                storyDetails.AdminMemberId = memberIds;
+                storyDetails.MemberId = member.MemberId;
+                storyDetails.AdminMemberIds = memberIds;
                 storyDetails.Story = story;
                 storyDetails.Tasks = tasks;
                 storyDetails.Bugs = bugs;

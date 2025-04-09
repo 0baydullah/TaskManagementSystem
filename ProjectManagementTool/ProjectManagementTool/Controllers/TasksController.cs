@@ -3,6 +3,7 @@ using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -18,13 +19,14 @@ namespace ProjectManagementTool.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IStatusService _statusService;
         private readonly IPriorityService _priorityService;
+        private readonly UserManager<UserInfo> _userManager;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(TasksController));
 
         public TasksController(ITasksService tasksService, ISubTaskService subTaskService,
             IMemberService memberService, IUserStoryService userStoryService,
             ICategoryService categoryService, IStatusService statusService,
-            IPriorityService prioriyService)
+            IPriorityService prioriyService, UserManager<UserInfo> userManager)
         {
             _tasksService = tasksService;
             _subTaskService = subTaskService;
@@ -33,6 +35,7 @@ namespace ProjectManagementTool.Controllers
             _categoryService = categoryService;
             _statusService = statusService;
             _priorityService = prioriyService;
+            _userManager = userManager;
         }
 
 
@@ -108,14 +111,19 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id, int projectId)
         {
             try
             {
                 var tasksDetails = new TaskDetailsVM();
                 var task = _tasksService.GetTasks(id);
                 var subtasks = _subTaskService.GetAllSubTaskByTask(id);
+                var user = await _userManager.GetUserAsync(User);
+                var memberIds = _memberService.GetAllMember().Where(m => m.ProjectId == projectId && m.Role == "Admin").ToList().Select(i => i.MemberId).ToList();
+                var member = _memberService.GetAllMember().FirstOrDefault(m => m.Email == user.Email && m.ProjectId == projectId);
 
+                tasksDetails.MemberId = member.MemberId;
+                tasksDetails.AdminMemberIds = memberIds;
                 tasksDetails.Tasks = task;
                 tasksDetails.StoryName = _userStoryService.GetUserStory(task.UserStoryId).StoryName;
                 tasksDetails.SubTask = subtasks;
