@@ -1,6 +1,17 @@
-﻿@{
+﻿@using DataAccessLayer.StaticClass
+@{
     ViewData["Title"] = "Add User";
     ViewData["Banner"] = "Add new user";
+}
+
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("AllUser", Url.Action(ActionNameHelper.GetAllUserActionName, ControllerNameHelper.MemberControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Create", "#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 <!DOCTYPE html>
 <html lang="en">

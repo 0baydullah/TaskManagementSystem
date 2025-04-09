@@ -1,9 +1,24 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.ViewModel.MemberWithRoleVM>
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Index";
     ViewData["Banner"] = "Member Panel";
 }
 
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Member", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.MemberControllerName, new{ projectId = ViewBag.ProjectId }) ?? string.Empty),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
+<div id="response-message">
+
+</div>
 
 <div class="mb-3">
     <a class="btn btn-success fw-bold" href="@Url.Action("Create", "Member", new { projectId = ViewBag.ProjectId })"> <i class="text-light fa-solid fa-plus fw-bold"></i> Add Member</a>
@@ -45,8 +60,9 @@
                     </td>
                     <td class="text-center">
                         <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-pen"></i></a> |
+                        <a class="btn btn-light" asp-action="Details" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-info"></i></a> |
                         <a class="btn btn-light" onclick="openDeleteModal('@item.MemberId')"><i class="text-danger fa-solid fa-trash"></i> </a>
-                    </td>
+                    </td> 
                 </tr>
             }
         }

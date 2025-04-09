@@ -14,6 +14,5 @@ namespace DataAccessLayer.Models.ViewModel
         [Required(ErrorMessage = "Email is required!")]
         public string Email { get; set; }
         public int RoleId { get; set; }
-        public int ProjectId { get; set; }
     }
 }

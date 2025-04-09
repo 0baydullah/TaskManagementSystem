@@ -1,7 +1,20 @@
 ﻿@model DataAccessLayer.Models.ViewModel.ReleaseCreateVM
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Create Release";
     ViewData["Banner"] = "Create Release";
+}
+
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Release", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ReleaseControllerName, new{ projectId = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Create", "#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 <div id="response-message">

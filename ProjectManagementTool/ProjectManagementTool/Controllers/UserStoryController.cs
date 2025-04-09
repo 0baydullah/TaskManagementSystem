@@ -24,13 +24,14 @@ namespace ProjectManagementTool.Controllers
         private readonly ITimeTrackService _timeTrackService;
         private readonly IBugService _bugService;
         private readonly UserManager<UserInfo> _userManager;
+        private readonly IProjectInfoService _projectInfoService;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(UserStoryController));
 
         public UserStoryController(IUserStoryService userStoryService, ITasksService tasksService,
             ISubTaskService subTaskService, IMemberService memberService, ICategoryService categoryService,
             IStatusService statusService, IPriorityService prioriyService, ISprintService sprintService, ITimeTrackService timeTrackService,
-            IBugService bugService, UserManager<UserInfo> userManager)
+            IBugService bugService, UserManager<UserInfo> userManager, IProjectInfoService projectInfoService)
         {
             _userStoryService = userStoryService;
             _tasksService = tasksService;
@@ -43,6 +44,7 @@ namespace ProjectManagementTool.Controllers
             _timeTrackService = timeTrackService;
             _bugService = bugService;
             _userManager = userManager;
+            _projectInfoService = projectInfoService;
         }
 
         [HttpGet]
@@ -52,8 +54,9 @@ namespace ProjectManagementTool.Controllers
             {
                 var storyList = new UserStoryListVM();
                 var userStories = _userStoryService.GetAllUserStory().Where(s => s.ProjectId == projectId).ToList();
-
-                ViewBag.ProjectId = projectId;
+                var project = _projectInfoService.GetProjectInfo(projectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 storyList.UserStories = userStories;
                 storyList.MemberList = _memberService.GetAllMember().ToDictionary(m => m.MemberId, m => m.Name);
@@ -77,7 +80,10 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                ViewBag.ProjectId = projectId;
+                var project = _projectInfoService.GetProjectInfo(projectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+
                 var statuses = _statusService.GetAllStatuses();
                 ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
 
@@ -131,7 +137,10 @@ namespace ProjectManagementTool.Controllers
             {
                 var storyDetails = new UserStoryDetailsVM();
                 var story = _userStoryService.GetUserStory(id);
-                ViewBag.ProjectId = story.ProjectId;
+                var project = _projectInfoService.GetProjectInfo(story.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+
                 var tasks = _tasksService.GetAllTasks(id);
                 var bugs = _bugService.GetAllBugOfStory(id);
                 var user = await _userManager.GetUserAsync(User);
@@ -183,6 +192,10 @@ namespace ProjectManagementTool.Controllers
 
                 var sprints = _sprintService.GetAllSprint(userStory.ProjectId);
                 ViewBag.Sprints = new SelectList(sprints, "SprintId", "SprintName");
+
+                var project = _projectInfoService.GetProjectInfo(userStory.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(userStory);
             }

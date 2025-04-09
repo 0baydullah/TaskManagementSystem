@@ -84,7 +84,7 @@
                     contentType: false,
                     success: function () {
 
-                        window.location.href = '@Url.Action("Details", "Tasks", new { id = Model.TaskId, projectId = ProjectKey.GetProjectId() })';
+                        window.location.href = '@Url.Action("Details", "Tasks", new { id = Model.TaskId, projectId = ViewBag.ProjectId })';
                     },
                     error: function (error) {
                         alert('An error occurred: ' + error);

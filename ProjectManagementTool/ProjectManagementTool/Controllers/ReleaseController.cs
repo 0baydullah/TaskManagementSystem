@@ -6,6 +6,8 @@ using log4net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Evaluation;
+using Microsoft.CodeAnalysis;
 
 namespace ProjectManagementTool.Controllers
 {
@@ -29,10 +31,11 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId).ToList();
+                var projectKey = _projectInfoService.GetProjectInfo(projectId).Key;
                 var data = releases.Select(r => new ReleaseVM
                 {
                     ReleaseId = r.ReleaseId,
-                    ProjectKey = _projectInfoService.GetProjectInfo(r.ProjectId).Key,
+                    ProjectKey = projectKey,
                     ReleaseName = r.ReleaseName,
                     Description = r.Description,
                     StartDate = r.StartDate,
@@ -40,6 +43,7 @@ namespace ProjectManagementTool.Controllers
                     Sprints = _sprintService.GetAllSprint(projectId).Where(s => s.ReleaseId == r.ReleaseId).Count().ToString() ?? "No Sprint",
                 }).ToList();
                 ViewBag.ProjectId = projectId;
+                ViewBag.ProjectKey = projectKey;
                 
                 return View(data);
 
@@ -57,8 +61,22 @@ namespace ProjectManagementTool.Controllers
         [HttpGet]
         public IActionResult Create(int projectId)
         {
-            ViewBag.ProjectId = projectId;
-            return View();
+            try
+            {
+                var project = _projectInfoService.GetProjectInfo(projectId);
+                ViewBag.ProjectId = projectId;
+                ViewBag.ProjectKey = project.Key;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+           
         }
 
         [HttpPost]
@@ -115,7 +133,10 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var release = _releaseService.GetRelease(id);
-                
+                var project = _projectInfoService.GetProjectInfo(release.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+
                 return View(release);
             }
             catch (Exception ex)
@@ -203,7 +224,9 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var release = _releaseService.GetReleaseDetails(id);
-                ViewBag.ProjectId = release.ProjectId;
+                var project = _projectInfoService.GetProjectInfo(release.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
 
                 return View(release);
             }
