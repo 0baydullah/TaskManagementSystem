@@ -15,17 +15,19 @@ namespace ProjectManagementTool.Controllers
         private readonly IStatusService _statusService;
         private readonly IPriorityService _priorityService;
         private readonly IBugService _bugService;
+        private readonly IProjectInfoService _projectInfoService;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(BugController));
 
         public BugController(IMemberService memberService, IUserStoryService userStoryService, IStatusService statusService,
-            IPriorityService prioriyService, IBugService bugService)
+            IPriorityService prioriyService, IBugService bugService, IProjectInfoService projectInfoService)
         {
             _memberService = memberService;
             _userStoryService = userStoryService;
             _statusService = statusService;
             _priorityService = prioriyService;
             _bugService = bugService;
+            _projectInfoService = projectInfoService;
         }
         [HttpGet]
         public IActionResult Create(int id)
@@ -33,7 +35,10 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var story = _userStoryService.GetUserStory(id);
-                ViewBag.ProjectId = story.ProjectId;
+                var project = _projectInfoService.GetProjectInfo(story.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+                ViewBag.StoryId = id;
                 ViewBag.UserStoryId = id;
 
                 var statuses = _statusService.GetAllStatuses();
@@ -111,9 +116,11 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var bug = _bugService.GetBug(id);
-
                 var story = _userStoryService.GetUserStory(bug.UserStoryId);
-                ViewBag.ProjectId = story.ProjectId;
+                var project = _projectInfoService.GetProjectInfo(story.ProjectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+                ViewBag.StoryId = story.StoryId;
                 ViewBag.Id = id;
 
                 var statuses = _statusService.GetAllStatuses();
@@ -168,13 +175,16 @@ namespace ProjectManagementTool.Controllers
             }
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, int projectId)
         {
             try
             {
                 var bugDetails = new BugDetailsVM();
                 var bug = _bugService.GetBug(id);
-
+                var project = _projectInfoService.GetProjectInfo(projectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+                ViewBag.StoryId = bug.UserStoryId;
                 bugDetails.Bug = bug;
                 bugDetails.StoryName = _userStoryService.GetUserStory(bug.UserStoryId).StoryName;
                 bugDetails.StatusList = _statusService.GetAllStatuses().ToDictionary(s => s.StatusId, s => s.Name);
