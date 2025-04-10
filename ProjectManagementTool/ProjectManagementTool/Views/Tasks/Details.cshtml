@@ -420,18 +420,50 @@
             }
         }
 
+        function flipPlayPauseButton(subTaskId, status) {
+            if (status === "Started") {
+                document.getElementById("playButton-" + subTaskId).classList.add("d-none");
+                document.getElementById("pauseButton-" + subTaskId).classList.remove("d-none");
+            } else {
+                document.getElementById("playButton-" + subTaskId).classList.remove("d-none");
+                document.getElementById("pauseButton-" + subTaskId).classList.add("d-none");
+            }
+        }
+
+        // Time track starting
+        function IncompletedTracking(subTaskId) {
+            console.log(subTaskId);
+            $.ajax({
+                url: "/TimeTrack/IncompletedTimeTrackBySubTask",
+                type: 'GET',
+                data: { subTaskId: subTaskId },
+                success: function (response) { 
+                    if (response.status === "Started") {
+                        localStorage.setItem("tracking-" + subTaskId, "Started");
+                        flipPlayPauseButton(subTaskId, "Started");
+                    } else {
+                        localStorage.setItem("tracking-" + subTaskId, "Stopped");
+                        flipPlayPauseButton(subTaskId, "Stopped");
+                    }
+                },
+                error: function () {
+                    alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+                }
+            });
+        }
+
         // Button tracking handle
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let subTaskId = button.id.split("-")[1];
                 let status = localStorage.getItem("tracking-" + subTaskId);
-
-                if (status === "Started") {
-                    document.getElementById("playButton-" + subTaskId).classList.add("d-none");
-                    document.getElementById("pauseButton-" + subTaskId).classList.remove("d-none");
-                } else {
-                    document.getElementById("playButton-" + subTaskId).classList.remove("d-none");
-                    document.getElementById("pauseButton-" + subTaskId).classList.add("d-none");
+                if(status == null)
+                {
+                    IncompletedTracking(subTaskId);
+                }
+                else
+                {
+                    flipPlayPauseButton(subTaskId, status);
                 }
             });
         });
@@ -439,10 +471,7 @@
         
 
         // Stop watch releted variable
-        let currentTime = 0;
-        let endTimeInSeconds = 120; // e.g. count up to 2 minutes
-        let interval;
-        let isRunning = false;
+        const timers = {};
 
         // Update stop watch
         function updateDisplay(seconds, subTaskId) {
@@ -455,28 +484,35 @@
 
         // Stopwatch start
         function stoptWatchStart(subTaskId) {
-            console.log("stop watch start");
-            if (isRunning) return;
-            isRunning = true;
+            if (!timers[subTaskId]) { 
+                timers[subTaskId] = { currentTime : 0, interval : null, isRunning : false };
+            }
 
-            interval = setInterval(() => {
-                currentTime++;
-                updateDisplay(currentTime, subTaskId);
+            const timer = timers[subTaskId];
+
+            if (timer.isRunning)
+                return;
+
+            timer.isRunning = true;
+
+            timer.interval = setInterval(() => {
+                timer.currentTime++;
+                updateDisplay(timer.currentTime, subTaskId);
             }, 1000);
         }
 
         // Stopwatch stop
         function stopWatchOff(subTaskId) {
-            console.log("stop watch off");
-            clearInterval(interval);
-            currentTime = 0;
-            isRunning = false;
+            const timer = timers[subTaskId];
+            clearInterval(timer.interval);
+            timer.currentTime = 0;
+            timer.isRunning = false;
         }
 
 
         // Time track starting
         function startTracking(taskId, subTaskId) {
-            stoptWatchStart(subTaskId);
+            //stoptWatchStart(subTaskId);
             $.ajax({
                 url:"/TimeTrack/Start",
                 type: 'POST',
@@ -497,7 +533,7 @@
 
         // Time track stopping
         function stopTracking(taskId, subTaskId) {
-            stopWatchOff(subTaskId);
+            //stopWatchOff(subTaskId);
             $.ajax({
                 url: "/TimeTrack/End",
                 type: 'POST',

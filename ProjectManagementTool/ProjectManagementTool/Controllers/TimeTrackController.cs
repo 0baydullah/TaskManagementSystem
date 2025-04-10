@@ -156,5 +156,30 @@ namespace ProjectManagementTool.Controllers
                 return RedirectToAction("Exception", "Error");
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> IncompletedTimeTrackBySubTask(int subTaskId)
+        {
+            try
+            {
+                var incompletedTimeTrack =  _timeTrackService.IncompletedTimeTrackBySubTask(subTaskId);
+                if (incompletedTimeTrack != null) 
+                {
+
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus });
+                }
+                else
+                {
+                    return Json(new { success = false }); 
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
     }
 }

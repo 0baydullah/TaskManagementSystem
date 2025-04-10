@@ -29,39 +29,13 @@ namespace BusinessLogicLayer.Service
                     SubTaskId = subTaskId,
                     StartTime = DateTime.Now,
                     EndTime = DateTime.Now,
-                    //TodaysTime = DateTime.Now,
                     TotalTime = 0,
                 };
 
                 timeTrack.EndTime = timeTrack.StartTime;
-
                 var result = await _timeTrackRepo.TimeStore(timeTrack);
+                
                 return result;
-
-                //var existTimeTrack = _timeTrackRepo.GetByTaskIdSubTaskId(taskId, subTaskId);
-
-                //if (existTimeTrack == null)
-                //{
-                //    var timeTrack = new TimeTrack()
-                //    {
-                //        TaskId = taskId,
-                //        SubTaskId = subTaskId,
-                //        StartTime = DateTime.Now,
-                //        EndTime = DateTime.Now,
-                //        TodaysTime = DateTime.Now,
-                //        TotalTime = 0,
-                //    };
-
-                //    var result = await _timeTrackRepo.TimeStore(timeTrack);
-                //    return result;
-                //}
-                //else
-                //{
-                //    existTimeTrack.TodaysTime = DateTime.Now;
-                //    var result = await _timeTrackRepo.TimeUpdate(existTimeTrack);
-
-                //    return result;
-                //}
             }
             catch(Exception)
             {
@@ -150,6 +124,18 @@ namespace BusinessLogicLayer.Service
             try
             {
                 return _timeTrackRepo.GetAllByTaskId(taskId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public TimeTrack IncompletedTimeTrackBySubTask(int subTaskId)
+        {
+            try
+            {
+                return _timeTrackRepo.IncompletedTimeTrackBySubTask(subTaskId);
             }
             catch (Exception)
             {

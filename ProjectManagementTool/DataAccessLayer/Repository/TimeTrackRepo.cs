@@ -113,6 +113,19 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public TimeTrack IncompletedTimeTrackBySubTask(int subTaskId)
+        {
+            try
+            {
+                var incompletedTimeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId && s.TrackingStatus == "Started" && s.IsTrackCompleted == false);
+                return incompletedTimeTrack;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
     }
 }
