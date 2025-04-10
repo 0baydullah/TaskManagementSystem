@@ -95,14 +95,62 @@
             <div class="col-md-4">
                 <div class="card h-100 text-center shadow-sm">
                     <div class="card-header bg-light">
-                        <h4>@Html.DisplayNameFor(x => x.Task) & @Html.DisplayNameFor(x => x.Bug)</h4>
+                        <h4>@Html.DisplayNameFor(x => x.Task)</h4>
                     </div>
                     <div class="card-body">
-                        <h4>Task: @Model.Task</h4>
-                        <h4>Bug: @Model.Bug</h4>
+                        <h1>@Model.Task</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="#">
+                            Details
+                        </a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>@Html.DisplayNameFor(x => x.Bug)</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>@Model.Bug</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="#">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>#</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>#</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="#">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center shadow-sm">
+                    <div class="card-header bg-light">
+                        <h4>#</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1>#</h1>
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="#">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+           
         </div>
     </div>
 </div>

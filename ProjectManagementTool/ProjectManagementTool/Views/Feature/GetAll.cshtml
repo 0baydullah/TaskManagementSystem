@@ -1,9 +1,20 @@
 ﻿@using DataAccessLayer.Models.ViewModel
+@using DataAccessLayer.StaticClass
 @model IEnumerable<FeatureWithMemberReleaseVM>
 
 @{
     ViewData["Title"] = "User Story";
-    ViewData["Banner"] = "Features";
+    ViewData["Banner"] = "Features Panel";
+}
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName) ?? string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName, new{ id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("Feature", Url.Action(ActionNameHelper.GetAllActionName, ControllerNameHelper.FeatureControllerName, new{projectId = ViewBag.ProjectId })?? string.Empty),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 
@@ -44,7 +55,9 @@
 
                 <tr>
                     <td>
-                        @item.Name
+                        <a class="text-decoration-none fw-bold" onclick="openDetailsModal('@item.Description')">
+                           @item.Name
+                        </a>
                     </td>
                     <td>
                         @item.EstimatedPoint
@@ -66,9 +79,6 @@
                         <a class="btn btn-light" onclick="openDeleteModal('@item.FeatureId')">
                             <i class="text-danger fa-solid fa-trash"></i>
                         </a>
-                        <a class="btn btn-light" onclick="openDetailsModal('@item.Description')">
-                             <i class="text-danger fa-solid fa-circle-info"></i>
-                         </a>
                     </td>
                 </tr>
             }
