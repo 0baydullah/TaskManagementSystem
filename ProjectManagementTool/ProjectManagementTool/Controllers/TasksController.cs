@@ -244,5 +244,31 @@ namespace ProjectManagementTool.Controllers
                 return RedirectToAction("Exception", "Error");
             }
         }
+        [HttpPost]
+        public IActionResult ChangeStatus(int id, int status)
+        {
+            try
+            {
+                Tasks task = _tasksService.GetTasks(id);
+
+                if (task == null)
+                {
+                    return NotFound();
+                }
+
+                task.Status = status;
+
+                _tasksService.UpdateTasks(task);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace BusinessLogicLayer.IService
         public void DeleteTasks(Tasks tasks);
         public Tasks GetTasks(int id);
         public List<Tasks> GetAllTasks();
+        public List<Tasks> GetAllTasksByMember(List<Member>? members);
         public List<TasksVM> GetAllTasks(int id);
     }
 }
