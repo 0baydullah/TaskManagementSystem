@@ -39,8 +39,10 @@
 
             @foreach (var item in Model.StatusList)
             {
-                if(item.Key<= Model.StatusList.Count)
+                @if (Model.TaskDict.ContainsKey(item.Key) == false)
                 {
+                    Model.TaskDict[item.Key] = 0;
+                }
                     <div class="col-md-3">
                         <div class="card h-100 text-center shadow-sm">
                             <div class="card-header bg-light">
@@ -51,20 +53,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                }
-                else{
-                    <div class="col-md-3">
-                        <div class="card h-100 text-center shadow-sm">
-                            <div class="card-header bg-light">
-                                <h4>@item.Value</h4>
-                            </div>
-                            <div class="card-body">
-                                <h1 id="taskInProgress">0</h1>
-                            </div>
-                        </div>
-                    </div>
-                }
 
             }
 
@@ -154,6 +142,14 @@
             {
                 @foreach (var item in Model.Tasks)
                 {
+                    @if (Model.StatusList.ContainsKey(item.Status) == false)
+                    {
+                        Model.StatusList[item.Status] = "Not Found";
+                    }
+                    @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                    {
+                        Model.StatusList[item.Priority] = "Not Found";
+                    }
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
@@ -222,6 +218,14 @@
             {
                 @foreach (var item in Model.Bugs)
                 {
+                    @if (Model.StatusList.ContainsKey(item.Status) == false)
+                    {
+                        Model.StatusList[item.Status] = "Not Found";
+                    }
+                    @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                    {
+                        Model.StatusList[item.Priority] = "Not Found";
+                    }
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)

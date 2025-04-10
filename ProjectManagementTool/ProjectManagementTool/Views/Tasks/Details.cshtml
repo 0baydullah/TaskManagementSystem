@@ -179,7 +179,7 @@
                                 <i class="text-danger fa-solid fa-circle-xmark"></i>
                             </a>
                         }
-                        <a id="stop-watch-@item.SubTaskId" class="btn btn-light">00:00:00:00</a>
+                        <a id="stop-watch-@item.SubTaskId" class="Digital7 btn btn-light">00:00:00:00</a>
                     </td>
                 </tr>
             }
@@ -506,7 +506,7 @@
 
         // Time track starting
         function startTracking(taskId, subTaskId) {
-            stoptWatchStart(subTaskId);
+            //stoptWatchStart(subTaskId);
             $.ajax({
                 url:"/TimeTrack/Start",
                 type: 'POST',
@@ -527,7 +527,7 @@
 
         // Time track stopping
         function stopTracking(taskId, subTaskId) {
-            stopWatchOff(subTaskId);
+            //stopWatchOff(subTaskId);
             $.ajax({
                 url: "/TimeTrack/End",
                 type: 'POST',
