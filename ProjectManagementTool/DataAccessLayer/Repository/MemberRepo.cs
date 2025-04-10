@@ -2,11 +2,6 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repository
 {
@@ -63,7 +58,7 @@ namespace DataAccessLayer.Repository
             try
             {
                 var result = _context.Members.Join(_context.Users, member => member.Email, user => user.Email, (member, user) =>
-                new 
+                new
                 {
                     MemberId = member.MemberId,
                     Name = user.Name,
@@ -77,9 +72,12 @@ namespace DataAccessLayer.Repository
                     Name = m.Name,
                     Email = m.Email,
                     Role = r.Name,
-                    ProjectId = m.ProjectId   
+                    ProjectId = m.ProjectId,
+                    TotalTask = _context.Tasks.Where( t => t.AssignMembersId == m.MemberId).Count(),
+                    TotalBug = _context.Bugs.Where(b => b.AssignMembersId == m.MemberId).Count(),
+
                 }).ToList();
-                
+
                 return result;
             }
             catch (Exception)
@@ -93,11 +91,11 @@ namespace DataAccessLayer.Repository
             try
             {
                 var member = _context.Members.Find(id);
-                if( member == null)
+                if (member == null)
                 {
                     throw new Exception("Member not found!");
                 }
-               
+
                 return member;
             }
             catch (Exception)
@@ -143,9 +141,9 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var user = _context.Users.FirstOrDefault( u => u.Email == email);
+                var user = _context.Users.FirstOrDefault(u => u.Email == email);
 
-                if(user == null)
+                if (user == null)
                 {
                     throw new Exception("User not found!");
                 }
@@ -164,13 +162,13 @@ namespace DataAccessLayer.Repository
             {
                 var result = user.GroupJoin(_context.Members, u => u.Email, m => m.Email, (u, m) => new { u, m }).SelectMany(
                     x => x.m.DefaultIfEmpty(), (x, q) => new
-                { 
-                     UserId = x.u.Id,
-                     Pin = x.u.Pin,
-                     Name = x.u.Name,
-                     Email = x.u.Email,
-                     ProjectId = q != null ? q.ProjectId : 0
-                }).
+                    {
+                        UserId = x.u.Id,
+                        Pin = x.u.Pin,
+                        Name = x.u.Name,
+                        Email = x.u.Email,
+                        ProjectId = q != null ? q.ProjectId : 0
+                    }).
                 GroupJoin(_context.ProjectInfo, f => f.ProjectId, p => p.ProjectId, (f, p) => new { f, p }).SelectMany(
                     x => x.p.DefaultIfEmpty(), (x, p) => new AllUserVM
                     {
@@ -179,7 +177,7 @@ namespace DataAccessLayer.Repository
                         Name = x.f.Name,
                         Email = x.f.Email,
                         ProjectId = x.f.ProjectId,
-                        Projects = p != null ? ( _context.ProjectInfo.Where( z => z.ProjectId == x.f.ProjectId).Select( d => d.Key).ToList() ) : new List<string>()
+                        Projects = p != null ? (_context.ProjectInfo.Where(z => z.ProjectId == x.f.ProjectId).Select(d => d.Key).ToList()) : new List<string>()
                     }).ToList();
 
                 var allUser = result.GroupBy(x => x.Id).Select(x => new AllUserVM
@@ -191,7 +189,7 @@ namespace DataAccessLayer.Repository
                     ProjectId = x.Select(y => y.ProjectId).FirstOrDefault(),
                     Projects = x.SelectMany(y => y.Projects).ToList()
                 }).ToList();
-                
+
                 return allUser;
             }
             catch (Exception)

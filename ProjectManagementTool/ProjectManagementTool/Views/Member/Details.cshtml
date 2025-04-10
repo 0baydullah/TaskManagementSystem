@@ -25,10 +25,10 @@
     <div class="card-body fw-bolder">
 
         <div class="row g-3 mt-4">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card h-100 text-center shadow-sm">
                     <div class="card-header bg-light">
-                        <h4>Total Tasks</h4>
+                        <h5 class="text-success">Total Tasks</h5>
                     </div>
                     <div class="card-body">
                         <h1>@Model.TaskAll</h1>
@@ -43,25 +43,25 @@
                 {
                     Model.TaskDict[item.Key] = 0;
                 }
-                    <div class="col-md-3">
-                        <div class="card h-100 text-center shadow-sm">
-                            <div class="card-header bg-light">
-                                <h4>@item.Value</h4>
-                            </div>
-                            <div class="card-body">
-                                <h1 id="taskInProgress">@Model.TaskDict[item.Key]</h1>
-                            </div>
+
+                <div class="col-md-2">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="text-success">@item.Value</h5>
+                        </div>
+                        <div class="card-body di">
+                            <h1 id="taskInProgress">@Model.TaskDict[item.Key]</h1>
                         </div>
                     </div>
-
+                </div>
             }
-
         </div>
+
         <div class="row g-3 mt-4">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card h-100 text-center shadow-sm">
                     <div class="card-header bg-light">
-                        <h4>Total Bugs</h4>
+                        <h5 class="text-danger">Total Bugs</h5>
                     </div>
                     <div class="card-body">
                         <h1>@Model.BugAll</h1>
@@ -69,36 +69,25 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card h-100 text-center shadow-sm">
-                    <div class="card-header bg-light">
-                        <h4>In Progress</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1>@Model.BugInProgress</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 text-center shadow-sm">
-                    <div class="card-header bg-light">
-                        <h4>Urgent</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1>@Model.BugUrgent</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 text-center shadow-sm">
-                    <div class="card-header bg-light">
-                        <h4>Closed</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1>@Model.BugClosed</h1>
+
+            @foreach (var item in Model.StatusList)
+            {
+                @if (Model.BugDict.ContainsKey(item.Key) == false)
+                {
+                    Model.BugDict[item.Key] = 0;
+                }
+
+                <div class="col-md-2">
+                    <div class="card h-100 text-center shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="text-danger">@item.Value</h5>
+                        </div>
+                        <div class="card-body">
+                            <h1 id="taskInProgress">@Model.BugDict[item.Key]</h1>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
