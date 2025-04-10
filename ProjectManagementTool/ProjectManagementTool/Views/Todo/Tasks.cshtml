@@ -5,6 +5,11 @@
     Model.PriorityList[0] = "N/A"; // Ensure PriorityList has a default value for 0
 }
 
+<div id="#successAlert" class="alert alert-success alert-dismissible fade show" role="alert" hidden>
+    <strong>Success!</strong> Status Changed.
+    <button type="button" id="#close" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div>
     <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -121,6 +126,11 @@
                 success: function (response) {
                     if (response.success) {
                         console.log('Task status updated successfully');
+                        var successAlert = document.getElementById('successAlert');
+                        successAlert.hidden = false;
+                        setTimeout(function() {
+                            successAlert.hidden = true;
+                        }, 3000);
                     } else {
                         console.error('Failed to update task status: ' + response.message);
                         alert('Error: ' + response.message);
