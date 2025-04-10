@@ -432,17 +432,16 @@
 
         // Time track starting
         function IncompletedTracking(subTaskId) {
-            console.log(subTaskId);
             $.ajax({
                 url: "/TimeTrack/IncompletedTimeTrackBySubTask",
                 type: 'GET',
                 data: { subTaskId: subTaskId },
                 success: function (response) { 
                     if (response.status === "Started") {
-                        localStorage.setItem("tracking-" + subTaskId, "Started");
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
                         flipPlayPauseButton(subTaskId, "Started");
                     } else {
-                        localStorage.setItem("tracking-" + subTaskId, "Stopped");
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
                         flipPlayPauseButton(subTaskId, "Stopped");
                     }
                 },
@@ -456,7 +455,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let subTaskId = button.id.split("-")[1];
-                let status = localStorage.getItem("tracking-" + subTaskId);
+                let status = localStorage.getItem("trackingSubTask-" + subTaskId);
                 if(status == null)
                 {
                     IncompletedTracking(subTaskId);
@@ -518,8 +517,8 @@
                 type: 'POST',
                 data: { taskId: taskId, subTaskId: subTaskId },
                 success: function(response) {
-                    if (response.status === "Started") { 
-                        localStorage.setItem("tracking-" + subTaskId, "Started");
+                    if (response.status === "Started") {
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
                     }
 
                     $("#playButton-" + subTaskId).addClass("d-none");
@@ -540,7 +539,7 @@
                 data: { taskId: taskId, subTaskId: subTaskId },
                 success: function (response) {
                     if (response.status === "Stopped") {
-                        localStorage.setItem("tracking-" + subTaskId, "Stopped");
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
                     }
 
                     $("#pauseButton-" + subTaskId).addClass("d-none");

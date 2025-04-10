@@ -65,11 +65,11 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public bool UpdateTrackingStatus(int subTaskId, string status)
+        public bool UpdateTrackingStatus(int taskId, int subTaskId, string status)
         {
             try
             {
-                var timeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId && s.IsTrackCompleted == false);
+                var timeTrack = _context.TimeTracks.FirstOrDefault(s => s.TaskId == taskId && s.SubTaskId == subTaskId && s.IsTrackCompleted == false);
                
                 if (timeTrack == null)
                 {
@@ -113,11 +113,11 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public TimeTrack IncompletedTimeTrackBySubTask(int subTaskId)
+        public async Task<TimeTrack> IncompletedTimeTrackBySubTask(int subTaskId)
         {
             try
             {
-                var incompletedTimeTrack = _context.TimeTracks.FirstOrDefault(s => s.SubTaskId == subTaskId && s.TrackingStatus == "Started" && s.IsTrackCompleted == false);
+                var incompletedTimeTrack = await _context.TimeTracks.FirstOrDefaultAsync(s => s.SubTaskId == subTaskId && s.TrackingStatus == "Started" && s.IsTrackCompleted == false);
                 return incompletedTimeTrack;
             }
             catch (Exception)
@@ -126,6 +126,18 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public async Task<TimeTrack> IncompletedTimeTrackByTask(int taskId) 
+        {
+            try
+            {
+                var incompletedTimeTrack = await _context.TimeTracks.FirstOrDefaultAsync(s => s.TaskId == taskId && s.TrackingStatus == "Started" && s.IsTrackCompleted == false);
+                return incompletedTimeTrack;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
     }
 }

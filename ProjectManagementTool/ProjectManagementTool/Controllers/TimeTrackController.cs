@@ -28,7 +28,7 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var result = await _timeTrackService.TimeStoreStart(taskId, subTaskId);
-                var isSavedTrackingStatus =  _timeTrackService.UpdateTrackingStatus(subTaskId, "Started");
+                var isSavedTrackingStatus =  _timeTrackService.UpdateTrackingStatus(taskId,subTaskId, "Started");
 
                 if (result == true)
                 {
@@ -53,7 +53,7 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                var isSavedTrackingStatus =  _timeTrackService.UpdateTrackingStatus(subTaskId, "Stopped");
+                var isSavedTrackingStatus =  _timeTrackService.UpdateTrackingStatus(taskId, subTaskId, "Stopped");
                 var result = await _timeTrackService.TimeStoreEnd(taskId, subTaskId);
 
                 if (result == true)
@@ -162,7 +162,7 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                var incompletedTimeTrack =  _timeTrackService.IncompletedTimeTrackBySubTask(subTaskId);
+                var incompletedTimeTrack =  await _timeTrackService.IncompletedTimeTrackBySubTask(subTaskId);
                 if (incompletedTimeTrack != null) 
                 {
 
@@ -171,6 +171,31 @@ namespace ProjectManagementTool.Controllers
                 else
                 {
                     return Json(new { success = false }); 
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> IncompletedTimeTrackByTask(int taskId)
+        {
+            try
+            {
+                var incompletedTimeTrack = await _timeTrackService.IncompletedTimeTrackByTask(taskId);
+                if (incompletedTimeTrack != null)
+                {
+
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus });
+                }
+                else
+                {
+                    return Json(new { success = false });
                 }
             }
             catch (Exception ex)

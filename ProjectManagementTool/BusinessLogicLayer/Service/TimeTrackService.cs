@@ -85,11 +85,11 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public bool UpdateTrackingStatus(int subTaskId, string status)
+        public bool UpdateTrackingStatus(int taskId, int subTaskId, string status)
         {
             try
             {
-                return _timeTrackRepo.UpdateTrackingStatus(subTaskId, status);
+                return _timeTrackRepo.UpdateTrackingStatus(taskId, subTaskId, status);
             }
             catch (Exception)
             {
@@ -102,14 +102,6 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var subTasksTimeTracks = _timeTrackRepo.GetBySubTaskId(subTaskId);
-                //var formatedSubTasksTimeTrack = new List<TimeTrack>();
-                
-                //foreach (var track in subTasksTimeTracks)
-                //{
-                //    track.StartTime.ToString("MM/dd/yyyy HH:mm");
-                //    track.EndTime.ToString("MM/dd/yyyy HH:mm");
-                //    formatedSubTasksTimeTrack.Add(track);
-                //}
 
                 return subTasksTimeTracks;
             }
@@ -131,11 +123,23 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public TimeTrack IncompletedTimeTrackBySubTask(int subTaskId)
+        public async Task<TimeTrack> IncompletedTimeTrackBySubTask(int subTaskId)
         {
             try
             {
-                return _timeTrackRepo.IncompletedTimeTrackBySubTask(subTaskId);
+                return await _timeTrackRepo.IncompletedTimeTrackBySubTask(subTaskId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<TimeTrack> IncompletedTimeTrackByTask(int taskId)
+        {
+            try
+            {
+                return await _timeTrackRepo.IncompletedTimeTrackByTask(taskId);
             }
             catch (Exception)
             {
