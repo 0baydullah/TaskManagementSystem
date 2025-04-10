@@ -179,10 +179,7 @@
                                 <i class="text-danger fa-solid fa-circle-xmark"></i>
                             </a>
                         }
-                        <a id="pauseButton-@item.TaskId" class="btn btn-light"
-                           onclick="timeDetails(@item.TaskId)">
-                            <i class="text-black fa-solid fa-stopwatch"></i>
-                        </a>
+                        <a id="stop-watch-@item.SubTaskId" class="btn btn-light">00:00:00:00</a>
                     </td>
                 </tr>
             }
@@ -415,31 +412,108 @@
             }
         }
 
+        function flipPlayPauseButton(subTaskId, status) {
+            if (status === "Started") {
+                document.getElementById("playButton-" + subTaskId).classList.add("d-none");
+                document.getElementById("pauseButton-" + subTaskId).classList.remove("d-none");
+            } else {
+                document.getElementById("playButton-" + subTaskId).classList.remove("d-none");
+                document.getElementById("pauseButton-" + subTaskId).classList.add("d-none");
+            }
+        }
+
+        // Time track starting
+        function IncompletedTracking(subTaskId) {
+            $.ajax({
+                url: "/TimeTrack/IncompletedTimeTrackBySubTask",
+                type: 'GET',
+                data: { subTaskId: subTaskId },
+                success: function (response) { 
+                    if (response.status === "Started") {
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
+                        flipPlayPauseButton(subTaskId, "Started");
+                    } else {
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
+                        flipPlayPauseButton(subTaskId, "Stopped");
+                    }
+                },
+                error: function () {
+                    alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+                }
+            });
+        }
+
         // Button tracking handle
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let subTaskId = button.id.split("-")[1];
-                let status = localStorage.getItem("tracking-" + subTaskId);
-
-                if (status === "Started") {
-                    document.getElementById("playButton-" + subTaskId).classList.add("d-none");
-                    document.getElementById("pauseButton-" + subTaskId).classList.remove("d-none");
-                } else {
-                    document.getElementById("playButton-" + subTaskId).classList.remove("d-none");
-                    document.getElementById("pauseButton-" + subTaskId).classList.add("d-none");
+                let status = localStorage.getItem("trackingSubTask-" + subTaskId);
+                if(status == null)
+                {
+                    IncompletedTracking(subTaskId);
+                }
+                else
+                {
+                    flipPlayPauseButton(subTaskId, status);
                 }
             });
         });
 
+        
+
+        // Stop watch releted variable
+        const timers = {};
+
+        // Update stop watch
+        function updateDisplay(seconds, subTaskId) {
+            const day = Math.floor(seconds / 86400).toString().padStart(2, '0');
+            const hour = Math.floor((seconds %86400) / 3600).toString().padStart(2, '0');
+            const min = Math.floor(((seconds % 86400) % 3600) / 60).toString().padStart(2, '0');
+            const sec = (((seconds % 86400) % 3600) % 60).toString().padStart(2, '0');
+            document.getElementById(`stop-watch-${subTaskId}`).textContent = `${day}:${hour}:${min}:${sec}`;
+        }
+
+        // Stopwatch start
+        function stoptWatchStart(subTaskId) {
+            if (!timers[subTaskId]) { 
+                timers[subTaskId] = { currentTime : 0, interval : null, isRunning : false };
+            }
+
+            const timer = timers[subTaskId];
+
+            if (timer.isRunning)
+                return;
+                
+            timer.isRunning = true;
+
+            timer.interval = setInterval(() => {
+                timer.currentTime++; 
+                updateDisplay(timer.currentTime, subTaskId);
+            }, 1000);
+        }
+
+        // Stopwatch stop
+        function stopWatchOff(subTaskId) {
+            const timer = timers[subTaskId];
+            console.log("stop track watch", timer);
+            
+            clearInterval(timers[subTaskId].interval);
+            //timer.interval = null;
+            timers[subTaskId].currentTime = 0;
+            timers[subTaskId].isRunning = false;
+        }
+
+
         // Time track starting
         function startTracking(taskId, subTaskId) {
+            stoptWatchStart(subTaskId);
             $.ajax({
                 url:"/TimeTrack/Start",
                 type: 'POST',
                 data: { taskId: taskId, subTaskId: subTaskId },
                 success: function(response) {
-                    if (response.status === "Started") { 
-                        localStorage.setItem("tracking-" + subTaskId, "Started");
+                    if (response.status === "Started") {
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
                     }
 
                     $("#playButton-" + subTaskId).addClass("d-none");
@@ -452,14 +526,15 @@
         }
 
         // Time track stopping
-        function stopTracking(taskId, subTaskId) { 
+        function stopTracking(taskId, subTaskId) {
+            stopWatchOff(subTaskId);
             $.ajax({
                 url: "/TimeTrack/End",
                 type: 'POST',
                 data: { taskId: taskId, subTaskId: subTaskId },
                 success: function (response) {
                     if (response.status === "Stopped") {
-                        localStorage.setItem("tracking-" + subTaskId, "Stopped");
+                        localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
                     }
 
                     $("#pauseButton-" + subTaskId).addClass("d-none");
