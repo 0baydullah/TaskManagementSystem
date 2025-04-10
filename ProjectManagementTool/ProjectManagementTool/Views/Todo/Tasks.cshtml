@@ -5,9 +5,8 @@
     Model.PriorityList[0] = "N/A"; // Ensure PriorityList has a default value for 0
 }
 
-<div id="#successAlert" class="alert alert-success alert-dismissible fade show" role="alert" hidden>
-    <strong>Success!</strong> Status Changed.
-    <button type="button" id="#close" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+<div id="response-message">
 </div>
 
 <div>
@@ -124,16 +123,15 @@
                     status: selectedStatus,
                 },
                 success: function (response) {
-                    if (response.success) {
-                        console.log('Task status updated successfully');
-                        var successAlert = document.getElementById('successAlert');
-                        successAlert.hidden = false;
-                        setTimeout(function() {
-                            successAlert.hidden = true;
-                        }, 3000);
-                    } else {
-                        console.error('Failed to update task status: ' + response.message);
-                        alert('Error: ' + response.message);
+                    if(response.success) {
+                        $('#response-message').html('<div class="alert alert-success"><b>Success!!</b> Status Updated Successfully!</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    }
+
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function (xhr, status, error) {
@@ -154,11 +152,15 @@
                     status : selectedStatus,
                 },
                 success: function (response) {
-                    if (response.success) {
-                        console.log('Subtask status updated successfully');
-                    } else {
-                        console.error('Failed to update subtask status: ' + response.message);
-                        alert('Error: ' + response.message);
+                    if(response.success) {
+                        $('#response-message').html('<div class="alert alert-success"><b>Success!!</b> Status Updated Successfully!</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    }
+
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
                 error: function (xhr, status, error) {
