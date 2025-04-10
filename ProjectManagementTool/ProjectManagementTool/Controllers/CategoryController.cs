@@ -17,11 +17,13 @@ namespace ProjectManagementTool.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
+        private readonly IUserStoryService _userStoryService;
         private readonly ILog _log = LogManager.GetLogger(typeof(CategoryController));
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IUserStoryService userStoryService)
         {
             _categoryService = categoryService;
+            _userStoryService = userStoryService;
         }
 
         [HttpGet]
@@ -132,7 +134,12 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                _categoryService.DeleteCategory(id);
+                var story = _userStoryService.GetAllUserStory().Where( s => s.Category == id).FirstOrDefault();
+                if (story == null)
+                {
+                    _categoryService.DeleteCategory(id);
+                }
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

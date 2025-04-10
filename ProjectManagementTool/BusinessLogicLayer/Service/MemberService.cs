@@ -2,11 +2,6 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Service
 {
@@ -16,20 +11,22 @@ namespace BusinessLogicLayer.Service
         private readonly ITasksRepo _tasksRepo;
         private readonly IUserStoryRepo _userStoryRepo;
         private readonly IProjectInfoRepo _projectInfoRepo;
-        public MemberService(IMemberRepo memberRepo, ITasksRepo tasksRepo, IUserStoryRepo userStoryRepo, IProjectInfoRepo projectInfoRepo)
+        private readonly IRoleService _roleService;
+        public MemberService(IMemberRepo memberRepo, ITasksRepo tasksRepo, IUserStoryRepo userStoryRepo, IProjectInfoRepo projectInfoRepo, IRoleService roleService)
         {
             _memberRepo = memberRepo;
             _tasksRepo = tasksRepo;
             _userStoryRepo = userStoryRepo;
             _projectInfoRepo = projectInfoRepo;
+            _roleService = roleService;
         }
         public bool AddMember(Member member)
         {
             try
             {
-               var result = _memberRepo.AddMember(member);
-               
-               return result;
+                var result = _memberRepo.AddMember(member);
+
+                return result;
             }
             catch (Exception)
             {
@@ -41,9 +38,9 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-               var result = _memberRepo.DeleteMember(member);
+                var result = _memberRepo.DeleteMember(member);
 
-               return result;
+                return result;
             }
             catch (Exception)
             {
@@ -60,7 +57,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception)
             {
                 throw;
-            }  
+            }
         }
 
         public Member GetMember(int id)
@@ -68,7 +65,7 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var member = _memberRepo.GetMember(id);
-               
+
                 return member;
             }
             catch (Exception)
@@ -100,13 +97,13 @@ namespace BusinessLogicLayer.Service
                 data.RoleId = member.RoleId;
                 //data.ProjectId = member.ProjectId;
                 var result = await _memberRepo.UpdateMember(data);
-                
+
                 return result;
             }
             catch (Exception)
             {
                 throw;
-            }   
+            }
         }
 
         public UserInfo GetUserByEmail(string email)
@@ -114,14 +111,14 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var user = _memberRepo.GetUserByEmail(email);
-                
+
                 return user;
             }
             catch (Exception)
             {
                 throw;
             }
-            
+
         }
 
 
@@ -130,62 +127,31 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var users = _memberRepo.GetAllUser(user);
-                
+
                 return users;
             }
             catch (Exception)
             {
                 throw;
             }
-            
-        }
 
+        }
         public MemberDetailsVM GetMemberDetails(int id)
         {
             try
             {
-                var member = _memberRepo.GetAllMember().Where( m => m.MemberId == id).ToList();
-                var storys = _userStoryRepo.GetAllUserStory().ToList();
-                var tasks = _tasksRepo.GetAllTasks();
-                var allTasks = tasks.Join(storys, task => task.UserStoryId, story => story.StoryId, (task, story) => new
-                {
-                    TaskId = task.TaskId,
-                    TaskName = task.Name,
-                    Description = task.Descripton,
-                    AssignMemberId = task.AssignMembersId,
-                    ReviewerMemberId = task.ReviewerMemberId,
-                    EstimatedTime = task.EstimatedTime,
-                    Tag = task.Tag,
-                    Status = task.Status,
-                    Priority = task.Priority,
-                    StoryId = story.StoryId,
-                    StoryName = story.StoryName,
-                    ProjectId = story.ProjectId,
-
-                }).Join(member, t => t.ProjectId, member => member.ProjectId, (t, member) => new TasksVM
-                {
-                    TaskId = t.TaskId,
-                    Name = t.TaskName,
-                    Descripton = t.Description,
-                    AssignMembersId = t.AssignMemberId,
-                    ReviewerMemberId = t.ReviewerMemberId,
-                    EstimatedTime = t.EstimatedTime,
-                    Tag = t.Tag,
-                    Status = t.Status,
-                    Priority = t.Priority,
-                    UserStoryId = t.StoryId,
-                }).ToList();
-
-
+                var member = _memberRepo.GetMember(id);
+                var tasks = _tasksRepo.GetAllTasks().Where(t => t.AssignMembersId == member.MemberId).ToList();
+                var roles =  _roleService.GetAllRole().ToDictionary(r => r.RoleId, r => r.RoleName);
                 var result = new MemberDetailsVM
                 {
-                    MemberId = member.FirstOrDefault().MemberId,
-                    ProjectId = member.FirstOrDefault().ProjectId,
-                    MemberName = member.FirstOrDefault().Name,
-                    RoleName = member.FirstOrDefault().Role,
-                    Email = member.FirstOrDefault().Email,
-                    Tasks = allTasks,
+                    MemberId = member.MemberId,
+                    ProjectId = member.ProjectId,
+                    RoleId = member.RoleId,
+                    Email = member.Email ?? "No Email!",
+                    Tasks = tasks,
                     Bugs = null,
+                    RoleList = roles
                 };
 
                 return result;
@@ -196,5 +162,62 @@ namespace BusinessLogicLayer.Service
                 throw;
             }
         }
+
+        //public MemberDetailsVM GetMemberDetails(int id)
+        //{
+        //    try
+        //    {
+        //        var member = _memberRepo.GetAllMember().Where( m => m.MemberId == id).ToList();
+        //        var storys = _userStoryRepo.GetAllUserStory().ToList();
+        //        var tasks = _tasksRepo.GetAllTasks();
+        //        var allTasks = tasks.Join(storys, task => task.UserStoryId, story => story.StoryId, (task, story) => new
+        //        {
+        //            TaskId = task.TaskId,
+        //            TaskName = task.Name,
+        //            Description = task.Descripton,
+        //            AssignMemberId = task.AssignMembersId,
+        //            ReviewerMemberId = task.ReviewerMemberId,
+        //            EstimatedTime = task.EstimatedTime,
+        //            Tag = task.Tag,
+        //            Status = task.Status,
+        //            Priority = task.Priority,
+        //            StoryId = story.StoryId,
+        //            StoryName = story.StoryName,
+        //            ProjectId = story.ProjectId,
+
+        //        }).Join(member, t => t.ProjectId, member => member.ProjectId, (t, member) => new TasksVM
+        //        {
+        //            TaskId = t.TaskId,
+        //            Name = t.TaskName,
+        //            Descripton = t.Description,
+        //            AssignMembersId = t.AssignMemberId,
+        //            ReviewerMemberId = t.ReviewerMemberId,
+        //            EstimatedTime = t.EstimatedTime,
+        //            Tag = t.Tag,
+        //            Status = t.Status,
+        //            Priority = t.Priority,
+        //            UserStoryId = t.StoryId,
+        //        }).ToList();
+
+
+        //        var result = new MemberDetailsVM
+        //        {
+        //            MemberId = member.FirstOrDefault().MemberId,
+        //            ProjectId = member.FirstOrDefault().ProjectId,
+        //            MemberName = member.FirstOrDefault().Name,
+        //            RoleName = member.FirstOrDefault().Role,
+        //            Email = member.FirstOrDefault().Email,
+        //            Tasks = allTasks,
+        //            Bugs = null,
+        //        };
+
+        //        return result;
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
     }
 }
