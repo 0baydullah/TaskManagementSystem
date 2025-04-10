@@ -2,6 +2,7 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Service
 {
@@ -11,14 +12,21 @@ namespace BusinessLogicLayer.Service
         private readonly ITasksRepo _tasksRepo;
         private readonly IUserStoryRepo _userStoryRepo;
         private readonly IProjectInfoRepo _projectInfoRepo;
-        private readonly IRoleService _roleService;
-        public MemberService(IMemberRepo memberRepo, ITasksRepo tasksRepo, IUserStoryRepo userStoryRepo, IProjectInfoRepo projectInfoRepo, IRoleService roleService)
+        private readonly IRoleRepo _roleRepo;
+        private readonly IBugRepo _bugRepo;
+        private readonly IStatusRepo _statusRepo;
+        private readonly IPriorityRepo _priorityRepo;
+        public MemberService(IMemberRepo memberRepo, ITasksRepo tasksRepo, IUserStoryRepo userStoryRepo, IProjectInfoRepo projectInfoRepo, 
+            IRoleRepo roleRepo, IBugRepo bugRepo, IStatusRepo statusRepo, IPriorityRepo priorityRepo)
         {
             _memberRepo = memberRepo;
             _tasksRepo = tasksRepo;
             _userStoryRepo = userStoryRepo;
             _projectInfoRepo = projectInfoRepo;
-            _roleService = roleService;
+            _roleRepo = roleRepo;
+            _bugRepo = bugRepo;
+            _statusRepo = statusRepo;
+            _priorityRepo = priorityRepo;
         }
         public bool AddMember(Member member)
         {
@@ -142,7 +150,42 @@ namespace BusinessLogicLayer.Service
             {
                 var member = _memberRepo.GetMember(id);
                 var tasks = _tasksRepo.GetAllTasks().Where(t => t.AssignMembersId == member.MemberId).ToList();
-                var roles =  _roleService.GetAllRole().ToDictionary(r => r.RoleId, r => r.RoleName);
+                var bugs = _bugRepo.GetAllBug().Where(b => b.AssignMembersId == member.MemberId).ToList();
+                var roles =  _roleRepo.GetAllRole().ToDictionary(r => r.RoleId, r => r.RoleName);
+                var status = _statusRepo.GetAllStatuses().ToDictionary( s => s.StatusId, s => s.Name);
+                var priority = _priorityRepo.GetAllPriorities().ToDictionary( p => p.PriorityId, p => p.Name);
+
+                Dictionary<int, int> dictTask = new Dictionary<int, int>();
+                foreach (var item in tasks)
+                {
+                    if (dictTask.ContainsKey(item.Status))
+                    {
+                        dictTask[item.Status]++;
+                    }
+                    else
+                    {
+                        
+                        dictTask[item.Status] = 1;
+                    }
+
+                }
+
+
+                Dictionary<int, int> dictBug = new Dictionary<int, int>();
+                foreach (var item in bugs)
+                {
+                    if (dictBug.ContainsKey(item.Status))
+                    {
+
+                        dictBug[item.Status]++;
+                    }
+                    else
+                    {
+                        dictBug[item.Status] = 1;
+                    }
+
+                }
+
                 var result = new MemberDetailsVM
                 {
                     MemberId = member.MemberId,
@@ -150,8 +193,20 @@ namespace BusinessLogicLayer.Service
                     RoleId = member.RoleId,
                     Email = member.Email ?? "No Email!",
                     Tasks = tasks,
-                    Bugs = null,
-                    RoleList = roles
+                    Bugs = bugs,
+                    RoleList = roles,
+                    StatusList = status,
+                    PriorityList = priority,
+                    TaskAll = tasks.Count,
+                    TaskInProgress = 0,
+                    TaskUrgent = 0,
+                    TaskNeedToReview = 0,
+                    BugAll = bugs.Count,
+                    BugInProgress = 0,
+                    BugUrgent = 0,
+                    BugClosed = 0,
+                    TaskDict = dictTask,
+                    BugDict = dictBug
                 };
 
                 return result;
@@ -162,62 +217,5 @@ namespace BusinessLogicLayer.Service
                 throw;
             }
         }
-
-        //public MemberDetailsVM GetMemberDetails(int id)
-        //{
-        //    try
-        //    {
-        //        var member = _memberRepo.GetAllMember().Where( m => m.MemberId == id).ToList();
-        //        var storys = _userStoryRepo.GetAllUserStory().ToList();
-        //        var tasks = _tasksRepo.GetAllTasks();
-        //        var allTasks = tasks.Join(storys, task => task.UserStoryId, story => story.StoryId, (task, story) => new
-        //        {
-        //            TaskId = task.TaskId,
-        //            TaskName = task.Name,
-        //            Description = task.Descripton,
-        //            AssignMemberId = task.AssignMembersId,
-        //            ReviewerMemberId = task.ReviewerMemberId,
-        //            EstimatedTime = task.EstimatedTime,
-        //            Tag = task.Tag,
-        //            Status = task.Status,
-        //            Priority = task.Priority,
-        //            StoryId = story.StoryId,
-        //            StoryName = story.StoryName,
-        //            ProjectId = story.ProjectId,
-
-        //        }).Join(member, t => t.ProjectId, member => member.ProjectId, (t, member) => new TasksVM
-        //        {
-        //            TaskId = t.TaskId,
-        //            Name = t.TaskName,
-        //            Descripton = t.Description,
-        //            AssignMembersId = t.AssignMemberId,
-        //            ReviewerMemberId = t.ReviewerMemberId,
-        //            EstimatedTime = t.EstimatedTime,
-        //            Tag = t.Tag,
-        //            Status = t.Status,
-        //            Priority = t.Priority,
-        //            UserStoryId = t.StoryId,
-        //        }).ToList();
-
-
-        //        var result = new MemberDetailsVM
-        //        {
-        //            MemberId = member.FirstOrDefault().MemberId,
-        //            ProjectId = member.FirstOrDefault().ProjectId,
-        //            MemberName = member.FirstOrDefault().Name,
-        //            RoleName = member.FirstOrDefault().Role,
-        //            Email = member.FirstOrDefault().Email,
-        //            Tasks = allTasks,
-        //            Bugs = null,
-        //        };
-
-        //        return result;
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        throw;
-        //    }
-        //}
     }
 }
