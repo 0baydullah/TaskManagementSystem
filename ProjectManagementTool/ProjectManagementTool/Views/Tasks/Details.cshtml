@@ -491,11 +491,11 @@
 
             if (timer.isRunning)
                 return;
-
+                
             timer.isRunning = true;
 
             timer.interval = setInterval(() => {
-                timer.currentTime++;
+                timer.currentTime++; 
                 updateDisplay(timer.currentTime, subTaskId);
             }, 1000);
         }
@@ -503,15 +503,18 @@
         // Stopwatch stop
         function stopWatchOff(subTaskId) {
             const timer = timers[subTaskId];
-            clearInterval(timer.interval);
-            timer.currentTime = 0;
-            timer.isRunning = false;
+            console.log("stop track watch", timer);
+            
+            clearInterval(timers[subTaskId].interval);
+            //timer.interval = null;
+            timers[subTaskId].currentTime = 0;
+            timers[subTaskId].isRunning = false;
         }
 
 
         // Time track starting
         function startTracking(taskId, subTaskId) {
-            //stoptWatchStart(subTaskId);
+            stoptWatchStart(subTaskId);
             $.ajax({
                 url:"/TimeTrack/Start",
                 type: 'POST',
@@ -532,7 +535,7 @@
 
         // Time track stopping
         function stopTracking(taskId, subTaskId) {
-            //stopWatchOff(subTaskId);
+            stopWatchOff(subTaskId);
             $.ajax({
                 url: "/TimeTrack/End",
                 type: 'POST',
