@@ -44,6 +44,48 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> GetAllProjectTask( int projectId)
+        {
+            try
+            {
+                var project = _projectInfoService.GetProjectInfo(projectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllProjectBug( int projectId)
+        {
+            try
+            {
+                var project = _projectInfoService.GetProjectInfo(projectId);
+                ViewBag.ProjectId = project.ProjectId;
+                ViewBag.ProjectKey = project.Key;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();

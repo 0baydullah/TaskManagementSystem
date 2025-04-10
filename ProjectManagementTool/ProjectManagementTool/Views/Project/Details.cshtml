@@ -99,7 +99,7 @@
                     </div>
                     <div class="card-body">
                         <h1>@Model.Task</h1>
-                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="#">
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="@Url.Action("GetAllProjectTask", "Project", new { projectId = Model.ProjectId })">
                             Details
                         </a>
                     </div>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="card-body">
                         <h1>@Model.Bug</h1>
-                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="#">
+                        <a class="btn mb-4 w-50 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="@Url.Action("GetAllProjectBug", "Project", new { projectId = Model.ProjectId })">
                             Details
                         </a>
                     </div>
