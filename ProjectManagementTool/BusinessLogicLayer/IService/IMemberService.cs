@@ -16,6 +16,7 @@ namespace BusinessLogicLayer.IService
         public bool DeleteMember(Member member);
 
         public Member GetMember(int id);
+        public List<Member> GetMemberByEmail(string email);
 
         public List<MemberWithRoleVM> GetAllMember();
         public List<AllUserVM> GetAllUser(List<UserInfo> user);

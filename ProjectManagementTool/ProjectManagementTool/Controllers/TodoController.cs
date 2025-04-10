@@ -1,5 +1,7 @@
 ﻿using BusinessLogicLayer.IService;
+using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
+using DataAccessLayer.Models.ViewModel;
 using log4net;
 using log4net.Core;
 using Microsoft.AspNetCore.Identity;
@@ -10,30 +12,51 @@ namespace ProjectManagementTool.Controllers
     public class TodoController : Controller
     {
 
-        private readonly IProjectInfoService _projectInfoService;
         private readonly UserManager<UserInfo> _userManager;
         private readonly ITasksService _tasksService;
-        private readonly ILog _log = LogManager.GetLogger(nameof(TodoController));
+        private readonly IMemberService _memberService;
+        private readonly IPriorityService _priorityService;
+        private readonly ILog _log = LogManager.GetLogger(typeof(TodoController));
 
 
-        public TodoController(IProjectInfoService projectInfoService,
-            UserManager<UserInfo> userManager, ITasksService tasksService)
+        public TodoController(
+            UserManager<UserInfo> userManager, ITasksService tasksService,
+            IMemberService memberService, IPriorityService priorityService)
         {
-
-            _projectInfoService = projectInfoService;
+            _memberService = memberService;
             _userManager = userManager;
             _tasksService = tasksService;
+            _priorityService = priorityService;
         }
 
 
         [HttpGet]
-        public IActionResult Tasks()
+        public async Task<IActionResult> Tasks()
         {
             try
             {
-                var user = _userManager.GetUserAsync(User).Result;
-                var tasks= _tasksService.GetAllTasks();
-                return View(); 
+                var todoTasks = new TodoTaskVM();
+                var user = await _userManager.GetUserAsync(User);
+                var userEmail = user.Email;
+                var members = _memberService.GetMemberByEmail(userEmail);
+                var tasks = _tasksService.GetAllTasks().Join(members,t=>t.AssignMembersId, m => m.MemberId, (t,m)=> new Tasks{
+                    TaskId = t.TaskId,
+                    Name = t.Name,
+                    Descripton = t.Descripton,
+                    AssignMembersId = t.AssignMembersId,
+                    ReviewerMemberId = t.ReviewerMemberId,
+                    EstimatedTime = t.EstimatedTime,
+                    Tag = t.Tag,
+                    Status = t.Status,
+                    Priority = t.Priority,
+                    UserStoryId = t.UserStoryId
+                }).ToList();
+                todoTasks.Tasks = tasks;
+
+
+                todoTasks.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+
+                return View(todoTasks); 
             }
             catch (Exception ex)
             {

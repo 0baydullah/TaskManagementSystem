@@ -14,6 +14,7 @@ namespace DataAccessLayer.IRepository
         public Task<bool> UpdateMember(Member member);
         public bool DeleteMember(Member member);
         public Member GetMember(int id);
+        public List<Member> GetMemberByEmail(string email);
         public List<MemberWithRoleVM> GetAllMember();
         public UserInfo GetUserByEmail(string email);
         public List<AllUserVM> GetAllUser(List<UserInfo> user);

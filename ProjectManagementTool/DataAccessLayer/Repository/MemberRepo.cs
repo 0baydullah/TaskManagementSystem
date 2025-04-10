@@ -106,6 +106,24 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public List<Member> GetMemberByEmail(string email)
+        {
+            try
+            {
+                var members = _context.Members.Where(x => x.Email == email).ToList();
+                if (members == null)
+                {
+                    throw new Exception("Member not found!");
+                }
+
+                return members;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<bool> UpdateMember(Member member)
         {
             try
