@@ -11,9 +11,9 @@
         new KeyValuePair<string, string>("","#"),
         new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
         new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId})?? string.Empty),
-        new KeyValuePair<string, string>("User Stories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId})?? string.Empty),
-        new KeyValuePair<string, string>("Details", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = ViewBag.UserStoryId})?? string.Empty),
-        new KeyValuePair<string, string>("Task Edit","#"),
+        new KeyValuePair<string, string>("UserStories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId})?? string.Empty),
+        new KeyValuePair<string, string>("StoryDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = ViewBag.UserStoryId})?? string.Empty),
+        new KeyValuePair<string, string>("TaskEdit","#"),
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
 }

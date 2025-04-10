@@ -1,9 +1,22 @@
 ﻿@model DataAccessLayer.Models.Entity.Bug
-
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "Bug-Update";
     ViewData["Banner"] = "Update Bug";
+}
+
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId})?? string.Empty),
+        new KeyValuePair<string, string>("UserStories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId})?? string.Empty),
+        new KeyValuePair<string, string>("StoryDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = ViewBag.StoryId})?? string.Empty),
+        new KeyValuePair<string, string>("EditBug","#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
 

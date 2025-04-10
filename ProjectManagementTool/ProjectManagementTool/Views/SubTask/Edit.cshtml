@@ -5,6 +5,20 @@
 	ViewData["Banner"] = "Update SubTask";
 }
 
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("UserStories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("StoryDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = ViewBag.StoryId})?? string.Empty),
+        new KeyValuePair<string, string>("TaskDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.TasksControllerName,new{id = ViewBag.TaskId, projectId = ViewBag.ProjectId})?? string.Empty),
+        new KeyValuePair<string, string>("EditSubTask","#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
         <form asp-action="Create" id="createForm">
@@ -58,15 +72,11 @@
 
                 <input asp-for="TaskId" class="form-control" type="hidden" value="@Model.TaskId" />
             </div>
-            <div class="form-group mt-3 d-flex justify-content-center">
+            <div class="form-group mt-5 d-flex justify-content-center">
                 <input type="button" onclick="submitForm()" value="Update" class="btn btn-success w-50" />
             </div>
         </form>
     </div>
-</div>
-
-<div class="text-center mt-5 ">
-    <a class="btn btn-outline-danger w-25" asp-action="#">Back to User Story</a>
 </div>
 
 @section Scripts {

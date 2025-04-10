@@ -5,6 +5,20 @@
 	ViewData["Banner"] = "Create SubTask";
 }
 
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("UserStories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("StoryDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = ViewBag.StoryId})?? string.Empty),
+        new KeyValuePair<string, string>("TaskDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.TasksControllerName,new{id = ViewBag.TaskId, projectId = ViewBag.ProjectId})?? string.Empty),
+        new KeyValuePair<string, string>("CreateSubTask","#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
         <form asp-action="Create" id="createForm" autocomplete="off">
@@ -63,9 +77,9 @@
     </div>
 </div>
 
-@* <div class="text-center mt-5 " >
-    <a class="btn btn-outline-danger w-25" asp-action="#" >Back to Tasks</a>
-</div> *@
+<div class="text-center mt-5 ">
+    <a class="btn btn-outline-danger w-25" asp-action="Details" asp-controller="Tasks" asp-route-id="@ViewBag.TaskId" asp-route-projectId="@ViewBag.ProjectId">Back to Tasks</a>
+</div>
 
 @section Scripts {
 

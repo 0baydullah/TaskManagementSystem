@@ -1,5 +1,5 @@
 ﻿@model DataAccessLayer.Models.ViewModel.BugDetailsVM
-
+@using DataAccessLayer.StaticClass
 
 @{
 	ViewData["Title"] = "Bug Details";
@@ -7,6 +7,18 @@
 	Model.MemberList[0] = "N/A";
 	Model.StatusList[0] = "N/A";
 	Model.PriorityList[0] = "N/A";
+}
+@{
+	var breadcrumbs = new List<KeyValuePair<string, string>>
+	{
+		new KeyValuePair<string, string>("","#"),
+		new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+		new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId })?? string.Empty),
+		new KeyValuePair<string, string>("UserStories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
+		new KeyValuePair<string, string>("StoryDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{id = ViewBag.StoryId})?? string.Empty),
+		new KeyValuePair<string, string>("BugDetails","#"),
+	};
+	ViewData["Breadcrumbs"] = breadcrumbs;
 }
 @if (Model.StatusList.ContainsKey(Model.Bug.Status) == false)
 {

@@ -1,11 +1,23 @@
 ﻿@model DataAccessLayer.Models.ViewModel.BugVM
-
+@using DataAccessLayer.StaticClass
 
 @{
     ViewData["Title"] = "Bug-Create";
     ViewData["Banner"] = "Create Bug";
 }
 
+@{
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Project", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.ProjectControllerName)??string.Empty),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.ProjectControllerName,new{id = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("UserStories", Url.Action(ActionNameHelper.IndexActionName, ControllerNameHelper.UserStoryControllerName,new{projectId = ViewBag.ProjectId })?? string.Empty),
+        new KeyValuePair<string, string>("StoryDetails", Url.Action(ActionNameHelper.DetailsActionName, ControllerNameHelper.UserStoryControllerName,new{Id = ViewBag.StoryId})?? string.Empty),
+        new KeyValuePair<string, string>("TaskBug","#"),
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
 
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">

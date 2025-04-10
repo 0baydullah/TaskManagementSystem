@@ -1,0 +1,53 @@
+﻿@model DataAccessLayer.Models.ViewModel.TodoTaskVM
+@{
+    ViewData["Title"] = "Tasks";
+}
+
+@{
+    ViewData["Title"] = "MyTasks";
+    ViewData["Banner"] = "MyTasks";
+    Model.PriorityList[0] = "N/A";
+}
+
+
+
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Task
+                </th>
+                <th>
+                    Estimated Time
+                </th>
+                <th>
+                    Priority
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Tasks)
+            {
+                @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                {
+                    Model.PriorityList[item.Priority] = "Not Found";
+                }
+                
+                <tr>
+                    <td>
+                        <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@ViewBag.ProjectId">
+                            @item.Name
+                        </a>
+                    </td>
+                    <td>
+                        @item.EstimatedTime Hour
+                    </td>
+                    <td>
+                        @Model.PriorityList[item.Priority]
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

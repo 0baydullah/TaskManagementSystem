@@ -77,6 +77,20 @@ namespace BusinessLogicLayer.Service
             }
         }
 
+        public List<Member> GetMemberByEmail(string email)
+        {
+            try
+            {
+                var members = _memberRepo.GetMemberByEmail(email);
+
+                return members;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task<bool> UpdateMember(int id, MemberVM member)
         {
             try
