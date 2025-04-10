@@ -63,6 +63,33 @@ namespace BusinessLogicLayer.Service
             }
         }
 
+        public List<SubTask> GetAllSubTaskByMember(List<Member> members)
+        {
+            try
+            {
+                var subTask = _subTaskRepo.GetAllSubTask().Join(members, t=>t.AssignMembersId , m=>m.MemberId , (t,m)=> new SubTask
+                {
+                    TaskId = t.TaskId,
+                    Name = t.Name,
+                    Descripton = t.Descripton,
+                    AssignMembersId = t.AssignMembersId,
+                    ReviewerMemberId = t.ReviewerMemberId,
+                    EstimatedTime = t.EstimatedTime,
+                    Tag = t.Tag,
+                    Status = t.Status,
+                    Priority = t.Priority,
+                    SubTaskId = t.SubTaskId,
+                }).ToList();
+
+                return subTask;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
+
         public List<SubTaskVM> GetAllSubTaskByTask(int id)
         {
             try

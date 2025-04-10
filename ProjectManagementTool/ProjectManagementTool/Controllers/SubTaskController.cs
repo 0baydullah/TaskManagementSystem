@@ -222,6 +222,39 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
+        public IActionResult ChangeStatus(int id, int status)
+        {
+            try
+            {
+                var subTask = _subTaskService.GetSubTask(id);
+
+                if (subTask == null)
+                {
+                    return NotFound();
+                }
+
+                subTask.Status = status;
+
+                _subTaskService.UpdateSubTask(subTask);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Something went wrong : " + ex.Message);
+                var errorModel = new ErrVM
+                {
+                    Msg = ex.Message,
+                    ActionMetod = "Edit Post",
+                    CustomMsg = "this is a custom message",
+                    StackTrace = ex.StackTrace
+                };
+
+                return View("Err", errorModel);
+            }
+        }
+
+        [HttpPost]
         public IActionResult Delete(int id)
         {
             try

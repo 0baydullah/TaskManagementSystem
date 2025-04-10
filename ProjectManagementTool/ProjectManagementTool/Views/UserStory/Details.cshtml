@@ -439,19 +439,60 @@ else
             }
         }
 
+
+        function flipPlayPauseButton(taskId, status) {
+            if (status === "Started") {
+                document.getElementById("playButton-" + taskId).classList.add("d-none");
+                document.getElementById("pauseButton-" + taskId).classList.remove("d-none");
+            } else {
+                document.getElementById("playButton-" + taskId).classList.remove("d-none");
+                document.getElementById("pauseButton-" + taskId).classList.add("d-none");
+            }
+        }
+
+        // Time track starting
+        function IncompletedTracking(taskId) {
+            console.log(taskId);
+            $.ajax({
+                url: "/TimeTrack/IncompletedTimeTrackByTask",
+                type: 'GET',
+                data: { taskId: taskId },
+                success: function (response) {
+                    console.log(response);
+                    if (response.status === "Started") {
+                        localStorage.setItem("trackingTask-" + taskId, "Started");
+                        flipPlayPauseButton(subTaskId, "Started");
+                    } else {
+                        localStorage.setItem("trackingTask-" + taskId, "Stopped");
+                        flipPlayPauseButton(subTaskId, "Stopped");
+                    }
+                },
+                error: function () {
+                    alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
+                }
+            });
+        }
+
         // Button tracking handle
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let taskId = button.id.split("-")[1];
-                let status = localStorage.getItem("tracking-" + taskId);
-
-                if (status === "Started") {
-                    document.getElementById("playButton-" + taskId).classList.add("d-none");
-                    document.getElementById("pauseButton-" + taskId).classList.remove("d-none");
-                } else {
-                    document.getElementById("playButton-" + taskId).classList.remove("d-none");
-                    document.getElementById("pauseButton-" + taskId).classList.add("d-none");
+                let status = localStorage.getItem("trackingTask-" + taskId);
+                console.log(taskId, status);
+                if (status == null) {
+                    IncompletedTracking(taskId);
                 }
+                else {
+                    flipPlayPauseButton(taskId, status);
+                }
+
+                // if (status === "Started") {
+                //     document.getElementById("playButton-" + taskId).classList.add("d-none");
+                //     document.getElementById("pauseButton-" + taskId).classList.remove("d-none");
+                // } else {
+                //     document.getElementById("playButton-" + taskId).classList.remove("d-none");
+                //     document.getElementById("pauseButton-" + taskId).classList.add("d-none");
+                // }
             });
         });
 
@@ -575,7 +616,7 @@ else
                 data: { taskId: taskId, subTaskId: 0 },
                 success: function (response) {
                     if (response.status === "Started") {
-                        localStorage.setItem("tracking-" + taskId, "Started");
+                        localStorage.setItem("trackingTask-" + taskId, "Started");
                     }
                     $("#playButton-" + taskId).addClass("d-none");
                     $("#pauseButton-" + taskId).removeClass("d-none");
@@ -595,7 +636,7 @@ else
                 data: { taskId: taskId, subTaskId: 0 },
                 success: function (response) {
                     if (response.status === "Stopped") {
-                        localStorage.setItem("tracking-" + taskId, "Stopped");
+                        localStorage.setItem("trackingTask-" + taskId, "Stopped");
                     }
                     $("#pauseButton-" + taskId).addClass("d-none");
                     $("#playButton-" + taskId).removeClass("d-none");

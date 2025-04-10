@@ -1,53 +1,174 @@
 ﻿@model DataAccessLayer.Models.ViewModel.TodoTaskVM
 @{
-    ViewData["Title"] = "Tasks";
-}
-
-@{
     ViewData["Title"] = "MyTasks";
-    ViewData["Banner"] = "MyTasks";
-    Model.PriorityList[0] = "N/A";
+    ViewData["Banner"] = "My Tasks & Sub Tasks";
+    Model.PriorityList[0] = "N/A"; // Ensure PriorityList has a default value for 0
 }
 
-
+<div id="#successAlert" class="alert alert-success alert-dismissible fade show" role="alert" hidden>
+    <strong>Success!</strong> Status Changed.
+    <button type="button" id="#close" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 
 <div>
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
-                <th>
-                    Task
-                </th>
-                <th>
-                    Estimated Time
-                </th>
-                <th>
-                    Priority
-                </th>
+                <th>Tasks & Sub Tasks</th>
+                <th>Estimated Time</th>
+                <th>Priority</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
+            <!-- Tasks -->
             @foreach (var item in Model.Tasks)
             {
-                @if (Model.PriorityList.ContainsKey(item.Priority) == false)
+                @if (!Model.PriorityList.ContainsKey(item.Priority))
                 {
                     Model.PriorityList[item.Priority] = "Not Found";
                 }
-                
+                @if (!Model.StatusList.ContainsKey(item.Status))
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+
                 <tr>
-                    <td>
-                        <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@ViewBag.ProjectId">
+                    <td class="fw-bold text-success">
+                        <div class="d-flex justify-content-between">
                             @item.Name
-                        </a>
+                            <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">Task</div>
+                        </div>
                     </td>
+                    <td>@item.EstimatedTime Hour</td>
+                    <td>@Model.PriorityList[item.Priority]</td>
                     <td>
-                        @item.EstimatedTime Hour
+                        <select class="btn btn-sm btn-light dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="background-color: lightblue"
+                                onchange="editTask(this, '@item.TaskId')">
+                            @foreach (var status in Model.StatusList)
+                            {
+                                if (status.Key == item.Status)
+                                {
+                                    <option value="@status.Key" selected>@status.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@status.Key">@status.Value</option>
+                                }
+                            }
+                        </select>
                     </td>
+                </tr>
+            }
+
+            <!-- Subtasks -->
+            @foreach (var item in Model.SubTasks)
+            {
+                @if (!Model.PriorityList.ContainsKey(item.Priority))
+                {
+                    Model.PriorityList[item.Priority] = "Not Found";
+                }
+                @if (!Model.StatusList.ContainsKey(item.Status))
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+
+                <tr>
+                    <td class="fw-bold text-success">
+                        <div class="d-flex justify-content-between">
+                            @item.Name
+                            <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">SubTask</div>
+                        </div>
+                    </td>
+                    <td>@item.EstimatedTime Hour</td>
+                    <td>@Model.PriorityList[item.Priority]</td>
                     <td>
-                        @Model.PriorityList[item.Priority]
+                        <select class="btn btn-sm btn-light dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="background-color: lightblue"
+                                onchange="editSubTask(this, '@item.SubTaskId')">
+                            @foreach (var status in Model.StatusList)
+                            {
+                                if (status.Key == item.Status)
+                                {
+                                    <option value="@status.Key" selected>@status.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@status.Key">@status.Value</option>
+                                }
+                            }
+                        </select>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+
+    <script>
+        function editTask(selectElement, taskId) {
+            var selectedStatus = selectElement.value;
+
+            $.ajax({
+                url: '/Tasks/ChangeStatus',
+                type: 'POST',
+                data: {
+                    id: taskId,
+                    status: selectedStatus,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Task status updated successfully');
+                        var successAlert = document.getElementById('successAlert');
+                        successAlert.hidden = false;
+                        setTimeout(function() {
+                            successAlert.hidden = true;
+                        }, 3000);
+                    } else {
+                        console.error('Failed to update task status: ' + response.message);
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error: ' + error);
+                    alert('An error occurred while updating the task status.');
+                }
+            });
+        }
+
+        function editSubTask(selectElement, subTaskId) {
+            var selectedStatus = selectElement.value;
+
+            $.ajax({
+                url: '/SubTask/ChangeStatus',
+                type: 'POST',
+                data: {
+                    id : subTaskId,
+                    status : selectedStatus,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Subtask status updated successfully');
+                    } else {
+                        console.error('Failed to update subtask status: ' + response.message);
+                        alert('Error: ' + response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error: ' + error);
+                    alert('An error occurred while updating the subtask status.');
+                }
+            });
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
