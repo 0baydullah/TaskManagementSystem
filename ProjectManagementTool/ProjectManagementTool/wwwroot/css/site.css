@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+@font-face {
+    font-family: 'Digital7';
+    src: url('/Fonts/digital-7.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.Digital7 {
+    font-family: 'Digital7', sans-serif;
+    font-size: 1.2em;
+    color: black;
+    font-weight:500;
+    letter-spacing:3px;
+}
