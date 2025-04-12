@@ -342,9 +342,9 @@
                 success: function (response) {
                     if (response.success == true) {
                         var mainTimeDescription = showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
-                        document.getElementById('modalDescription').innerText = mainTimeDescription;
                         var data = response.timeHistory;
                         var timeHistoryTable = createTimeHistoryTable(data);
+                        document.getElementById('modalDescription').innerText = mainTimeDescription;
                         document.getElementById('eachTimeDescription').innerHTML = timeHistoryTable;
                         var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
                         myModal.show();
@@ -450,11 +450,9 @@
         // Button tracking handle
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
-
                 let subTaskId = button.id.split("-")[1];
-
                 let status = localStorage.getItem("trackingSubTask-" + subTaskId);
-                console.log("refresh and status = ", subTaskId, status);
+
                 if (status == null || status == "Started")
                 {
                     IncompletedTracking(subTaskId);
@@ -497,7 +495,6 @@
                 return;
             }
 
-            console.log("refresh");
             timer.isRunning = true;
 
             timer.interval = setInterval(() => {
@@ -522,7 +519,6 @@
                 success: function(response) {
                     if (response.status === "Started") {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
-                        var date = new Date();
                         localStorage.setItem("TimeTrackingSubTask-" + subTaskId, new Date());
                     }
 
