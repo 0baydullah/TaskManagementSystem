@@ -56,7 +56,7 @@ namespace ProjectManagementTool.Controllers
 
                 todoTasks.Tasks = tasks;
                 todoTasks.SubTasks = subTasks;
-                todoTasks.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+                todoTasks.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name + "+" + p.ColorHex);
                 todoTasks.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
 
                 var statuses = _statusService.GetAllStatuses();

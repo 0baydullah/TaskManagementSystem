@@ -31,6 +31,10 @@
                 {
                     Model.StatusList[item.Status] = "Not Found";
                 }
+                var priority = Model.PriorityList[item.Priority].Split('+');
+                var pName = priority[0];
+                var pColor = priority[1];
+
 
                 <tr>
                     <td class="fw-bold text-success">
@@ -40,7 +44,11 @@
                         </div>
                     </td>
                     <td>@item.EstimatedTime Hour</td>
-                    <td>@Model.PriorityList[item.Priority]</td>
+                    <td>
+                        <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
+                            @pName
+                        </span>
+                    </td>
                     <td>
                         <select class="btn btn-sm btn-light dropdown-toggle"
                                 data-bs-toggle="dropdown"
@@ -75,6 +83,12 @@
                     Model.StatusList[item.Status] = "Not Found";
                 }
 
+
+                var priority = Model.PriorityList[item.Priority].Split('+');
+                var pName = priority[0];
+                var pColor = priority[1];
+
+
                 <tr>
                     <td class="fw-bold text-success">
                         <div class="d-flex justify-content-between">
@@ -83,7 +97,11 @@
                         </div>
                     </td>
                     <td>@item.EstimatedTime Hour</td>
-                    <td>@Model.PriorityList[item.Priority]</td>
+                    <td>
+                        <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
+                            @pName
+                        </span>
+                    </td>
                     <td>
                         <select class="btn btn-sm btn-light dropdown-toggle"
                                 data-bs-toggle="dropdown"
