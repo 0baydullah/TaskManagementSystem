@@ -1,4 +1,5 @@
-﻿@using DataAccessLayer.StaticClass
+﻿@model IEnumerable<DataAccessLayer.Models.Entity.Bug>
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "GetAllProjectBug";
     ViewData["Banner"] = "All Bug";
@@ -14,3 +15,43 @@
     };
     ViewData["Breadcrumbs"] = breadcrumbs;
 }
+
+
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Bugs</th>
+                <th>Description</th>
+                <th>Assign-Member</th>
+                <th>QA-Remarks</th>
+                <th>Priority</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @*  @if (!Model.PriorityList.ContainsKey(item.Priority))
+                {
+                    Model.PriorityList[item.Priority] = "Not Found";
+                }
+                @if (!Model.StatusList.ContainsKey(item.Status))
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                } *@
+
+                <tr>
+                    <td class="fw-bold text-danger">
+                     @item.Name
+                    </td>
+                    <td>@item.Descripton</td>
+                    <td>@item.AssignMembersId</td>
+                    <td>@item.QaRemarks</td>
+                    <td>@item.Priority</td>
+                    <td>@item.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

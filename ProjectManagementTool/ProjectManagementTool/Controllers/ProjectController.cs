@@ -44,7 +44,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProjectTask( int projectId)
+        public IActionResult GetAllProjectTask( int projectId)
         {
             try
             {
@@ -52,7 +52,9 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.ProjectId = project.ProjectId;
                 ViewBag.ProjectKey = project.Key;
 
-                return View();
+                var tasks = _projectInfoService.GetAllTaskByProject(projectId);
+
+                return View(tasks);
             }
             catch (Exception ex)
             {
@@ -65,7 +67,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProjectBug( int projectId)
+        public IActionResult GetAllProjectBug( int projectId)
         {
             try
             {
@@ -73,7 +75,9 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.ProjectId = project.ProjectId;
                 ViewBag.ProjectKey = project.Key;
 
-                return View();
+                var bugs = _projectInfoService.GetAllBugByProject(projectId);
+
+                return View(bugs);
             }
             catch (Exception ex)
             {
