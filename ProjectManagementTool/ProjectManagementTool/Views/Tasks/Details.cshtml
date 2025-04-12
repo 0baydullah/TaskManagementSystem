@@ -434,6 +434,7 @@
                         var x = response.timeTrack.startTime;
                         localStorage.setItem("TimeTrackingSubTask-" + subTaskId, x);
                         flipPlayPauseButton(subTaskId, "Started");
+                        stoptWatch(subTaskId);
                     } else {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
                         localStorage.setItem("TimeTrackingSubTask-" + subTaskId, 0);
@@ -449,9 +450,12 @@
         // Button tracking handle
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
+
                 let subTaskId = button.id.split("-")[1];
+
                 let status = localStorage.getItem("trackingSubTask-" + subTaskId);
-                if(status == null)
+                console.log("refresh and status = ", subTaskId, status);
+                if (status == null || status == "Started")
                 {
                     IncompletedTracking(subTaskId);
                 }
@@ -478,7 +482,6 @@
 
         // Stopwatch start
         function stoptWatch(subTaskId) {
-            var storageDate2 = localStorage.getItem("TimeTrackingSubTask-" + subTaskId);
             if (!timers[subTaskId]) {
                 timers[subTaskId] = { currentTime : 0, interval : null, isRunning : false };
             }
@@ -486,7 +489,7 @@
             const timer = timers[subTaskId];
             let status = localStorage.getItem("trackingSubTask-" + subTaskId);
 
-            if (timer.isRunning || status == "Started") {
+            if (timer.isRunning) {
                 const timer = timers[subTaskId];
                 clearInterval(timer.interval);
                 timer.currentTime = 0;
@@ -501,7 +504,7 @@
                 var storageDate = localStorage.getItem("TimeTrackingSubTask-" + subTaskId);
                 var date1 = new Date(storageDate);
                 var date2 = new Date();
-                timer.currentTime = Math.abs(date2.getTime() - date1.getTime()) / 1000;
+                timer.currentTime = Math.floor(Math.abs(date2.getTime() - date1.getTime()) / 1000);
                 updateDisplay(timer.currentTime, subTaskId);
             }, 1000);
         }
