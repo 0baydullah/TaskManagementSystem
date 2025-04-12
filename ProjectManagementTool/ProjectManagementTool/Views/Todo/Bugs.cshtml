@@ -1,0 +1,109 @@
+﻿@model DataAccessLayer.Models.ViewModel.TodoBugVM
+@{
+    ViewData["Title"] = "MyTasks";
+    ViewData["Banner"] = "My Tasks & Sub Tasks";
+    Model.PriorityList[0] = "N/A"; 
+}
+
+
+<div id="response-message">
+</div>
+
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Bug</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Bugs -->
+            @foreach (var item in Model.Bug)
+            {
+                @if (!Model.PriorityList.ContainsKey(item.Priority))
+                {
+                    Model.PriorityList[item.Priority] = "Not Found";
+                }
+                @if (!Model.StatusList.ContainsKey(item.Status))
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+
+
+                var priority = Model.PriorityList[item.Priority].Split('+');
+                var pName = priority[0];
+                var pColor = priority[1];
+
+
+                
+
+                <tr>
+                    <td class="fw-bold text-success">
+                        <div class="d-flex justify-content-between">
+                            @item.Name
+                            <div class=" btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px; background-color:@pColor;">@pName</div>
+                        </div>
+                    </td>
+                    <td>
+                        <select class="btn btn-sm btn-light dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="background-color: lightblue"
+                                onchange="editBug(this, '@item.BugId')">
+                            @foreach (var status in Model.StatusList)
+                            {
+                                if (status.Key == item.Status)
+                                {
+                                    <option value="@status.Key" selected>@status.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@status.Key">@status.Value</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+
+    <script>
+        function editBug(selectElement, bugId) {
+            var selectedStatus = selectElement.value;
+
+            $.ajax({
+                url: '/Bug/ChangeStatus',
+                type: 'POST',
+                data: {
+                    id: bugId,
+                    status: selectedStatus,
+                },
+                success: function (response) {
+                    if(response.success) {
+                        $('#response-message').html('<div class="alert alert-success"><b>Success!!</b> Status Updated Successfully!</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    }
+
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error: ' + error);
+                    alert('An error occurred while updating the task status.');
+                }
+            });
+        }
+
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
