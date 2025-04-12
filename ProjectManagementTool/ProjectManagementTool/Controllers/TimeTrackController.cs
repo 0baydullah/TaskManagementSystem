@@ -166,7 +166,7 @@ namespace ProjectManagementTool.Controllers
                 if (incompletedTimeTrack != null) 
                 {
 
-                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus });
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack });
                 }
                 else
                 {
@@ -191,7 +191,7 @@ namespace ProjectManagementTool.Controllers
                 if (incompletedTimeTrack != null)
                 {
 
-                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus });
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack });
                 }
                 else
                 {

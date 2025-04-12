@@ -343,9 +343,9 @@
                 success: function (response) {
                     if (response.success == true) {
                         var mainTimeDescription = showDetailsModal(description, response.startTime, response.endTime, response.totalTime);
-                        document.getElementById('modalDescription').innerText = mainTimeDescription;
                         var data = response.timeHistory;
                         var timeHistoryTable = createTimeHistoryTable(data);
+                        document.getElementById('modalDescription').innerText = mainTimeDescription;
                         document.getElementById('eachTimeDescription').innerHTML = timeHistoryTable;
                         var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
                         myModal.show();
@@ -432,9 +432,13 @@
                 success: function (response) { 
                     if (response.status === "Started") {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
+                        var x = response.timeTrack.startTime;
+                        localStorage.setItem("TimeTrackingSubTask-" + subTaskId, x);
                         flipPlayPauseButton(subTaskId, "Started");
+                        stoptWatch(subTaskId);
                     } else {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
+                        localStorage.setItem("TimeTrackingSubTask-" + subTaskId, 0);
                         flipPlayPauseButton(subTaskId, "Stopped");
                     }
                 },
@@ -449,7 +453,8 @@
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let subTaskId = button.id.split("-")[1];
                 let status = localStorage.getItem("trackingSubTask-" + subTaskId);
-                if(status == null)
+
+                if (status == null || status == "Started")
                 {
                     IncompletedTracking(subTaskId);
                 }
@@ -475,39 +480,39 @@
         }
 
         // Stopwatch start
-        function stoptWatchStart(subTaskId) {
-            if (!timers[subTaskId]) { 
+        function stoptWatch(subTaskId) {
+            if (!timers[subTaskId]) {
                 timers[subTaskId] = { currentTime : 0, interval : null, isRunning : false };
             }
 
             const timer = timers[subTaskId];
+            let status = localStorage.getItem("trackingSubTask-" + subTaskId);
 
-            if (timer.isRunning)
+            if (timer.isRunning) {
+                const timer = timers[subTaskId];
+                clearInterval(timer.interval);
+                timer.currentTime = 0;
+                timer.isRunning = false;
                 return;
-                
+            }
+
             timer.isRunning = true;
 
             timer.interval = setInterval(() => {
-                timer.currentTime++; 
+                var storageDate = localStorage.getItem("TimeTrackingSubTask-" + subTaskId);
+                var date1 = new Date(storageDate);
+                var date2 = new Date();
+                timer.currentTime = Math.floor(Math.abs(date2.getTime() - date1.getTime()) / 1000);
                 updateDisplay(timer.currentTime, subTaskId);
             }, 1000);
         }
 
-        // Stopwatch stop
-        function stopWatchOff(subTaskId) {
-            const timer = timers[subTaskId];
-            console.log("stop track watch", timer);
-            
-            clearInterval(timers[subTaskId].interval);
-            //timer.interval = null;
-            timers[subTaskId].currentTime = 0;
-            timers[subTaskId].isRunning = false;
-        }
+       
 
 
         // Time track starting
         function startTracking(taskId, subTaskId) {
-            //stoptWatchStart(subTaskId);
+            stoptWatch(subTaskId);
             $.ajax({
                 url:"/TimeTrack/Start",
                 type: 'POST',
@@ -515,6 +520,7 @@
                 success: function(response) {
                     if (response.status === "Started") {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
+                        localStorage.setItem("TimeTrackingSubTask-" + subTaskId, new Date());
                     }
 
                     $("#playButton-" + subTaskId).addClass("d-none");
@@ -528,7 +534,7 @@
 
         // Time track stopping
         function stopTracking(taskId, subTaskId) {
-            //stopWatchOff(subTaskId);
+            stoptWatch(subTaskId);
             $.ajax({
                 url: "/TimeTrack/End",
                 type: 'POST',
@@ -536,6 +542,7 @@
                 success: function (response) {
                     if (response.status === "Stopped") {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
+                        localStorage.setItem("TimeTrackingSubTask-" + subTaskId, 0);
                     }
 
                     $("#pauseButton-" + subTaskId).addClass("d-none");
