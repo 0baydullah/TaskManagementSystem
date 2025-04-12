@@ -225,13 +225,9 @@ namespace ProjectManagementTool.Controllers
                     MemberId = member.MemberId,
                     Email = member.Email,
                     RoleId = member.RoleId,
-                    //ProjectId = member.ProjectId
                 };
                 var roles = _roleService.GetAllRole();
                 ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
-                
-                //var projects = _projectInfoService.GetAllProjectInfo();
-                //ViewData["ProjectId"] = new SelectList(projects, "ProjectId", "Name", member.ProjectId);
                 ViewBag.ProjectId = member.ProjectId;
                 ViewBag.ProjectKey = project.Key;
 

@@ -155,36 +155,8 @@ namespace BusinessLogicLayer.Service
                 var status = _statusRepo.GetAllStatuses().ToDictionary( s => s.StatusId, s => s.Name);
                 var priority = _priorityRepo.GetAllPriorities().ToDictionary( p => p.PriorityId, p => p.Name);
 
-                Dictionary<int, int> dictTask = new Dictionary<int, int>();
-                foreach (var item in tasks)
-                {
-                    if (dictTask.ContainsKey(item.Status))
-                    {
-                        dictTask[item.Status]++;
-                    }
-                    else
-                    {
-                        
-                        dictTask[item.Status] = 1;
-                    }
-
-                }
-
-
-                Dictionary<int, int> dictBug = new Dictionary<int, int>();
-                foreach (var item in bugs)
-                {
-                    if (dictBug.ContainsKey(item.Status))
-                    {
-
-                        dictBug[item.Status]++;
-                    }
-                    else
-                    {
-                        dictBug[item.Status] = 1;
-                    }
-
-                }
+                Dictionary<int, int> dictTask = tasks.GroupBy(task => task.Status).ToDictionary(group => group.Key, group => group.Count());
+                Dictionary<int, int> dictBug = bugs.GroupBy(bug => bug.Status).ToDictionary(group => group.Key, group => group.Count());
 
                 var result = new MemberDetailsVM
                 {
@@ -198,13 +170,7 @@ namespace BusinessLogicLayer.Service
                     StatusList = status,
                     PriorityList = priority,
                     TaskAll = tasks.Count,
-                    TaskInProgress = 0,
-                    TaskUrgent = 0,
-                    TaskNeedToReview = 0,
                     BugAll = bugs.Count,
-                    BugInProgress = 0,
-                    BugUrgent = 0,
-                    BugClosed = 0,
                     TaskDict = dictTask,
                     BugDict = dictBug
                 };
