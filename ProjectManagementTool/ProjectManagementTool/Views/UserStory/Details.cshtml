@@ -192,8 +192,9 @@ else
                             
                             <a id="pauseButton-@item.TaskId" class="btn btn-light"
                                onclick="timeDetails(@item.TaskId)">
-                                <i class="text-primary fa-solid fa-stopwatch"></i>
+                                <i class="text-primary fa-solid fa-clock"></i>
                             </a>
+                            <a id="stop-watch-@item.TaskId" class="Digital7 btn btn-light">00:00:00:00</a>
                         </td>
                     </tr>
                 }
@@ -461,10 +462,13 @@ else
                     console.log(response);
                     if (response.status === "Started") {
                         localStorage.setItem("trackingTask-" + taskId, "Started");
-                        flipPlayPauseButton(subTaskId, "Started");
+                        var startTime = response.timeTrack.startTime;
+                        localStorage.setItem("TimeTrackingTask-" + taskId, startTime);
+                        flipPlayPauseButton(taskId, "Started");
+                        stoptWatch(taskId);
                     } else {
                         localStorage.setItem("trackingTask-" + taskId, "Stopped");
-                        flipPlayPauseButton(subTaskId, "Stopped");
+                        flipPlayPauseButton(taskId, "Stopped");
                     }
                 },
                 error: function () {
@@ -478,21 +482,13 @@ else
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let taskId = button.id.split("-")[1];
                 let status = localStorage.getItem("trackingTask-" + taskId);
-                console.log(taskId, status);
-                if (status == null) {
+
+                if (status == null || status == "Started") {
                     IncompletedTracking(taskId);
                 }
                 else {
                     flipPlayPauseButton(taskId, status);
                 }
-
-                // if (status === "Started") {
-                //     document.getElementById("playButton-" + taskId).classList.add("d-none");
-                //     document.getElementById("pauseButton-" + taskId).classList.remove("d-none");
-                // } else {
-                //     document.getElementById("playButton-" + taskId).classList.remove("d-none");
-                //     document.getElementById("pauseButton-" + taskId).classList.add("d-none");
-                // }
             });
         });
 
@@ -587,9 +583,9 @@ else
                 success: function (response) {
                     if (response.success == true) {
                         var mainTimeDescription = showDetailsModal(response.startTime, response.endTime, response.totalTime);
-                        document.getElementById('modalDescription').innerText = mainTimeDescription;
                         var data = response.timeHistory;
                         var timeHistoryTable = createTimeHistoryTable(data);
+                        document.getElementById('modalDescription').innerText = mainTimeDescription;
                         document.getElementById('eachTimeDescription').innerHTML = timeHistoryTable;
                         var myModal = new bootstrap.Modal(document.getElementById('detailsModal'));
                         myModal.show();
@@ -608,8 +604,52 @@ else
             });
         }
 
+
+        // Stop watch releted variable
+        const timers = {};
+
+        // Update stop watch
+        function updateDisplay(seconds, taskId) {
+            const day = Math.floor(seconds / 86400).toString().padStart(2, '0');
+            const hour = Math.floor((seconds % 86400) / 3600).toString().padStart(2, '0');
+            const min = Math.floor(((seconds % 86400) % 3600) / 60).toString().padStart(2, '0');
+            const sec = (((seconds % 86400) % 3600) % 60).toString().padStart(2, '0');
+            document.getElementById(`stop-watch-${taskId}`).textContent = `${day}:${hour}:${min}:${sec}`;
+        }
+
+        // Stopwatch start
+        function stoptWatch(taskId) {
+            if (!timers[taskId]) {
+                timers[taskId] = { currentTime: 0, interval: null, isRunning: false };
+            }
+
+            const timer = timers[taskId];
+            let status = localStorage.getItem("trackingTask-" + taskId);
+
+            if (timer.isRunning) {
+                const timer = timers[taskId];
+                clearInterval(timer.interval);
+                timer.currentTime = 0;
+                timer.isRunning = false;
+                return;
+            }
+
+            timer.isRunning = true;
+
+            timer.interval = setInterval(() => {
+                var storageDate = localStorage.getItem("TimeTrackingTask-" + taskId);
+                var date1 = new Date(storageDate);
+                var date2 = new Date();
+                timer.currentTime = Math.floor(Math.abs(date2.getTime() - date1.getTime()) / 1000);
+                updateDisplay(timer.currentTime, taskId);
+            }, 1000);
+        }
+
+
+
         // Time track starting
         function startTracking(taskId) {
+            stoptWatch(taskId);
             $.ajax({
                 url: "/TimeTrack/Start",
                 type: 'POST',
@@ -617,6 +657,7 @@ else
                 success: function (response) {
                     if (response.status === "Started") {
                         localStorage.setItem("trackingTask-" + taskId, "Started");
+                        localStorage.setItem("TimeTrackingTask-" + taskId, new Date());
                     }
                     $("#playButton-" + taskId).addClass("d-none");
                     $("#pauseButton-" + taskId).removeClass("d-none");
@@ -630,6 +671,7 @@ else
 
         // Time track stopping
         function stopTracking(taskId) {
+            stoptWatch(taskId);
             $.ajax({
                 url: "/TimeTrack/End",
                 type: 'POST',
@@ -637,6 +679,7 @@ else
                 success: function (response) {
                     if (response.status === "Stopped") {
                         localStorage.setItem("trackingTask-" + taskId, "Stopped");
+                        localStorage.setItem("TimeTrackingTask-" + taskId, 0);
                     }
                     $("#pauseButton-" + taskId).addClass("d-none");
                     $("#playButton-" + taskId).removeClass("d-none");

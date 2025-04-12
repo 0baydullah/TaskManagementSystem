@@ -432,8 +432,8 @@
                 success: function (response) { 
                     if (response.status === "Started") {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
-                        var x = response.timeTrack.startTime;
-                        localStorage.setItem("TimeTrackingSubTask-" + subTaskId, x);
+                        var startTime = response.timeTrack.startTime;
+                        localStorage.setItem("TimeTrackingSubTask-" + subTaskId, startTime);
                         flipPlayPauseButton(subTaskId, "Started");
                         stoptWatch(subTaskId);
                     } else {
