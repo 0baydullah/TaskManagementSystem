@@ -435,6 +435,7 @@
                         var startTime = response.timeTrack.startTime;
                         localStorage.setItem("TimeTrackingSubTask-" + subTaskId, startTime);
                         flipPlayPauseButton(subTaskId, "Started");
+                        othersPlayButtonDisabled(subTaskId, 1);
                         stoptWatch(subTaskId);
                     } else {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
@@ -525,10 +526,10 @@
 
                     $("#playButton-" + subTaskId).addClass("d-none");
                     $("#pauseButton-" + subTaskId).removeClass("d-none");
-
                     $("#pauseButton-" + subTaskId).addClass("disabled");
+                    othersPlayButtonDisabled(subTaskId, 1);
+
                     setTimeout(function () {
-                        console.log('pause button 10');
                         $("#pauseButton-" + subTaskId).removeClass("disabled");
                     }, 10000);
                 },
@@ -553,11 +554,27 @@
 
                     $("#pauseButton-" + subTaskId).addClass("d-none");
                     $("#playButton-" + subTaskId).removeClass("d-none");
+                    othersPlayButtonDisabled(subTaskId, 2);
                 },
                 error: function () {
                     alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
                 }
             }); 
+        }
+
+        // Disable and Enable the play button when start a sub task and closing a sub task
+        function othersPlayButtonDisabled(subTaskId, state) {
+            //document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll("[id^=playButton-]").forEach(button => {
+                    let id = button.id.split("-")[1];
+                    if (id != subTaskId && state == 1) {
+                        $("#playButton-" + id).addClass("disabled");
+                    }
+                    else{
+                        $("#playButton-" + id).removeClass("disabled");
+                    }
+                });
+            //});
         }
 
     </script>

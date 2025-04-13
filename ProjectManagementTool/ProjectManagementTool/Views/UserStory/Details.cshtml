@@ -465,6 +465,7 @@ else
                         var startTime = response.timeTrack.startTime;
                         localStorage.setItem("TimeTrackingTask-" + taskId, startTime);
                         flipPlayPauseButton(taskId, "Started");
+                        othersPlayButtonDisabled(taskId, 1);
                         stoptWatch(taskId);
                     } else {
                         localStorage.setItem("trackingTask-" + taskId, "Stopped");
@@ -661,8 +662,9 @@ else
                     }
                     $("#playButton-" + taskId).addClass("d-none");
                     $("#pauseButton-" + taskId).removeClass("d-none");
-
                     $("#pauseButton-" + taskId).addClass("disabled");
+                    othersPlayButtonDisabled(taskId, 1);
+
                     setTimeout(function () {
                         $("#pauseButton-" + taskId).removeClass("disabled");
                     }, 10000);
@@ -688,11 +690,28 @@ else
                     }
                     $("#pauseButton-" + taskId).addClass("d-none");
                     $("#playButton-" + taskId).removeClass("d-none");
+                    othersPlayButtonDisabled(taskId, 2);
                 },
                 error: function () {
                     alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
                 }
             });
+        }
+
+
+        // Disable and Enable the play button when start a sub task and closing a sub task
+        function othersPlayButtonDisabled(subTaskId, state) {
+            //document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("[id^=playButton-]").forEach(button => {
+                let id = button.id.split("-")[1];
+                if (id != subTaskId && state == 1) {
+                    $("#playButton-" + id).addClass("disabled");
+                }
+                else {
+                    $("#playButton-" + id).removeClass("disabled");
+                }
+            });
+            //});
         }
 
     </script>
