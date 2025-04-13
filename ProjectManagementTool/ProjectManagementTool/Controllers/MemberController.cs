@@ -18,14 +18,18 @@ namespace ProjectManagementTool.Controllers
         private readonly IRoleService _roleService;
         private readonly IProjectInfoService _projectInfoService;
         private readonly UserManager<UserInfo> _userManager;
+        private readonly ITasksService _tasksService;
+        private readonly IBugService _bugService;
         private readonly ILog _log = LogManager.GetLogger(typeof(MemberController));
         public MemberController(IMemberService memberService, IRoleService roleService, IProjectInfoService projectInfoService
-            , UserManager<UserInfo> userManager)
+            , UserManager<UserInfo> userManager, ITasksService tasksService, IBugService bugService)
         {
             _memberService = memberService;
             _roleService = roleService;
             _projectInfoService = projectInfoService;
             _userManager = userManager;
+            _tasksService = tasksService;
+            _bugService = bugService;
         }
 
         [HttpGet]
@@ -291,18 +295,27 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
+            bool isSuccess = true;
+            string message = "Member deleted successfully!";
             try
             {
                 var member = _memberService.GetMember(id);
-                if (member == null)
+                var tasks = _tasksService.GetAllTasks().Where( t => t.AssignMembersId == id).FirstOrDefault();
+                var bugs = _bugService.GetAllBug().Where(t => t.AssignMembersId == id).FirstOrDefault();
+                
+                if( tasks == null && bugs == null)
                 {
-                    return NotFound("Member not found!");
+                    _memberService.DeleteMember(member);
+                    _log.Warn(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Member cannot be deleted!";
+                    _log.Warn(message);
                 }
 
-                _memberService.DeleteMember(member);
-
-                return Json(new { success = true, message = "Member deleted successfully!" });
-
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {

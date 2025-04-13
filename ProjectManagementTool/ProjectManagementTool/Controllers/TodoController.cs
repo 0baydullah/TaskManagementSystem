@@ -73,6 +73,38 @@ namespace ProjectManagementTool.Controllers
             }
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> Reviews()
+        {
+            try
+            {
+                var toReview = new TodoReviewVM();
+                var user = await _userManager.GetUserAsync(User);
+                var userEmail = user.Email;
+                var members = _memberService.GetMemberByEmail(userEmail);
+                var tasks = _tasksService.GetAllTasksByReviewr(members);
+                var subTasks = _subTaskService.GetAllSubTaskByReviewr(members);
+
+                toReview.Tasks = tasks;
+                toReview.SubTasks = subTasks;
+                toReview.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name + "+" + p.ColorHex);
+                toReview.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
+
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+                return View(toReview); 
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Bugs()
         {

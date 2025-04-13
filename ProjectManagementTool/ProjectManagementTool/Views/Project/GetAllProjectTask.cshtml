@@ -1,4 +1,5 @@
-﻿@using DataAccessLayer.StaticClass
+﻿@model IEnumerable<DataAccessLayer.Models.Entity.Tasks>
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "GetAllProjectTask";
     ViewData["Banner"] = "All Task";
@@ -15,3 +16,41 @@
     ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
+<div>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Tasks</th>
+                <th>Description</th>
+                <th>Assign-Member</th>
+                <th>Estimated Time</th>
+                <th>Priority</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+               @*  @if (!Model.PriorityList.ContainsKey(item.Priority))
+                {
+                    Model.PriorityList[item.Priority] = "Not Found";
+                }
+                @if (!Model.StatusList.ContainsKey(item.Status))
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                } *@
+
+                <tr>
+                    <td class="fw-bold text-success">
+                     @item.Name
+                    </td>
+                    <td>@item.Descripton</td>
+                    <td>@item.AssignMembersId</td>
+                    <td>@item.EstimatedTime Hour</td>
+                    <td>@item.Priority</td>
+                    <td>@item.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

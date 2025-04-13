@@ -3,6 +3,7 @@ using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -175,26 +176,24 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var project = _projectInfoRepo.GetProjectInfo(model.ProjectId);
-                if (project != null)
-                {
-
-                    project.Name = model.Name;
-                    project.Key = model.Key;
-                    project.Description = model.Description;
-                    project.StartDate = model.StartDate;
-                    project.EndDate = model.EndDate;
-                    project.CompanyName = model.CompanyName;
-                    project.ProjectOwnerId = model.ProjectOwnerId;
-
-                    _projectInfoRepo.UpdateProjectInfo(project);
-                    return true;
-                }
-                else
+                var existProject = _projectInfoRepo.GetProjectInfo(model.ProjectId);
+                var existProjectName = _projectInfoRepo.GetProjectInfoByName(model.ProjectId, model.Name);
+                
+                if (existProject == null || existProjectName != null)
                 {
                     return false;
                 }
 
+                existProject.Name = model.Name;
+                existProject.Key = model.Key;
+                existProject.Description = model.Description;
+                existProject.StartDate = model.StartDate;
+                existProject.EndDate = model.EndDate;
+                existProject.CompanyName = model.CompanyName;
+                existProject.ProjectOwnerId = model.ProjectOwnerId;
+                _projectInfoRepo.UpdateProjectInfo(existProject);
+
+                return true;
             }
             catch (Exception)
             {
@@ -249,6 +248,65 @@ namespace BusinessLogicLayer.Service
 
                 throw;
             }
+        }
+
+        public List<Tasks> GetAllTaskByProject(int projectId)
+        {
+            try
+            {
+                var story = _userStoryRepo.GetAllUserStory().Where( u => u.ProjectId == projectId).ToList();
+                var tasks = _tasksRepo.GetAllTasks().ToList();
+                var result = tasks.Join(story, t => t.UserStoryId, u => u.StoryId, (t, u) => new Tasks
+                {
+                    TaskId = t.TaskId,
+                    Name = t.Name,
+                    Descripton = t.Descripton,
+                    AssignMembersId = t.AssignMembersId,
+                    ReviewerMemberId = t.ReviewerMemberId,
+                    EstimatedTime = t.EstimatedTime,
+                    Tag = t.Tag,
+                    Status = t.Status,
+                    Priority = t.Priority,
+                    UserStoryId = u.StoryId,
+                }).ToList();
+
+                return result;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public List<Bug> GetAllBugByProject(int projectId)
+        {
+            try
+            {
+                var story = _userStoryRepo.GetAllUserStory().Where(u => u.ProjectId == projectId).ToList();
+                var bugs = _bugRepo.GetAllBug();
+                var allBugs = story.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new Bug
+                {
+                    BugId = b.BugId,
+                    Name = b.Name,
+                    Descripton = b.Descripton,
+                    AssignMembersId = b.AssignMembersId,
+                    QaRemarks = b.QaRemarks,
+                    Status = b.Status,
+                    Priority = b.Priority,
+                    UserStoryId = u.StoryId
+
+                }).ToList();
+
+                return allBugs;
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

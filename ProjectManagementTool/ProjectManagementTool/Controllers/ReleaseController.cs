@@ -199,15 +199,25 @@ namespace ProjectManagementTool.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            bool isSuccess = true;
+            bool success = true;
             var message = "Release deleted successfully!";
             try
-            {
+            {   
                 var release = _releaseService.GetRelease(id);
-                _releaseService.DeleteRelease(release);
-                _log.Info(message);
+                var sprint = _sprintService.GetAllSprint(release.ProjectId).Where( s => s.ReleaseId == id).FirstOrDefault();
+                if(sprint == null)
+                {
+                    _releaseService.DeleteRelease(release);
+                    _log.Info(message);
+                }
+                else
+                {
+                    success = false ;
+                    message = "Release cannot be deleted!";
+                    _log.Info(message);
+                }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success, message });
             }
             catch (Exception ex)
             {

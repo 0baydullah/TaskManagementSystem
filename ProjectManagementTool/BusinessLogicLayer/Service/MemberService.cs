@@ -60,7 +60,8 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                return _memberRepo.GetAllMember();
+                var members = _memberRepo.GetAllMember().ToList();
+                return members;
             }
             catch (Exception)
             {
@@ -101,9 +102,7 @@ namespace BusinessLogicLayer.Service
             try
             {
                 var data = _memberRepo.GetMember(id);
-                data.Email = member.Email;
                 data.RoleId = member.RoleId;
-                //data.ProjectId = member.ProjectId;
                 var result = await _memberRepo.UpdateMember(data);
 
                 return result;

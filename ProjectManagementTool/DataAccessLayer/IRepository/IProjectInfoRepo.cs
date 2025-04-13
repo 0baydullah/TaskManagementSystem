@@ -15,5 +15,6 @@ namespace DataAccessLayer.IRepository
         public ProjectInfo GetProjectInfo(int id);
         public ProjectInfo GetProjectInfo(string projectName);
         public List<ProjectInfo> GetAllProjectInfo();
+        public ProjectInfo GetProjectInfoByName(int projectId, string name);
     }
 }

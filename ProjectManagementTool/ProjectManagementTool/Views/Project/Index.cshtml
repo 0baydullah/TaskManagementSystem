@@ -118,17 +118,16 @@
                 url: `/Project/Delete/${projectIdToDelete}`,
                 type: 'POST',
                 success: function (response) {
-                    if(response.success) {
-                        $("#modal").modal('hide');
+                    if(response.success == true ) {   
                         $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1000);  
                     }
-
                     else {
                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
+                    $("#modal").modal('hide');
+                    setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
                 },
                 error: function (response) {
                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');

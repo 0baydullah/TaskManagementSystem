@@ -16,6 +16,7 @@ namespace BusinessLogicLayer.IService
         public SubTask GetSubTask(int id);
         public List<SubTask> GetAllSubTask();
         public List<SubTask> GetAllSubTaskByMember(List<Member>? member);
+        public List<SubTask> GetAllSubTaskByReviewr(List<Member>? member);
         public List<SubTaskVM> GetAllSubTaskByTask(int id);
     }
 }
