@@ -248,7 +248,7 @@ namespace ProjectManagementTool.Controllers
                 _projectInfoService.DeleteProjectInfo(response);
                 _log.Info(message);
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {

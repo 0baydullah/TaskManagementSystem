@@ -214,7 +214,7 @@ namespace ProjectManagementTool.Controllers
                 {
                     success = false ;
                     message = "Release cannot be deleted!";
-
+                    _log.Info(message);
                 }
 
                 return Json(new { success, message });
