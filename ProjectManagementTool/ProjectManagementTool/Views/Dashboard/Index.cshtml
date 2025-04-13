@@ -1,0 +1,163 @@
+﻿@using DataAccessLayer.StaticClass
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Banner"] = "Dashboard";
+}
+
+@{
+
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.GetAllUserActionName, ControllerNameHelper.MemberControllerName) ?? string.Empty),
+
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
+<div class="d-flex justify-content-between">
+    <canvas id="myChart2" style="width:100%;max-width:700px"></canvas>
+    <canvas id="myChart3" style="width:100%;max-width:700px"></canvas>
+</div>
+
+<div class="card shadow-lg">
+
+    <div class="card-body fw-bolder p-5 ">
+        
+        <div class="row g-3 mt-2">
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Projects</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Tasks">
+                            Go
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Bugs</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Bugs">
+                            Go
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Tasks</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Tasks">
+                            Go
+                        </a>
+                       
+                    </div>
+                </div>
+            </div>
+           
+
+
+        </div>
+        <div class="row g-3 mt-2">
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Need to Review</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Reviews">
+                            Go
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>#</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>#</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> </script>
+
+<script>
+    var xValues = ["Italy", "France", "Spain", "USA", "Argentina", "Brazil"];
+    var yValues = [55, 49, 44, 24, 15, 70];
+    var barColors = ["red", "green","blue","orange","brown", "yellow"];
+
+    new Chart("myChart2", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "World Wide Wine Production"
+        }
+      }
+    });
+
+    new Chart("myChart3", {
+      type: "doughnut",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "World Wide Wine Production"
+        }
+      }
+    });
+</script>
