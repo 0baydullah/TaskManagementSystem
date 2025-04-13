@@ -19,30 +19,30 @@
 
 <div id="response-message">
 </div>
+<div class="d-flex justify-content-center">
+    <form id="form" class="col-6 shadow-lg p-3 rounded-3">
+        <div class="form-group">
+            <input id="MemberId" name="MemberId" type="text" value="@Model.MemberId" hidden />
+        </div>
 
-<form id="form">
-    <div class="form-group">
-        <input id="MemberId" name="MemberId" type="text" value="@Model.MemberId" hidden />
-    </div>
+        <div class="form-group mb-3">
+            <label class="fw-bold" asp-for="@Model.Email"> </label>
+            <input asp-for="@Model.Email" class="form-control" id="role" readonly>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Email"> </label>
-        <input asp-for="@Model.Email" class="form-control" id="role" readonly>
-    </div>
+        <div class="form-group mb-4">
+            <label class="fw-bold" asp-for="@Model.RoleId"> Role Name </label>
+            <select asp-for="@Model.RoleId" class="form-control" asp-items="ViewBag.RoleId">
+                <option value="">-- Select Role --</option>
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.RoleId"> Role Name </label>
-        <select asp-for="@Model.RoleId" class="form-control" asp-items="ViewBag.RoleId">
-            <option value="">-- Select Role --</option>
-        </select>
-    </div>
-    
+        <input type="button" onclick="editMember();" value="Save Changes" class="btn btn-success fw-bold" />
+        <a class="btn btn-success fw-bold float-end" href="@Url.Action("Index", "Member", new { projectId = ViewBag.ProjectId })"> Back to List</a>
+    </form>
 
-    <br/> <br/>
+</div>
 
-    <input type="button" onclick="editMember();" value="Save Changes" class="btn btn-primary" />
-    <a class="btn btn-success fw-bold float-end" href="@Url.Action("Index", "Member", new { projectId = ViewBag.ProjectId })"> Back to List</a>
-</form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -58,17 +58,15 @@
             processData: false,
             contentType: false,
             success: function (response) {
-                if (response.success) {
-
+                if (response.success == true ) {
                     $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                    setTimeout(() => {
-                        window.location.href = '@Url.Action("Index", "Member", new { projectId = ViewBag.ProjectId })';
-                    }, 2000);
                 }
-
                 else {
                     $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
+                setTimeout(() => {
+                        window.location.href = '@Url.Action("Index", "Member", new { projectId = ViewBag.ProjectId })';
+                }, 1000);
             },
             error: function (xhr, status, error) {
 
