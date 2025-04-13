@@ -176,26 +176,24 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var project = _projectInfoRepo.GetProjectInfo(model.ProjectId);
-                if (project != null)
-                {
-
-                    project.Name = model.Name;
-                    project.Key = model.Key;
-                    project.Description = model.Description;
-                    project.StartDate = model.StartDate;
-                    project.EndDate = model.EndDate;
-                    project.CompanyName = model.CompanyName;
-                    project.ProjectOwnerId = model.ProjectOwnerId;
-
-                    _projectInfoRepo.UpdateProjectInfo(project);
-                    return true;
-                }
-                else
+                var existProject = _projectInfoRepo.GetProjectInfo(model.ProjectId);
+                var existProjectName = _projectInfoRepo.GetProjectInfoByName(model.ProjectId, model.Name);
+                
+                if (existProject == null || existProjectName != null)
                 {
                     return false;
                 }
 
+                existProject.Name = model.Name;
+                existProject.Key = model.Key;
+                existProject.Description = model.Description;
+                existProject.StartDate = model.StartDate;
+                existProject.EndDate = model.EndDate;
+                existProject.CompanyName = model.CompanyName;
+                existProject.ProjectOwnerId = model.ProjectOwnerId;
+                _projectInfoRepo.UpdateProjectInfo(existProject);
+
+                return true;
             }
             catch (Exception)
             {

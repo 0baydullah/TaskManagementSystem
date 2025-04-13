@@ -129,17 +129,12 @@
                 url: `/Release/Delete/${releaseIdToDelete}`,
                 type: 'POST',
                 success: function (response) {
-                    console.log(response);
-                    //debugger;
-                    if(response.success == true) {
-                        
-                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                        
+                    if(response.success == true) {  
+                        $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>'); 
                     }
                     else {
                        $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
-
                     $("#modal").modal('hide');
                     setTimeout(() => {
                             window.location.reload();

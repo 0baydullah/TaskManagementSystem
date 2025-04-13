@@ -112,7 +112,7 @@ namespace ProjectManagementTool.Controllers
                     message += error + " ";
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
 
             try
@@ -124,7 +124,7 @@ namespace ProjectManagementTool.Controllers
                     isSuccess = false;
                     message = "User not found!";
 
-                    return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                    return Json(new { success = isSuccess, message });
                 }
 
                 var response = _projectInfoService.AddProjectInfo(model, user);
@@ -143,7 +143,7 @@ namespace ProjectManagementTool.Controllers
                     _log.Info(message);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {
@@ -205,19 +205,27 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                     message += error + " ";
                 }
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
 
             try
             {
-                var project = _projectInfoService.GetProjectInfo(id);
-                _projectInfoService.UpdateProjectInfo(model);
-                isSuccess = true;
-                message = "Project updated successfully!";
-                _log.Info(message);
-
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
-
+                var response = _projectInfoService.UpdateProjectInfo(model);
+                
+                if ( response == true )
+                {
+                    isSuccess = true;
+                    message = "Project updated successfully!";
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Project already exist!";
+                    _log.Info(message);
+                }
+               
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {

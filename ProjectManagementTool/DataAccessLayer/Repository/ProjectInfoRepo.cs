@@ -108,6 +108,21 @@ namespace DataAccessLayer.Repository
                 throw;
             }
         }
+
+        public ProjectInfo GetProjectInfoByName(int projectId, string name)
+        {
+
+            try
+            {
+                var project = _context.ProjectInfo.FirstOrDefault(p => p.Name == name && p.ProjectId != projectId);
+                
+                return project;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public bool UpdateProjectInfo(ProjectInfo projectInfo)
         {
             try

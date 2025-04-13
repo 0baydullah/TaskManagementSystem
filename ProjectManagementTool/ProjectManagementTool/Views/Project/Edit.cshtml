@@ -80,17 +80,15 @@
             processData: false,
             contentType: false,
             success: function (response) {
-                if (response.success) {
-
+                if (response.success == true) {
                     $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                    setTimeout(() => {
-                        window.location.href = '/Project/Index';
-                    }, 2000);
                 }
-
                 else {
                     $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
+                 setTimeout(() => {
+                        window.location.href = '/Project/Index';
+                    }, 1000);
             },
             error: function (xhr, status, error) {
 

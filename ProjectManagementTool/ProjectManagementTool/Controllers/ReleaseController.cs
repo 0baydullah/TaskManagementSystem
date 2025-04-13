@@ -217,7 +217,7 @@ namespace ProjectManagementTool.Controllers
 
                 }
 
-                return Json(new { success = success, message });
+                return Json(new { success, message });
             }
             catch (Exception ex)
             {
