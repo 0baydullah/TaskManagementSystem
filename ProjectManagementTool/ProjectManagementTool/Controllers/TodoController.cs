@@ -57,7 +57,7 @@ namespace ProjectManagementTool.Controllers
                 todoTasks.Tasks = tasks;
                 todoTasks.SubTasks = subTasks;
                 todoTasks.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name + "+" + p.ColorHex);
-                todoTasks.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
+                todoTasks.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name + "+" + p.ColorHex);
 
                 var statuses = _statusService.GetAllStatuses();
                 ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
@@ -89,7 +89,7 @@ namespace ProjectManagementTool.Controllers
                 toReview.Tasks = tasks;
                 toReview.SubTasks = subTasks;
                 toReview.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name + "+" + p.ColorHex);
-                toReview.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
+                toReview.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name + "+" + p.ColorHex);
 
                 var statuses = _statusService.GetAllStatuses();
                 ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
@@ -118,7 +118,7 @@ namespace ProjectManagementTool.Controllers
 
                 todoBugs.Bug = bug;
                 todoBugs.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name +"+"+ p.ColorHex);
-                todoBugs.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
+                todoBugs.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name + "+" + p.ColorHex);
 
                 var statuses = _statusService.GetAllStatuses();
                 ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
