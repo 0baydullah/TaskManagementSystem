@@ -1,7 +1,7 @@
 ﻿@model DataAccessLayer.Models.ViewModel.TodoBugVM
 @{
-    ViewData["Title"] = "MyTasks";
-    ViewData["Banner"] = "My Tasks & Sub Tasks";
+    ViewData["Title"] = "MyBugs";
+    ViewData["Banner"] = "My Bugs";
     Model.PriorityList[0] = "N/A"; 
 }
 
@@ -63,11 +63,11 @@
 
                                 if (status.Key == item.Status)
                                 {
-                                    <option value="@status.Key" selected>@sName</option>
+                                    <option style="background-color:@sColor" value="@status.Key" selected>@sName</option>
                                 }
                                 else
                                 {
-                                    <option value="@status.Key">@sColor</option>
+                                    <option style="background-color:@sColor" value="@status.Key">@sName</option>
                                 }
                             }
                         </select>
