@@ -16,6 +16,7 @@ namespace ProjectManagementTool.Controllers
         private readonly UserManager<UserInfo> _userManager;
         private readonly ITasksService _tasksService;
         private readonly ISubTaskService _subTaskService;
+        private readonly IBugService _bugService;
         private readonly IMemberService _memberService;
         private readonly IPriorityService _priorityService;
         private readonly IStatusService _statusService;
@@ -26,6 +27,7 @@ namespace ProjectManagementTool.Controllers
             UserManager<UserInfo> userManager,
             ITasksService tasksService,
             ISubTaskService subTaskService,
+            IBugService bugService,
             IMemberService memberService,
             IPriorityService priorityService,
             IStatusService statusService)
@@ -33,6 +35,7 @@ namespace ProjectManagementTool.Controllers
             _userManager = userManager;
             _tasksService = tasksService;
             _subTaskService = subTaskService;
+            _bugService = bugService;
             _memberService = memberService;
             _priorityService = priorityService;
             _statusService = statusService;
@@ -53,13 +56,74 @@ namespace ProjectManagementTool.Controllers
 
                 todoTasks.Tasks = tasks;
                 todoTasks.SubTasks = subTasks;
-                todoTasks.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
+                todoTasks.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name + "+" + p.ColorHex);
                 todoTasks.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
 
                 var statuses = _statusService.GetAllStatuses();
                 ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
 
                 return View(todoTasks); 
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Reviews()
+        {
+            try
+            {
+                var toReview = new TodoReviewVM();
+                var user = await _userManager.GetUserAsync(User);
+                var userEmail = user.Email;
+                var members = _memberService.GetMemberByEmail(userEmail);
+                var tasks = _tasksService.GetAllTasksByReviewr(members);
+                var subTasks = _subTaskService.GetAllSubTaskByReviewr(members);
+
+                toReview.Tasks = tasks;
+                toReview.SubTasks = subTasks;
+                toReview.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name + "+" + p.ColorHex);
+                toReview.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
+
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+                return View(toReview); 
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Bugs()
+        {
+            try
+            {
+                var todoBugs = new TodoBugVM();
+                var user = await _userManager.GetUserAsync(User);
+                var userEmail = user.Email;
+                var members = _memberService.GetMemberByEmail(userEmail);
+                var bug = _bugService.GetAllBugByMember(members);
+
+                todoBugs.Bug = bug;
+                todoBugs.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name +"+"+ p.ColorHex);
+                todoBugs.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name);
+
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+                return View(todoBugs); 
             }
             catch (Exception ex)
             {

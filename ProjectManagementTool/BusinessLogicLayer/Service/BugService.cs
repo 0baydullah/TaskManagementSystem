@@ -69,6 +69,30 @@ namespace BusinessLogicLayer.Service
                 throw;
             }
         }
+        public List<Bug> GetAllBugByMember(List<Member> member)
+        {
+            try
+            {
+                var bugs = _bugRepo.GetAllBug().Join(member,b=>b.AssignMembersId , m=>m.MemberId , (b, m) =>
+                new Bug{
+                    BugId = b.BugId,
+                    Name = b.Name,
+                    Descripton = b.Descripton,
+                    Status = b.Status,
+                    UserStoryId = b.UserStoryId,
+                    Priority = b.Priority,
+                    QaRemarks = b.QaRemarks,
+                    AssignMembersId = b.AssignMembersId,
+                }).ToList();
+                return bugs;
+
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
+        }
 
         public List<Bug> GetAllBugOfStory(int id)
         {
@@ -113,6 +137,19 @@ namespace BusinessLogicLayer.Service
 
 
                 _bugRepo.UpdateBug(existingBug);
+            }
+            catch(Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw;
+            }
+        }
+
+        public void UpdateBug(Bug bug)
+        {
+            try
+            {
+                _bugRepo.UpdateBug(bug);
             }
             catch(Exception ex)
             {

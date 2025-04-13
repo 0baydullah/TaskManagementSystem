@@ -12,9 +12,11 @@ namespace BusinessLogicLayer.IService
     {
         public void AddBug(int id, BugVM bug);
         public void UpdateBug(int id, BugVM bug);
+        public void UpdateBug(Bug bug);
         public void DeleteBug(Bug bug);
         public Bug GetBug(int id);
         public List<Bug> GetAllBugOfStory(int id);
         public List<Bug> GetAllBug();
+        public List<Bug> GetAllBugByMember(List<Member> member);
     }
 }
