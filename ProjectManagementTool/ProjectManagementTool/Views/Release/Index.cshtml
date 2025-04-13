@@ -57,7 +57,9 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ReleaseName)
+                            <a class="text-decoration-none fw-bold" asp-action="Details" asp-route-id="@item.ReleaseId">
+                                @item.ReleaseName
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ProjectKey)
@@ -76,7 +78,6 @@
                         </td>
                         <td class="text-center">
                             <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.ReleaseId"> <i class="text-success fa-solid fa-pen fw-bold"></i></a> |
-                            <a class="btn btn-light" asp-action="Details" asp-route-id="@item.ReleaseId"> <i class="text-success fa-solid fa-info fw-bold"></i></a> |
                             <a class="btn btn-light" onclick="openDeleteModal(@item.ReleaseId)"><i class="text-danger fa-solid fa-trash fw-bold"></i></a> |
                         </td>
                     </tr>

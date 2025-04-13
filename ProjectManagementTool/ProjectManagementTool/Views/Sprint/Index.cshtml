@@ -61,7 +61,9 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.SprintName)
+                            <a class="text-decoration-none fw-bold" asp-action="Details" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId" asp-route-projectKey="@ViewBag.ProjectKey">
+                                @item.SprintName
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.StartDate)
@@ -80,7 +82,6 @@
                         </td>
                         <td class="text-center">
                             <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId"><i class="text-success fa-solid fa-pen fw-bold"></i></a> |
-                            <a class="btn btn-light" asp-action="Details" asp-route-id="@item.SprintId" asp-route-projectId="@ViewBag.ProjectId" asp-route-projectKey="@ViewBag.ProjectKey"><i class="text-success fa-solid fa-info fw-bold"></i></a> |
                             <a class="btn btn-light" onclick="openDeleteModal('@item.SprintId')"><i class="text-danger fa-solid fa-trash fw-bold"></i></a>
                         </td>
                     </tr>
