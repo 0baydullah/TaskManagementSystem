@@ -661,6 +661,11 @@ else
                     }
                     $("#playButton-" + taskId).addClass("d-none");
                     $("#pauseButton-" + taskId).removeClass("d-none");
+
+                    $("#pauseButton-" + taskId).addClass("disabled");
+                    setTimeout(function () {
+                        $("#pauseButton-" + taskId).removeClass("disabled");
+                    }, 10000);
                 },
                 error: function () {
                     alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);

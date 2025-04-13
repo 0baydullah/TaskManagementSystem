@@ -525,6 +525,12 @@
 
                     $("#playButton-" + subTaskId).addClass("d-none");
                     $("#pauseButton-" + subTaskId).removeClass("d-none");
+
+                    $("#pauseButton-" + subTaskId).addClass("disabled");
+                    setTimeout(function () {
+                        console.log('pause button 10');
+                        $("#pauseButton-" + subTaskId).removeClass("disabled");
+                    }, 10000);
                 },
                 error: function () {
                     alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
