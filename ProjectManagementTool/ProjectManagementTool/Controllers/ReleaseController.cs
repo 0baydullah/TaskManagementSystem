@@ -96,7 +96,7 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             
             try
@@ -116,7 +116,7 @@ namespace ProjectManagementTool.Controllers
                     _log.Info(message);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {
@@ -164,7 +164,7 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             try
             { 
@@ -184,7 +184,7 @@ namespace ProjectManagementTool.Controllers
                 }
                
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {

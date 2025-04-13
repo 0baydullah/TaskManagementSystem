@@ -21,39 +21,42 @@
 
 </div>
 
-<form id="form" method="post">
-    <div class="form-group">
-        <input asp-for="@Model.ReleaseId" name="ReleaseId" class="form-control" id="id" hidden>
-    </div>
+<div class="d-flex justify-content-center">
+    <form id="form" method="post" class="col-6 shadow-lg p-3 rounded-3">
+        <div class="form-group mb-2">
+            <input asp-for="@Model.ReleaseId" name="ReleaseId" class="form-control" id="id" hidden>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.ReleaseName"> </label>
-        <input asp-for="@Model.ReleaseName" class="form-control" id="name">
-    </div>
+        <div class="form-group mb-2">
+            <label class="fw-bold" asp-for="@Model.ReleaseName"> </label>
+            <input asp-for="@Model.ReleaseName" class="form-control" id="name">
+        </div>
 
 
-    <div class="form-group">
-        <input asp-for="@Model.ProjectId" class="form-control" id="projectId" hidden>
-    </div>
+        <div class="form-group mb-2">
+            <input asp-for="@Model.ProjectId" class="form-control" id="projectId" hidden>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Description"> </label>
-        <textarea asp-for="@Model.Description" class="form-control" id="description"> </textarea>
-    </div>
+        <div class="form-group mb-2">
+            <label class="fw-bold" asp-for="@Model.Description"> </label>
+            <textarea asp-for="@Model.Description" class="form-control" id="description"> </textarea>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.StartDate"> </label>
-        <input asp-for="@Model.StartDate" class="form-control" id="startDate">
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.EndDate"> </label>
-        <input asp-for="@Model.EndDate" class="form-control" id="endDate">
-    </div>
-    <br /> <br />
+        <div class="form-group mb-2">
+            <label class="fw-bold" asp-for="@Model.StartDate"> </label>
+            <input asp-for="@Model.StartDate" class="form-control" id="startDate">
+        </div>
+        <div class="form-group mb-4">
+            <label class="fw-bold" asp-for="@Model.EndDate"> </label>
+            <input asp-for="@Model.EndDate" class="form-control" id="endDate">
+        </div>
 
-    <button type="button" class="btn btn-success" id="submitForm">Update Release</button>
-    <a href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })" class="btn btn-success fw-bold float-end"> Back to List</a>
-</form>
+        <button type="button" class="btn btn-success fw-bold" id="submitForm">Update</button>
+        <a href="@Url.Action("Index", "Release", new { projectId = Model.ProjectId })" class="btn btn-success fw-bold float-end"> Back to List</a>
+    </form>
+
+</div>
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -69,7 +72,6 @@
             for( var pair of formData.entries()) {
                 console.log(pair[0]+ ', '+ pair[1]);
             }
-            //debugger;
 
             $.ajax({
                 url: `/Release/Edit/${id}`,
@@ -78,21 +80,19 @@
                 processData: false,
                 contentType: false,
                 success:function(response){
-                    if(response.success){
+                    if(response.success == true ){
                         $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                        setTimeout(function(){
-                        window.location.href = '@Url.Action("Index", "Release", new {projectId = Model.ProjectId})';
-                        }, 2000);
                     }
                     else{
                         $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
-
+                    setTimeout(function(){
+                        window.location.href = '@Url.Action("Index", "Release", new { projectId = Model.ProjectId })';
+                     }, 1000);
                 },
                 error: function(response){
                     $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
                 }
-
 
             });
         });
