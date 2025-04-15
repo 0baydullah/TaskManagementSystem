@@ -1,4 +1,5 @@
 ﻿@using DataAccessLayer.StaticClass
+@model DataAccessLayer.Models.ViewModel.DashboardVM
 @{
     ViewData["Title"] = "Index";
     ViewData["Banner"] = "Dashboard";
@@ -15,12 +16,16 @@
     ViewData["Breadcrumbs"] = breadcrumbs;
 }
 
-<div class="d-flex justify-content-between">
-    <canvas id="myChart2" style="width:100%;max-width:700px"></canvas>
-    <canvas id="myChart3" style="width:100%;max-width:700px"></canvas>
+<div class="d-flex justify-content-between shadow-lg mb-4 rounded">
+    <div class="w-50">
+        <canvas id="taskChart"></canvas>
+    </div>
+    <div class="w-50">
+        <canvas id="bugChart"></canvas>
+    </div>
 </div>
 
-<div class="card shadow-lg">
+<div class="card shadow-lg rounded">
 
     <div class="card-body fw-bolder p-5 ">
         
@@ -32,10 +37,7 @@
                         <h4>Projects</h4>
                     </div>
                     <div class="card-body" style="background:#B0BEC5">
-                        <h1>#</h1>
-                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Tasks">
-                            Go
-                        </a>
+                        <h1>@Model.Projects.Count</h1>
                     </div>
                 </div>
             </div>
@@ -115,49 +117,61 @@
     </div>
 </div>
 
-
-
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> </script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var xValues = ["Italy", "France", "Spain", "USA", "Argentina", "Brazil"];
-    var yValues = [55, 49, 44, 24, 15, 70];
-    var barColors = ["red", "green","blue","orange","brown", "yellow"];
+    const ctxTask = document.getElementById('taskChart').getContext('2d');
+    const ctxBug = document.getElementById('bugChart').getContext('2d');
 
-    new Chart("myChart2", {
-      type: "pie",
-      data: {
-        labels: xValues,
-        datasets: [{
-          backgroundColor: barColors,
-          data: yValues
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: "World Wide Wine Production"
+    const taskChart = new Chart(ctxTask, {
+        type: 'doughnut',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.PieChartTask.xStatusName)),
+            datasets: [{
+                label: 'Task Counts',
+                data: @Html.Raw(Json.Serialize(Model.PieChartTask.yStatusCount)),
+                backgroundColor: @Html.Raw(Json.Serialize(Model.PieChartTask.BarColor)),
+                borderColor: '#000',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Tasks'
+                }
+            }
         }
-      }
     });
 
-    new Chart("myChart3", {
-      type: "doughnut",
-      data: {
-        labels: xValues,
-        datasets: [{
-          backgroundColor: barColors,
-          data: yValues
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: "World Wide Wine Production"
+    const bugChart = new Chart(ctxBug, {
+        type: 'doughnut',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.PieChartBug.xStatusName)),
+            datasets: [{
+                label: 'Bug Counts',
+                data: @Html.Raw(Json.Serialize(Model.PieChartBug.yStatusCount)),
+                backgroundColor: @Html.Raw(Json.Serialize(Model.PieChartBug.BarColor)),
+                borderColor: '#000',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Bugs'
+                }
+            }
         }
-      }
     });
+
 </script>

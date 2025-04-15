@@ -8,5 +8,8 @@ namespace DataAccessLayer.Models.ViewModel
 {
     public class PieChartBugVM
     {
+        public string[] xStatusName { get; set; }
+        public int[] yStatusCount { get; set; }
+        public string[] BarColor { get; set; }
     }
 }
