@@ -39,9 +39,9 @@ else
         <a class="btn shadow-sm text-success fw-bold float-end mx-3" style="background-color:aliceblue;" href="#">Filter</a>
     </div>
 
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-            <tr>
+    <table class="table table-bordered table-striped table-hover" id="datatable">
+        <thead >
+            <tr >
                 <th>
                     Story Name
                 </th>
@@ -83,9 +83,6 @@ else
                         </a>
                         
                     </td>
-                    @*    <td>
-                   @item.ProjectId
-                </td> *@
                     <td>
                         @Model.StatusList[item.Status]
                     </td>
@@ -106,15 +103,6 @@ else
                         <a class="btn btn-light" onclick="openDeleteModal('@item.StoryId')">
                             <i class="text-danger fa-solid fa-trash"></i>
                         </a>
-						@*   <a class="btn btn-light" asp-action="Details" asp-route-id="@item.StoryId">
-                            <i class="text-danger fa-solid fa-circle-info"></i>
-                        </a>
-                        <a class="btn btn-light" asp-controller="Tasks" asp-action="Create" asp-route-id="@item.StoryId">
-                            <i class="text-success fa-solid fa-plus"></i> <small>Task</small>
-                        </a>
-                        <a class="btn btn-light" asp-controller="Bug" asp-action="Create" asp-route-id="@item.StoryId">
-                            <i class="text-danger fa-solid fa-plus"></i> <small>Bug</small>
-                        </a> *@
 
                     </td>
                 </tr>
@@ -143,6 +131,15 @@ else
 
     @section Scripts {
     <script>
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+                
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
+
         let userStoryIdToDelete = 0;
 
         function openDeleteModal(id) {

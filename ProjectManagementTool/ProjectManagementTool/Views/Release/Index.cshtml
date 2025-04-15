@@ -20,11 +20,11 @@
 
 <div class="mb-3">
     <a href="@Url.Action("Create", "Release", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold">  <i class="text-light fa-solid fa-plus fw-bold"></i> Create Release</a>
-    <a class="btn shadow-sm text-success fw-bold float-end mx-3" style="background-color:aliceblue;" href="#">Filter</a>
+    
 </div>
 
 <div>
-    <table class="table table-bordered table-hover table-striped">
+    <table class="table table-bordered table-hover table-striped" id="datatable">
         <thead>
             <tr>
                 <th>
@@ -116,6 +116,15 @@
 
 @section Scripts {
     <script>
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
+
         let releaseIdToDelete = 0;
 
         function openDeleteModal(id)

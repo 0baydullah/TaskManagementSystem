@@ -85,7 +85,7 @@
     </a>
 </div>
 <div>
-    <table class="table">
+    <table class="table table-bordered table-striped table-hover" id="datatable">
         <thead>
             <tr>
                 <th>
@@ -106,7 +106,7 @@
                 <th>
                     Reviewer
                 </th>
-                <th></th>
+                <th class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -251,6 +251,13 @@
 
 @section Scripts {
     <script>
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("table th").css("background-color", "aliceblue");
 
         // Convert seconds into day, hour, minutes and second
         function secondsToDHMS(seconds) {
