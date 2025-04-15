@@ -104,6 +104,8 @@ namespace ProjectManagementTool.Controllers
                 };
                 model.PieChartBug = bugModel;
                 model.Projects = _projectInfoService.GetAllProjectInfo(userEmail);
+                model.Bugs = bugs;
+                model.Tasks = tasks;
 
                 return View(model);
             }

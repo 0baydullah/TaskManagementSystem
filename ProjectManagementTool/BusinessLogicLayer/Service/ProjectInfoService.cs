@@ -52,7 +52,7 @@ namespace BusinessLogicLayer.Service
                     StartDate = model.StartDate,
                     EndDate = model.EndDate,
                     CompanyName = model.CompanyName,
-                    ProjectOwnerId = user.Id,
+                    ProjectOwnerId = user.Id, 
 
                 };
 
@@ -61,7 +61,7 @@ namespace BusinessLogicLayer.Service
                 if (result == true)
                 {
                     var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
-                    var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Admin");
+                    var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Owner");
                     var member = new Member
                     {
                         ProjectId = projectId,

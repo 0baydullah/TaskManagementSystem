@@ -15,13 +15,15 @@ namespace ProjectManagementTool.Controllers
     {
         private readonly IProjectInfoService _projectInfoService;
         private readonly UserManager<UserInfo> _userManager;
+        private readonly IMemberService _memberService;
         private readonly ILog _log = LogManager.GetLogger(typeof(ProjectController));
 
         public ProjectController(IProjectInfoService projectInfoService,
-            UserManager<UserInfo> userManager)
+            UserManager<UserInfo> userManager, IMemberService memberService)
         {
             _projectInfoService = projectInfoService;
             _userManager = userManager;
+            _memberService = memberService;
         }
 
         public async Task<IActionResult> Index()
@@ -30,8 +32,21 @@ namespace ProjectManagementTool.Controllers
             {
                 var user = await _userManager.GetUserAsync(User);
                 var projects = _projectInfoService.GetAllProjectInfo(user?.Email ?? "");
+                var members = _userManager.Users.ToDictionary( u => u.Id, u => u.Name);
+                var data = projects.Select(p => new ProjectInfoVM
+                {
+                    ProjectId = p.ProjectId,
+                    Name = p.Name,
+                    Key = p.Key,
+                    Description = p.Description,
+                    StartDate = p.StartDate,
+                    EndDate = p.EndDate,
+                    CompanyName = p.CompanyName,
+                    ProjectOwnerId = p.ProjectOwnerId,
+                    MemberList = members,
+                }).ToList();
 
-                return View(projects);
+                return View(data);
             }
             catch (Exception ex)
             {
@@ -40,7 +55,6 @@ namespace ProjectManagementTool.Controllers
 
                 return RedirectToAction("Exception", "Error");
             }
-
         }
 
         [HttpGet]
@@ -136,7 +150,7 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
-                    var roleName = "Admin"; // need update
+                    var roleName = "Owner"; // need update
                     await _userManager.AddToRoleAsync(user, roleName);
                     isSuccess = true;
                     message = "Project created successfully!";
@@ -269,6 +283,24 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.ProjectKey = project.Key;
 
                 return View(project);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+
+        }
+
+        public async Task<IActionResult> UpdateOwner(int ownerId, int projectId)
+        {
+            try
+            {
+
+
+                return View();
             }
             catch (Exception ex)
             {
