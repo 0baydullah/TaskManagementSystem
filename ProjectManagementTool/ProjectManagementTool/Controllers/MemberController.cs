@@ -159,7 +159,7 @@ namespace ProjectManagementTool.Controllers
         public async Task<IActionResult> Create(Member model)
         {
             bool isSuccess = false;
-            string message = "Invalid data submitted! ";
+            string message = "Invalid data submitted!";
 
             if (ModelState.IsValid == false)
             {
@@ -170,7 +170,7 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             try
             {
@@ -204,7 +204,7 @@ namespace ProjectManagementTool.Controllers
                     _log.Info(message);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {
@@ -262,7 +262,7 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             try
             {
@@ -281,7 +281,7 @@ namespace ProjectManagementTool.Controllers
                     _log.Info(message);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {

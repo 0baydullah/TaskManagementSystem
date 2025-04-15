@@ -21,38 +21,40 @@
 
 </div>
 
-<form id="form" method="post">
-    <div class="form-group mb-2">
-        <label asp-for="@Model.ReleaseName"> </label>
-        <input asp-for="@Model.ReleaseName" class="form-control" id="name" placeholder="Enter Release Name">
-        <span asp-validation-for="ReleaseName" class=" text-danger"></span>
-    </div>
+<div class="d-flex justify-content-center">
+    <form id="form" method="post" class="col-6 shadow-lg p-3 rounded-3">
+        <div class="form-group mb-2">
+            <label class="fw-bold" asp-for="@Model.ReleaseName"> </label>
+            <input asp-for="@Model.ReleaseName" class="form-control" id="name" placeholder="Enter Release Name">
+            <span asp-validation-for="ReleaseName" class=" text-danger"></span>
+        </div>
 
-    <div class="form-group"> 
-        <input asp-for="@Model.ProjectId" class="form-control" id="projectId" value="@ViewBag.ProjectId" hidden>
-    </div>
+        <div class="form-group mb-2">
+            <input asp-for="@Model.ProjectId" class="form-control" id="projectId" value="@ViewBag.ProjectId" hidden>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Description"> </label>
-        <textarea asp-for="@Model.Description" class="form-control" id="description" placeholder="Write Short Description"> </textarea>
-        <span asp-validation-for="Description" class=" text-danger"></span>
-    </div>
+        <div class="form-group mb-2">
+            <label class="fw-bold" asp-for="@Model.Description"> </label>
+            <textarea asp-for="@Model.Description" class="form-control" id="description" placeholder="Write Short Description"> </textarea>
+            <span asp-validation-for="Description" class=" text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.StartDate"> </label>
-        <input asp-for="@Model.StartDate" class="form-control" id="startDate" placeholder="Select Start Date">
-        <span asp-validation-for="StartDate" class=" text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.EndDate"> </label>
-        <input asp-for="@Model.EndDate" class="form-control" id="endDate" placeholder="Select End Date">
-        <span asp-validation-for="EndDate" class=" text-danger"></span>
-    </div>
-    <br /> <br />
+        <div class="form-group mb-2">
+            <label class="fw-bold" asp-for="@Model.StartDate"> </label>
+            <input asp-for="@Model.StartDate" class="form-control" id="startDate" placeholder="Select Start Date">
+            <span asp-validation-for="StartDate" class=" text-danger"></span>
+        </div>
+        <div class="form-group mb-4">
+            <label class="fw-bold" asp-for="@Model.EndDate"> </label>
+            <input asp-for="@Model.EndDate" class="form-control" id="endDate" placeholder="Select End Date">
+            <span asp-validation-for="EndDate" class=" text-danger"></span>
+        </div>
 
-    <button type="button" class="btn btn-success" id="submitForm">Create Release</button>
-    <a href="@Url.Action("Index", "Release", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold float-end"> Back to List</a>
-</form>
+        <button type="button" class="btn btn-success fw-bold" id="submitForm">Create Release</button>
+        <a href="@Url.Action("Index", "Release", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold float-end"> Back to List</a>
+    </form>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -69,7 +71,6 @@
                 for( var pair of formData.entries()) {
                     console.log(pair[0]+ ', '+ pair[1]);
                 }
-                //debugger;
 
                 if(form.valid())
                 {
@@ -80,21 +81,19 @@
                         processData: false,
                         contentType: false,
                         success:function(response){
-                            if(response.success){
-                                $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                                setTimeout(function(){
-                                window.location.href = '@Url.Action("Index", "Release", new { projectId = ViewBag.projectId })';
-                                }, 2000);
+                            if(response.success == true){
+                                $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>'); 
                             }
                             else{
                                 $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                             }
-
+                            setTimeout(function(){
+                                window.location.href = '@Url.Action("Index", "Release", new { projectId = ViewBag.projectId })';
+                            }, 2000);
                         },
                         error: function(response){
                             $('#response-message').html('<div class="alert alert-danger"> An error occurred:' + response.message + '</div>');
                         }
-
 
                      });
                 

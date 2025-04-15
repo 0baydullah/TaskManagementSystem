@@ -14,13 +14,16 @@ namespace ProjectManagementTool.Controllers
         private readonly ISprintService _sprintService;
         private readonly IReleaseService _releaseService;
         private readonly IProjectInfoService _projectInfoService;
+        private readonly IUserStoryService _userStoryService;
         private readonly ILog _log = LogManager.GetLogger(typeof(SprintController));
         
-        public SprintController(ISprintService sprintService, IReleaseService releaseService, IProjectInfoService projectInfoService)
+        public SprintController(ISprintService sprintService, IReleaseService releaseService, IProjectInfoService projectInfoService,
+           IUserStoryService userStoryService )
         {
             _sprintService = sprintService;
             _releaseService = releaseService;
             _projectInfoService = projectInfoService;
+            _userStoryService = userStoryService;
         }
 
         [HttpGet]
@@ -95,7 +98,7 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             try
             {
@@ -114,7 +117,7 @@ namespace ProjectManagementTool.Controllers
                     _log.Info(message);
                 }
                 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {
@@ -165,7 +168,7 @@ namespace ProjectManagementTool.Controllers
                     Console.WriteLine(error);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             try
             {
@@ -184,7 +187,7 @@ namespace ProjectManagementTool.Controllers
                     _log.Info(message);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {
@@ -233,6 +236,8 @@ namespace ProjectManagementTool.Controllers
                     message += error + " ";
                     Console.WriteLine(error);
                 }
+
+                return Json(new { success = isSuccess, message });
             }
 
             try
@@ -252,7 +257,7 @@ namespace ProjectManagementTool.Controllers
                     _log.Error(message);
                 }
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {
@@ -272,10 +277,22 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var sprint = _sprintService.GetSprint(id);
-                _sprintService.DeleteSprint(sprint);
-                _log.Info(message);
+                var story = _userStoryService.GetAllUserStory().Where( s => s.SprintId == sprint.SprintId).FirstOrDefault();
 
-                return Json(new { success = $"{isSuccess}", message = $"{message}" });
+                if(story == null)
+                {
+                    _sprintService.DeleteSprint(sprint);
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Sprint cannot be deleted";
+                    _log.Warn(message);
+                }
+               
+
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {

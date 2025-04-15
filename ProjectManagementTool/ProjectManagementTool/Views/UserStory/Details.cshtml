@@ -92,9 +92,11 @@ else
             <i class="text-light fa-solid fa-plus"></i> Task
         </a>
     </div>
+
+    
     <div>
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
+        <table class="table table-bordered table-striped table-hover" id="taskTable">
+            <thead class="bg-dark">
                 <tr>
                     <th>
                         Task
@@ -272,7 +274,7 @@ else
         </a>
     </div>
     <div>
-        <table class= " table table-bordered table-striped table-hover">
+        <table class= " table table-bordered table-striped table-hover" id="subTaskTable">
             <thead>
                 <tr>
                     <th>
@@ -370,6 +372,23 @@ else
 
 @section Scripts {
     <script>
+
+        const taskTableIdName = '#taskTable';
+        const subTaskTableIdName = '#subTaskTable';
+
+        $(document).ready(function () {
+            $(taskTableIdName + ',' + subTaskTableIdName).DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                columnDefs: [
+                    { orderable: false, targets: -1 } 
+                ]
+            });
+        });
+
+
         var deleteTaskId = null;
         var userStoryId = null;
         var deleteBugId = null;

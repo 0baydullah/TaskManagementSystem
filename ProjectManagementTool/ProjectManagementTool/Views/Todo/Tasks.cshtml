@@ -10,13 +10,13 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="taskTable">
         <thead>
             <tr>
                 <th>Tasks & Sub Tasks</th>
-                <th>Estimated Time</th>
-                <th>Priority</th>
-                <th>Status</th>
+                <th class="text-center">Estimated Time</th>
+                <th class="text-center">Priority</th>
+                <th class="text-center">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +35,10 @@
                 var pName = priority[0];
                 var pColor = priority[1];
 
+                var stat = Model.StatusList[item.Status].Split('+');
+                var sName = stat[0];
+                var sColor = stat[1];
+
 
                 <tr>
                     <td class="fw-bold text-success">
@@ -43,27 +47,31 @@
                             <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">Task</div>
                         </div>
                     </td>
-                    <td>@item.EstimatedTime Hour</td>
-                    <td>
+                    <td class="text-center">@item.EstimatedTime Hour</td>
+                    <td class="text-center">
                         <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
                             @pName
                         </span>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <select class="btn btn-sm btn-light dropdown-toggle"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                style="background-color: lightblue"
-                                onchange="editTask(this, '@item.TaskId')">
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        style="background-color:@sColor;"
+                        onchange="editTask(this, '@item.TaskId')">
                             @foreach (var status in Model.StatusList)
                             {
+                                var st = status.Value.Split('+');
+                                sName = st[0];
+                                sColor = st[1];
+
                                 if (status.Key == item.Status)
                                 {
-                                    <option value="@status.Key" selected>@status.Value</option>
+                                    <option style="background-color:@sColor;" value="@status.Key" selected>@sName</option>
                                 }
                                 else
                                 {
-                                    <option value="@status.Key">@status.Value</option>
+                                    <option style="background-color:@sColor;" value="@status.Key">@sName</option>
                                 }
                             }
                         </select>
@@ -88,35 +96,43 @@
                 var pName = priority[0];
                 var pColor = priority[1];
 
+                var stat = Model.StatusList[item.Status].Split('+');
+                var sName = stat[0];
+                var sColor = stat[1];
+
 
                 <tr>
-                    <td class="fw-bold text-success">
+                    <td class="fw-bold text-success ">
                         <div class="d-flex justify-content-between">
                             @item.Name
                             <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">SubTask</div>
                         </div>
                     </td>
-                    <td>@item.EstimatedTime Hour</td>
-                    <td>
+                    <td class="text-center">@item.EstimatedTime Hour</td>
+                    <td class="text-center">
                         <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
                             @pName
                         </span>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <select class="btn btn-sm btn-light dropdown-toggle"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                style="background-color: lightblue"
+                                style="background-color:@sColor"
                                 onchange="editSubTask(this, '@item.SubTaskId')">
                             @foreach (var status in Model.StatusList)
                             {
+                                var st = status.Value.Split('+');
+                                sName = st[0];
+                                sColor = st[1];
+
                                 if (status.Key == item.Status)
                                 {
-                                    <option value="@status.Key" selected>@status.Value</option>
+                                    <option style="background-color:@sColor;" value="@status.Key" selected>@sName</option>
                                 }
                                 else
                                 {
-                                    <option value="@status.Key">@status.Value</option>
+                                    <option style="background-color:@sColor;" value="@status.Key">@sName</option>
                                 }
                             }
                         </select>
@@ -130,6 +146,11 @@
 @section Scripts {
 
     <script>
+
+        $(document).ready(function () {
+            $("#taskTable").DataTable({});
+        });
+
         function editTask(selectElement, taskId) {
             var selectedStatus = selectElement.value;
 
