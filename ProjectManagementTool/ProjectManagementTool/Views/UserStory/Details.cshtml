@@ -512,6 +512,7 @@ else
                         stoptWatch(taskId);
                     } else {
                         localStorage.setItem("trackingTask-" + taskId, "Stopped");
+                        localStorage.setItem("TimeTrackingTask-" + taskId, 0);
                         flipPlayPauseButton(taskId, "Stopped");
                     }
                 },
@@ -525,14 +526,7 @@ else
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let taskId = button.id.split("-")[1];
-                let status = localStorage.getItem("trackingTask-" + taskId);
-
-                if (status == null || status == "Started") {
-                    IncompletedTracking(taskId);
-                }
-                else {
-                    flipPlayPauseButton(taskId, status);
-                }
+                IncompletedTracking(taskId);
             });
         });
 

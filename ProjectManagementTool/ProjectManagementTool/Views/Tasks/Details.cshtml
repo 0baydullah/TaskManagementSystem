@@ -479,16 +479,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let subTaskId = button.id.split("-")[1];
-                let status = localStorage.getItem("trackingSubTask-" + subTaskId);
-
-                if (status == null || status == "Started")
-                {
-                    IncompletedTracking(subTaskId);
-                }
-                else
-                {
-                    flipPlayPauseButton(subTaskId, status);
-                }
+                IncompletedTracking(subTaskId);
             });
         });
 
@@ -590,17 +581,15 @@
 
         // Disable and Enable the play button when start a sub task and closing a sub task
         function othersPlayButtonDisabledAndEnabled(subTaskId, state) {
-            //document.addEventListener("DOMContentLoaded", function () {
-                document.querySelectorAll("[id^=playButton-]").forEach(button => {
-                    let id = button.id.split("-")[1];
-                    if (id != subTaskId && state == 1) {
-                        $("#playButton-" + id).addClass("disabled");
-                    }
-                    else{
-                        $("#playButton-" + id).removeClass("disabled");
-                    }
-                });
-            //});
+            document.querySelectorAll("[id^=playButton-]").forEach(button => {
+                let id = button.id.split("-")[1];
+                if (id != subTaskId && state == 1) {
+                    $("#playButton-" + id).addClass("disabled");
+                }
+                else{
+                    $("#playButton-" + id).removeClass("disabled");
+                }
+            });
         }
 
     </script>
