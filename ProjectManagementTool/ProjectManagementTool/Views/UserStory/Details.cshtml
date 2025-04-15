@@ -490,7 +490,6 @@ else
 
         // Time track starting
         function IncompletedTracking(taskId) {
-            console.log(taskId);
             $.ajax({
                 url: "/TimeTrack/IncompletedTimeTrackByTask",
                 type: 'GET',
@@ -752,9 +751,7 @@ else
                     console.log("memberId: ", memberId, "assignedId:", assignMembersId);
                     console.log("id = ", id, "and subtaskId = ", taskId);
                 }
-                else {
-                   // $("#playButton-" + id).removeClass("disabled");
-                }
+
             });
         }
 

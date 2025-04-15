@@ -444,15 +444,10 @@
 
         // Time track starting
         function IncompletedTracking(subTaskId) {
-            let projectIdElement = document.getElementById("projectData");
-            let projectId = projectIdElement ? projectIdElement.getAttribute("data-member-id") : null;
-
             $.ajax({
                 url: "/TimeTrack/IncompletedTimeTrackBySubTask",
                 type: 'GET',
-                data: { subTaskId: subTaskId ,
-                    projectId: projectId
-                },
+                data: { subTaskId: subTaskId },
                 success: function (response) {
                     localStorage.setItem("assignMemberIdSubTask-" + subTaskId, response.assignMembersId);
                     var assignMembersId = localStorage.getItem("assignMemberIdSubTask-" + subTaskId);
@@ -606,9 +601,7 @@
                     console.log("memberId: ", memberId, "assignedId:", assignMembersId);
                     console.log("id = ",id,"and subtaskId = ", subTaskId);
                 }
-                else{
-                    //$("#playButton-" + id).removeClass("disabled");
-                }
+                
             });
         }
 

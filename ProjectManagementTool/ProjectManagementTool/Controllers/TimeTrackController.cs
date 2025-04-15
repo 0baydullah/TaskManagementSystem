@@ -168,7 +168,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IncompletedTimeTrackBySubTask(int subTaskId,int projectId)
+        public async Task<IActionResult> IncompletedTimeTrackBySubTask(int subTaskId)
         {
             try
             {
