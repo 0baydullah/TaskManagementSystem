@@ -92,9 +92,11 @@ else
             <i class="text-light fa-solid fa-plus"></i> Task
         </a>
     </div>
+
+    
     <div>
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
+        <table class="table table-bordered table-striped table-hover" id="taskTable">
+            <thead class="bg-dark">
                 <tr>
                     <th>
                         Task
@@ -272,7 +274,7 @@ else
         </a>
     </div>
     <div>
-        <table class= " table table-bordered table-striped table-hover">
+        <table class= " table table-bordered table-striped table-hover" id="subTaskTable">
             <thead>
                 <tr>
                     <th>
@@ -370,6 +372,24 @@ else
 
 @section Scripts {
     <script>
+
+        const taskTableIdName = '#taskTable';
+        const subTaskTableIdName = '#subTaskTable';
+
+        $(document).ready(function () {
+            $(taskTableIdName + ',' + subTaskTableIdName).DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                columnDefs: [
+                    { orderable: false, targets: -1 } 
+                ]
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
+
         var deleteTaskId = null;
         var userStoryId = null;
         var deleteBugId = null;
@@ -451,6 +471,23 @@ else
             }
         }
 
+        // calculate waiting time to active the pause button
+        function waitingTimeToActivePauseButton(startTime)
+        {
+            var date1 = new Date(startTime);
+            var date2 = new Date();
+            var waitingTime = Math.floor(Math.abs(date2.getTime() - date1.getTime()) / 1000);
+                        
+            if(waitingTime>10){
+                waitingTime= 0;
+            }
+            else{
+                waitingTime = 10 - waitingTime;
+            }
+
+            return waitingTime;
+        }
+
         // Time track starting
         function IncompletedTracking(taskId) {
             console.log(taskId);
@@ -459,13 +496,20 @@ else
                 type: 'GET',
                 data: { taskId: taskId },
                 success: function (response) {
-                    console.log(response);
                     if (response.status === "Started") {
                         localStorage.setItem("trackingTask-" + taskId, "Started");
                         var startTime = response.timeTrack.startTime;
                         localStorage.setItem("TimeTrackingTask-" + taskId, startTime);
                         flipPlayPauseButton(taskId, "Started");
-                        othersPlayButtonDisabled(taskId, 1);
+
+                        $("#pauseButton-" + taskId).addClass("disabled");
+                        othersPlayButtonDisabledAndEnabled(taskId, 1);
+                        var waitingTime = waitingTimeToActivePauseButton(startTime);
+
+                        setTimeout(function () {
+                            $("#pauseButton-" + taskId).removeClass("disabled");
+                        }, waitingTime*1000);
+
                         stoptWatch(taskId);
                     } else {
                         localStorage.setItem("trackingTask-" + taskId, "Stopped");
@@ -663,7 +707,7 @@ else
                     $("#playButton-" + taskId).addClass("d-none");
                     $("#pauseButton-" + taskId).removeClass("d-none");
                     $("#pauseButton-" + taskId).addClass("disabled");
-                    othersPlayButtonDisabled(taskId, 1);
+                    othersPlayButtonDisabledAndEnabled(taskId, 1);
 
                     setTimeout(function () {
                         $("#pauseButton-" + taskId).removeClass("disabled");
@@ -690,7 +734,7 @@ else
                     }
                     $("#pauseButton-" + taskId).addClass("d-none");
                     $("#playButton-" + taskId).removeClass("d-none");
-                    othersPlayButtonDisabled(taskId, 2);
+                    othersPlayButtonDisabledAndEnabled(taskId, 2);
                 },
                 error: function () {
                     alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
@@ -700,8 +744,7 @@ else
 
 
         // Disable and Enable the play button when start a sub task and closing a sub task
-        function othersPlayButtonDisabled(subTaskId, state) {
-            //document.addEventListener("DOMContentLoaded", function () {
+        function othersPlayButtonDisabledAndEnabled(subTaskId, state) {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let id = button.id.split("-")[1];
                 if (id != subTaskId && state == 1) {
@@ -711,7 +754,6 @@ else
                     $("#playButton-" + id).removeClass("disabled");
                 }
             });
-            //});
         }
 
     </script>

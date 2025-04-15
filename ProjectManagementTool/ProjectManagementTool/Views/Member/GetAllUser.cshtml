@@ -24,7 +24,7 @@
 </div>
 
 
-<table class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover" id="datatable">
     <thead>
         <tr>
             <th>
@@ -106,6 +106,14 @@
 
 @section Scripts {
     <script>
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
         let projectIdToDelete = 0;
 
         function openDeleteModal(id)

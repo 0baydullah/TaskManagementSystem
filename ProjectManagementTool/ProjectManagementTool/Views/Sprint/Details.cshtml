@@ -44,7 +44,7 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="datatable">
         <thead>
             <tr>
                 <th>
@@ -64,15 +64,10 @@
                 <th>
                     Status
                 </th>
-               @*  <th>
-                    Action
-                </th> *@
 
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.UserStroy.Any())
-            {
                 @foreach (var item in Model.UserStroy)
                 {
                     <tr>
@@ -91,24 +86,27 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
-                       @*  <td>
-                            <a class="btn btn-light" asp-controller="" asp-action="" asp-route-id="" asp-route-projectId=""><i class="text-success fa-solid fa-pen fw-bold"></i></a> |
-                            <a class="btn btn-light" asp-action="" asp-route-id="" asp-route-projectId=""><i class="text-success fa-solid fa-info fw-bold"></i></a> |
-                            <a class="btn btn-light" onclick="openDeleteModal('')"><i class="text-danger fa-solid fa-trash fw-bold"></i></a>
-                        </td> *@
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="7" class="text-center fw-bold text-danger">No User Story found!</td>
-                </tr>
-            }
 
 
         </tbody>
 
     </table>
 </div>
+
+@section Scripts{
+    <script>
+
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
+
+    </script>
+}
 

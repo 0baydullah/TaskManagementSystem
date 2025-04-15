@@ -85,7 +85,7 @@
     </a>
 </div>
 <div>
-    <table class="table">
+    <table class="table table-bordered table-striped table-hover" id="datatable">
         <thead>
             <tr>
                 <th>
@@ -106,7 +106,7 @@
                 <th>
                     Reviewer
                 </th>
-                <th></th>
+                <th class="text-center">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -251,6 +251,13 @@
 
 @section Scripts {
     <script>
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("table th").css("background-color", "aliceblue");
 
         // Convert seconds into day, hour, minutes and second
         function secondsToDHMS(seconds) {
@@ -423,6 +430,23 @@
             }
         }
 
+        // calculate waiting time to active the pause button
+        function waitingTimeToActivePauseButton(startTime)
+        {
+            var date1 = new Date(startTime);
+            var date2 = new Date();
+            var waitingTime = Math.floor(Math.abs(date2.getTime() - date1.getTime()) / 1000);
+                        
+            if(waitingTime>10){
+                waitingTime= 0;
+            }
+            else{
+                waitingTime = 10 - waitingTime;
+            }
+
+            return waitingTime;
+        }
+
         // Time track starting
         function IncompletedTracking(subTaskId) {
             $.ajax({
@@ -435,8 +459,17 @@
                         var startTime = response.timeTrack.startTime;
                         localStorage.setItem("TimeTrackingSubTask-" + subTaskId, startTime);
                         flipPlayPauseButton(subTaskId, "Started");
-                        othersPlayButtonDisabled(subTaskId, 1);
+                        
+                        $("#pauseButton-" + subTaskId).addClass("disabled");
+                        othersPlayButtonDisabledAndEnabled(subTaskId, 1);
+                        var waitingTime = waitingTimeToActivePauseButton(startTime);
+
+                        setTimeout(function () {
+                            $("#pauseButton-" + subTaskId).removeClass("disabled");
+                        }, waitingTime*1000);
+
                         stoptWatch(subTaskId);
+
                     } else {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Stopped");
                         localStorage.setItem("TimeTrackingSubTask-" + subTaskId, 0);
@@ -480,7 +513,7 @@
             document.getElementById(`stop-watch-${subTaskId}`).textContent = `${day}:${hour}:${min}:${sec}`;
         }
 
-        // Stopwatch start
+        // Stopwatch 
         function stoptWatch(subTaskId) {
             if (!timers[subTaskId]) {
                 timers[subTaskId] = { currentTime : 0, interval : null, isRunning : false };
@@ -527,7 +560,7 @@
                     $("#playButton-" + subTaskId).addClass("d-none");
                     $("#pauseButton-" + subTaskId).removeClass("d-none");
                     $("#pauseButton-" + subTaskId).addClass("disabled");
-                    othersPlayButtonDisabled(subTaskId, 1);
+                    othersPlayButtonDisabledAndEnabled(subTaskId, 1);
 
                     setTimeout(function () {
                         $("#pauseButton-" + subTaskId).removeClass("disabled");
@@ -554,7 +587,7 @@
 
                     $("#pauseButton-" + subTaskId).addClass("d-none");
                     $("#playButton-" + subTaskId).removeClass("d-none");
-                    othersPlayButtonDisabled(subTaskId, 2);
+                    othersPlayButtonDisabledAndEnabled(subTaskId, 2);
                 },
                 error: function () {
                     alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
@@ -563,7 +596,7 @@
         }
 
         // Disable and Enable the play button when start a sub task and closing a sub task
-        function othersPlayButtonDisabled(subTaskId, state) {
+        function othersPlayButtonDisabledAndEnabled(subTaskId, state) {
             //document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll("[id^=playButton-]").forEach(button => {
                     let id = button.id.split("-")[1];

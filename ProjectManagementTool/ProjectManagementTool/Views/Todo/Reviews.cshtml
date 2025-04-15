@@ -10,13 +10,14 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="taskTable">
         <thead>
             <tr>
-                <th>Tasks & Sub Tasks</th>
-                <th>Estimated Time</th>
-                <th>Priority</th>
-                <th>Status</th>
+                <th class="text-center">Need to Review</th>
+                <th class="text-center">Estimated Time</th>
+                <th class="text-center">Priority</th>
+                <th class="text-center">Status</th>
+                <th hidden>status</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                 var stat = Model.StatusList[item.Status].Split('+');
                 var sName = stat[0];
                 var sColor = stat[1];
+                var statusName = stat[0];
 
 
                 <tr>
@@ -47,13 +49,13 @@
                             <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">Task</div>
                         </div>
                     </td>
-                    <td>@item.EstimatedTime Hour</td>
-                    <td>
+                    <td class="text-center">@item.EstimatedTime Hour</td>
+                    <td class="text-center">
                         <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
                             @pName
                         </span>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <select class="btn btn-sm btn-light dropdown-toggle"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
@@ -75,7 +77,9 @@
                                 }
                             }
                         </select>
+                        <p hidden>@statusName</p>
                     </td>
+                    <td hidden>@statusName</td>
                 </tr>
             }
 
@@ -99,6 +103,7 @@
                 var stat = Model.StatusList[item.Status].Split('+');
                 var sName = stat[0];
                 var sColor = stat[1];
+                var statusName = stat[0];
 
                 <tr>
                     <td class="fw-bold text-success">
@@ -107,13 +112,13 @@
                             <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">SubTask</div>
                         </div>
                     </td>
-                    <td>@item.EstimatedTime Hour</td>
-                    <td>
+                    <td class="text-center">@item.EstimatedTime Hour</td>
+                    <td class="text-center">
                         <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
                             @pName
                         </span>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <select class="btn btn-sm btn-light dropdown-toggle"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
@@ -135,7 +140,9 @@
                                 }
                             }
                         </select>
+                        <p hidden>@statusName</p>
                     </td>
+                    <td hidden>@statusName</td>
                 </tr>
             }
         </tbody>
@@ -145,6 +152,16 @@
 @section Scripts {
 
     <script>
+
+        $(document).ready(function () {
+            $("#taskTable").DataTable({
+                columnDefs: [
+                    { orderable: true, searchable: false,  targets: -2 }
+                ]
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
         function editTask(selectElement, taskId) {
             var selectedStatus = selectElement.value;
 

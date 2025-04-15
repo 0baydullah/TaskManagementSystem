@@ -10,11 +10,12 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="bugTable">
         <thead>
-            <tr>
-                <th>Bug</th>
-                <th>Status</th>
+            <tr >
+                <th class="text-center">Bug</th>
+                <th class="text-center">Status</th>
+                <th hidden>status</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                 var stat = Model.StatusList[item.Status].Split('+');
                 var sName = stat[0];
                 var sColor = stat[1];
+                var statusName = stat[0];
 
 
                 
@@ -46,13 +48,14 @@
                     <td class="fw-bold text-success">
                         <div class="d-flex justify-content-between">
                             @item.Name
-                            <div class=" btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px; background-color:@pColor;">@pName</div>
+                            <div class="text-dark btn-light fw-bold btn-sm px-2 py-1 rounded-pill" style="font-size:10px; background-color:@pColor;">@pName</div>
                         </div>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <select class="btn btn-sm btn-light dropdown-toggle"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
+                                id="dropdown"
                                 style="background-color: @sColor"
                                 onchange="editBug(this, '@item.BugId')">
                             @foreach (var status in Model.StatusList)
@@ -71,7 +74,9 @@
                                 }
                             }
                         </select>
+                        <p hidden>@statusName</p>
                     </td>
+                    <td hidden>@statusName</td>
                 </tr>
             }
         </tbody>
@@ -81,6 +86,15 @@
 @section Scripts {
 
     <script>
+        $(document).ready(function () {
+            $("#bugTable").DataTable({
+                columnDefs: [
+                    { orderable: true, searchable: false,  targets: -2 } 
+                ]
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
         function editBug(selectElement, bugId) {
             var selectedStatus = selectElement.value;
 
