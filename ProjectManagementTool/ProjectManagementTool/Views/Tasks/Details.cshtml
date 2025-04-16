@@ -460,10 +460,12 @@
                     $("#pauseButton-" + subTaskId).removeClass("d-none");
                     $("#pauseButton-" + subTaskId).addClass("disabled");
                     othersPlayButtonDisabledAndEnabled(subTaskId, 1, assignMembersId);
+                    //var disableTime = response.disableTime;
+                    //console.log(response.disableTime);
 
                     setTimeout(function () {
                         $("#pauseButton-" + subTaskId).removeClass("disabled");
-                    }, 10000);
+                    }, disableTime*1000);
                 },
                 error: function () {
                     alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);

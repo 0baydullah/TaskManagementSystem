@@ -139,5 +139,28 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public bool DisableButtonTimer()
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public int GetDisableButtonTimer()
+        {
+            try
+            {
+                return 5;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

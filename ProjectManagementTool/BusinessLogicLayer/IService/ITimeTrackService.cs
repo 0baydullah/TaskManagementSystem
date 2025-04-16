@@ -16,5 +16,7 @@ namespace BusinessLogicLayer.IService
         public List<TimeTrack> GetAllByTaskId(int taskId);
         public Task<TimeTrack> IncompletedTimeTrackBySubTask(int subTaskId);
         public Task<TimeTrack> IncompletedTimeTrackByTask(int taskId);
+        public bool DisableButtonTimer();
+        public int GetDisableButtonTimer();
     }
 }
