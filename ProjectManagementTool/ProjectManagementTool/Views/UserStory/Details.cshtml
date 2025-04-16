@@ -490,7 +490,9 @@ else
 
                         $("#pauseButton-" + taskId).addClass("disabled");
                         othersPlayButtonDisabledAndEnabled(taskId, 1, assignMembersId);
-                        var waitingTime = waitingTimeToActivePauseButton(startTime);
+                        var disableTime = response.disableTime;
+
+                        var waitingTime = waitingTimeToActivePauseButton(startTime, disableTime);
 
                         setTimeout(function () {
                             $("#pauseButton-" + taskId).removeClass("disabled");
@@ -608,11 +610,13 @@ else
                     $("#playButton-" + taskId).addClass("d-none");
                     $("#pauseButton-" + taskId).removeClass("d-none");
                     $("#pauseButton-" + taskId).addClass("disabled");
+
                     othersPlayButtonDisabledAndEnabled(taskId, 1, assignMembersId);
+                    var disableTime = response.disableTime;
 
                     setTimeout(function () {
                         $("#pauseButton-" + taskId).removeClass("disabled");
-                    }, 10000);
+                    }, disableTime*1000);
                 },
                 error: function () {
                     alert("Error starting tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);

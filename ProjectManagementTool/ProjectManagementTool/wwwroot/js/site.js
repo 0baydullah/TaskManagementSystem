@@ -110,16 +110,16 @@ function flipPlayPauseButton(id, status) {
 }
 
 // calculate waiting time to active the pause button
-function waitingTimeToActivePauseButton(startTime) {
+function waitingTimeToActivePauseButton(startTime, disableTime) {
     var date1 = new Date(startTime);
     var date2 = new Date();
     var waitingTime = Math.floor(Math.abs(date2.getTime() - date1.getTime()) / 1000);
 
-    if (waitingTime > 10) {
+    if (waitingTime > disableTime) {
         waitingTime = 0;
     }
     else {
-        waitingTime = 10 - waitingTime;
+        waitingTime = disableTime - waitingTime;
     }
 
     return waitingTime;
