@@ -83,10 +83,10 @@ namespace DataAccessLayer.Repository
             try
             {
                 var tasks = _context.Tasks.Where(x => x.UserStoryId == id).ToList();
-                var tasksVM = tasks.GroupJoin(_context.TimeTracks.Where(ttrack => ttrack.SubTaskId == 0 && ttrack.IsTrackCompleted == false), t=> t.TaskId, time=>time.TaskId,(t,time) => new { t, time }).SelectMany(
+                var tasksVM = tasks.GroupJoin(_context.TimeTracks.Where(ttrack => ttrack.SubTaskId == 0 && ttrack.IsTrackCompleted == false), t=> t.Id, time=>time.TaskId,(t,time) => new { t, time }).SelectMany(
                     x => x.time.DefaultIfEmpty(), (x, time) => new TasksVM
                     {
-                    TaskId = x.t.TaskId,
+                    TaskId = x.t.Id,
                     Name = x.t.Name,
                     Descripton = x.t.Descripton,
                     AssignMembersId = x.t.AssignMembersId,
@@ -97,7 +97,7 @@ namespace DataAccessLayer.Repository
                     Priority = x.t.Priority,
                     UserStoryId = x.t.UserStoryId,
                     TrackingStatus = time!=null? time.TrackingStatus : "", 
-                    SubTaskCount = _context.SubTask.Where(a => a.TaskId == x.t.TaskId).ToList().Count  
+                    SubTaskCount = _context.SubTask.Where(a => a.TaskId == x.t.Id).ToList().Count  
                 }).ToList();
 
                 return tasksVM;
@@ -113,7 +113,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var task = _context.Tasks.FirstOrDefault(x => x.TaskId == id);
+                var task = _context.Tasks.FirstOrDefault(x => x.Id == id);
                 return task;
             }
             catch (Exception ex)
