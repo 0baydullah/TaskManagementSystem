@@ -143,7 +143,31 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                return true;
+                var time = _context.DisableTime.FirstOrDefault();
+                bool result = false;
+
+                if (time == null)
+                {
+                    var savedTime = new DisableTime()
+                    {
+                        Time = disableTime * 60
+                    };
+
+                    _context.DisableTime.Add(savedTime);
+                    _context.SaveChanges();
+
+                    result = true;
+                }
+                else
+                {
+                    time.Time = disableTime * 60; 
+                    _context.DisableTime.Update(time);
+                    _context.SaveChanges();
+                    result = true;
+                }
+
+                return result;
+               
             }
             catch (Exception)
             {
@@ -151,11 +175,12 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public int GetDisableButtonTimer()
+        public DisableTime GetDisableButtonTimer()
         {
             try
             {
-                return 5;
+                var time = _context.DisableTime.FirstOrDefault();
+                return time;
             }
             catch (Exception)
             {

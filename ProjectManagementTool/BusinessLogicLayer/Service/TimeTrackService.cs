@@ -159,7 +159,7 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public int GetDisableButtonTimer()
+        public DisableTime GetDisableButtonTimer()
         {
             try
             {

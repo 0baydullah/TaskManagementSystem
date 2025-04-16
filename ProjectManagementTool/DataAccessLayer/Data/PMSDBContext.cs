@@ -27,6 +27,7 @@ namespace DataAccessLayer.Data
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Priority> Priorities { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<DisableTime> DisableTime { get; set; }  
         public DbSet<TimeTrack> TimeTracks { get; set; }
         public DbSet<Bug> Bugs { get; set; }
     }

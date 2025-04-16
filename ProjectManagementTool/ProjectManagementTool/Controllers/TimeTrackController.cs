@@ -230,12 +230,13 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var timer =  _timeTrackService.DisableButtonTimer(disableTime);
+                //var savedTime = _timeTrackService.GetDisableButtonTimer();
               
 
                 if (timer == true)
                 {
 
-                    return Json(new { success = true, message = "Unsuccessful" });
+                    return Json(new { success = true, message = "Unsuccessful", redirectUrl = Url.Action("Index", "Settings") });
                 }
                 else
                 {
