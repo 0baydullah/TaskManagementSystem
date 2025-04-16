@@ -37,7 +37,7 @@
                         <h4>Projects</h4>
                     </div>
                     <div class="card-body" style="background:#B0BEC5">
-                        <h1>@Model.Projects.Count</h1>
+                        <a class="text-decoration-none text-center"><h1>@Model.Projects.Count</h1></a>
                     </div>
                 </div>
             </div>
@@ -47,10 +47,8 @@
                         <h4>Bugs</h4>
                     </div>
                     <div class="card-body" style="background:#B0BEC5">
-                        <h1>#</h1>
-                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Bugs">
-                            Go
-                        </a>
+                        <a class="text-decoration-none text-center"> <h1>@Model.Bugs.Count</h1></a>
+                        
                     </div>
                 </div>
             </div>
@@ -61,17 +59,10 @@
                         <h4>Tasks</h4>
                     </div>
                     <div class="card-body" style="background:#B0BEC5">
-                        <h1>#</h1>
-                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Tasks">
-                            Go
-                        </a>
-                       
+                        <a class="text-decoration-none text-center"> <h1>@Model.Tasks.Count</h1></a>
                     </div>
                 </div>
             </div>
-           
-
-
         </div>
         <div class="row g-3 mt-2">
 

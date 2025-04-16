@@ -52,7 +52,7 @@ namespace BusinessLogicLayer.Service
                     StartDate = model.StartDate,
                     EndDate = model.EndDate,
                     CompanyName = model.CompanyName,
-                    ProjectOwnerId = user.Id,
+                    ProjectOwnerId = user.Id, 
 
                 };
 
@@ -61,7 +61,7 @@ namespace BusinessLogicLayer.Service
                 if (result == true)
                 {
                     var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
-                    var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Admin");
+                    var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Owner");
                     var member = new Member
                     {
                         ProjectId = projectId,
@@ -217,7 +217,7 @@ namespace BusinessLogicLayer.Service
                 var allTasks = userStory.Join(tasks, u => u.StoryId, t => t.UserStoryId, (u, t) => new
                 {
                     u.StoryId,
-                    t.TaskId,
+                    t.Id,
                 }).ToList().Count;
 
                 var allBugs = userStory.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new
@@ -258,7 +258,7 @@ namespace BusinessLogicLayer.Service
                 var tasks = _tasksRepo.GetAllTasks().ToList();
                 var result = tasks.Join(story, t => t.UserStoryId, u => u.StoryId, (t, u) => new Tasks
                 {
-                    TaskId = t.TaskId,
+                    Id = t.Id,
                     Name = t.Name,
                     Descripton = t.Descripton,
                     AssignMembersId = t.AssignMembersId,
@@ -301,6 +301,30 @@ namespace BusinessLogicLayer.Service
 
                 return allBugs;
 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public bool UpdateProjectOwner(int ownerId, int projectId)
+        {
+            try
+            {
+                //owner update on project
+                var project = _projectInfoRepo.GetProjectInfo(projectId);
+                project.ProjectOwnerId = ownerId;
+                _projectInfoRepo.UpdateProjectInfo(project);
+
+                //owner update on member 
+                var member = _memberRepo.GetMember(ownerId);
+                var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Owner");
+                member.RoleId = role.RoleId;
+                _memberRepo.UpdateMember(member);
+                
+                return true;
             }
             catch (Exception)
             {

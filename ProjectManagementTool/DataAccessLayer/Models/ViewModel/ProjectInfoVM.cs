@@ -11,6 +11,7 @@ namespace DataAccessLayer.Models.ViewModel
 {
     public class ProjectInfoVM
     {
+        public int ProjectId { get; set; } 
         [Required(ErrorMessage ="Project Name is required!")]
         [DisplayName(displayName: "Project Name")]
         public string Name { get; set; }
@@ -40,5 +41,7 @@ namespace DataAccessLayer.Models.ViewModel
         public string CompanyName { get; set; }
 
         public int ProjectOwnerId { get; set; }
+
+        public Dictionary<int, string>? MemberList { get; set; }
     }
 }
