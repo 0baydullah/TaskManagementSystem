@@ -139,7 +139,7 @@ namespace DataAccessLayer.Repository
             }
         }
 
-        public bool DisableButtonTimer()
+        public bool DisableButtonTimer(int disableTime)
         {
             try
             {

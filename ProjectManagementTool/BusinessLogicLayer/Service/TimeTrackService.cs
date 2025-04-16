@@ -147,11 +147,11 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public bool DisableButtonTimer()
+        public bool DisableButtonTimer(int disableTime)
         {
             try
             {
-                return _timeTrackRepo.DisableButtonTimer();
+                return _timeTrackRepo.DisableButtonTimer(disableTime);
             }
             catch (Exception)
             {

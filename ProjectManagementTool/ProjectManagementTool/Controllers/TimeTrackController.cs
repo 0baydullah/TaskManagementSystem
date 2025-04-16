@@ -225,11 +225,11 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-		public async Task<IActionResult> DisableButtonTimer()
+		public  IActionResult DisableButtonTimer(int disableTime)
         {
             try
             {
-                var timer =  _timeTrackService.DisableButtonTimer();
+                var timer =  _timeTrackService.DisableButtonTimer(disableTime);
               
 
                 if (timer == true)
