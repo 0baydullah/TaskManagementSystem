@@ -1,0 +1,177 @@
+﻿@using DataAccessLayer.StaticClass
+@model DataAccessLayer.Models.ViewModel.DashboardVM
+@{
+    ViewData["Title"] = "Index";
+    ViewData["Banner"] = "Dashboard";
+}
+
+@{
+
+    var breadcrumbs = new List<KeyValuePair<string, string>>
+    {
+        new KeyValuePair<string, string>("","#"),
+        new KeyValuePair<string, string>("Dashboard", Url.Action(ActionNameHelper.GetAllUserActionName, ControllerNameHelper.MemberControllerName) ?? string.Empty),
+
+    };
+    ViewData["Breadcrumbs"] = breadcrumbs;
+}
+
+<div class="d-flex justify-content-between shadow-lg mb-4 rounded">
+    <div class="w-50">
+        <canvas id="taskChart"></canvas>
+    </div>
+    <div class="w-50">
+        <canvas id="bugChart"></canvas>
+    </div>
+</div>
+
+<div class="card shadow-lg rounded">
+
+    <div class="card-body fw-bolder p-5 ">
+        
+        <div class="row g-3 mt-2">
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Projects</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>@Model.Projects.Count</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Bugs</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Bugs">
+                            Go
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Tasks</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Tasks">
+                            Go
+                        </a>
+                       
+                    </div>
+                </div>
+            </div>
+           
+
+
+        </div>
+        <div class="row g-3 mt-2">
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>Need to Review</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+                        <a class="btn mb-4 shadow-sm text-danger fw-bold" style="background-color:aliceblue;" href="/Todo/Reviews">
+                            Go
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>#</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 text-center text-light shadow-sm">
+                    <div class="card-header" style="background:#607D8B">
+                        <h4>#</h4>
+                    </div>
+                    <div class="card-body" style="background:#B0BEC5">
+                        <h1>#</h1>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctxTask = document.getElementById('taskChart').getContext('2d');
+    const ctxBug = document.getElementById('bugChart').getContext('2d');
+
+    const taskChart = new Chart(ctxTask, {
+        type: 'doughnut',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.PieChartTask.xStatusName)),
+            datasets: [{
+                label: 'Task Counts',
+                data: @Html.Raw(Json.Serialize(Model.PieChartTask.yStatusCount)),
+                backgroundColor: @Html.Raw(Json.Serialize(Model.PieChartTask.BarColor)),
+                borderColor: '#000',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Tasks'
+                }
+            }
+        }
+    });
+
+    const bugChart = new Chart(ctxBug, {
+        type: 'doughnut',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.PieChartBug.xStatusName)),
+            datasets: [{
+                label: 'Bug Counts',
+                data: @Html.Raw(Json.Serialize(Model.PieChartBug.yStatusCount)),
+                backgroundColor: @Html.Raw(Json.Serialize(Model.PieChartBug.BarColor)),
+                borderColor: '#000',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Bugs'
+                }
+            }
+        }
+    });
+
+</script>

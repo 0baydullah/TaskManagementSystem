@@ -100,7 +100,7 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="datatable">
         <thead>
             <tr>
                 <th>
@@ -127,8 +127,7 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.Tasks.Any())
-            {
+            
                 @foreach (var item in Model.Tasks)
                 {
                     @if (Model.StatusList.ContainsKey(item.Status) == false)
@@ -160,13 +159,8 @@
                         </td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="7" class="text-center fw-bold text-danger">No Tasks found!</td>
-                </tr>
-            }
+          
+           
 
 
         </tbody>
@@ -179,7 +173,7 @@
 </div>
 
 <div>
-    <table class="table table-bordered table-striped table-hover">
+    <table class="table table-bordered table-striped table-hover" id="datatablebug">
         <thead>
             <tr>
                 <th>
@@ -203,8 +197,7 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.Bugs.Any())
-            {
+            
                 @foreach (var item in Model.Bugs)
                 {
                     @if (Model.StatusList.ContainsKey(item.Status) == false)
@@ -233,17 +226,28 @@
                         </td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="7" class="text-center fw-bold text-danger">No Bugs found!</td>
-                </tr>
-            }
+            
 
 
         </tbody>
 
     </table>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#datatablebug").DataTable({
+
+            });
+        });
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
+    </script>
+}
 

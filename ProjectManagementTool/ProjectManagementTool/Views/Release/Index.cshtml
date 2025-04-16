@@ -20,11 +20,11 @@
 
 <div class="mb-3">
     <a href="@Url.Action("Create", "Release", new { projectId = ViewBag.ProjectId })" class="btn btn-success fw-bold">  <i class="text-light fa-solid fa-plus fw-bold"></i> Create Release</a>
-    <a class="btn shadow-sm text-success fw-bold float-end mx-3" style="background-color:aliceblue;" href="#">Filter</a>
+    
 </div>
 
 <div>
-    <table class="table table-bordered table-hover table-striped">
+    <table class="table table-bordered table-hover table-striped" id="datatable">
         <thead>
             <tr>
                 <th>
@@ -57,7 +57,9 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ReleaseName)
+                            <a class="text-decoration-none fw-bold" asp-action="Details" asp-route-id="@item.ReleaseId">
+                                @item.ReleaseName
+                            </a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.ProjectKey)
@@ -76,7 +78,6 @@
                         </td>
                         <td class="text-center">
                             <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.ReleaseId"> <i class="text-success fa-solid fa-pen fw-bold"></i></a> |
-                            <a class="btn btn-light" asp-action="Details" asp-route-id="@item.ReleaseId"> <i class="text-success fa-solid fa-info fw-bold"></i></a> |
                             <a class="btn btn-light" onclick="openDeleteModal(@item.ReleaseId)"><i class="text-danger fa-solid fa-trash fw-bold"></i></a> |
                         </td>
                     </tr>
@@ -116,6 +117,15 @@
 
 @section Scripts {
     <script>
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
+
         let releaseIdToDelete = 0;
 
         function openDeleteModal(id)

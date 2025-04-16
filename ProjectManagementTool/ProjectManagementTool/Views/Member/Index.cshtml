@@ -22,11 +22,11 @@
 
 <div class="mb-3">
     <a class="btn btn-success fw-bold" href="@Url.Action("Create", "Member", new { projectId = ViewBag.ProjectId })"> <i class="text-light fa-solid fa-plus fw-bold"></i> Add Member</a>
-    <a class="btn shadow-sm text-success fw-bold float-end mx-3" style="background-color:aliceblue;" href="#">Filter</a>
+    
 </div>
 
 
-<table class="table table-bordered table-striped table-hover">
+<table class="table table-bordered table-striped table-hover" id="datatable">
     <thead>
         <tr>
             <th>
@@ -56,7 +56,9 @@
             {
                 <tr>
                     <td>
-                        @item.Name
+                        <a class="text-decoration-none fw-bold" asp-action="Details" asp-route-id="@item.MemberId">
+                            @item.Name
+                        </a>
                     </td>
                     <td>
                         @item.Email
@@ -72,7 +74,6 @@
                     </td>
                     <td class="text-center">
                         <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-pen"></i></a> |
-                        <a class="btn btn-light" asp-action="Details" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-info"></i></a> |
                         <a class="btn btn-light" onclick="openDeleteModal('@item.MemberId')"><i class="text-danger fa-solid fa-trash"></i> </a>
                     </td> 
                 </tr>
@@ -109,6 +110,14 @@
 
 @section Scripts {
     <script>
+
+        $(document).ready(function () {
+            $("#datatable").DataTable({
+
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+        
         let projectIdToDelete = 0;
 
         function openDeleteModal(id)
