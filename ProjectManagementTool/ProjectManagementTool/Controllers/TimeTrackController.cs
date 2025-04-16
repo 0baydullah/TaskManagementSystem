@@ -220,5 +220,11 @@ namespace ProjectManagementTool.Controllers
                 return RedirectToAction("Exception", "Error");
             }
         }
-    }
+
+        [HttpPost]
+		public async Task<IActionResult> DisableButtonTimer()
+        {
+            return View();
+        }
+	}
 }
