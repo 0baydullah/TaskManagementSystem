@@ -80,7 +80,7 @@
 </div>
 <div class="d-flex justify-content-between">
     <h3>Sub Tasks</h3>
-    <a class="btn btn-success w-25" asp-controller="SubTask" asp-action="Create" asp-route-id="@Model.Tasks.TaskId">
+    <a class="btn btn-success w-25" asp-controller="SubTask" asp-action="Create" asp-route-id="@Model.Tasks.Id">
         <i class="text-light fa-solid fa-plus"></i> Sub Task
     </a>
 </div>
@@ -161,22 +161,22 @@
                         @if (@Model.MemberId == @item.AssignMembersId || @Model.AdminMemberIds.Contains(Model.MemberId))
                         {
                             <a id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
-                               onclick="startTracking(@item.TaskId, @item.SubTaskId)">
+                               onclick="startTracking(@item.TaskId, @item.SubTaskId,@item.AssignMembersId)">
                                 <i class="text-warning fa-solid fa-circle-play"></i>
                             </a>
                             <a id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
-                               onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
+                               onclick="stopTracking(@item.TaskId, @item.SubTaskId,@item.AssignMembersId)">
                                 <i class="text-warning fa-solid fa-circle-pause"></i>
                             </a>
                         }
                         else
                         {
                             <a style="pointer-events:none;" id="playButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "d-none" : "")"
-                               onclick="startTracking(@item.TaskId, @item.SubTaskId)">
+                               onclick="startTracking(@item.TaskId, @item.SubTaskId,@item.AssignMembersId)">
                                 <i class="text-danger fa-solid fa-circle-xmark"></i>
                             </a>
                             <a style="pointer-events:none;" id="pauseButton-@item.SubTaskId" class="btn btn-light @(item.TrackingStatus == "Started" ? "" : "d-none")"
-                               onclick="stopTracking(@item.TaskId, @item.SubTaskId)">
+                               onclick="stopTracking(@item.TaskId, @item.SubTaskId,@item.AssignMembersId)">
                                 <i class="text-danger fa-solid fa-circle-xmark"></i>
                             </a>
                         }
@@ -189,6 +189,8 @@
 <hr />
 </div>
 
+<div id="memberData" data-member-id="@Model.MemberId"></div>
+<div id="projectData" data-member-id="@ViewBag.ProjectId"></div>
 
 <!-- Delete Modal -->
 <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
@@ -293,7 +295,7 @@
             const hours = String(date.getHours()).padStart(2, '0');
             const minutes = String(date.getMinutes()).padStart(2, '0');
 
-            return `${year}/${month}/${day} ${hours}:${minutes}`;
+            return `${year}-${month}-${day} ${hours}:${minutes}`;
         }
 
         // Formate the details
@@ -453,15 +455,21 @@
                 url: "/TimeTrack/IncompletedTimeTrackBySubTask",
                 type: 'GET',
                 data: { subTaskId: subTaskId },
-                success: function (response) { 
+                success: function (response) {
+                    localStorage.setItem("assignMemberIdSubTask-" + subTaskId, response.assignMembersId);
+                    var assignMembersId = localStorage.getItem("assignMemberIdSubTask-" + subTaskId);
+
                     if (response.status === "Started") {
                         localStorage.setItem("trackingSubTask-" + subTaskId, "Started");
                         var startTime = response.timeTrack.startTime;
                         localStorage.setItem("TimeTrackingSubTask-" + subTaskId, startTime);
+
                         flipPlayPauseButton(subTaskId, "Started");
                         
                         $("#pauseButton-" + subTaskId).addClass("disabled");
-                        othersPlayButtonDisabledAndEnabled(subTaskId, 1);
+
+                        othersPlayButtonDisabledAndEnabled(subTaskId, 1, assignMembersId);
+
                         var waitingTime = waitingTimeToActivePauseButton(startTime);
 
                         setTimeout(function () {
@@ -486,16 +494,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             document.querySelectorAll("[id^=playButton-]").forEach(button => {
                 let subTaskId = button.id.split("-")[1];
-                let status = localStorage.getItem("trackingSubTask-" + subTaskId);
-
-                if (status == null || status == "Started")
-                {
-                    IncompletedTracking(subTaskId);
-                }
-                else
-                {
-                    flipPlayPauseButton(subTaskId, status);
-                }
+                IncompletedTracking(subTaskId);
             });
         });
 
@@ -545,8 +544,9 @@
 
 
         // Time track starting
-        function startTracking(taskId, subTaskId) {
+        function startTracking(taskId, subTaskId,assignMembersId) {
             stoptWatch(subTaskId);
+            localStorage.setItem("assignMemberIdSubTask-" + subTaskId, assignMembersId);
             $.ajax({
                 url:"/TimeTrack/Start",
                 type: 'POST',
@@ -560,7 +560,7 @@
                     $("#playButton-" + subTaskId).addClass("d-none");
                     $("#pauseButton-" + subTaskId).removeClass("d-none");
                     $("#pauseButton-" + subTaskId).addClass("disabled");
-                    othersPlayButtonDisabledAndEnabled(subTaskId, 1);
+                    othersPlayButtonDisabledAndEnabled(subTaskId, 1, assignMembersId);
 
                     setTimeout(function () {
                         $("#pauseButton-" + subTaskId).removeClass("disabled");
@@ -573,8 +573,9 @@
         }
 
         // Time track stopping
-        function stopTracking(taskId, subTaskId) {
+        function stopTracking(taskId, subTaskId, assignMembersId) {
             stoptWatch(subTaskId);
+            localStorage.setItem("assignMemberIdSubTask-" + subTaskId, assignMembersId);
             $.ajax({
                 url: "/TimeTrack/End",
                 type: 'POST',
@@ -587,7 +588,7 @@
 
                     $("#pauseButton-" + subTaskId).addClass("d-none");
                     $("#playButton-" + subTaskId).removeClass("d-none");
-                    othersPlayButtonDisabledAndEnabled(subTaskId, 2);
+                    othersPlayButtonEnabled(subTaskId, 2, assignMembersId);
                 },
                 error: function () {
                     alert("Error stopping tracking for Task ID: " + taskId + ", SubTask ID: " + subTaskId);
@@ -596,18 +597,32 @@
         }
 
         // Disable and Enable the play button when start a sub task and closing a sub task
-        function othersPlayButtonDisabledAndEnabled(subTaskId, state) {
-            //document.addEventListener("DOMContentLoaded", function () {
-                document.querySelectorAll("[id^=playButton-]").forEach(button => {
-                    let id = button.id.split("-")[1];
-                    if (id != subTaskId && state == 1) {
-                        $("#playButton-" + id).addClass("disabled");
-                    }
-                    else{
-                        $("#playButton-" + id).removeClass("disabled");
-                    }
-                });
-            //});
+        function othersPlayButtonDisabledAndEnabled(subTaskId, state, assignMembersId) {
+            document.querySelectorAll("[id^=playButton-]").forEach(button => {
+                let id = button.id.split("-")[1];
+                let memberIdElement = document.getElementById("memberData");
+                let memberId = memberIdElement ? memberIdElement.getAttribute("data-member-id") : null;
+                
+                if (id != subTaskId && state == 1 && assignMembersId == memberId) {
+                    $("#playButton-" + id).addClass("disabled");
+                    console.log("memberId: ", memberId, "assignedId:", assignMembersId);
+                    console.log("id = ",id,"and subtaskId = ", subTaskId);
+                }
+                
+            });
+        }
+
+        // Disable and Enable the play button when start a sub task and closing a sub task
+        function othersPlayButtonEnabled(subTaskId, state, assignMembersId) {
+            document.querySelectorAll("[id^=playButton-]").forEach(button => {
+                let id = button.id.split("-")[1];
+                let memberIdElement = document.getElementById("memberData");
+                let memberId = memberIdElement ? memberIdElement.getAttribute("data-member-id") : null;
+
+                if (state == 2 && assignMembersId == memberId) {
+                    $("#playButton-" + id).removeClass("disabled");
+                }
+            });
         }
 
     </script>

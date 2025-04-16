@@ -22,7 +22,7 @@
     <div class="col-md-4">
         <form asp-action="Create" id="createForm" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="TaskId" class="form-control" value="@Model.TaskId" type="hidden"/>
+            <input asp-for="Id" class="form-control" value="@Model.Id" type="hidden"/>
             <div class="form-group mt-2">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" value="@Model.Name" />

@@ -43,7 +43,7 @@ namespace BusinessLogicLayer.Service
             try
             {
                 _tasksRepo.DeleteTasks(tasks);
-                _subTasksRepo.DeleteAllAssociation(tasks.TaskId);
+                _subTasksRepo.DeleteAllAssociation(tasks.Id);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace BusinessLogicLayer.Service
             {
                 var tasks = _tasksRepo.GetAllTasks().Join(member, t=>t.AssignMembersId, m=>m.MemberId, (t,m)=> new Tasks
                 {
-                    TaskId = t.TaskId,
+                    Id = t.Id,
                     Name = t.Name,
                     Descripton = t.Descripton,
                     AssignMembersId = t.AssignMembersId,
@@ -99,7 +99,7 @@ namespace BusinessLogicLayer.Service
             {
                 var tasks = _tasksRepo.GetAllTasks().Join(member, t=>t.ReviewerMemberId, m=>m.MemberId, (t,m)=> new Tasks
                 {
-                    TaskId = t.TaskId,
+                    Id = t.Id,
                     Name = t.Name,
                     Descripton = t.Descripton,
                     AssignMembersId = t.AssignMembersId,
@@ -152,7 +152,7 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var existingTask = _tasksRepo.GetTasks(tasks.TaskId);
+                var existingTask = _tasksRepo.GetTasks(tasks.Id);
                 if (existingTask != null)
                 {
                     existingTask.Name = tasks.Name;

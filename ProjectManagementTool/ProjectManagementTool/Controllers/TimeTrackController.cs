@@ -4,7 +4,9 @@ using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace ProjectManagementTool.Controllers
@@ -12,14 +14,22 @@ namespace ProjectManagementTool.Controllers
     [Authorize]
     public class TimeTrackController : Controller
     {
+        private readonly UserManager<UserInfo> _userManager;
         private readonly ITimeTrackService _timeTrackService;
+        private readonly ITasksService _taskService;
         private readonly ISubTaskService _subTaskService;
+        private readonly IMemberService _memberService;
+        
         private readonly ILog _log = LogManager.GetLogger(typeof(TimeTrackController));
 
-        public TimeTrackController(ITimeTrackService timeTrackService, ISubTaskService subTaskService) 
-        { 
+        public TimeTrackController(UserManager<UserInfo> userManager,ITimeTrackService timeTrackService, ITasksService taskService,
+            ISubTaskService subTaskService, IMemberService memberService) 
+        {
+            _userManager = userManager;
             _timeTrackService = timeTrackService;
+            _taskService = taskService;
             _subTaskService = subTaskService;
+            _memberService = memberService;
         }
 
         [HttpPost]
@@ -163,14 +173,16 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var incompletedTimeTrack =  await _timeTrackService.IncompletedTimeTrackBySubTask(subTaskId);
+                var subTask = _subTaskService.GetSubTask(subTaskId);
+
                 if (incompletedTimeTrack != null) 
                 {
 
-                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack });
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack, assignMembersId = subTask.AssignMembersId });
                 }
                 else
                 {
-                    return Json(new { success = false }); 
+                    return Json(new { success = false, assignMembersId = subTask.AssignMembersId }); 
                 }
             }
             catch (Exception ex)
@@ -188,14 +200,16 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var incompletedTimeTrack = await _timeTrackService.IncompletedTimeTrackByTask(taskId);
+                var task = _taskService.GetTasks(taskId);
+
                 if (incompletedTimeTrack != null)
                 {
 
-                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack });
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack, assignMembersId = task.AssignMembersId });
                 }
                 else
                 {
-                    return Json(new { success = false });
+                    return Json(new { success = false, assignMembersId = task.AssignMembersId });
                 }
             }
             catch (Exception ex)

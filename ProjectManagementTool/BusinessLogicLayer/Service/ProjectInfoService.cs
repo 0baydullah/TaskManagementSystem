@@ -217,7 +217,7 @@ namespace BusinessLogicLayer.Service
                 var allTasks = userStory.Join(tasks, u => u.StoryId, t => t.UserStoryId, (u, t) => new
                 {
                     u.StoryId,
-                    t.TaskId,
+                    t.Id,
                 }).ToList().Count;
 
                 var allBugs = userStory.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new
@@ -258,7 +258,7 @@ namespace BusinessLogicLayer.Service
                 var tasks = _tasksRepo.GetAllTasks().ToList();
                 var result = tasks.Join(story, t => t.UserStoryId, u => u.StoryId, (t, u) => new Tasks
                 {
-                    TaskId = t.TaskId,
+                    Id = t.Id,
                     Name = t.Name,
                     Descripton = t.Descripton,
                     AssignMembersId = t.AssignMembersId,
