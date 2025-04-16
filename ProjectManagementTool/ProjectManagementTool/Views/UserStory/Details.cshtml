@@ -383,11 +383,16 @@ else
                 searching: true,
                 ordering: true,
                 info: true,
+                stateSave: true,
                 columnDefs: [
                     { orderable: false, targets: -1 } 
                 ]
             });
         });
+        $(document).on('click', '.paginate_button', function (e) {
+            e.preventDefault();
+            location.reload();
+        })
         $("th").css("background-color", "aliceblue");
 
 
