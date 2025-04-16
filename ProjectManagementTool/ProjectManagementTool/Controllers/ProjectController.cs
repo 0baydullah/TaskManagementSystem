@@ -293,13 +293,13 @@ namespace ProjectManagementTool.Controllers
 
         }
 
-        public IActionResult UpdateOwner(int ownerId, int projectId)
+        public async Task<IActionResult> UpdateOwner(int ownerId, int projectId)
         {
             var isSuccess = true;
             var message = "Project Owner updated successfully!";
             try
             {
-                var response = _projectInfoService.UpdateProjectOwner(ownerId, projectId);
+                var response = await _projectInfoService.UpdateProjectOwner(ownerId, projectId);
                 if (response == true)
                 {
                     _log.Info(message);

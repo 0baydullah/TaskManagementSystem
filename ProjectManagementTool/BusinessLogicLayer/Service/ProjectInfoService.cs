@@ -309,12 +309,13 @@ namespace BusinessLogicLayer.Service
 
         }
 
-        public bool UpdateProjectOwner(int ownerId, int projectId)
+        public async Task<bool> UpdateProjectOwner(int ownerId, int projectId)
         {
             try
             {
                 //owner update on project
                 var project = _projectInfoRepo.GetProjectInfo(projectId);
+                var oldOwner = project.ProjectOwnerId;
                 project.ProjectOwnerId = ownerId;
                 _projectInfoRepo.UpdateProjectInfo(project);
 
@@ -322,7 +323,13 @@ namespace BusinessLogicLayer.Service
                 var member = _memberRepo.GetMember(ownerId);
                 var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Owner");
                 member.RoleId = role.RoleId;
-                _memberRepo.UpdateMember(member);
+                await _memberRepo.UpdateMember(member);
+
+                //demote current owner to user
+                var oldMember = _memberRepo.GetMember(oldOwner);
+                var oldRole = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "User");
+                oldMember.RoleId = oldRole.RoleId;
+                await _memberRepo.UpdateMember(member);
                 
                 return true;
             }
