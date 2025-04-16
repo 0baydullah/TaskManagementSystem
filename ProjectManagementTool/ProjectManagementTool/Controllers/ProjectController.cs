@@ -32,7 +32,6 @@ namespace ProjectManagementTool.Controllers
             {
                 var user = await _userManager.GetUserAsync(User);
                 var projects = _projectInfoService.GetAllProjectInfo(user?.Email ?? "");
-                var members = _userManager.Users.ToDictionary( u => u.Id, u => u.Name);
                 var data = projects.Select(p => new ProjectInfoVM
                 {
                     ProjectId = p.ProjectId,
@@ -43,7 +42,7 @@ namespace ProjectManagementTool.Controllers
                     EndDate = p.EndDate,
                     CompanyName = p.CompanyName,
                     ProjectOwnerId = p.ProjectOwnerId,
-                    MemberList = members,
+                    MemberList = _memberService.GetAllMember().Where(m => m.ProjectId == p.ProjectId).ToDictionary(member => member.MemberId, member => member.Name),
                 }).ToList();
 
                 return View(data);
@@ -294,13 +293,25 @@ namespace ProjectManagementTool.Controllers
 
         }
 
-        public async Task<IActionResult> UpdateOwner(int ownerId, int projectId)
+        public IActionResult UpdateOwner(int ownerId, int projectId)
         {
+            var isSuccess = true;
+            var message = "Project Owner updated successfully!";
             try
             {
+                var response = _projectInfoService.UpdateProjectOwner(ownerId, projectId);
+                if (response == true)
+                {
+                    _log.Info(message);
+                }
+                else
+                {
+                    isSuccess = false;
+                    message = "Project Owner update failed!";
+                    _log.Warn(message);
+                }
 
-
-                return View();
+                return Json(new { success = isSuccess, message });
             }
             catch (Exception ex)
             {

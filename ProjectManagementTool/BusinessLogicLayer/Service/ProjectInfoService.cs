@@ -308,5 +308,29 @@ namespace BusinessLogicLayer.Service
             }
 
         }
+
+        public bool UpdateProjectOwner(int ownerId, int projectId)
+        {
+            try
+            {
+                //owner update on project
+                var project = _projectInfoRepo.GetProjectInfo(projectId);
+                project.ProjectOwnerId = ownerId;
+                _projectInfoRepo.UpdateProjectInfo(project);
+
+                //owner update on member 
+                var member = _memberRepo.GetMember(ownerId);
+                var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Owner");
+                member.RoleId = role.RoleId;
+                _memberRepo.UpdateMember(member);
+                
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
     }
 }
