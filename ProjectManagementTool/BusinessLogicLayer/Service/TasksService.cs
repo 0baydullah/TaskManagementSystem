@@ -29,6 +29,8 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
+                tasks.Id = 0;
+                tasks.CreatedAt = DateTime.Now;
                 _tasksRepo.AddTasks(tasks);
             }
             catch (Exception ex)

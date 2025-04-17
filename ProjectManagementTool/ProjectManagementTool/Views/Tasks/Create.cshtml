@@ -72,7 +72,8 @@
             </div>
             <div class="form-group">
              
-                <input asp-for="UserStoryId" id="ID" class="form-control" type="hidden" value="@ViewBag.UserStoryId" />
+                <input asp-for="UserStoryId" class="form-control" type="hidden" value="@ViewBag.UserStoryId" />
+                <input asp-for="CreatedBy" class="form-control" type="hidden" value="@ViewBag.CurrentUserId" />
             </div>
             <div class="form-group mt-3 d-flex justify-content-center">
                 <input type="button" onclick="submitForm()" value="Create" class="btn btn-success w-50" />
