@@ -1,4 +1,5 @@
 ﻿@model DataAccessLayer.Models.ViewModel.TodoReviewVM
+@using DataAccessLayer.StaticClass
 @{
     ViewData["Title"] = "Reviews";
     ViewData["Banner"] = "Reviews";
@@ -24,6 +25,9 @@
             <!-- Tasks -->
             @foreach (var item in Model.Tasks)
             {
+                if (TodoHelper.ReviewrsStatus.Contains(item.Status) == false)
+                    continue;
+
                 @if (!Model.PriorityList.ContainsKey(item.Priority))
                 {
                     Model.PriorityList[item.Priority] = "Not Found";
