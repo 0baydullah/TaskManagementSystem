@@ -61,7 +61,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(int id)
         {
             try
             {
@@ -79,6 +79,9 @@ namespace ProjectManagementTool.Controllers
 
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
+
+                var user = await _userManager.GetUserAsync(User);
+                ViewBag.CurrentUserId = user.Id;
 
                 return View();
             }

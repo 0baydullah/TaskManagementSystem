@@ -9,6 +9,7 @@ namespace DataAccessLayer.Models.Entity
 {
     public class Tasks
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]

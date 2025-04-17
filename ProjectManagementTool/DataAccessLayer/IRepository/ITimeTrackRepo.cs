@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Models.Entity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace DataAccessLayer.IRepository
         public List<TimeTrack> GetBySubTaskId(int subTaskId);
         public List<TimeTrack> GetAllByTaskId(int taskId); 
         public Task<TimeTrack> IncompletedTimeTrackBySubTask(int subTaskId);
-        public Task<TimeTrack> IncompletedTimeTrackByTask(int taskId); 
+        public Task<TimeTrack> IncompletedTimeTrackByTask(int taskId);
+        public bool DisableButtonTimer(int disableTime);
+        public DisableTime GetDisableButtonTimer();
     }
 }
