@@ -30,5 +30,7 @@ namespace BusinessLogicLayer.IService
 
         public Task<bool> UpdateProjectOwner(int ownerId, int projectId);
 
+        public bool IsOwner(int projectId, string email);
+
     }
 }

@@ -43,6 +43,8 @@ namespace ProjectManagementTool.Controllers
                     CompanyName = p.CompanyName,
                     ProjectOwnerId = p.ProjectOwnerId,
                     MemberList = _memberService.GetAllMember().Where(m => m.ProjectId == p.ProjectId).ToDictionary(member => member.MemberId, member => member.Name),
+                    //IsOwner = _memberService.GetAllMember().Where( m => (m.ProjectId == p.ProjectId) && (m.Email == user.Email)).FirstOrDefault().Role == RoleHelper.OwnerRoleName ? true : false,
+                    IsOwner = _projectInfoService.IsOwner(p.ProjectId, user.Email),
                 }).ToList();
 
                 return View(data);
@@ -149,7 +151,7 @@ namespace ProjectManagementTool.Controllers
                 }
                 else
                 {
-                    var roleName = "Owner"; // need update
+                    var roleName = RoleHelper.OwnerRoleName;
                     await _userManager.AddToRoleAsync(user, roleName);
                     isSuccess = true;
                     message = "Project created successfully!";
@@ -307,7 +309,7 @@ namespace ProjectManagementTool.Controllers
                 else
                 {
                     isSuccess = false;
-                    message = "Project Owner update failed!";
+                    message = "Hey! You are already in owner role";
                     _log.Warn(message);
                 }
 

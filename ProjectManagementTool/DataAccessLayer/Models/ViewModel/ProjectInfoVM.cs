@@ -43,5 +43,7 @@ namespace DataAccessLayer.Models.ViewModel
         public int ProjectOwnerId { get; set; }
 
         public Dictionary<int, string>? MemberList { get; set; }
+
+        public bool IsOwner { get; set; }
     }
 }
