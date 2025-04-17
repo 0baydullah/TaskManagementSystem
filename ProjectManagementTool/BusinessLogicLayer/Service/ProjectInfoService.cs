@@ -2,6 +2,7 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
+using DataAccessLayer.StaticClass;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
@@ -52,7 +53,7 @@ namespace BusinessLogicLayer.Service
                     StartDate = model.StartDate,
                     EndDate = model.EndDate,
                     CompanyName = model.CompanyName,
-                    ProjectOwnerId = user.Id, 
+                    ProjectOwnerId = 0, 
 
                 };
 
@@ -60,15 +61,20 @@ namespace BusinessLogicLayer.Service
 
                 if (result == true)
                 {
-                    var projectId = _projectInfoRepo.GetProjectInfo(model.Name).ProjectId;
-                    var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Owner");
+                    var projectUpdate = _projectInfoRepo.GetProjectInfo(model.Name);
+                    var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == RoleHelper.OwnerRoleName);
                     var member = new Member
                     {
-                        ProjectId = projectId,
+                        ProjectId = projectUpdate.ProjectId,
                         RoleId = role.RoleId,
                         Email = user.Email,
                     };
                     _memberRepo.AddMember(member);
+
+                    //update project owner 
+                    var owner = _memberRepo.GetAllMember().Where(m => m.ProjectId == projectUpdate.ProjectId).FirstOrDefault();
+                    projectUpdate.ProjectOwnerId = owner.MemberId;
+                    _projectInfoRepo.UpdateProjectInfo(projectUpdate);
 
                 }
 
@@ -309,22 +315,62 @@ namespace BusinessLogicLayer.Service
 
         }
 
-        public bool UpdateProjectOwner(int ownerId, int projectId)
+        public async Task<bool> UpdateProjectOwner(int ownerId, int projectId)
         {
             try
             {
+                
                 //owner update on project
                 var project = _projectInfoRepo.GetProjectInfo(projectId);
+                var oldOwner = project.ProjectOwnerId;
+                if (oldOwner == ownerId)
+                {
+                    return false;
+                }
                 project.ProjectOwnerId = ownerId;
                 _projectInfoRepo.UpdateProjectInfo(project);
 
                 //owner update on member 
                 var member = _memberRepo.GetMember(ownerId);
-                var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == "Owner");
+                var role = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == RoleHelper.OwnerRoleName);
                 member.RoleId = role.RoleId;
-                _memberRepo.UpdateMember(member);
+                await _memberRepo.UpdateMember(member);
+
+                //demote current owner to user
+                var oldMember = _memberRepo.GetMember(oldOwner);
+                var oldRole = _roleRepo.GetAllRole().FirstOrDefault(x => x.RoleName == RoleHelper.AdminRoleName);
+                oldMember.RoleId = oldRole.RoleId;
+                await _memberRepo.UpdateMember(member);
                 
                 return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public bool IsOwner( int projectId, string email)
+        {
+            try
+            {
+                var member = _memberRepo.GetAllMember().Where(m => (m.ProjectId == projectId) && (m.Email == email)).FirstOrDefault();
+
+                if (member == null)
+                {
+                    throw new Exception("Member not found!");
+                }
+
+                if (member.Role == RoleHelper.OwnerRoleName)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
             }
             catch (Exception)
             {

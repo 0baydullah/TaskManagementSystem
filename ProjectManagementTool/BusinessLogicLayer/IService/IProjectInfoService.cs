@@ -28,7 +28,9 @@ namespace BusinessLogicLayer.IService
         public List<Tasks> GetAllTaskByProject(int projectId);
         public List<Bug> GetAllBugByProject(int projectId);
 
-        public bool UpdateProjectOwner(int ownerId, int projectId);
+        public Task<bool> UpdateProjectOwner(int ownerId, int projectId);
+
+        public bool IsOwner(int projectId, string email);
 
     }
 }

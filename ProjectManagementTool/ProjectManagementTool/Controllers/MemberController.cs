@@ -137,11 +137,15 @@ namespace ProjectManagementTool.Controllers
             try
             {
                 var roles = _roleService.GetAllRole();
+                var ownerRole = roles.FirstOrDefault(x => x.RoleName == "Owner");
+                if (ownerRole != null)
+                {
+                    roles.Remove(ownerRole);
+                }
                 var project = _projectInfoService.GetProjectInfo(projectId);
                 ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName");
                 ViewBag.ProjectId = projectId;
                 ViewBag.ProjectKey = project.Key;
-
 
                 return View();
             }
@@ -152,7 +156,6 @@ namespace ProjectManagementTool.Controllers
 
                 return RedirectToAction("Exception", "Error");
             }
-
         }
 
         [HttpPost]
@@ -231,6 +234,11 @@ namespace ProjectManagementTool.Controllers
                     RoleId = member.RoleId,
                 };
                 var roles = _roleService.GetAllRole();
+                var ownerRole = roles.FirstOrDefault(x => x.RoleName == "Owner");
+                if (ownerRole != null)
+                {
+                    roles.Remove(ownerRole);
+                }
                 ViewData["RoleId"] = new SelectList(roles, "RoleId", "RoleName", member.RoleId);
                 ViewBag.ProjectId = member.ProjectId;
                 ViewBag.ProjectKey = project.Key;

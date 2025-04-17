@@ -22,7 +22,7 @@
 
 <div class="mb-3">
     <a class="btn btn-success fw-bold" href="@Url.Action("Create", "Member", new { projectId = ViewBag.ProjectId })"> <i class="text-light fa-solid fa-plus fw-bold"></i> Add Member</a>
-    
+
 </div>
 
 
@@ -39,10 +39,10 @@
                 Role
             </th>
             <th class="text-center">
-               Total Task
+                Total Task
             </th>
             <th class ="text-center">
-               Total Bug
+                Total Bug
             </th>
             <th class="text-center">
                 Action
@@ -72,10 +72,17 @@
                     <td class="text-center text-danger">
                         @item.TotalBug
                     </td>
-                    <td class="text-center">
-                        <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-pen"></i></a> |
-                        <a class="btn btn-light" onclick="openDeleteModal('@item.MemberId')"><i class="text-danger fa-solid fa-trash"></i> </a>
-                    </td> 
+                    @if(item.Role != RoleHelper.OwnerRoleName)
+                    {
+                        <td class="text-center">
+                            <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.MemberId"><i class="text-success fa-solid fa-pen"></i></a> |
+                            <a class="btn btn-light" onclick="openDeleteModal('@item.MemberId')"><i class="text-danger fa-solid fa-trash"></i> </a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                    }
                 </tr>
             }
         }

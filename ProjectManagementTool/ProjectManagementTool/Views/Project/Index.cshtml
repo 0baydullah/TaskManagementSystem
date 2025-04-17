@@ -68,10 +68,15 @@
                         {
                             item.MemberList[item.ProjectOwnerId] = "Not Found";
                         }
+                       
                         @item.MemberList[item.ProjectOwnerId]
-                        <a class="btn btn-light float-end" onclick="openUpdateOwnerModal(@item.ProjectId)">
-                            <i class="text-warning fa-solid fa-pen"></i>
-                        </a>
+                        @if (item.IsOwner == true)
+                        {
+                            <a class="btn btn-light float-end" onclick="openUpdateOwnerModal(@item.ProjectId)">
+                                <i class="text-warning fa-solid fa-pen"></i>
+                            </a>
+                        }
+                       
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Description)
@@ -125,12 +130,11 @@
             </div>
             <div class="modal-body">
                 <form id="updateOwnerForm">
-                    <!-- Hidden input to store the projectId -->
                     <input type="hidden" id="projectIdToUpdate" />
                     <div class="mb-3">
                         <label for="newOwner" class="form-label">Select New Owner</label>
                         <select class="form-select" id="newOwner" name="newOwner">
-                            <!-- Options will be dynamically populated -->
+
                         </select>
                     </div>
                 </form>
@@ -212,7 +216,8 @@
                 success: function (response) {
                     if (response.success == true) {
                         $('#response-message').html('<div class="alert alert-success">' + response.message + '</div>');
-                    } else {
+                    } 
+                    else {
                         $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                     $("#ownerModal").modal('hide');
