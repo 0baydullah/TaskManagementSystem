@@ -18,6 +18,7 @@ namespace DataAccessLayer.Models.ViewModel
 
         public int AssignMembersId { get; set; }
         public int ReviewerMemberId { get; set; }
+        public int QAMemberId { get; set; }
         public double EstimatedTime { get; set; }
         [Required]
         public string Tag { get; set; }

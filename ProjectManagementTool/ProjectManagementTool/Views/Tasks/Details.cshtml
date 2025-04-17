@@ -47,6 +47,10 @@
 {
     Model.MemberList[Model.Tasks.ReviewerMemberId] = "Not Found";
 }
+@if (Model.MemberList.ContainsKey(Model.Tasks.QAMemberId) == false)
+{
+    Model.MemberList[Model.Tasks.QAMemberId] = "Not Found";
+}
 <div>
     <table>
         <tbody>
@@ -61,6 +65,10 @@
             <tr>
                 <td>Reviewer :</td>
                 <th><i>@Model.MemberList[Model.Tasks.ReviewerMemberId]</i></th>
+            </tr>
+            <tr>
+                <td>Reviewer :</td>
+                <th><i>@Model.MemberList[Model.Tasks.QAMemberId]</i></th>
             </tr>
             <tr>
                 <td>Status :</td>
@@ -106,6 +114,9 @@
                 <th>
                     Reviewer
                 </th>
+                <th>
+                    QA-Responsible
+                </th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
@@ -129,6 +140,10 @@
                 {
                     Model.MemberList[item.ReviewerMemberId] = "Not Found";
                 }
+                @if (Model.MemberList.ContainsKey(item.QAMemberId) == false)
+                {
+                    Model.MemberList[item.QAMemberId] = "Not Found";
+                }
                 <tr>
                     <td>
                         @item.Name
@@ -147,6 +162,9 @@
                     </td>
                     <td>
                         @Model.MemberList[item.ReviewerMemberId]
+                    </td>
+                    <td>
+                        @Model.MemberList[item.QAMemberId]
                     </td>
                     <td>
                         <a class="btn btn-light" asp-controller="SubTask" asp-action="Edit" asp-route-id="@item.SubTaskId">

@@ -21,6 +21,7 @@ namespace DataAccessLayer.Models.Entity
         public int AssignMembersId { get; set; }
 
         public int ReviewerMemberId { get; set; }
+        public int QAMemberId { get; set; }
 
         public double EstimatedTime { get; set; }
 

@@ -116,6 +116,9 @@ else
                     <th>
                         Reviewer
                     </th>
+                    <th>
+                        QA-Responsible
+                    </th>
                     <th class="text-center">
                         Actions 
                     </th>
@@ -140,6 +143,10 @@ else
                     {
                         Model.MemberList[item.ReviewerMemberId] = "Not Found";
                     }
+                    @if (Model.MemberList.ContainsKey(item.QAMemberId) == false)
+                    {
+                        Model.MemberList[item.QAMemberId] = "Not Found";
+                    }
                     <tr>
                         <td>
                             <a class="text-decoration-none fw-bold" asp-controller="Tasks" asp-action="Details" asp-route-id="@item.TaskId" asp-route-projectId="@ViewBag.ProjectId">
@@ -160,6 +167,9 @@ else
                         </td>
                         <td>
                             @Model.MemberList[item.ReviewerMemberId]
+                        </td>
+                        <td>
+                            @Model.MemberList[item.QAMemberId]
                         </td>
                         <td class="text-center">
 

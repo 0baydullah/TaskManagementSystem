@@ -19,8 +19,8 @@
 
 
 
-<div class="row d-flex justify-content-center">
-    <div class="col-md-4">
+<div class="row d-flex justify-content-center ">
+    <div class="col-md-6 shadow-lg rounded p-4">
         <form asp-action="Create" id="createForm" autocomplete="off">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-2">
@@ -33,18 +33,24 @@
                 <textarea asp-for="Descripton" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Descripton" class="text-danger"></span>
             </div>
-            <div class="form-group d-flex justify-content-evenly mt-2">
-                <label asp-for="AssignMembersId" class="control-label">Assignee</label>
+            <div class="form-group d-flex justify-content-between mt-2">
+                
                 <select asp-for="@Model.AssignMembersId" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
                     <option value="0">Select Assignee</option>
                 </select>
                 <span asp-validation-for="AssignMembersId" class="text-danger"></span>
             
-                <label asp-for="ReviewerMemberId" class="control-label">Reviewer</label>
+              
                 <select asp-for="@Model.ReviewerMemberId" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
                     <option value="0">Select Reviewer</option>
                 </select>
                 <span asp-validation-for="ReviewerMemberId" class="text-danger"></span>
+
+               
+                <select asp-for="@Model.QAMemberId" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
+                    <option value="0">Select QA</option>
+                </select>
+                <span asp-validation-for="QAMemberId" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">
                 <label asp-for="EstimatedTime" class="control-label">Estimated Time(hr.)</label>
@@ -70,20 +76,17 @@
                 </select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-5">
              
                 <input asp-for="UserStoryId" class="form-control" type="hidden" value="@ViewBag.UserStoryId" />
                 <input asp-for="CreatedBy" class="form-control" type="hidden" value="@ViewBag.CurrentUserId" />
             </div>
-            <div class="form-group mt-3 d-flex justify-content-center">
-                <input type="button" onclick="submitForm()" value="Create" class="btn btn-success w-50" />
+            <div class="form-group mt-3 d-flex justify-content-between">
+                <input type="button" onclick="submitForm()" value="Create" class="btn btn-success fw-bold" />
+                <a class="btn btn-success fw-bold" asp-action="Details" asp-controller="UserStory" asp-route-id="@ViewBag.UserStoryId">Back to User Story</a>
             </div>
         </form>
     </div>
-</div>
-
-<div class="text-center mt-5 ">
-    <a class="btn btn-outline-danger w-25" asp-action="Details" asp-controller="UserStory" asp-route-id="@ViewBag.UserStoryId">Back to User Story</a>
 </div>
 
 @section Scripts {

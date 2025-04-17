@@ -20,7 +20,7 @@
 }
 
 <div class="row d-flex justify-content-center">
-    <div class="col-md-4">
+    <div class="col-md-6 shadow-lg rounded p-4">
         <form asp-action="Create" id="createForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="TaskId" class="form-control" value="@Model.TaskId" type="hidden"/>
@@ -34,20 +34,30 @@
                 <textarea asp-for="Descripton" class="form-control" rows="4">@Model.Descripton</textarea>
                 <span asp-validation-for="Descripton" class="text-danger"></span>
             </div>
-            <div class="form-group mt-2">
-                <label asp-for="AssignMembersId" class="control-label">Assignee</label>
-                <select asp-for="@Model.AssignMembersId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
-                    <option value="0"> Select Assignee </option>
-                </select>
-                <span asp-validation-for="AssignMembersId" class="text-danger"></span>
+            <div class="form-group d-flex justify-content-between mt-2">
+                <div>
+                    <label asp-for="AssignMembersId">Assignee</label>
+                    <select asp-for="@Model.AssignMembersId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
+                        <option value="0"> Select Assignee </option>
+                    </select>
+                    <span asp-validation-for="AssignMembersId" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="ReviewerMemberId">Reviewer</label>
+                    <select asp-for="@Model.ReviewerMemberId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
+                        <option value="0"> Select Reviewer </option>
+                    </select>
+                    <span asp-validation-for="ReviewerMemberId" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="QAMemberId">QA-Responsible</label>
+                    <select asp-for="@Model.QAMemberId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
+                        <option value="0"> Select QA </option>
+                    </select>
+                    <span asp-validation-for="QAMemberId" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group mt-2">
-                <label asp-for="ReviewerMemberId" class="control-label">Reviewer</label>
-                <select asp-for="@Model.ReviewerMemberId" class="form-control btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Members">
-                    <option value="0"> Select Reviewer </option>
-                </select>
-                <span asp-validation-for="ReviewerMemberId" class="text-danger"></span>
-            </div>
+           
             <div class="form-group mt-3">
                 <label asp-for="EstimatedTime" class="control-label">Estimated Time(hr.)</label>
                 <input asp-for="EstimatedTime" class="form-control" value="@Model.EstimatedTime"/>
@@ -58,7 +68,7 @@
                 <input asp-for="Tag" class="form-control" value="@Model.Tag"/>
                 <span asp-validation-for="Tag" class="text-danger"></span>
             </div>
-            <div class="form-group d-flex justify-content-evenly mt-2">
+            <div class="form-group d-flex justify-content-between mt-2">
                 <label asp-for="Status" class="control-label"></label>
 
                 <select asp-for="Status" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Status"></select>
@@ -68,12 +78,13 @@
                 <select asp-for="Priority" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Priority" ></select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-4">
 
                 <input asp-for="TaskId" class="form-control" type="hidden" value="@Model.TaskId" />
             </div>
-            <div class="form-group mt-5 d-flex justify-content-center">
-                <input type="button" onclick="submitForm()" value="Update" class="btn btn-success w-50" />
+            <div class="form-group mt-5 d-flex justify-content-between">
+                <input type="button" onclick="submitForm()" value="Update" class="btn btn-success fw-bold" />
+                <a class="btn btn-success fw-bold" asp-action="Details" asp-controller="Tasks" asp-route-id="@ViewBag.TaskId" asp-route-projectId="@ViewBag.ProjectId">Back to Tasks</a>
             </div>
         </form>
     </div>
