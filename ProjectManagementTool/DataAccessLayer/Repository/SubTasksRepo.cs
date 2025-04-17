@@ -92,6 +92,7 @@ namespace DataAccessLayer.Repository
                         Descripton = x.s.Descripton,
                         AssignMembersId = x.s.AssignMembersId,
                         ReviewerMemberId = x.s.ReviewerMemberId,
+                        QAMemberId = x.s.QAMemberId,
                         EstimatedTime = x.s.EstimatedTime,
                         Tag = x.s.Tag,
                         TaskId = x.s.TaskId,

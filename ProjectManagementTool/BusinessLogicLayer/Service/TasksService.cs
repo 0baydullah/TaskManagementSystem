@@ -79,6 +79,7 @@ namespace BusinessLogicLayer.Service
                     Descripton = t.Descripton,
                     AssignMembersId = t.AssignMembersId,
                     ReviewerMemberId = t.ReviewerMemberId,
+                    QAMemberId = t.QAMemberId,
                     EstimatedTime = t.EstimatedTime,
                     Tag = t.Tag,
                     Status = t.Status,
