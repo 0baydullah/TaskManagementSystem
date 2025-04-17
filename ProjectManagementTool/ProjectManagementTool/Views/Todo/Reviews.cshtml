@@ -90,6 +90,10 @@
             <!-- Subtasks -->
             @foreach (var item in Model.SubTasks)
             {
+
+                if (TodoHelper.ReviewrsStatus.Contains(item.Status) == false)
+                    continue;
+
                 @if (!Model.PriorityList.ContainsKey(item.Priority))
                 {
                     Model.PriorityList[item.Priority] = "Not Found";
