@@ -30,6 +30,7 @@ namespace BusinessLogicLayer
             services.AddScoped<ITimeTrackService, TimeTrackService>();
             services.AddScoped<IBugService, BugService>();
             services.AddScoped<IFilterService, FilterService>();
+            services.AddScoped<IBugStatusService, BugStatusService>();
 
             return services;
         }

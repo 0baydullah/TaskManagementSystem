@@ -23,6 +23,7 @@ namespace DataAccessLayer
             services.AddScoped<ITimeTrackRepo, TimeTrackRepo>();
             services.AddScoped<IBugRepo, BugRepo>();
             services.AddScoped<IFilterRepo, FilterRepo>();
+            services.AddScoped<IBugStatusRepo, BugStatusRepo>();
 
             return services;
         }
