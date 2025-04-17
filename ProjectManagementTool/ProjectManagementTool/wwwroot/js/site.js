@@ -1,6 +1,7 @@
 ﻿
 // Write your JavaScript code.
 
+
 window.setTimeout(function () {
     $(".alert").fadeTo(500, function () {
         $(this).remove();
