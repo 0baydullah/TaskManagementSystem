@@ -39,10 +39,11 @@ namespace ProjectManagementTool.Controllers
             {
                 var result = await _timeTrackService.TimeStoreStart(taskId, subTaskId);
                 var isSavedTrackingStatus =  _timeTrackService.UpdateTrackingStatus(taskId,subTaskId, "Started");
+                var disableTime = _timeTrackService.GetDisableButtonTimer();
 
                 if (result == true)
                 {
-                    return Ok(new { success = true, message = "Tracking started", status = "Started" });
+                    return Ok(new { success = true, message = "Tracking started", status = "Started", disableTime = disableTime });
                 }
                 else
                 {
@@ -174,11 +175,12 @@ namespace ProjectManagementTool.Controllers
             {
                 var incompletedTimeTrack =  await _timeTrackService.IncompletedTimeTrackBySubTask(subTaskId);
                 var subTask = _subTaskService.GetSubTask(subTaskId);
+                var disableTime = _timeTrackService.GetDisableButtonTimer();
 
                 if (incompletedTimeTrack != null) 
                 {
 
-                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack, assignMembersId = subTask.AssignMembersId });
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack, assignMembersId = subTask.AssignMembersId, disableTime = disableTime });
                 }
                 else
                 {
@@ -201,11 +203,12 @@ namespace ProjectManagementTool.Controllers
             {
                 var incompletedTimeTrack = await _timeTrackService.IncompletedTimeTrackByTask(taskId);
                 var task = _taskService.GetTasks(taskId);
+                var disableTime = _timeTrackService.GetDisableButtonTimer();
 
                 if (incompletedTimeTrack != null)
                 {
 
-                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack, assignMembersId = task.AssignMembersId });
+                    return Json(new { success = true, status = incompletedTimeTrack.TrackingStatus, timeTrack = incompletedTimeTrack, assignMembersId = task.AssignMembersId, disableTime = disableTime });
                 }
                 else
                 {
@@ -220,5 +223,33 @@ namespace ProjectManagementTool.Controllers
                 return RedirectToAction("Exception", "Error");
             }
         }
-    }
+
+        [HttpPost]
+		public  IActionResult DisableButtonTimer(int disableTime)
+        {
+            try
+            {
+                var timer =  _timeTrackService.DisableButtonTimer(disableTime);
+                //var savedTime = _timeTrackService.GetDisableButtonTimer();
+              
+
+                if (timer == true)
+                {
+
+                    return Json(new { success = true, message = "Unsuccessful", redirectUrl = Url.Action("Index", "Settings") });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+	}
 }

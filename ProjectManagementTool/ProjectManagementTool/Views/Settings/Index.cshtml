@@ -1,7 +1,21 @@
-﻿@{
+﻿@model DataAccessLayer.Models.Entity.DisableTime;
+
+@{
 	ViewData["Title"] = "Settings-PMS";
 	ViewData["Banner"] = "Settings";
 }
+
+
+<!-- Pop-up create Modal -->
+<div id="popupCreateModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <input type="number" id="inputText" placeholder="Enter number in minutes" />
+        <button id="submitButton">Submit</button>
+        <div id="responseMessage"></div>
+    </div>
+</div>
+
 
 <div class="mb-4 col-4 ">
 	<a class="btn  w-50 shadow" style="background-color:aliceblue; " asp-area="" asp-controller="Status" asp-action="Index"><b>Status</b></a>
@@ -12,3 +26,59 @@
 <div class="mb-4 col-4 ">
 	<a class="btn  w-50 shadow" style="background-color:aliceblue;" asp-area="" asp-controller="Category" asp-action="Index"><b>Category</b></a>
 </div>
+<div class="mb-4 col-4 d-flex ">
+    <button class="btn  w-50 shadow" style="background-color:aliceblue;" id="createButton">Disabled time : @(Model.Time/60) minutes</button>
+</div>
+
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById("popupCreateModal");
+        var createButton = document.getElementById("createButton");
+        var closeButton = document.querySelector(".close");
+
+        createButton.addEventListener("click", function () {
+            modal.style.display = "block";
+        });
+
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        $("#submitButton").click(function () {
+            var inputText = $("#inputText").val();
+            $.ajax({
+                url: "/TimeTrack/DisableButtonTimer",
+                type: "POST",
+                data: { disableTime: inputText },
+                success: function (response) {
+                    $("#responseMessage").html("<p style='color:green;'> Successful!</p>");
+                    setTimeout(function () {
+                        $("#popupUpdateModal").hide();
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 400) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.errors) {
+                            var errorList = response.errors.map(e => `<li>${e}</li>`).join("");
+                            $("#responseMessage").html(`<div class='error' style='color:red;'>${errorList}</div>`);
+                        }
+                    }
+                    else {
+                        $("#responseMessage").html("<p style='color:red;'>An error occurred. Please try again.</p>");
+                    }
+                }
+            });
+        });
+    });
+</script>

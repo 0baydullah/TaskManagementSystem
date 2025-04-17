@@ -139,5 +139,53 @@ namespace DataAccessLayer.Repository
             }
         }
 
+        public bool DisableButtonTimer(int disableTime)
+        {
+            try
+            {
+                var time = _context.DisableTime.FirstOrDefault();
+                bool result = false;
+
+                if (time == null)
+                {
+                    var savedTime = new DisableTime()
+                    {
+                        Time = disableTime * 60
+                    };
+
+                    _context.DisableTime.Add(savedTime);
+                    _context.SaveChanges();
+
+                    result = true;
+                }
+                else
+                {
+                    time.Time = disableTime * 60; 
+                    _context.DisableTime.Update(time);
+                    _context.SaveChanges();
+                    result = true;
+                }
+
+                return result;
+               
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public DisableTime GetDisableButtonTimer()
+        {
+            try
+            {
+                var time = _context.DisableTime.FirstOrDefault();
+                return time;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
