@@ -229,6 +229,7 @@ namespace ProjectManagementTool.Controllers
                 task.Descripton = taskVM.Descripton;
                 task.AssignMembersId = taskVM.AssignMembersId;
                 task.ReviewerMemberId = taskVM.ReviewerMemberId;
+                task.QAMemberId = taskVM.QAMemberId;
                 task.EstimatedTime = taskVM.EstimatedTime;
                 task.Tag = taskVM.Tag;
                 task.Status = taskVM.Status;
