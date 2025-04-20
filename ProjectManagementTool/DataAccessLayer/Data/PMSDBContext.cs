@@ -16,11 +16,6 @@ namespace DataAccessLayer.Data
 
         }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-           
-        //}
-
         public DbSet<ProjectInfo> ProjectInfo { get; set; }
         public DbSet<UserStory> UserStories { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
