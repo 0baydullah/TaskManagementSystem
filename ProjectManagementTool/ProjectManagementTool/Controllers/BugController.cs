@@ -16,11 +16,13 @@ namespace ProjectManagementTool.Controllers
         private readonly IPriorityService _priorityService;
         private readonly IBugService _bugService;
         private readonly IProjectInfoService _projectInfoService;
+        private readonly ITasksService _tasksService;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(BugController));
 
         public BugController(IMemberService memberService, IUserStoryService userStoryService, IStatusService statusService,
-            IPriorityService prioriyService, IBugService bugService, IProjectInfoService projectInfoService)
+            IPriorityService prioriyService, IBugService bugService, IProjectInfoService projectInfoService,
+            ITasksService tasksService)
         {
             _memberService = memberService;
             _userStoryService = userStoryService;
@@ -28,7 +30,9 @@ namespace ProjectManagementTool.Controllers
             _priorityService = prioriyService;
             _bugService = bugService;
             _projectInfoService = projectInfoService;
+            _tasksService = tasksService;
         }
+        
         [HttpGet]
         public IActionResult Create(int id)
         {
@@ -49,6 +53,9 @@ namespace ProjectManagementTool.Controllers
 
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
+
+                var tasks = _tasksService.GetAllTasks(id);
+                ViewBag.Tasks = new SelectList(tasks, "TaskId", "Name");
 
                 return View();
             }
@@ -131,6 +138,9 @@ namespace ProjectManagementTool.Controllers
 
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == story.ProjectId);
                 ViewBag.Members = new SelectList(members, "MemberId", "Name");
+                
+                var tasks = _tasksService.GetAllTasks(story.StoryId);
+                ViewBag.Tasks = new SelectList(tasks, "TaskId", "Name");
 
                 ViewBag.UserStoryId = bug.UserStoryId;
 

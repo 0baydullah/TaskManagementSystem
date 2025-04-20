@@ -28,6 +28,7 @@ namespace BusinessLogicLayer.Service
                     Name = bugVM.Name,
                     Descripton = bugVM.Descripton,
                     Status = bugVM.Status,
+                    TaskId = bugVM.TaskId,
                     UserStoryId = id,
                     AssignMembersId = bugVM.AssignMembersId,
                     QaRemarks = bugVM.QaRemarks??"",
@@ -134,7 +135,7 @@ namespace BusinessLogicLayer.Service
                 existingBug.Name = bug.Name;
                 existingBug.Priority = bug.Priority;
                 existingBug.AssignMembersId = bug.AssignMembersId;
-
+                existingBug.TaskId = bug.TaskId;
 
                 _bugRepo.UpdateBug(existingBug);
             }

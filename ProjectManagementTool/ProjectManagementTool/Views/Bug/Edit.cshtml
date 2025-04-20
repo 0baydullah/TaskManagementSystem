@@ -42,6 +42,13 @@
                 </select>
                 <span asp-validation-for="AssignMembersId" class="text-danger"></span>
             </div>
+            <div class="form-group  mt-2">
+                <label asp-for="TaskId" class="control-label">Task</label> <br />
+                <select asp-for="@Model.TaskId" class="btn btn-sm btn-light dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false" style="background-color : lightblue" asp-items="ViewBag.Tasks">
+
+                </select>
+                <span asp-validation-for="TaskId" class="text-danger"></span>
+            </div>
             <div class="form-group mt-3">
                 <label asp-for="QaRemarks" class="control-label">QA Remarks</label>
                 <textarea asp-for="QaRemarks" class="form-control" rows="3">@Model.QaRemarks</textarea>
