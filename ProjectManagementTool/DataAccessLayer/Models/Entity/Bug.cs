@@ -20,6 +20,8 @@ namespace DataAccessLayer.Models.Entity
         public string? QaRemarks { get; set; }
         public int Status { get; set; }
         public int Priority { get; set; }
+        
+        public int TaskId { get; set; }
         public int UserStoryId { get; set; }
     }
 }

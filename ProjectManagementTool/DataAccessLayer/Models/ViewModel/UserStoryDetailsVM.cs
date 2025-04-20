@@ -19,5 +19,6 @@ namespace DataAccessLayer.Models.ViewModel
         public Dictionary<int,string> CategoryList { set; get; }
         public Dictionary<int,string> MemberList { get; set; }
         public Dictionary<int,string> SprintList { get; set; }
+        public Dictionary<int,string> TasksList { get; set; }
     }
 }
