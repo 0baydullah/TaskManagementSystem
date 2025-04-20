@@ -122,6 +122,33 @@ namespace BusinessLogicLayer.Service
                 throw new Exception(ex.Message);
             }
         }
+        public List<Tasks> GetAllTasksByQA(List<Member>? member)
+        {
+            try
+            {
+                var tasks = _tasksRepo.GetAllTasks().Join(member, t=>t.QAMemberId, m=>m.MemberId, (t,m)=> new Tasks
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Descripton = t.Descripton,
+                    AssignMembersId = t.AssignMembersId,
+                    QAMemberId = t.QAMemberId,
+                    ReviewerMemberId = t.ReviewerMemberId,
+                    EstimatedTime = t.EstimatedTime,
+                    Tag = t.Tag,
+                    Status = t.Status,
+                    Priority = t.Priority,
+                    UserStoryId = t.UserStoryId
+                } ).ToList();
+
+                return tasks;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                throw new Exception(ex.Message);
+            }
+        }
 
         public List<TasksVM> GetAllTasks(int id)
         {
