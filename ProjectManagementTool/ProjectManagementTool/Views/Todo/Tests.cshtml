@@ -1,8 +1,8 @@
 @model DataAccessLayer.Models.ViewModel.TodoTestVM
 @using DataAccessLayer.StaticClass
 @{
-    ViewData["Title"] = "Reviews";
-    ViewData["Banner"] = "Reviews";
+    ViewData["Title"] = "Tests";
+    ViewData["Banner"] = "Tests";
     Model.PriorityList[0] = "N/A"; 
 }
 
@@ -14,7 +14,7 @@
     <table class="table table-bordered table-striped table-hover" id="taskTable">
         <thead>
             <tr>
-                <th class="text-center">Need to Review</th>
+                <th class="text-center">Need to Test</th>
                 <th class="text-center">Estimated Time</th>
                 <th class="text-center">Priority</th>
                 <th class="text-center">Status</th>
@@ -25,7 +25,7 @@
             <!-- Tasks -->
             @foreach (var item in Model.Tasks)
             {
-                if (TodoHelper.ReviewrsStatus.Contains(item.Status) == false)
+                if (TodoHelper.QAsStatus.Contains(item.Status) == false)
                     continue;
 
                 @if (!Model.PriorityList.ContainsKey(item.Priority))

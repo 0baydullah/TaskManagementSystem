@@ -116,8 +116,8 @@ namespace ProjectManagementTool.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 var userEmail = user.Email;
                 var members = _memberService.GetMemberByEmail(userEmail);
-                var tasks = _tasksService.GetAllTasksByReviewr(members);
-                var subTasks = _subTaskService.GetAllSubTaskByReviewr(members);
+                var tasks = _tasksService.GetAllTasksByQA(members);
+                var subTasks = _subTaskService.GetAllSubTaskByQA(members);
 
                 toTests.Tasks = tasks;
                 toTests.SubTasks = subTasks;
