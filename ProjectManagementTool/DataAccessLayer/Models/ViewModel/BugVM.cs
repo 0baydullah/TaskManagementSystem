@@ -15,6 +15,7 @@ namespace DataAccessLayer.Models.ViewModel
         [Required]
         public string Descripton { get; set; }
         public int AssignMembersId { get; set; }
+        public int TaskId { get; set; }
         public string? QaRemarks { get; set; }
         public int Status { get; set; }
         public int Priority { get; set; }

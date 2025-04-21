@@ -157,6 +157,7 @@ namespace ProjectManagementTool.Controllers
                 storyDetails.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name);
                 storyDetails.CategoryList = _categoryService.GetAllCategory().ToDictionary(c => c.CategoryId, c => c.Name);
                 storyDetails.SprintList = _sprintService.GetAllSprint(story.ProjectId).ToDictionary(c => c.SprintId, c => c.SprintName);
+                storyDetails.TasksList = storyDetails.Tasks.ToDictionary(t => t.TaskId, t => t.Name);
 
                 return View(storyDetails);
             }

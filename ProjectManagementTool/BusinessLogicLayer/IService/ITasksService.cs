@@ -17,6 +17,7 @@ namespace BusinessLogicLayer.IService
         public List<Tasks> GetAllTasks();
         public List<Tasks> GetAllTasksByMember(List<Member> members);
         public List<Tasks> GetAllTasksByReviewr(List<Member>? members);
+        public List<Tasks> GetAllTasksByQA(List<Member>? members);
         public List<TasksVM> GetAllTasks(int id);
     }
 }

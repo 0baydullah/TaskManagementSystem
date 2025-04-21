@@ -9,6 +9,7 @@
     Model.CategoryList[0] = "N/A";
     Model.PriorityList[0] = "N/A";
     Model.SprintList[0] = "N/A";
+    Model.TasksList[0] = "N/A";
 }
 @{ 
     var breadcrumbs = new List<KeyValuePair<string, string>>
@@ -298,6 +299,9 @@ else
                         Status 
                     </th>
                     <th>
+                        Task
+                    </th>
+                    <th>
                         Priority
                     </th>
                     <th>
@@ -323,6 +327,10 @@ else
                     {
                         Model.MemberList[item.AssignMembersId] = "Not Found";
                     }
+                    @if (Model.TasksList.ContainsKey(item.TaskId) == false)
+                    {
+                        Model.TasksList[item.TaskId] = "Not Found";
+                    }
                     <tr>
                         <td>
                             <a class="fw-bold text-decoration-none" asp-controller="Bug" asp-action="Details" asp-route-id="@item.BugId" asp-route-projectId="@ViewBag.ProjectId">
@@ -331,6 +339,9 @@ else
                         </td>
                         <td>
                             @Model.StatusList[item.Status]
+                        </td>
+                        <td>
+                            @Model.TasksList[item.TaskId]
                         </td>
                         <td>
                             @Model.PriorityList[item.Priority]
@@ -346,11 +357,6 @@ else
                             <a class="btn btn-light" onclick="openDeleteBugModal(@item.BugId)">
                                 <i class="text-danger fa-solid fa-trash"></i>
                             </a>
-@* 
-                            <a class="btn btn-light" asp-controller="Bug" asp-action="Details" asp-route-id="@item.BugId">
-                                <i class="text-danger fa-solid fa-circle-info"></i>
-                            </a>
- *@
                         </td>
                     </tr>
                 }
@@ -386,7 +392,7 @@ else
 
 @section Scripts {
     <script>
-
+        $("th").css("background-color", "aliceblue");
         const taskTableIdName = '#taskTable';
         const subTaskTableIdName = '#subTaskTable';
 
@@ -401,7 +407,7 @@ else
                     { orderable: false, targets: -1 } 
                 ]
             });
-           
+            
         });
         $(document).on('click', '.paginate_button', function (e) {
             e.preventDefault();
@@ -411,7 +417,6 @@ else
             e.preventDefault();
             location.reload();
         })
-        $("th").css("background-color", "aliceblue");
 
 
         var deleteTaskId = null;

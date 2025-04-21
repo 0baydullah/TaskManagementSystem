@@ -1,0 +1,235 @@
+@model DataAccessLayer.Models.ViewModel.TodoTestVM
+@using DataAccessLayer.StaticClass
+@{
+    ViewData["Title"] = "Tests";
+    ViewData["Banner"] = "Tests";
+    Model.PriorityList[0] = "N/A"; 
+}
+
+
+<div id="response-message">
+</div>
+
+<div>
+    <table class="table table-bordered table-striped table-hover" id="taskTable">
+        <thead>
+            <tr>
+                <th class="text-center">Need to Test</th>
+                <th class="text-center">Estimated Time</th>
+                <th class="text-center">Priority</th>
+                <th class="text-center">Status</th>
+                <th hidden>status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Tasks -->
+            @foreach (var item in Model.Tasks)
+            {
+                if (TodoHelper.QAsStatus.Contains(item.Status) == false)
+                    continue;
+
+                @if (!Model.PriorityList.ContainsKey(item.Priority))
+                {
+                    Model.PriorityList[item.Priority] = "Not Found";
+                }
+                @if (!Model.StatusList.ContainsKey(item.Status))
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+                var priority = Model.PriorityList[item.Priority].Split('+');
+                var pName = priority[0];
+                var pColor = priority[1];
+
+                var stat = Model.StatusList[item.Status].Split('+');
+                var sName = stat[0];
+                var sColor = stat[1];
+                var statusName = stat[0];
+
+
+                <tr>
+                    
+                    <td class="fw-bold text-success">
+                        <div class="d-flex justify-content-between">
+                            @item.Name
+                            <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">Task</div>
+                        </div>
+                    </td>
+                    <td class="text-center">@item.EstimatedTime Hour</td>
+                    <td class="text-center">
+                        <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
+                            @pName
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <select class="btn btn-sm btn-light dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="background-color: @sColor"
+                                onchange="editTask(this, '@item.Id')">
+                            @foreach (var status in Model.StatusList)
+                            {
+                                var st = status.Value.Split('+');
+                                sName = st[0];
+                                sColor = st[1];
+
+                                if (status.Key == item.Status)
+                                {
+                                    <option style="background-color: @sColor" value="@status.Key" selected>@sName</option>
+                                }
+                                else
+                                {
+                                    <option style="background-color: @sColor" value="@status.Key">@sName</option>
+                                }
+                            }
+                        </select>
+                        <p hidden>@statusName</p>
+                    </td>
+                    <td hidden>@statusName</td>
+                </tr>
+            }
+
+            <!-- Subtasks -->
+            @foreach (var item in Model.SubTasks)
+            {
+
+                if (TodoHelper.ReviewrsStatus.Contains(item.Status) == false)
+                    continue;
+
+                @if (!Model.PriorityList.ContainsKey(item.Priority))
+                {
+                    Model.PriorityList[item.Priority] = "Not Found";
+                }
+                @if (!Model.StatusList.ContainsKey(item.Status))
+                {
+                    Model.StatusList[item.Status] = "Not Found";
+                }
+
+
+                var priority = Model.PriorityList[item.Priority].Split('+');
+                var pName = priority[0];
+                var pColor = priority[1];
+
+                var stat = Model.StatusList[item.Status].Split('+');
+                var sName = stat[0];
+                var sColor = stat[1];
+                var statusName = stat[0];
+
+                <tr>
+                    <td class="fw-bold text-success">
+                        <div class="d-flex justify-content-between">
+                            @item.Name
+                            <div class="btn btn-warning fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;">SubTask</div>
+                        </div>
+                    </td>
+                    <td class="text-center">@item.EstimatedTime Hour</td>
+                    <td class="text-center">
+                        <span class="btn btn-light fw-bold btn-sm px-2 rounded-pill" style="font-size:10px;background-color:@pColor;">
+                            @pName
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <select class="btn btn-sm btn-light dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="background-color: @sColor"
+                                onchange="editSubTask(this, '@item.SubTaskId')">
+                            @foreach (var status in Model.StatusList)
+                            {
+                                var st = status.Value.Split('+');
+                                sName = st[0];
+                                sColor = st[1];
+
+                                if (status.Key == item.Status)
+                                {
+                                    <option style="background-color: @sColor" value="@status.Key" selected>@sName</option>
+                                }
+                                else
+                                {
+                                    <option style="background-color: @sColor" value="@status.Key">@sName</option>
+                                }
+                            }
+                        </select>
+                        <p hidden>@statusName</p>
+                    </td>
+                    <td hidden>@statusName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+            $("#taskTable").DataTable({
+                columnDefs: [
+                    { orderable: true, searchable: false,  targets: -2 }
+                ]
+            });
+        });
+        $("th").css("background-color", "aliceblue");
+
+        function editTask(selectElement, taskId) {
+            var selectedStatus = selectElement.value;
+
+            $.ajax({
+                url: '/Tasks/ChangeStatus',
+                type: 'POST',
+                data: {
+                    id: taskId,
+                    status: selectedStatus,
+                },
+                success: function (response) {
+                    if(response.success) {
+                        $('#response-message').html('<div class="alert alert-success"><b>Success!!</b> Status Updated Successfully!</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    }
+
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error: ' + error);
+                    alert('An error occurred while updating the task status.');
+                }
+            });
+        }
+
+        function editSubTask(selectElement, subTaskId) {
+            var selectedStatus = selectElement.value;
+
+            $.ajax({
+                url: '/SubTask/ChangeStatus',
+                type: 'POST',
+                data: {
+                    id : subTaskId,
+                    status : selectedStatus,
+                },
+                success: function (response) {
+                    if(response.success) {
+                        $('#response-message').html('<div class="alert alert-success"><b>Success!!</b> Status Updated Successfully!</div>');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                    }
+
+                    else {
+                       $('#response-message').html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error: ' + error);
+                    alert('An error occurred while updating the subtask status.');
+                }
+            });
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

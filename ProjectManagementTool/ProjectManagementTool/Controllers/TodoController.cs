@@ -105,6 +105,39 @@ namespace ProjectManagementTool.Controllers
             }
         }
 
+
+
+        [HttpGet]
+        public async Task<IActionResult> Tests()
+        {
+            try
+            {
+                var toTests = new TodoTestVM();
+                var user = await _userManager.GetUserAsync(User);
+                var userEmail = user.Email;
+                var members = _memberService.GetMemberByEmail(userEmail);
+                var tasks = _tasksService.GetAllTasksByQA(members);
+                var subTasks = _subTaskService.GetAllSubTaskByQA(members);
+
+                toTests.Tasks = tasks;
+                toTests.SubTasks = subTasks;
+                toTests.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name + "+" + p.ColorHex);
+                toTests.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name + "+" + p.ColorHex);
+
+                var statuses = _statusService.GetAllStatuses();
+                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+
+                return View(toTests); 
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+
         [HttpGet]
         public async Task<IActionResult> Bugs()
         {
