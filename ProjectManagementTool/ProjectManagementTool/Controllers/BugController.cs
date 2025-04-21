@@ -3,6 +3,7 @@ using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -17,12 +18,13 @@ namespace ProjectManagementTool.Controllers
         private readonly IBugService _bugService;
         private readonly IProjectInfoService _projectInfoService;
         private readonly ITasksService _tasksService;
+        private readonly UserManager<UserInfo> _userManager;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(BugController));
 
         public BugController(IMemberService memberService, IUserStoryService userStoryService, IStatusService statusService,
             IPriorityService prioriyService, IBugService bugService, IProjectInfoService projectInfoService,
-            ITasksService tasksService)
+            ITasksService tasksService, UserManager<UserInfo> userManager)
         {
             _memberService = memberService;
             _userStoryService = userStoryService;
@@ -31,6 +33,7 @@ namespace ProjectManagementTool.Controllers
             _bugService = bugService;
             _projectInfoService = projectInfoService;
             _tasksService = tasksService;
+            _userManager = userManager;
         }
         
         [HttpGet]

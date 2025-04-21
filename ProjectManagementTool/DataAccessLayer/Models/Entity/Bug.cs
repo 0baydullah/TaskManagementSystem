@@ -23,5 +23,9 @@ namespace DataAccessLayer.Models.Entity
         
         public int TaskId { get; set; }
         public int UserStoryId { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public int BugReopen { get; set; }
     }
 }
