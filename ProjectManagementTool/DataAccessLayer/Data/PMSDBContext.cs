@@ -31,5 +31,7 @@ namespace DataAccessLayer.Data
         public DbSet<DisableTime> DisableTime { get; set; }  
         public DbSet<TimeTrack> TimeTracks { get; set; }
         public DbSet<Bug> Bugs { get; set; }
+
+        public DbSet<Activity> Actvities { get; set; }
     }
 }

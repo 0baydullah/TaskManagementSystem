@@ -16,14 +16,16 @@ namespace ProjectManagementTool.Controllers
         private readonly IProjectInfoService _projectInfoService;
         private readonly UserManager<UserInfo> _userManager;
         private readonly IMemberService _memberService;
+        private readonly IActivityService _activityService;
         private readonly ILog _log = LogManager.GetLogger(typeof(ProjectController));
 
         public ProjectController(IProjectInfoService projectInfoService,
-            UserManager<UserInfo> userManager, IMemberService memberService)
+            UserManager<UserInfo> userManager, IMemberService memberService, IActivityService activityService)
         {
             _projectInfoService = projectInfoService;
             _userManager = userManager;
             _memberService = memberService;
+            _activityService = activityService;
         }
 
         public async Task<IActionResult> Index()
@@ -206,7 +208,7 @@ namespace ProjectManagementTool.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EditProjectInfoVM model, int id)
+        public async Task<IActionResult> Edit(EditProjectInfoVM model, int id)
         {
             bool isSuccess = false;
             var message = "Invalid Data!";
@@ -225,7 +227,8 @@ namespace ProjectManagementTool.Controllers
 
             try
             {
-                var response = _projectInfoService.UpdateProjectInfo(model);
+                var user = await _userManager.GetUserAsync(User);
+                var response = _projectInfoService.UpdateProjectInfo(model, user);
                 
                 if ( response == true )
                 {
