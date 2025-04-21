@@ -229,7 +229,7 @@ namespace BusinessLogicLayer.Service
                 var allBugs = userStory.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new
                 {
                     u.StoryId,
-                    b.BugId,
+                    b.Id,
                 }).ToList().Count;
 
 
@@ -294,7 +294,7 @@ namespace BusinessLogicLayer.Service
                 var bugs = _bugRepo.GetAllBug();
                 var allBugs = story.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new Bug
                 {
-                    BugId = b.BugId,
+                    Id = b.Id,
                     Name = b.Name,
                     Descripton = b.Descripton,
                     AssignMembersId = b.AssignMembersId,

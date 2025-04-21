@@ -57,7 +57,7 @@
                                 aria-expanded="false"
                                 id="dropdown"
                                 style="background-color: @sColor"
-                                onchange="editBug(this, '@item.BugId')">
+                                onchange="editBug(this, '@item.Id')">
                             @foreach (var status in Model.StatusList)
                             {
                                 var st = status.Value.Split('+');

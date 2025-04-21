@@ -76,7 +76,7 @@ namespace BusinessLogicLayer.Service
             {
                 var bugs = _bugRepo.GetAllBug().Join(member,b=>b.AssignMembersId , m=>m.MemberId , (b, m) =>
                 new Bug{
-                    BugId = b.BugId,
+                    Id = b.Id,
                     Name = b.Name,
                     Descripton = b.Descripton,
                     Status = b.Status,

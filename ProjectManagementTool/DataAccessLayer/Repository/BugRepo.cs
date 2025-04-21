@@ -82,7 +82,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var bug = _context.Bugs.FirstOrDefault(b => b.BugId == id);
+                var bug = _context.Bugs.FirstOrDefault(b => b.Id == id);
                 return bug;
             }
             catch (Exception ex)

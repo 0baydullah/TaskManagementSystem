@@ -10,7 +10,7 @@ namespace DataAccessLayer.Models.Entity
     public class Bug
     {
         [Key]
-        public int BugId { get; set; }
+        public int Id { get; set; }
         [Required]
         [RegularExpression(@"^(?=.*[a-zA-Z])[\w\s-]+$", ErrorMessage = "Only Numbers or Special Characters are not allowed")]
         public string Name { get; set; }

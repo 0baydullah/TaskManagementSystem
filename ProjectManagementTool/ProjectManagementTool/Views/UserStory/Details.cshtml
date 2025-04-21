@@ -333,7 +333,7 @@ else
                     }
                     <tr>
                         <td>
-                            <a class="fw-bold text-decoration-none" asp-controller="Bug" asp-action="Details" asp-route-id="@item.BugId" asp-route-projectId="@ViewBag.ProjectId">
+                            <a class="fw-bold text-decoration-none" asp-controller="Bug" asp-action="Details" asp-route-id="@item.Id" asp-route-projectId="@ViewBag.ProjectId">
                                 @item.Name
                             </a>
                         </td>
@@ -351,10 +351,10 @@ else
                         </td>
                         <td class="text-center">
 
-                            <a class="btn btn-light" asp-controller="Bug" asp-action="Edit" asp-route-id="@item.BugId">
+                            <a class="btn btn-light" asp-controller="Bug" asp-action="Edit" asp-route-id="@item.Id">
                                 <i class="text-success fa-solid fa-pen"></i>
                             </a>
-                            <a class="btn btn-light" onclick="openDeleteBugModal(@item.BugId)">
+                            <a class="btn btn-light" onclick="openDeleteBugModal(@item.Id)">
                                 <i class="text-danger fa-solid fa-trash"></i>
                             </a>
                         </td>
