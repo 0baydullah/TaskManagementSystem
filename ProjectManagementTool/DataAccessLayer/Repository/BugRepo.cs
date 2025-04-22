@@ -56,9 +56,9 @@ namespace DataAccessLayer.Repository
                 return bugs;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _log.Error(ex.Message);
                 throw;
             }
         }

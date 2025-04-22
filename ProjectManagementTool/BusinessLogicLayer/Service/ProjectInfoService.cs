@@ -312,7 +312,7 @@ namespace BusinessLogicLayer.Service
                     Descripton = b.Descripton,
                     AssignMembersId = b.AssignMembersId,
                     QaRemarks = b.QaRemarks,
-                    Status = b.Status,
+                    BugStatus = b.BugStatus,
                     Priority = b.Priority,
                     UserStoryId = u.StoryId
 

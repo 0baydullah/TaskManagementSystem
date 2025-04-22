@@ -18,10 +18,14 @@ namespace DataAccessLayer.Models.Entity
 
         public int AssignMembersId { get; set; }
         public string? QaRemarks { get; set; }
-        public int Status { get; set; }
+        public int BugStatus { get; set; }
         public int Priority { get; set; }
         
         public int TaskId { get; set; }
         public int UserStoryId { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public int BugReopen { get; set; }
     }
 }

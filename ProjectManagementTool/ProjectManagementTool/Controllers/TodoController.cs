@@ -20,6 +20,7 @@ namespace ProjectManagementTool.Controllers
         private readonly IMemberService _memberService;
         private readonly IPriorityService _priorityService;
         private readonly IStatusService _statusService;
+        private readonly IBugStatusService _bugStatusService;
         private readonly ILog _log = LogManager.GetLogger(typeof(TodoController));
 
 
@@ -30,7 +31,8 @@ namespace ProjectManagementTool.Controllers
             IBugService bugService,
             IMemberService memberService,
             IPriorityService priorityService,
-            IStatusService statusService)
+            IStatusService statusService,
+            IBugStatusService bugStatusService)
         {
             _userManager = userManager;
             _tasksService = tasksService;
@@ -39,6 +41,7 @@ namespace ProjectManagementTool.Controllers
             _memberService = memberService;
             _priorityService = priorityService;
             _statusService = statusService;
+            _bugStatusService = bugStatusService;
         }
 
 
@@ -151,10 +154,10 @@ namespace ProjectManagementTool.Controllers
 
                 todoBugs.Bug = bug;
                 todoBugs.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name +"+"+ p.ColorHex);
-                todoBugs.StatusList = _statusService.GetAllStatuses().ToDictionary(p => p.StatusId, p => p.Name + "+" + p.ColorHex);
+                todoBugs.BugStatusList = _bugStatusService.GetAllStatuses().ToDictionary(p => p.Id, p => p.Name + "+" + p.ColorHex);
 
-                var statuses = _statusService.GetAllStatuses();
-                ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
+                var bugStatuses = _bugStatusService.GetAllStatuses();
+                ViewBag.BugStatus = new SelectList(bugStatuses, "StatusId", "Name");
 
                 return View(todoBugs); 
             }

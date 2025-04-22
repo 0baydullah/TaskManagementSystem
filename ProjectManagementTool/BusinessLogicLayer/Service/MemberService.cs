@@ -155,7 +155,7 @@ namespace BusinessLogicLayer.Service
                 var priority = _priorityRepo.GetAllPriorities().ToDictionary( p => p.PriorityId, p => p.Name);
 
                 Dictionary<int, int> dictTask = tasks.GroupBy(task => task.Status).ToDictionary(group => group.Key, group => group.Count());
-                Dictionary<int, int> dictBug = bugs.GroupBy(bug => bug.Status).ToDictionary(group => group.Key, group => group.Count());
+                Dictionary<int, int> dictBug = bugs.GroupBy(bug => bug.BugStatus).ToDictionary(group => group.Key, group => group.Count());
 
                 var result = new MemberDetailsVM
                 {

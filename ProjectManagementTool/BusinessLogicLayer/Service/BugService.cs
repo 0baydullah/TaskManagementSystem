@@ -14,10 +14,12 @@ namespace BusinessLogicLayer.Service
     public class BugService : IBugService
     {
         private readonly IBugRepo _bugRepo;
+        private readonly IMemberRepo _memberRepo;
         private readonly ILog _log = LogManager.GetLogger(typeof(BugService));
-        public BugService(IBugRepo bugRepo)
+        public BugService(IBugRepo bugRepo, IMemberRepo memberRepo)
         {
             _bugRepo = bugRepo;
+            _memberRepo = memberRepo;
         }
         public void AddBug(int id, BugVM bugVM)
         {
@@ -27,12 +29,16 @@ namespace BusinessLogicLayer.Service
                 {
                     Name = bugVM.Name,
                     Descripton = bugVM.Descripton,
-                    Status = bugVM.Status,
+                    BugStatus = bugVM.BugStatus,
                     TaskId = bugVM.TaskId,
                     UserStoryId = id,
                     AssignMembersId = bugVM.AssignMembersId,
                     QaRemarks = bugVM.QaRemarks??"",
                     Priority = bugVM.Priority,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    CreatedBy = bugVM.CreatedBy,
+                    BugReopen = 0
                 };
                 _bugRepo.AddBug(bug);
             }
@@ -79,7 +85,7 @@ namespace BusinessLogicLayer.Service
                     Id = b.Id,
                     Name = b.Name,
                     Descripton = b.Descripton,
-                    Status = b.Status,
+                    BugStatus = b.BugStatus,
                     UserStoryId = b.UserStoryId,
                     Priority = b.Priority,
                     QaRemarks = b.QaRemarks,
@@ -129,7 +135,7 @@ namespace BusinessLogicLayer.Service
             {
                 var existingBug = GetBug(id);
 
-                existingBug.Status = bug.Status;
+                existingBug.BugStatus = bug.BugStatus;
                 existingBug.QaRemarks = bug.QaRemarks;
                 existingBug.Descripton = bug.Descripton;
                 existingBug.Name = bug.Name;

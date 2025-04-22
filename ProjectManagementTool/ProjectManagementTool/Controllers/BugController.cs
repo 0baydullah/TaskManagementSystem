@@ -3,6 +3,7 @@ using BusinessLogicLayer.Service;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -17,20 +18,22 @@ namespace ProjectManagementTool.Controllers
         private readonly IBugService _bugService;
         private readonly IProjectInfoService _projectInfoService;
         private readonly ITasksService _tasksService;
+        private readonly UserManager<UserInfo> _userManager;
 
         private readonly ILog _log = LogManager.GetLogger(typeof(BugController));
 
         public BugController(IMemberService memberService, IUserStoryService userStoryService, IStatusService statusService,
-            IPriorityService prioriyService, IBugService bugService, IProjectInfoService projectInfoService,
-            ITasksService tasksService)
+            IPriorityService priorityService, IBugService bugService, IProjectInfoService projectInfoService,
+            ITasksService tasksService, UserManager<UserInfo> userManager)
         {
             _memberService = memberService;
             _userStoryService = userStoryService;
             _statusService = statusService;
-            _priorityService = prioriyService;
+            _priorityService = priorityService;
             _bugService = bugService;
             _projectInfoService = projectInfoService;
             _tasksService = tasksService;
+            _userManager = userManager;
         }
         
         [HttpGet]
@@ -44,6 +47,10 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.ProjectKey = project.Key;
                 ViewBag.StoryId = id;
                 ViewBag.UserStoryId = id;
+                
+                var loggedInUsersEmail = _userManager.GetUserAsync(HttpContext.User).Result.Email;
+                var loggedInMember = _memberService.GetAllMember().FirstOrDefault(x => x.Email == loggedInUsersEmail && x.ProjectId == project.ProjectId).MemberId;
+                ViewBag.LoggedInMember = loggedInMember;
 
                 var statuses = _statusService.GetAllStatuses();
                 ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
@@ -73,6 +80,8 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+               
+                
                 if (bugVM == null )
                 {
                     return Json(new { success = false, messgage = "Story Not Found" });
@@ -224,7 +233,35 @@ namespace ProjectManagementTool.Controllers
                     return NotFound();
                 }
 
-                bug.Status = status;
+                bug.BugStatus = status;
+
+                _bugService.UpdateBug(bug);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Reopen(int id)
+        {
+            try
+            {
+                var bug = _bugService.GetBug(id);
+
+                if (bug == null)
+                {
+                    return NotFound();
+                }
+
+                bug.BugStatus = 36;
+                bug.BugReopen = ++bug.BugReopen;
 
                 _bugService.UpdateBug(bug);
 
