@@ -5,9 +5,13 @@
     ViewData["Banner"] = "BugStatuses";
 }
 
+<div class="alert alert-warning">
+    <b>Message for Dev</b>
+    <p style="color:red;">Please do not delete any bug statuses from the database, as they are used as static values in this app.</p>
+</div>
 
 <div style="text-align: end;">
-    <a asp-action="Create" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> BugStatus</a>
+    <a asp-action="Create" class="btn btn-success disabled" ><i class="text-light fa-solid fa-plus"></i> BugStatus</a>
 </div>
 <table class="table">
     <thead>
@@ -40,7 +44,7 @@
                 <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.Id">
                     <i class="text-danger fa-solid fa-pen"></i>
                 </a>
-                <a class="btn btn-light" onclick="openDeleteModal('@item.Id')">
+                <a class="btn btn-light disabled"  onclick="openDeleteModal('@item.Id')">
                     <i class="text-danger fa-solid fa-trash"></i>
                 </a>
             </td>
