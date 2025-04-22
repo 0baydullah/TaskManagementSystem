@@ -247,5 +247,33 @@ namespace ProjectManagementTool.Controllers
                 return RedirectToAction("Exception", "Error");
             }
         }
+
+        [HttpPost]
+        public IActionResult Reopen(int id)
+        {
+            try
+            {
+                var bug = _bugService.GetBug(id);
+
+                if (bug == null)
+                {
+                    return NotFound();
+                }
+
+                bug.BugStatus = 36;
+                bug.BugReopen = ++bug.BugReopen;
+
+                _bugService.UpdateBug(bug);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message);
+                TempData["Error"] = ex.Message;
+
+                return RedirectToAction("Exception", "Error");
+            }
+        }
     }
 }
