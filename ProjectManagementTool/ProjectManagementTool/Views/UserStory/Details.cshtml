@@ -307,6 +307,9 @@ else
                     <th>
                         Assignee
                     </th>
+                    <th>
+                        Assigned by
+                    </th>
                     <th class="text-center">
                         Actions
                     </th>
@@ -315,22 +318,12 @@ else
             <tbody>
                 @foreach (var item in Model.Bugs)
                 {
-                    @if (Model.StatusList.ContainsKey(item.BugStatus) == false)
-                    {
-                        Model.StatusList[item.BugStatus] = "Not Found";
-                    }
-                    @if (Model.PriorityList.ContainsKey(item.Priority) == false)
-                    {
-                        Model.StatusList[item.Priority] = "Not Found";
-                    }
-                    @if (Model.MemberList.ContainsKey(item.AssignMembersId) == false)
-                    {
-                        Model.MemberList[item.AssignMembersId] = "Not Found";
-                    }
-                    @if (Model.TasksList.ContainsKey(item.TaskId) == false)
-                    {
-                        Model.TasksList[item.TaskId] = "Not Found";
-                    }
+                    Model.StatusList.TryAdd(item.BugStatus, "Not Found");
+                    Model.PriorityList.TryAdd(item.Priority, "Not Found");
+                    Model.MemberList.TryAdd(item.AssignMembersId, "Not Found");
+                    Model.MemberList.TryAdd(item.CreatedBy, "Not Found");
+                    Model.TasksList.TryAdd(item.TaskId, "Not Found");
+                
                     <tr>
                         <td>
                             <a class="fw-bold text-decoration-none" asp-controller="Bug" asp-action="Details" asp-route-id="@item.Id" asp-route-projectId="@ViewBag.ProjectId">
@@ -348,6 +341,9 @@ else
                         </td>
                         <td>
                             @Model.MemberList[item.AssignMembersId]
+                        </td>
+                        <td>
+                            @Model.MemberList[item.CreatedBy]
                         </td>
                         <td class="text-center">
 
