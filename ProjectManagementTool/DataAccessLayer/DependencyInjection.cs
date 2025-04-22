@@ -24,6 +24,7 @@ namespace DataAccessLayer
             services.AddScoped<IBugRepo, BugRepo>();
             services.AddScoped<IFilterRepo, FilterRepo>();
             services.AddScoped<IBugStatusRepo, BugStatusRepo>();
+            services.AddScoped<IActivityRepo, ActivityRepo>();
 
             return services;
         }

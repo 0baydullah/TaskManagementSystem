@@ -31,6 +31,7 @@ namespace BusinessLogicLayer
             services.AddScoped<IBugService, BugService>();
             services.AddScoped<IFilterService, FilterService>();
             services.AddScoped<IBugStatusService, BugStatusService>();
+            services.AddScoped<IActivityService, ActivityService>();
 
             return services;
         }
