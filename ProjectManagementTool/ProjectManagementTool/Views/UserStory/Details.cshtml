@@ -293,7 +293,7 @@ else
             <thead>
                 <tr>
                     <th>
-                        Bug
+                        Bug (Reopen)
                     </th>
                     <th>
                         Status 
@@ -327,7 +327,7 @@ else
                     <tr>
                         <td>
                             <a class="fw-bold text-decoration-none" asp-controller="Bug" asp-action="Details" asp-route-id="@item.Id" asp-route-projectId="@ViewBag.ProjectId">
-                                @item.Name
+                                @item.Name <span class="text-danger">(@item.BugReopen)</span>
                             </a>
                         </td>
                         <td>
