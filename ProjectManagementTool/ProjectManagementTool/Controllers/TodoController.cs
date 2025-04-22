@@ -156,8 +156,8 @@ namespace ProjectManagementTool.Controllers
                 todoBugs.PriorityList = _priorityService.GetAllPriority().ToDictionary(p => p.PriorityId, p => p.Name +"+"+ p.ColorHex);
                 todoBugs.BugStatusList = _bugStatusService.GetAllStatuses().ToDictionary(p => p.Id, p => p.Name + "+" + p.ColorHex);
 
-                var statuses = _bugStatusService.GetAllStatuses();
-                ViewBag.BugStatus = new SelectList(statuses, "StatusId", "Name");
+                var bugStatuses = _bugStatusService.GetAllStatuses();
+                ViewBag.BugStatus = new SelectList(bugStatuses, "StatusId", "Name");
 
                 return View(todoBugs); 
             }

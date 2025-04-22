@@ -22,14 +22,8 @@
             <!-- Bugs -->
             @foreach (var item in Model.Bug)
             {
-                @if (!Model.PriorityList.ContainsKey(item.Priority))
-                {
-                    Model.PriorityList[item.Priority] = "Not Found";
-                }
-                @if (!Model.BugStatusList.ContainsKey(item.BugStatus))
-                {
-                    Model.BugStatusList[item.BugStatus] = "Not Found";
-                }
+                Model.PriorityList.TryAdd(item.Priority, "Not Found");
+                Model.BugStatusList.TryAdd(item.BugStatus, "Not Found");
 
 
                 var priority = Model.PriorityList[item.Priority].Split('+');
