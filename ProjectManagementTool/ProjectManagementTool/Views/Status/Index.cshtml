@@ -5,9 +5,13 @@
     ViewData["Banner"] = "Statuses";
 }
 
+<div class="alert alert-warning">
+    <b>Message for Dev</b>
+    <p style="color:red;">Please do not delete any statuses from the database, as they are used as static values in this app.</p>
+</div>
 
 <div style="text-align: end;">
-    <a asp-action="Create" class="btn btn-success"><i class="text-light fa-solid fa-plus"></i> Status</a>
+    <a asp-action="Create" class="btn btn-success disabled"><i class="text-light fa-solid fa-plus"></i> Status</a>
 </div>
 <table class="table">
     <thead>
@@ -40,7 +44,7 @@
                 <a class="btn btn-light" asp-action="Edit" asp-route-id="@item.StatusId">
                     <i class="text-danger fa-solid fa-pen"></i>
                 </a>
-                <a class="btn btn-light" onclick="openDeleteModal('@item.StatusId')">
+                <a class="btn btn-light disabled" onclick="openDeleteModal('@item.StatusId')">
                     <i class="text-danger fa-solid fa-trash"></i>
                 </a>
             </td>
