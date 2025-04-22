@@ -27,7 +27,7 @@ namespace BusinessLogicLayer.Service
                 {
                     Name = bugVM.Name,
                     Descripton = bugVM.Descripton,
-                    Status = bugVM.Status,
+                    BugStatus = bugVM.BugStatus,
                     TaskId = bugVM.TaskId,
                     UserStoryId = id,
                     AssignMembersId = bugVM.AssignMembersId,
@@ -79,7 +79,7 @@ namespace BusinessLogicLayer.Service
                     Id = b.Id,
                     Name = b.Name,
                     Descripton = b.Descripton,
-                    Status = b.Status,
+                    BugStatus = b.BugStatus,
                     UserStoryId = b.UserStoryId,
                     Priority = b.Priority,
                     QaRemarks = b.QaRemarks,
@@ -129,7 +129,7 @@ namespace BusinessLogicLayer.Service
             {
                 var existingBug = GetBug(id);
 
-                existingBug.Status = bug.Status;
+                existingBug.BugStatus = bug.BugStatus;
                 existingBug.QaRemarks = bug.QaRemarks;
                 existingBug.Descripton = bug.Descripton;
                 existingBug.Name = bug.Name;

@@ -24,7 +24,7 @@ namespace DataAccessLayer.Repository
             var stories = _context.UserStories.Where(s => s.Status == statusId && s.ProjectId == projectId).ToList();
             var tasks = _context.Tasks.Where(s => s.Status == statusId).ToList();
             var subtasks = _context.SubTask.Where(s => s.Status == statusId).ToList();
-            var bug = _context.Bugs.Where(s => s.Status == statusId).ToList();
+            var bug = _context.Bugs.Where(s => s.BugStatus == statusId).ToList();
             
             throw new NotImplementedException();
         }

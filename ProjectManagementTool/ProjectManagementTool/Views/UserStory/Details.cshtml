@@ -315,9 +315,9 @@ else
             <tbody>
                 @foreach (var item in Model.Bugs)
                 {
-                    @if (Model.StatusList.ContainsKey(item.Status) == false)
+                    @if (Model.StatusList.ContainsKey(item.BugStatus) == false)
                     {
-                        Model.StatusList[item.Status] = "Not Found";
+                        Model.StatusList[item.BugStatus] = "Not Found";
                     }
                     @if (Model.PriorityList.ContainsKey(item.Priority) == false)
                     {
@@ -338,7 +338,7 @@ else
                             </a>
                         </td>
                         <td>
-                            @Model.StatusList[item.Status]
+                            @Model.StatusList[item.BugStatus]
                         </td>
                         <td>
                             @Model.TasksList[item.TaskId]

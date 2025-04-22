@@ -26,9 +26,9 @@
                 {
                     Model.PriorityList[item.Priority] = "Not Found";
                 }
-                @if (!Model.StatusList.ContainsKey(item.Status))
+                @if (!Model.BugStatusList.ContainsKey(item.BugStatus))
                 {
-                    Model.StatusList[item.Status] = "Not Found";
+                    Model.BugStatusList[item.BugStatus] = "Not Found";
                 }
 
 
@@ -36,7 +36,7 @@
                 var pName = priority[0];
                 var pColor = priority[1];
 
-                var stat = Model.StatusList[item.Status].Split('+');
+                var stat = Model.BugStatusList[item.BugStatus].Split('+');
                 var sName = stat[0];
                 var sColor = stat[1];
                 var statusName = stat[0];
@@ -58,13 +58,13 @@
                                 id="dropdown"
                                 style="background-color: @sColor"
                                 onchange="editBug(this, '@item.Id')">
-                            @foreach (var status in Model.StatusList)
+                            @foreach (var status in Model.BugStatusList)
                             {
                                 var st = status.Value.Split('+');
                                 sName = st[0];
                                 sColor = st[1];
 
-                                if (status.Key == item.Status)
+                                if (status.Key == item.BugStatus)
                                 {
                                     <option style="background-color:@sColor" value="@status.Key" selected>@sName</option>
                                 }

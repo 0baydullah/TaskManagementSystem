@@ -227,7 +227,7 @@ namespace ProjectManagementTool.Controllers
                     return NotFound();
                 }
 
-                bug.Status = status;
+                bug.BugStatus = status;
 
                 _bugService.UpdateBug(bug);
 

@@ -20,9 +20,9 @@
 	};
 	ViewData["Breadcrumbs"] = breadcrumbs;
 }
-@if (Model.StatusList.ContainsKey(Model.Bug.Status) == false)
+@if (Model.StatusList.ContainsKey(Model.Bug.BugStatus) == false)
 {
-	Model.StatusList[Model.Bug.Status] = "Not Found";
+	Model.StatusList[Model.Bug.BugStatus] = "Not Found";
 }
 @if (Model.PriorityList.ContainsKey(Model.Bug.Priority) == false)
 {
@@ -55,7 +55,7 @@
 		</div>
 	}
 	<div class=" mb-3 d-flex justify-content-around">
-		<div>Status : <b><i>@Model.StatusList[Model.Bug.Status]</i></b></div>
+		<div>Status : <b><i>@Model.StatusList[Model.Bug.BugStatus]</i></b></div>
 		<div>Priority : <b><i>@Model.PriorityList[Model.Bug.Priority]</i></b></div>
 	</div>
 
