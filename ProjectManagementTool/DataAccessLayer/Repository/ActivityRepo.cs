@@ -44,7 +44,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var data = _context.Actvities.ToList();
+                var data = _context.Actvities.Where( x => x.ProjectId == projectId).ToList();
 
                 return data;
             }
