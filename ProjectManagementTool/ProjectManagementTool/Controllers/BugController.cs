@@ -23,13 +23,13 @@ namespace ProjectManagementTool.Controllers
         private readonly ILog _log = LogManager.GetLogger(typeof(BugController));
 
         public BugController(IMemberService memberService, IUserStoryService userStoryService, IStatusService statusService,
-            IPriorityService prioriyService, IBugService bugService, IProjectInfoService projectInfoService,
+            IPriorityService priorityService, IBugService bugService, IProjectInfoService projectInfoService,
             ITasksService tasksService, UserManager<UserInfo> userManager)
         {
             _memberService = memberService;
             _userStoryService = userStoryService;
             _statusService = statusService;
-            _priorityService = prioriyService;
+            _priorityService = priorityService;
             _bugService = bugService;
             _projectInfoService = projectInfoService;
             _tasksService = tasksService;
@@ -47,6 +47,10 @@ namespace ProjectManagementTool.Controllers
                 ViewBag.ProjectKey = project.Key;
                 ViewBag.StoryId = id;
                 ViewBag.UserStoryId = id;
+                
+                var loggedInUsersEmail = _userManager.GetUserAsync(HttpContext.User).Result.Email;
+                var loggedInMember = _memberService.GetAllMember().FirstOrDefault(x => x.Email == loggedInUsersEmail && x.ProjectId == project.ProjectId).MemberId;
+                ViewBag.LoggedInMember = loggedInMember;
 
                 var statuses = _statusService.GetAllStatuses();
                 ViewBag.Status = new SelectList(statuses, "StatusId", "Name");
@@ -76,6 +80,8 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
+               
+                
                 if (bugVM == null )
                 {
                     return Json(new { success = false, messgage = "Story Not Found" });

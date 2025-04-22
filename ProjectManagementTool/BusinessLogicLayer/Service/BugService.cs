@@ -14,10 +14,12 @@ namespace BusinessLogicLayer.Service
     public class BugService : IBugService
     {
         private readonly IBugRepo _bugRepo;
+        private readonly IMemberRepo _memberRepo;
         private readonly ILog _log = LogManager.GetLogger(typeof(BugService));
-        public BugService(IBugRepo bugRepo)
+        public BugService(IBugRepo bugRepo, IMemberRepo memberRepo)
         {
             _bugRepo = bugRepo;
+            _memberRepo = memberRepo;
         }
         public void AddBug(int id, BugVM bugVM)
         {
@@ -33,6 +35,10 @@ namespace BusinessLogicLayer.Service
                     AssignMembersId = bugVM.AssignMembersId,
                     QaRemarks = bugVM.QaRemarks??"",
                     Priority = bugVM.Priority,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    CreatedBy = bugVM.CreatedBy,
+                    BugReopen = 0
                 };
                 _bugRepo.AddBug(bug);
             }

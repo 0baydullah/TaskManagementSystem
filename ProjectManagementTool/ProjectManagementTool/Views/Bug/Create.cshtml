@@ -101,6 +101,7 @@
         function submitForm() {
             var form = $('#createForm');
             var formData = new FormData(form[0]);
+            formData.append('CreatedBy' , '@ViewBag.LoggedInMember');
             if(form.valid()){
                 $.ajax({
                     type: 'POST',

@@ -19,5 +19,6 @@ namespace DataAccessLayer.Models.ViewModel
         public string? QaRemarks { get; set; }
         public int BugStatus { get; set; }
         public int Priority { get; set; }
+        public int CreatedBy { get; set; }
     }
 }
