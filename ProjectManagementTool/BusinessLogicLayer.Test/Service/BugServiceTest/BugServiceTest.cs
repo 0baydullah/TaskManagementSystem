@@ -93,5 +93,52 @@ namespace BusinessLogicLayer.Test.Service.BugServiceTest
             _bugRepoMock.Received().DeleteBug(bug);
         }
         #endregion
+
+        #region DeleteBug exception Test
+        [Fact]
+        public void DeleteBug_InvalidBug_ExceptionThrown()
+        {
+            // Arrange
+            var bug = new Bug
+            {
+                Id = 1,
+                Name = "Test Bug",
+                Descripton = "Test Description",
+                BugStatus = 1,
+                AssignMembersId = 1,
+                TaskId = 1,
+                UserStoryId = 1,
+                QaRemarks = "Test Remarks",
+                Priority = 1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = 1,
+                BugReopen = 0
+            };
+            _bugRepoMock.When(x => x.DeleteBug(bug)).Do(x => throw new Exception("Test exception"));
+            // Act & Assert
+            Assert.Throws<Exception>(() => _sut.DeleteBug(bug));
+        }
+        #endregion
+
+        #region GetAllBug Test
+        [Fact]
+        public void GetAllBug_ValidCall_ListOfBugs()
+        {
+            // Arrange
+            var bugs = new List<Bug>
+            {
+                new Bug { Id = 1, Name = "Test Bug 1", Descripton = "Test Description 1", BugStatus = 2, UserStoryId = 1, Priority = 3 ,QaRemarks = "sdjhlksdfjhkasjhkdv", AssignMembersId =34 },
+                new Bug { Id = 2, Name = "Test Bug 2", Descripton = "Test Description 2", BugStatus = 2, UserStoryId = 1, Priority = 3 ,QaRemarks = "sdjhlksdfjhkasjhkdv", AssignMembersId =34  }
+            };
+            _bugRepoMock.GetAllBug().Returns(bugs);
+
+            // Act
+            var result = _sut.GetAllBug();
+
+            // Assert
+            Assert.Equal(2, result.Count);
+        }
+        #endregion
     }
 }
