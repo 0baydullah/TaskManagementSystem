@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogicLayer.Test
+namespace BusinessLogicLayer.Test.ProjectInfoTest
 {
     public class ProjectInfoServiceTests
     {
