@@ -39,6 +39,31 @@ namespace BusinessLogicLayer.Test.Service.BugServiceTest
         }
         #endregion
 
+        #region AddBug exception Test
+        [Fact]
+        public void AddBug_IdAndBugVM_ExceptionThrown()
+        {
+            // Arrange
+            const int id = 57;
+            var bugVM = new BugVM
+            {
+                Name = "Test Bug",
+                Descripton = "Test Description",
+                BugStatus = 9,
+                AssignMembersId = 67,
+                TaskId = 1267,
+                QaRemarks = "Test Remarks",
+                Priority = 5,
+                CreatedBy = 7
+            };
+
+            _bugRepoMock.When(x => x.AddBug(Arg.Any<Bug>())).Do(x => throw new Exception("Test exception"));
+
+            // Act & Assert
+            Assert.Throws<Exception>(() => _sut.AddBug(id, bugVM));
+        }
+        #endregion
+
         #region DeleteBug Test
         [Fact]
         public void DeleteBug_ValidBug_CallRepoDeleteBug()
