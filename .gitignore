@@ -9,7 +9,7 @@
 bin/
 obj/
 out/
-
+UnitTestResult/
 # User-specific files
 *.rsuser
 *.ide
