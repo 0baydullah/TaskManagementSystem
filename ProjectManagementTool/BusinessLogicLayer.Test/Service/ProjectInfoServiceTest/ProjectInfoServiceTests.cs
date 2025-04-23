@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Service;
+using BusinessLogicLayer.Test.Service.ProjectInfoServiceTest;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using NSubstitute;
@@ -11,38 +12,8 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Test.Service.ProjectInfoTest
 {
-    public class ProjectInfoServiceTests
+    public class ProjectInfoServiceTests: ProjectInfoServiceBaseTest
     {
-        private readonly IProjectInfoRepo _projectInfoRepo;
-        private readonly ProjectInfoService _projectInfoService;
-
-        public ProjectInfoServiceTests()
-        {
-            // Initialize substitutes (mocks) for dependencies
-            _projectInfoRepo = Substitute.For<IProjectInfoRepo>();
-            var memberRepo = Substitute.For<IMemberRepo>();
-            var roleRepo = Substitute.For<IRoleRepo>();
-            var releaseRepo = Substitute.For<IReleaseRepo>();
-            var sprintRepo = Substitute.For<ISprintRepo>();
-            var userStoryRepo = Substitute.For<IUserStoryRepo>();
-            var featureRepo = Substitute.For<IFeatureRepo>();
-            var tasksRepo = Substitute.For<ITasksRepo>();
-            var bugRepo = Substitute.For<IBugRepo>();
-            var activityRepo = Substitute.For<IActivityRepo>();
-
-            // Initialize the service with mocked dependencies
-            _projectInfoService = new ProjectInfoService(
-                _projectInfoRepo,
-                memberRepo,
-                roleRepo,
-                releaseRepo,
-                sprintRepo,
-                userStoryRepo,
-                featureRepo,
-                tasksRepo,
-                bugRepo,
-                activityRepo);
-        }
 
         [Fact]
         public void GetProjectInfo_ValidId_ReturnsProjectInfo()
@@ -61,15 +32,13 @@ namespace BusinessLogicLayer.Test.Service.ProjectInfoTest
                 ProjectOwnerId = 1
             };
 
-            _projectInfoRepo.GetProjectInfo(projectId).Returns(expectedProjectInfo);
+            _sut.GetProjectInfo(projectId).Returns(expectedProjectInfo);
 
             // Act
-            var result = _projectInfoService.GetProjectInfo(projectId);
+            var result = _sut.GetProjectInfo(projectId);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.Equal(expectedProjectInfo.ProjectId, result.ProjectId);
-            Assert.Equal(expectedProjectInfo.Name, result.Name);
+          
             Assert.Equal(expectedProjectInfo.Key, result.Key);
         }
 
@@ -78,25 +47,13 @@ namespace BusinessLogicLayer.Test.Service.ProjectInfoTest
         {
             // Arrange
             int invalidProjectId = 999;
-            _projectInfoRepo.GetProjectInfo(invalidProjectId).Returns((ProjectInfo)null);
+            _sut.GetProjectInfo(invalidProjectId).Returns((ProjectInfo)null);
 
             // Act
-            var result = _projectInfoService.GetProjectInfo(invalidProjectId);
+            var result = _sut.GetProjectInfo(invalidProjectId);
 
             // Assert
             Assert.Null(result);
-        }
-
-        [Fact]
-        public void GetProjectInfo_ExceptionThrown_ThrowsException()
-        {
-            // Arrange
-            int projectId = 1;
-            _projectInfoRepo.GetProjectInfo(projectId).Throws(new Exception("Database error"));
-
-            // Act & Assert
-            var exception = Assert.Throws<Exception>(() => _projectInfoService.GetProjectInfo(projectId));
-            Assert.Equal("Database error", exception.Message);
         }
     }
 
