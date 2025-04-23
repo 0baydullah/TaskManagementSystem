@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogicLayer.IService;
+﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
@@ -33,7 +28,7 @@ namespace BusinessLogicLayer.Service
                     TaskId = bugVM.TaskId,
                     UserStoryId = id,
                     AssignMembersId = bugVM.AssignMembersId,
-                    QaRemarks = bugVM.QaRemarks??"",
+                    QaRemarks = bugVM.QaRemarks ?? "",
                     Priority = bugVM.Priority,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
@@ -45,7 +40,7 @@ namespace BusinessLogicLayer.Service
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw ;
+                throw;
             }
         }
 
@@ -80,8 +75,9 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var bugs = _bugRepo.GetAllBug().Join(member,b=>b.AssignMembersId , m=>m.MemberId , (b, m) =>
-                new Bug{
+                var bugs = _bugRepo.GetAllBug().Join(member, b => b.AssignMembersId, m => m.MemberId, (b, m) =>
+                new Bug
+                {
                     Id = b.Id,
                     Name = b.Name,
                     Descripton = b.Descripton,
@@ -129,7 +125,7 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public void UpdateBug(int id, BugVM  bug)
+        public void UpdateBug(int id, BugVM bug)
         {
             try
             {
@@ -145,7 +141,7 @@ namespace BusinessLogicLayer.Service
 
                 _bugRepo.UpdateBug(existingBug);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 throw;
@@ -158,7 +154,7 @@ namespace BusinessLogicLayer.Service
             {
                 _bugRepo.UpdateBug(bug);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 throw;
