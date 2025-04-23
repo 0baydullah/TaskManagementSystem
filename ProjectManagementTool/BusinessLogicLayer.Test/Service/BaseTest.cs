@@ -10,7 +10,7 @@ namespace BusinessLogicLayer.Test.Service
         {
             // Initialize the test setup here
         }
-        public void Dispose()
+        public virtual void Dispose()
         {
             // Clean up resources here
         }
