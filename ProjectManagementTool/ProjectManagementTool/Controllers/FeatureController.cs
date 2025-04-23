@@ -1,7 +1,9 @@
 ﻿using BusinessLogicLayer.IService;
+using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
 using log4net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
@@ -15,15 +17,17 @@ namespace ProjectManagementTool.Controllers
         public readonly IFeatureService _featureService;
         public readonly IReleaseService _releaseService;
         private readonly IProjectInfoService _projectInfoService;
+        private readonly UserManager<UserInfo> _userManager;
         private readonly ILog _log = LogManager.GetLogger(typeof(FeatureController));
 
         public FeatureController(IMemberService memberService, IFeatureService featureService, IReleaseService releaseService,
-            IProjectInfoService projectInfoService) 
+            IProjectInfoService projectInfoService, UserManager<UserInfo> userManager) 
         { 
             _memberService = memberService;
             _featureService = featureService;
             _releaseService = releaseService;
             _projectInfoService = projectInfoService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -31,7 +35,6 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-
                 var members = _memberService.GetAllMember().Where(m => m.ProjectId == projectId);
                 var releases = _releaseService.GetAllReleases().Where(r => r.ProjectId == projectId);
                 var project = _projectInfoService.GetProjectInfo(projectId);
@@ -62,7 +65,8 @@ namespace ProjectManagementTool.Controllers
 
             try
             {
-                var result =  await _featureService.CreateFeature(featureVM);
+                var user = await _userManager.GetUserAsync(User);
+                var result =  await _featureService.CreateFeature(featureVM, user);
 
                 if (result == true)
                 {
@@ -136,7 +140,8 @@ namespace ProjectManagementTool.Controllers
             }
             try
             {
-                var result = await _featureService.UpdateFeature(id, featureVM);
+                var user = await _userManager.GetUserAsync(User);
+                var result = await _featureService.UpdateFeature(id, featureVM, user);
 
                 if (result == true)
                 {
@@ -161,7 +166,8 @@ namespace ProjectManagementTool.Controllers
         {
             try
             {
-                var result = await _featureService.DeleteFeature(id);
+                var user = await _userManager.GetUserAsync(User);
+                var result = await _featureService.DeleteFeature(id, user);
 
                 if (result == true)
                 {

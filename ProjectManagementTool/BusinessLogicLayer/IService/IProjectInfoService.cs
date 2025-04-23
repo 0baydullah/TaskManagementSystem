@@ -12,7 +12,7 @@ namespace BusinessLogicLayer.IService
     public interface IProjectInfoService
     {
         public bool AddProjectInfo(ProjectInfoVM projectInfo, UserInfo user);
-        public bool UpdateProjectInfo(EditProjectInfoVM projectInfo);
+        public bool UpdateProjectInfo(EditProjectInfoVM projectInfo, UserInfo user);
 
         public bool DeleteProjectInfo(ProjectInfo projectInfo);
 

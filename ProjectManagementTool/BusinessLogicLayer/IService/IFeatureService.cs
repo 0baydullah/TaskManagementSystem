@@ -10,10 +10,10 @@ namespace BusinessLogicLayer.IService
 {
     public interface IFeatureService
     {
-        public Task<bool> CreateFeature(FeatureVM featureVM);
+        public Task<bool> CreateFeature(FeatureVM featureVM, UserInfo user);
         public Task<List<FeatureWithMemberReleaseVM>> GetAllFeature(int projectId);
         public Task<Feature> GetFeatureById(int id);
-        public Task<bool> UpdateFeature(int id, FeatureVM featureVM);
-        public Task<bool> DeleteFeature(int id);
+        public Task<bool> UpdateFeature(int id, FeatureVM featureVM, UserInfo user);
+        public Task<bool> DeleteFeature(int id, UserInfo user);
     }
 }

@@ -25,9 +25,10 @@ namespace BusinessLogicLayer.Service
         private readonly IFeatureRepo _featureRepo;
         private readonly ITasksRepo _tasksRepo;
         private readonly IBugRepo _bugRepo;
+        private readonly IActivityRepo _activityRepo;
 
         public ProjectInfoService(IProjectInfoRepo projectInfoRepo, IMemberRepo memberRepo, IRoleRepo roleRepo, IReleaseRepo releaseRepo, 
-            ISprintRepo sprintRepo, IUserStoryRepo userStoryRepo, IFeatureRepo featureRepo, ITasksRepo tasksRepo, IBugRepo bugRepo)
+            ISprintRepo sprintRepo, IUserStoryRepo userStoryRepo, IFeatureRepo featureRepo, ITasksRepo tasksRepo, IBugRepo bugRepo, IActivityRepo activityRepo)
         {
             _projectInfoRepo = projectInfoRepo;
             _memberRepo = memberRepo;
@@ -38,6 +39,7 @@ namespace BusinessLogicLayer.Service
             _featureRepo = featureRepo;
             _tasksRepo = tasksRepo;
             _bugRepo = bugRepo;
+            _activityRepo = activityRepo;
         }
 
 
@@ -75,6 +77,7 @@ namespace BusinessLogicLayer.Service
                     var owner = _memberRepo.GetAllMember().Where(m => m.ProjectId == projectUpdate.ProjectId).FirstOrDefault();
                     projectUpdate.ProjectOwnerId = owner.MemberId;
                     _projectInfoRepo.UpdateProjectInfo(projectUpdate);
+                    _activityRepo.Add( projectUpdate.ProjectId, "Project", projectUpdate.Name+" is created by ", user.Id);
 
                 }
 
@@ -178,18 +181,19 @@ namespace BusinessLogicLayer.Service
 
         }
 
-        public bool UpdateProjectInfo(EditProjectInfoVM model)
+        public bool UpdateProjectInfo(EditProjectInfoVM model, UserInfo user)
         {
             try
             {
                 var existProject = _projectInfoRepo.GetProjectInfo(model.ProjectId);
                 var existProjectName = _projectInfoRepo.GetProjectInfoByName(model.ProjectId, model.Name);
-                
+                var previousName = existProject.Name;
+
                 if (existProject == null || existProjectName != null)
                 {
                     return false;
                 }
-
+                
                 existProject.Name = model.Name;
                 existProject.Key = model.Key;
                 existProject.Description = model.Description;
@@ -198,6 +202,15 @@ namespace BusinessLogicLayer.Service
                 existProject.CompanyName = model.CompanyName;
                 existProject.ProjectOwnerId = model.ProjectOwnerId;
                 _projectInfoRepo.UpdateProjectInfo(existProject);
+                if (previousName == model.Name)
+                {
+                    _activityRepo.Add(existProject.ProjectId, "Project", previousName + " is updated", user.Id);
+                }
+                else
+                {
+                    _activityRepo.Add(existProject.ProjectId, "Project", previousName + " is changed to " + model.Name, user.Id);
+                }
+                
 
                 return true;
             }
@@ -229,7 +242,7 @@ namespace BusinessLogicLayer.Service
                 var allBugs = userStory.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new
                 {
                     u.StoryId,
-                    b.BugId,
+                    b.Id,
                 }).ToList().Count;
 
 
@@ -294,12 +307,12 @@ namespace BusinessLogicLayer.Service
                 var bugs = _bugRepo.GetAllBug();
                 var allBugs = story.Join(bugs, u => u.StoryId, b => b.UserStoryId, (u, b) => new Bug
                 {
-                    BugId = b.BugId,
+                    Id = b.Id,
                     Name = b.Name,
                     Descripton = b.Descripton,
                     AssignMembersId = b.AssignMembersId,
                     QaRemarks = b.QaRemarks,
-                    Status = b.Status,
+                    BugStatus = b.BugStatus,
                     Priority = b.Priority,
                     UserStoryId = u.StoryId
 

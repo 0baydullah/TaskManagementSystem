@@ -17,7 +17,8 @@ namespace DataAccessLayer.Models.ViewModel
         public int AssignMembersId { get; set; }
         public int TaskId { get; set; }
         public string? QaRemarks { get; set; }
-        public int Status { get; set; }
+        public int BugStatus { get; set; }
         public int Priority { get; set; }
+        public int CreatedBy { get; set; }
     }
 }

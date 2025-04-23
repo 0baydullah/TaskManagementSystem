@@ -2,22 +2,19 @@
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLogicLayer.Service
 {
     public class FeatureService : IFeatureService
     {
         private readonly IFeatureRepo _featureRepo;
-        public FeatureService(IFeatureRepo featureRepo)
+        private readonly IActivityRepo _activityRepo;
+        public FeatureService(IFeatureRepo featureRepo, IActivityRepo activityRepo)
         {
             _featureRepo = featureRepo;
+            _activityRepo = activityRepo;
         }
-        public async Task<bool> CreateFeature(FeatureVM featureVM) 
+        public async Task<bool> CreateFeature(FeatureVM featureVM, UserInfo user)
         {
             try
             {
@@ -33,6 +30,12 @@ namespace BusinessLogicLayer.Service
                 };
 
                 var result = await _featureRepo.CreateFeature(feature);
+
+                if (result == true)
+                {
+                    _activityRepo.Add(featureVM.ProjectId, "Feature", featureVM.Name + " is created by ", user.Id);
+                }
+
                 return result;
             }
             catch (Exception)
@@ -67,13 +70,13 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public async Task<bool> UpdateFeature(int id, FeatureVM featureVM)
+        public async Task<bool> UpdateFeature(int id, FeatureVM featureVM, UserInfo user)
         {
             try
             {
                 var existFeature = await _featureRepo.GetFeatureById(id);
                 var existFeatureName = await _featureRepo.GetFeatureByName(featureVM.Name, id, featureVM.ProjectId);
-
+                var previousName = existFeature.Name;
                 if (existFeature == null || existFeatureName != null)
                 {
                     return false;
@@ -88,6 +91,14 @@ namespace BusinessLogicLayer.Service
                 existFeature.Tag = featureVM.Tag;
 
                 var result = await _featureRepo.UpdateFeature(existFeature);
+                if (previousName == featureVM.Name)
+                {
+                    _activityRepo.Add(featureVM.ProjectId, "Feature", previousName + " is updated", user.Id);
+                }
+                else
+                {
+                    _activityRepo.Add(featureVM.ProjectId, "Feature", previousName + " is changed to " + featureVM.Name, user.Id);
+                }
                 return result;
             }
             catch (Exception)
@@ -96,7 +107,7 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public async Task<bool> DeleteFeature(int id) 
+        public async Task<bool> DeleteFeature(int id, UserInfo user)
         {
             try
             {
@@ -109,6 +120,8 @@ namespace BusinessLogicLayer.Service
                 else
                 {
                     var result = await _featureRepo.DeleteFeature(feature);
+                    _activityRepo.Add(feature.ProjectId, "Feature", feature.Name + " is deleted by ", user.Id);
+
                     return result;
                 }
             }

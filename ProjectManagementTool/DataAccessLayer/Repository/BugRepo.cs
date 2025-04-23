@@ -26,6 +26,7 @@ namespace DataAccessLayer.Repository
             {
                 _context.Bugs.Add(bug);
                 _context.SaveChanges();
+                _log.Info("Bug created successfully");
             }
             catch(Exception ex)
             {
@@ -56,9 +57,9 @@ namespace DataAccessLayer.Repository
                 return bugs;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                _log.Error(ex.Message);
                 throw;
             }
         }
@@ -82,7 +83,7 @@ namespace DataAccessLayer.Repository
         {
             try
             {
-                var bug = _context.Bugs.FirstOrDefault(b => b.BugId == id);
+                var bug = _context.Bugs.FirstOrDefault(b => b.Id == id);
                 return bug;
             }
             catch (Exception ex)

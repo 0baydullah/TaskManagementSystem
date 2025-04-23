@@ -200,9 +200,9 @@
             
                 @foreach (var item in Model.Bugs)
                 {
-                    @if (Model.StatusList.ContainsKey(item.Status) == false)
+                    @if (Model.StatusList.ContainsKey(item.BugStatus) == false)
                     {
-                        Model.StatusList[item.Status] = "Not Found";
+                        Model.StatusList[item.BugStatus] = "Not Found";
                     }
                     @if (Model.PriorityList.ContainsKey(item.Priority) == false)
                     {
@@ -219,7 +219,7 @@
                             @Html.DisplayFor(modelItem => item.QaRemarks)
                         </td>
                         <td>
-                            @Model.StatusList[item.Status]
+                            @Model.StatusList[item.BugStatus]
                         </td>
                         <td>
                             @Model.PriorityList[item.Priority]

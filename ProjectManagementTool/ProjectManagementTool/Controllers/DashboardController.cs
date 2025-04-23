@@ -76,7 +76,7 @@ namespace ProjectManagementTool.Controllers
                 var bugResult = status.Join(
                     bugs,
                     s => s.StatusId,
-                    t => t.Status,
+                    t => t.BugStatus,
                     (s, t) => new
                     {
                         StatusId = s.StatusId,

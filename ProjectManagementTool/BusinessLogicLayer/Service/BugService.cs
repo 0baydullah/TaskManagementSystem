@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLogicLayer.IService;
+﻿using BusinessLogicLayer.IService;
 using DataAccessLayer.IRepository;
 using DataAccessLayer.Models.Entity;
 using DataAccessLayer.Models.ViewModel;
@@ -14,10 +9,12 @@ namespace BusinessLogicLayer.Service
     public class BugService : IBugService
     {
         private readonly IBugRepo _bugRepo;
+        private readonly IMemberRepo _memberRepo;
         private readonly ILog _log = LogManager.GetLogger(typeof(BugService));
-        public BugService(IBugRepo bugRepo)
+        public BugService(IBugRepo bugRepo, IMemberRepo memberRepo)
         {
             _bugRepo = bugRepo;
+            _memberRepo = memberRepo;
         }
         public void AddBug(int id, BugVM bugVM)
         {
@@ -27,19 +24,23 @@ namespace BusinessLogicLayer.Service
                 {
                     Name = bugVM.Name,
                     Descripton = bugVM.Descripton,
-                    Status = bugVM.Status,
+                    BugStatus = bugVM.BugStatus,
                     TaskId = bugVM.TaskId,
                     UserStoryId = id,
                     AssignMembersId = bugVM.AssignMembersId,
-                    QaRemarks = bugVM.QaRemarks??"",
+                    QaRemarks = bugVM.QaRemarks ?? "",
                     Priority = bugVM.Priority,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    CreatedBy = bugVM.CreatedBy,
+                    BugReopen = 0
                 };
                 _bugRepo.AddBug(bug);
             }
             catch (Exception ex)
             {
                 _log.Error(ex.Message);
-                throw ;
+                throw;
             }
         }
 
@@ -74,12 +75,13 @@ namespace BusinessLogicLayer.Service
         {
             try
             {
-                var bugs = _bugRepo.GetAllBug().Join(member,b=>b.AssignMembersId , m=>m.MemberId , (b, m) =>
-                new Bug{
-                    BugId = b.BugId,
+                var bugs = _bugRepo.GetAllBug().Join(member, b => b.AssignMembersId, m => m.MemberId, (b, m) =>
+                new Bug
+                {
+                    Id = b.Id,
                     Name = b.Name,
                     Descripton = b.Descripton,
-                    Status = b.Status,
+                    BugStatus = b.BugStatus,
                     UserStoryId = b.UserStoryId,
                     Priority = b.Priority,
                     QaRemarks = b.QaRemarks,
@@ -123,13 +125,13 @@ namespace BusinessLogicLayer.Service
             }
         }
 
-        public void UpdateBug(int id, BugVM  bug)
+        public void UpdateBug(int id, BugVM bug)
         {
             try
             {
                 var existingBug = GetBug(id);
 
-                existingBug.Status = bug.Status;
+                existingBug.BugStatus = bug.BugStatus;
                 existingBug.QaRemarks = bug.QaRemarks;
                 existingBug.Descripton = bug.Descripton;
                 existingBug.Name = bug.Name;
@@ -139,7 +141,7 @@ namespace BusinessLogicLayer.Service
 
                 _bugRepo.UpdateBug(existingBug);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 throw;
@@ -152,7 +154,7 @@ namespace BusinessLogicLayer.Service
             {
                 _bugRepo.UpdateBug(bug);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log.Error(ex.Message);
                 throw;
