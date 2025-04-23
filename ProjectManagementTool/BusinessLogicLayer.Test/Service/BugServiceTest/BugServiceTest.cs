@@ -38,5 +38,35 @@ namespace BusinessLogicLayer.Test.Service.BugServiceTest
             _bugRepoMock.Received().AddBug(Arg.Any<Bug>());
         }
         #endregion
+
+        #region DeleteBug Test
+        [Fact]
+        public void DeleteBug_ValidBug_CallRepoDeleteBug()
+        {
+            // Arrange
+            var bug = new Bug
+            {
+                Id = 1,
+                Name = "Test Bug",
+                Descripton = "Test Description",
+                BugStatus = 1,
+                AssignMembersId = 1,
+                TaskId = 1,
+                UserStoryId = 1,
+                QaRemarks = "Test Remarks",
+                Priority = 1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = 1,
+                BugReopen = 0
+            };
+
+            // Act
+            _sut.DeleteBug(bug);
+
+            // Assert
+            _bugRepoMock.Received().DeleteBug(bug);
+        }
+        #endregion
     }
 }
