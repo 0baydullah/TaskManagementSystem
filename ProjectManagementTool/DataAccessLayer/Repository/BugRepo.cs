@@ -26,6 +26,7 @@ namespace DataAccessLayer.Repository
             {
                 _context.Bugs.Add(bug);
                 _context.SaveChanges();
+                _log.Info("Bug created successfully");
             }
             catch(Exception ex)
             {
